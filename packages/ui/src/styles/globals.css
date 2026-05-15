@@ -1,0 +1,1110 @@
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--alka-radius-panel);
+  --font-sans: var(--alka-font-sans);
+  --font-mono: var(--alka-font-mono);
+}
+
+@property --alka-button-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root,
+.alka-theme-light,
+.theme-light {
+  color-scheme: light;
+  --alka-background: 0 0% 96%;
+  --alka-foreground: 35 9% 8%;
+  --alka-card: 0 0% 100%;
+  --alka-card-foreground: 35 9% 8%;
+  --alka-popover: 0 0% 100%;
+  --alka-popover-foreground: 35 9% 8%;
+  --alka-primary: 0 0% 0%;
+  --alka-primary-foreground: 0 0% 100%;
+  --alka-secondary: 38 22% 92%;
+  --alka-secondary-foreground: 35 9% 12%;
+  --alka-muted: 38 18% 91%;
+  --alka-muted-foreground: 31 8% 42%;
+  --alka-accent: 0 0% 0%;
+  --alka-accent-foreground: 0 0% 100%;
+  --alka-destructive: 0 72% 51%;
+  --alka-destructive-foreground: 0 0% 98%;
+  --alka-border: 36 22% 82%;
+  --alka-input: 36 22% 82%;
+  --alka-ring: 0 0% 0%;
+  --alka-panel-bg: 0 0% 100% / 0.72;
+  --alka-panel-solid-bg: 0 0% 100%;
+  --alka-panel-border: 35 16% 20% / 0.1;
+  --alka-panel-shadow: 35 24% 20% / 0.1;
+  --alka-highlight-color: 0 0% 100%;
+  --alka-shadow-color: 35 24% 20%;
+  --alka-navbar-bg: 0 0% 100% / 0.58;
+  --alka-navbar-border: 35 16% 20% / 0.1;
+  --alka-navbar-text: 35 9% 8%;
+  --alka-navbar-muted: 31 8% 42%;
+  --alka-theme-color: #f5f5f7;
+}
+
+.alka-theme-dark,
+.theme-dark {
+  color-scheme: dark;
+  --alka-background: 0 0% 2%;
+  --alka-foreground: 36 31% 93%;
+  --alka-card: 0 0% 7%;
+  --alka-card-foreground: 36 31% 93%;
+  --alka-popover: 0 0% 7%;
+  --alka-popover-foreground: 36 31% 93%;
+  --alka-primary: 0 0% 100%;
+  --alka-primary-foreground: 0 0% 2%;
+  --alka-secondary: 0 0% 10%;
+  --alka-secondary-foreground: 36 31% 93%;
+  --alka-muted: 0 0% 13%;
+  --alka-muted-foreground: 32 9% 66%;
+  --alka-accent: 0 0% 100%;
+  --alka-accent-foreground: 0 0% 2%;
+  --alka-destructive: 0 63% 46%;
+  --alka-destructive-foreground: 0 0% 98%;
+  --alka-border: 0 0% 18%;
+  --alka-input: 0 0% 18%;
+  --alka-ring: 0 0% 100%;
+  --alka-panel-bg: 0 0% 5% / 0.78;
+  --alka-panel-solid-bg: 0 0% 7%;
+  --alka-panel-border: 0 0% 100% / 0.1;
+  --alka-panel-shadow: 0 0% 0% / 0.36;
+  --alka-highlight-color: 0 0% 100%;
+  --alka-shadow-color: 0 0% 0%;
+  --alka-navbar-bg: 0 0% 5% / 0.7;
+  --alka-navbar-border: 0 0% 100% / 0.1;
+  --alka-navbar-text: 0 0% 100%;
+  --alka-navbar-muted: 0 0% 100% / 0.68;
+  --alka-theme-color: #050505;
+}
+
+:root {
+  --background: var(--alka-background);
+  --foreground: var(--alka-foreground);
+  --card: var(--alka-card);
+  --card-foreground: var(--alka-card-foreground);
+  --popover: var(--alka-popover);
+  --popover-foreground: var(--alka-popover-foreground);
+  --primary: var(--alka-primary);
+  --primary-foreground: var(--alka-primary-foreground);
+  --secondary: var(--alka-secondary);
+  --secondary-foreground: var(--alka-secondary-foreground);
+  --muted: var(--alka-muted);
+  --muted-foreground: var(--alka-muted-foreground);
+  --accent: var(--alka-accent);
+  --accent-foreground: var(--alka-accent-foreground);
+  --destructive: var(--alka-destructive);
+  --destructive-foreground: var(--alka-destructive-foreground);
+  --border: var(--alka-border);
+  --input: var(--alka-input);
+  --ring: var(--alka-ring);
+  --radius: var(--alka-radius-control);
+  --alka-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --alka-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --alka-radius-xs: 8px;
+  --alka-radius-control: 12px;
+  --alka-radius-panel: 16px;
+  --alka-radius-panel-lg: 24px;
+  --alka-radius-modal: 28px;
+  --alka-radius-pill: 999px;
+  --alka-blur-soft: 12px;
+  --alka-blur-panel: 18px;
+  --alka-blur-strong: 24px;
+  --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.08);
+  --alka-shadow-panel: 0 16px 44px hsl(var(--alka-shadow-color) / 0.18);
+  --alka-shadow-floating: 0 18px 54px hsl(var(--alka-shadow-color) / 0.24);
+  --alka-shadow-modal: 0 28px 76px hsl(var(--alka-shadow-color) / 0.32), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08);
+  --alka-motion-instant: 100ms;
+  --alka-motion-fast: 160ms;
+  --alka-motion-normal: 240ms;
+  --alka-motion-panel: 300ms;
+  --alka-motion-slow: 600ms;
+  --alka-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --alka-ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --alka-ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --alka-motion-smooth: 520ms;
+  --sidebar-background: var(--alka-card);
+  --sidebar-foreground: var(--alka-card-foreground);
+  --sidebar-primary: var(--alka-primary);
+  --sidebar-primary-foreground: var(--alka-primary-foreground);
+  --sidebar-accent: var(--alka-muted);
+  --sidebar-accent-foreground: var(--alka-foreground);
+  --sidebar-border: var(--alka-border);
+  --sidebar-ring: var(--alka-ring);
+}
+
+.alka-theme-light,
+.theme-light,
+.alka-theme-dark,
+.theme-dark {
+  --background: var(--alka-background);
+  --foreground: var(--alka-foreground);
+  --card: var(--alka-card);
+  --card-foreground: var(--alka-card-foreground);
+  --popover: var(--alka-popover);
+  --popover-foreground: var(--alka-popover-foreground);
+  --primary: var(--alka-primary);
+  --primary-foreground: var(--alka-primary-foreground);
+  --secondary: var(--alka-secondary);
+  --secondary-foreground: var(--alka-secondary-foreground);
+  --muted: var(--alka-muted);
+  --muted-foreground: var(--alka-muted-foreground);
+  --accent: var(--alka-accent);
+  --accent-foreground: var(--alka-accent-foreground);
+  --destructive: var(--alka-destructive);
+  --destructive-foreground: var(--alka-destructive-foreground);
+  --border: var(--alka-border);
+  --input: var(--alka-input);
+  --ring: var(--alka-ring);
+}
+
+.alka-navbar-panel,
+.navbar-panel {
+  position: relative;
+  overflow: visible;
+}
+
+.alka-pill-surface {
+  border: 1px solid hsl(var(--alka-panel-border));
+  background: hsl(var(--alka-panel-bg));
+  box-shadow:
+    0 14px 38px hsl(var(--alka-shadow-color) / 0.18),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.07);
+  -webkit-backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.12);
+}
+
+.alka-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: hsl(0 0% 0% / 0.72);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+  transition: opacity 520ms var(--alka-ease-smooth);
+}
+
+.alka-sheet-overlay[data-state="closed"] {
+  opacity: 0;
+  animation: alka-overlay-out 420ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-overlay[data-state="open"] {
+  opacity: 1;
+  animation: alka-overlay-in 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content {
+  --alka-sheet-width: 42rem;
+  position: fixed;
+  z-index: 50;
+  display: grid;
+  gap: 1rem;
+  border: 1px solid hsl(var(--alka-panel-border));
+  background: hsl(var(--background) / 0.9);
+  box-shadow:
+    0 30px 96px hsl(var(--alka-shadow-color) / 0.42),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.06);
+  -webkit-backdrop-filter: blur(var(--alka-blur-strong)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-blur-strong)) saturate(1.12);
+  outline: none;
+  overflow: visible;
+  transition:
+    opacity 520ms var(--alka-ease-smooth),
+    transform 680ms var(--alka-ease-smooth);
+}
+
+.alka-sheet-content[data-size="sm"] {
+  --alka-sheet-width: 28rem;
+}
+
+.alka-sheet-content[data-size="md"] {
+  --alka-sheet-width: 42rem;
+}
+
+.alka-sheet-content[data-size="lg"] {
+  --alka-sheet-width: 60rem;
+}
+
+.alka-sheet-content[data-size="xl"] {
+  --alka-sheet-width: 76rem;
+}
+
+.alka-sheet-body {
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.alka-sheet-content[data-side="center"] {
+  left: 50%;
+  bottom: 0;
+  width: min(calc(100vw - 2rem), var(--alka-sheet-width));
+  max-height: calc(100dvh - 5.75rem);
+  border-bottom-width: 0;
+  border-radius: 2.4rem 2.4rem 0 0;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.alka-sheet-content[data-side="center"] > .alka-sheet-body {
+  max-height: calc(100dvh - 10.75rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.15rem;
+}
+
+.alka-sheet-content[data-side="center"][data-state="closed"] {
+  opacity: 0;
+  transform: translate3d(-50%, 100%, 0) scale(0.985);
+  animation: alka-sheet-center-out 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="center"][data-state="open"] {
+  opacity: 1;
+  transform: translate3d(-50%, 0, 0) scale(1);
+  animation: alka-sheet-center-in 820ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="left"],
+.alka-sheet-content[data-side="right"] {
+  top: 0;
+  bottom: 0;
+  width: min(100vw, var(--alka-sheet-width));
+  max-width: 100vw;
+  height: 100dvh;
+  padding: 1.5rem;
+}
+
+.alka-sheet-content[data-side="left"] > .alka-sheet-body,
+.alka-sheet-content[data-side="right"] > .alka-sheet-body {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.alka-sheet-content[data-side="left"] {
+  left: 0;
+  border-width: 0 1px 0 0;
+}
+
+.alka-sheet-content[data-side="right"] {
+  right: 0;
+  border-width: 0 0 0 1px;
+}
+
+.alka-sheet-content[data-side="left"][data-state="closed"] {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: alka-sheet-left-out 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="left"][data-state="open"] {
+  opacity: 1;
+  transform: translateX(0);
+  animation: alka-sheet-left-in 760ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="right"][data-state="closed"] {
+  opacity: 0;
+  transform: translateX(100%);
+  animation: alka-sheet-right-out 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="right"][data-state="open"] {
+  opacity: 1;
+  transform: translateX(0);
+  animation: alka-sheet-right-in 760ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="top"],
+.alka-sheet-content[data-side="bottom"] {
+  right: 0;
+  left: 0;
+  width: 100%;
+  max-height: calc(100dvh - 2rem);
+  padding: 1.5rem;
+}
+
+.alka-sheet-content[data-side="top"] > .alka-sheet-body,
+.alka-sheet-content[data-side="bottom"] > .alka-sheet-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.alka-sheet-content[data-side="top"] {
+  top: 0;
+  border-width: 0 0 1px;
+  border-radius: 0 0 2rem 2rem;
+}
+
+.alka-sheet-content[data-side="bottom"] {
+  bottom: 0;
+  border-width: 1px 0 0;
+  border-radius: 2rem 2rem 0 0;
+}
+
+.alka-sheet-content[data-side="top"][data-state="closed"] {
+  opacity: 0;
+  transform: translateY(-100%);
+  animation: alka-sheet-top-out 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="top"][data-state="open"] {
+  opacity: 1;
+  transform: translateY(0);
+  animation: alka-sheet-top-in 760ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="bottom"][data-state="closed"] {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: alka-sheet-bottom-out 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-content[data-side="bottom"][data-state="open"] {
+  opacity: 1;
+  transform: translateY(0);
+  animation: alka-sheet-bottom-in 760ms var(--alka-ease-smooth) both;
+}
+
+.alka-sheet-close-button {
+  display: grid;
+  place-items: center;
+  border: 1px solid hsl(var(--alka-panel-border));
+  border-radius: var(--alka-radius-pill);
+  background: hsl(var(--background) / 0.72);
+  box-shadow:
+    0 12px 32px hsl(var(--alka-shadow-color) / 0.28),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08);
+  color: hsl(var(--foreground) / 0.88);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.14);
+  backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.14);
+  transition:
+    background-color 320ms var(--alka-ease-smooth),
+    color 320ms var(--alka-ease-smooth),
+    opacity 420ms var(--alka-ease-smooth),
+    transform 520ms var(--alka-ease-smooth);
+}
+
+.alka-sheet-close-button:hover {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--foreground) / 0.08);
+}
+
+.alka-sheet-close-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px hsl(var(--ring) / 0.22),
+    0 14px 38px hsl(var(--alka-shadow-color) / 0.32);
+}
+
+.alka-sheet-close-button-inside {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.alka-sheet-close-button-floating {
+  position: absolute;
+  top: -4.5rem;
+  left: 50%;
+  z-index: 3;
+  height: 3.25rem;
+  width: 3.25rem;
+}
+
+.alka-sheet-content[data-state="closed"] .alka-sheet-close-button-floating {
+  opacity: 0;
+  transform: translateX(-50%) translateY(1rem) scale(0.94);
+}
+
+.alka-sheet-content[data-state="open"] .alka-sheet-close-button-floating {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.alka-dialog-overlay[data-state="closed"],
+.alka-alert-dialog-overlay[data-state="closed"] {
+  animation: alka-overlay-out 420ms var(--alka-ease-smooth) both;
+}
+
+.alka-dialog-overlay[data-state="open"],
+.alka-alert-dialog-overlay[data-state="open"] {
+  animation: alka-overlay-in 520ms var(--alka-ease-smooth) both;
+}
+
+.alka-dialog-content,
+.alka-alert-dialog-content {
+  transform: translate3d(-50%, -50%, 0) scale(1);
+}
+
+.alka-dialog-content[data-state="closed"],
+.alka-alert-dialog-content[data-state="closed"] {
+  animation: alka-modal-out 460ms var(--alka-ease-smooth) both;
+}
+
+.alka-dialog-content[data-state="open"],
+.alka-alert-dialog-content[data-state="open"] {
+  animation: alka-modal-in 760ms var(--alka-ease-smooth) both;
+}
+
+[data-radix-popper-content-wrapper] > [data-state="closed"] {
+  animation: alka-popper-out 320ms var(--alka-ease-smooth) both;
+}
+
+[data-radix-popper-content-wrapper] > [data-state="open"],
+[data-radix-popper-content-wrapper] > [data-state="delayed-open"],
+[data-radix-popper-content-wrapper] > [data-state="instant-open"] {
+  animation: alka-popper-in 520ms var(--alka-ease-smooth) both;
+}
+
+@keyframes alka-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes alka-overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes alka-sheet-center-in {
+  from {
+    opacity: 0;
+    transform: translate3d(-50%, 100%, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+}
+
+@keyframes alka-sheet-center-out {
+  from {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-50%, 100%, 0) scale(0.985);
+  }
+}
+
+@keyframes alka-sheet-left-in {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes alka-sheet-left-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes alka-sheet-right-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes alka-sheet-right-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes alka-sheet-top-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes alka-sheet-top-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes alka-sheet-bottom-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes alka-sheet-bottom-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes alka-modal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(-50%, calc(-50% + 1.5rem), 0) scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+  }
+}
+
+@keyframes alka-modal-out {
+  from {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-50%, calc(-50% + 1rem), 0) scale(0.97);
+  }
+}
+
+@keyframes alka-popper-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alka-popper-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.25rem) scale(0.98);
+  }
+}
+
+.alka-navbar-panel:not([data-quiet="true"]),
+.navbar-panel:not([data-quiet="true"]) {
+  -webkit-backdrop-filter: blur(8px) saturate(1.18);
+  backdrop-filter: blur(8px) saturate(1.18);
+}
+
+.alka-navbar-panel::after,
+.navbar-panel::after,
+.alka-glass-highlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.12), hsl(var(--alka-highlight-color) / 0.02));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity var(--alka-motion-normal) var(--alka-ease-standard);
+}
+
+.alka-navbar-panel > *,
+.navbar-panel > *,
+.alka-glass-highlight > * {
+  position: relative;
+  z-index: 2;
+}
+
+.alka-navbar-panel[data-quiet="true"],
+.navbar-panel[data-quiet="true"] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.alka-navbar-panel[data-quiet="true"]::after,
+.navbar-panel[data-quiet="true"]::after {
+  opacity: 0;
+}
+
+.alka-glass-panel {
+  border: 1px solid hsl(var(--alka-panel-border));
+  background: linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.12), transparent 38%), hsl(var(--alka-panel-bg));
+  box-shadow: var(--alka-shadow-panel);
+  -webkit-backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.14);
+  backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.14);
+}
+
+.alka-button-control {
+  --alka-button-angle: 0deg;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  transition:
+    --alka-button-angle 880ms var(--alka-ease-smooth),
+    transform 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    color 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    background-color 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    border-color 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    box-shadow 320ms cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.alka-button-control::before,
+.alka-button-control::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.alka-button-control::before {
+  --alka-button-angle: 0deg;
+  padding: 1.5px;
+  opacity: 0;
+  background: conic-gradient(
+    from var(--alka-button-angle),
+    hsl(var(--foreground) / 0.08),
+    hsl(var(--foreground) / 0.86) 0.08turn,
+    hsl(var(--foreground) / 0.34) 0.16turn,
+    hsl(var(--foreground) / 0.08) 0.3turn,
+    hsl(var(--foreground) / 0.08)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition:
+    --alka-button-angle 880ms var(--alka-ease-smooth),
+    opacity 620ms var(--alka-ease-smooth);
+}
+
+.alka-button-control::after {
+  transform: scaleY(0);
+  transform-origin: top;
+  opacity: 0;
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.12), transparent 54%),
+    linear-gradient(90deg, hsl(var(--foreground) / 0.06), transparent 42%, hsl(var(--foreground) / 0.05));
+  transition:
+    transform 422ms cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 260ms cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.alka-button-control[data-variant="default"]::after {
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 54%),
+    linear-gradient(
+      135deg,
+      hsl(var(--primary-foreground) / 0.18),
+      hsl(var(--primary-foreground) / 0.08) 45%,
+      hsl(var(--primary-foreground) / 0.16)
+    );
+}
+
+.alka-button-control:active:not(:disabled) {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 160ms;
+}
+
+.alka-button-control:hover:not(:disabled),
+.alka-button-control:focus:not(:disabled),
+.alka-button-control:focus-visible {
+  --alka-button-angle: 360deg;
+}
+
+.alka-button-control:hover:not(:disabled)::before,
+.alka-button-control:focus:not(:disabled)::before,
+.alka-button-control:focus-visible::before {
+  --alka-button-angle: 360deg;
+  opacity: 1;
+}
+
+.alka-button-control:hover:not(:disabled)::after,
+.alka-button-control:focus:not(:disabled)::after,
+.alka-button-control:focus-visible::after {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.alka-input-field {
+  position: relative;
+  display: block;
+  min-height: 4rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1.35rem 1.35rem 1rem 1rem;
+  background:
+    linear-gradient(180deg, hsl(var(--background) / 0.86), hsl(var(--background) / 0.68)),
+    hsl(var(--card) / 0.52);
+  box-shadow: 0 16px 38px hsl(var(--alka-shadow-color) / 0.18);
+  transition:
+    transform 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    box-shadow 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    background-color 320ms cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.alka-input-field::before,
+.alka-input-field::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  bottom: 0.65rem;
+  left: 1rem;
+  pointer-events: none;
+}
+
+.alka-input-field::before {
+  height: 1px;
+  background: hsl(var(--border) / 0.64);
+}
+
+.alka-input-field::after {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--primary) / 0.34) 18%,
+    hsl(var(--primary) / 0.58) 52%,
+    hsl(var(--primary) / 0.32) 82%,
+    transparent
+  );
+  opacity: 0;
+  transform: translateX(-112%);
+  transition:
+    opacity 420ms var(--alka-ease-smooth),
+    transform 680ms var(--alka-ease-smooth);
+}
+
+.alka-input-field:hover:not([data-disabled="true"]) {
+  box-shadow: 0 18px 42px hsl(var(--alka-shadow-color) / 0.22);
+}
+
+.alka-input-field[data-selected="true"],
+.alka-input-field:focus-within {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 4px hsl(var(--primary) / 0.055),
+    0 20px 46px hsl(var(--alka-shadow-color) / 0.24);
+}
+
+.alka-input-field[data-selected="true"]::after,
+.alka-input-field[data-filled="true"]::after,
+.alka-input-field:focus-within::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.alka-input-field[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.alka-input-control {
+  position: relative;
+  z-index: 1;
+  height: 4rem;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  padding: 1.65rem 1rem 0.55rem;
+  outline: none;
+  transition:
+    color 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 320ms cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.alka-input-control::placeholder {
+  color: hsl(var(--muted-foreground) / 0.68);
+}
+
+.alka-input-field[data-has-label="true"] .alka-input-control::placeholder {
+  color: transparent;
+}
+
+.alka-input-field[data-has-label="false"] .alka-input-control {
+  padding: 0.8rem 1rem;
+}
+
+.alka-input-control:focus,
+.alka-input-control:focus-visible {
+  outline: none;
+}
+
+.alka-input-label {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 1rem;
+  max-width: calc(100% - 2rem);
+  overflow: hidden;
+  color: hsl(var(--muted-foreground) / 0.76);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transform: translateY(-50%);
+  transform-origin: left top;
+  transition:
+    color 520ms var(--alka-ease-smooth),
+    top 520ms var(--alka-ease-smooth),
+    transform 520ms var(--alka-ease-smooth);
+  white-space: nowrap;
+}
+
+.alka-input-field[data-selected="true"] .alka-input-label,
+.alka-input-field:focus-within .alka-input-label,
+.alka-input-field[data-filled="true"] .alka-input-label {
+  top: 0.8rem;
+  color: hsl(var(--primary) / 0.82);
+  transform: translateY(0) scale(0.78);
+}
+
+.alka-input-field-compact {
+  min-height: 2.25rem;
+  border-radius: 0.9rem;
+  box-shadow: none;
+}
+
+.alka-input-field-compact::before,
+.alka-input-field-compact::after {
+  right: 0.75rem;
+  bottom: 0.42rem;
+  left: 0.75rem;
+}
+
+.alka-input-field-compact::after {
+  height: 1px;
+}
+
+.alka-input-field-compact .alka-input-control {
+  height: 2.25rem;
+  padding: 0.45rem 0.75rem;
+}
+
+.alka-input-field-compact .alka-input-label {
+  left: 0.75rem;
+  font-size: 0.78rem;
+}
+
+.alka-tabs-list {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.alka-tabs-list::before {
+  content: "";
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0;
+  z-index: 0;
+  width: var(--alka-tabs-pill-width, 0px);
+  border: 1px solid hsl(var(--alka-panel-border));
+  border-radius: var(--alka-radius-pill);
+  background: hsl(var(--foreground) / 0.1);
+  box-shadow:
+    0 10px 24px hsl(var(--alka-shadow-color) / 0.18),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.07);
+  opacity: var(--alka-tabs-pill-opacity, 0);
+  transform: translate3d(var(--alka-tabs-pill-left, 0px), 0, 0);
+  transition:
+    opacity 240ms var(--alka-ease-smooth),
+    transform 680ms var(--alka-ease-smooth),
+    width 680ms var(--alka-ease-smooth);
+}
+
+.alka-tabs-list > * {
+  position: relative;
+  z-index: 1;
+}
+
+.alka-carousel-dots {
+  --alka-carousel-dot-gap: 0.35rem;
+  --alka-carousel-dot-width: 1.75rem;
+  position: relative;
+  display: inline-flex;
+  min-height: 2.5rem;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: var(--alka-carousel-dot-gap);
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--alka-radius-pill);
+  padding: 0.45rem;
+}
+
+.alka-carousel-dots::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  bottom: 0.45rem;
+  left: 0.45rem;
+  z-index: 0;
+  width: var(--alka-carousel-dot-width);
+  border: 1px solid hsl(var(--alka-panel-border));
+  border-radius: var(--alka-radius-pill);
+  background: hsl(var(--foreground) / 0.16);
+  box-shadow:
+    0 10px 26px hsl(var(--alka-shadow-color) / 0.2),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1);
+  transform: translate3d(var(--alka-carousel-dot-offset, 0rem), 0, 0);
+  transition: transform 680ms var(--alka-ease-smooth);
+}
+
+.alka-carousel-dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  height: 1.6rem;
+  width: var(--alka-carousel-dot-width);
+  cursor: pointer;
+  place-items: center;
+  border: 0;
+  border-radius: var(--alka-radius-pill);
+  background: transparent;
+  color: hsl(var(--muted-foreground) / 0.72);
+  transition:
+    color 420ms var(--alka-ease-smooth),
+    opacity 420ms var(--alka-ease-smooth);
+}
+
+.alka-carousel-dot::before {
+  content: "";
+  height: 0.38rem;
+  width: 0.38rem;
+  border-radius: var(--alka-radius-pill);
+  background: currentColor;
+  opacity: 0.66;
+  transition:
+    opacity 420ms var(--alka-ease-smooth),
+    width 520ms var(--alka-ease-smooth);
+}
+
+.alka-carousel-dot:hover,
+.alka-carousel-dot[data-active="true"] {
+  color: hsl(var(--foreground) / 0.92);
+}
+
+.alka-carousel-dot[data-active="true"]::before {
+  width: 0.96rem;
+  opacity: 1;
+}
+
+.alka-tabs-content[data-state="active"] {
+  animation: alka-tabs-in 520ms var(--alka-ease-smooth) both;
+}
+
+@keyframes alka-tabs-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.alka-reduce-motion-safe {
+  transition-property: transform, opacity, color, background-color, border-color, box-shadow;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

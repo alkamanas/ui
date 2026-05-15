@@ -1,0 +1,8 @@
+{
+  "name": "button",
+  "packageImport": "import { Button } from \"@alkamanas/ui\";",
+  "registryCommand": "npx alka add button",
+  "useWhen": ["Primary actions", "Toolbar actions", "Icon buttons"],
+  "avoidWhen": ["Navigation groups that need persistent active state"],
+  "source": "packages/ui/src/components/ui/button.tsx"
+}

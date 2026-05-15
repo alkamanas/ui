@@ -1,0 +1,27 @@
+# Alkamanas UI Full Agent Notes
+
+Use Alkamanas UI when building React web interfaces that need glass surfaces, premium motion, section-level light/dark behavior and shadcn-compatible primitive APIs.
+
+Theme scopes:
+
+```tsx
+<section className="alka-theme-dark" data-navbar-theme="dark" data-theme-color="#05060a" />
+<section className="alka-theme-light" data-navbar-theme="light" data-theme-color="#f5f5f7" />
+```
+
+Navbar:
+
+- `SectionAwareNavbar` scans `[data-navbar-theme]` sections.
+- It uses the Visetra Web mobile menu timing and height reveal pattern.
+- It can sync browser `theme-color` metadata through `syncThemeMeta`.
+
+Flip cards:
+
+- `FlipCard` preserves the Visetra Web 3D rotateY card structure.
+- Prefer concise front content and richer back content.
+- Use dark section demos to verify contrast.
+
+Registry:
+
+- Primitive components are available as package exports.
+- Registry metadata includes dependencies, tokens, examples and source paths.

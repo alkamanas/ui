@@ -1,0 +1,19 @@
+# Alkamanas UI
+
+Alkamanas UI provides React components for premium SaaS dashboards, admin panels and landing pages.
+
+Key files:
+
+- `/README.md`: package overview and setup.
+- `/AGENTS.md`: agent rules for implementation.
+- `/packages/ui/src/index.ts`: public exports.
+- `/packages/ui/src/styles/globals.css`: theme tokens and component utilities.
+- `/registry/registry.json`: registry manifest.
+- `/apps/docs/src/App.tsx`: component playground.
+
+Core usage:
+
+```tsx
+import { Button, Card, SectionAwareNavbar, FlipCard } from "@alkamanas/ui";
+import "@alkamanas/ui/styles.css";
+```

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@alkamanas/ui": ["../../packages/ui/src/index.ts"],
+      "@/*": ["../../packages/ui/src/*"]
+    },
+    "types": ["vite/client"],
+    "noEmit": true
+  },
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@alkamanas/cli",
+  "version": "0.1.0",
+  "description": "Alkamanas UI registry CLI.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alkamanas/ui.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/alkamanas/ui#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "bin": {
+    "alka": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}

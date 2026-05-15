@@ -1,0 +1,8 @@
+{
+  "name": "card",
+  "packageImport": "import { Card } from \"@alkamanas/ui\";",
+  "registryCommand": "npx alka add card",
+  "useWhen": ["Standalone surfaces", "Dashboard panels", "Feature cards"],
+  "avoidWhen": ["Nested panels where solid or soft variants are clearer"],
+  "source": "packages/ui/src/components/ui/card.tsx"
+}

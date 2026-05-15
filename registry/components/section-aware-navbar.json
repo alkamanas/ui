@@ -1,0 +1,8 @@
+{
+  "name": "section-aware-navbar",
+  "packageImport": "import { SectionAwareNavbar } from \"@alkamanas/ui\";",
+  "registryCommand": "npx alka add section-aware-navbar",
+  "useWhen": ["Landing pages with mixed light/dark sections", "Floating nav bars", "Mobile menu with premium reveal motion"],
+  "avoidWhen": ["Apps whose shell theme is fixed and global"],
+  "source": "packages/ui/src/components/navigation/section-aware-navbar.tsx"
+}

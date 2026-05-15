@@ -1,0 +1,8 @@
+{
+  "name": "flip-card",
+  "packageImport": "import { FlipCard } from \"@alkamanas/ui\";",
+  "registryCommand": "npx alka add flip-card",
+  "useWhen": ["Solution bento grids", "Feature reveals", "Product capability cards"],
+  "avoidWhen": ["Dense tables or repetitive administrative rows"],
+  "source": "packages/ui/src/components/display/flip-card.tsx"
+}

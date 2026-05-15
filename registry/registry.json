@@ -1,0 +1,927 @@
+{
+  "name": "@alkamanas/registry",
+  "version": "0.1.0",
+  "schemaVersion": "0.1.0",
+  "items": [
+    {
+      "name": "accordion",
+      "version": "0.1.0",
+      "hash": "sha256-3d54O70yudQZeOtInbqVqNDd3QBslnOJRunOW++1nME=",
+      "type": "primitive",
+      "description": "Accordion component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/accordion.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "accordion-basic"
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "version": "0.1.0",
+      "hash": "sha256-ZGjRcQdf9NJqHf2ggXchKe+w7JGrrEwPYxR3IQASSGI=",
+      "type": "primitive",
+      "description": "Alert Dialog component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/alert-dialog.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "alert-dialog-basic"
+      ]
+    },
+    {
+      "name": "avatar",
+      "version": "0.1.0",
+      "hash": "sha256-+zO8SGW3TR8CObF4Lb3EzC04aQum4kXp47AkwlaxTCs=",
+      "type": "primitive",
+      "description": "Avatar component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/avatar.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "avatar-basic"
+      ]
+    },
+    {
+      "name": "badge",
+      "version": "0.1.0",
+      "hash": "sha256-AhJLluZO0fHCX9bmL1RKoqITGuoahr54aCA/S0McIfs=",
+      "type": "primitive",
+      "description": "Badge component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/badge.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "badge-basic"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "version": "0.1.0",
+      "hash": "sha256-w9PcsNgvxekdiDC6x/6tkFaG/odvH0LD7YcrsKa2WE4=",
+      "type": "primitive",
+      "description": "Breadcrumb component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/breadcrumb.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "breadcrumb-basic"
+      ]
+    },
+    {
+      "name": "button",
+      "version": "0.1.0",
+      "hash": "sha256-7rz60M3VxNNOguLhqAyjMiuDp2zV/XYE5W2rFMbm3VU=",
+      "type": "primitive",
+      "description": "Button component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/button.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "button-basic"
+      ]
+    },
+    {
+      "name": "button-group",
+      "version": "0.1.0",
+      "hash": "sha256-oMmaDn3iPmrlB3rfjpLvnPGComw13nWM4twFQysTAWY=",
+      "type": "primitive",
+      "description": "Button Group component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/button-group.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "button-group-basic"
+      ]
+    },
+    {
+      "name": "card",
+      "version": "0.1.0",
+      "hash": "sha256-Z0jfCVYl4jyzSZZt2GzP7PcBGFRGMp1Ocl9336abHxM=",
+      "type": "component",
+      "description": "Card component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/card.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "card-basic"
+      ]
+    },
+    {
+      "name": "carousel",
+      "version": "0.1.0",
+      "hash": "sha256-vk2hn48ZJebwzJgv/uIdRXH45FDbjSOiPBT/bWVw9pc=",
+      "type": "primitive",
+      "description": "Carousel component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/carousel.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "carousel-basic"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "version": "0.1.0",
+      "hash": "sha256-0RI6cv9lInVcMrqFWH3UhCFxexm6uP+0Pm9qtFOJSx0=",
+      "type": "primitive",
+      "description": "Checkbox component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/checkbox.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "checkbox-basic"
+      ]
+    },
+    {
+      "name": "collapsible",
+      "version": "0.1.0",
+      "hash": "sha256-uIHrl+8NejKiJhcsQYkNlTo2Snhh9k0PmDVCkueGvsU=",
+      "type": "primitive",
+      "description": "Collapsible component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/collapsible.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "collapsible-basic"
+      ]
+    },
+    {
+      "name": "combobox",
+      "version": "0.1.0",
+      "hash": "sha256-AWJQINKzDIh2g5N52s9juGg8GuZRHxUdfVvglDuvXC8=",
+      "type": "primitive",
+      "description": "Combobox component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/combobox.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "combobox-basic"
+      ]
+    },
+    {
+      "name": "command",
+      "version": "0.1.0",
+      "hash": "sha256-WlfrwRnyNXsJcJjSKGXUXej9piPuiP6YuZmZg4wTYzs=",
+      "type": "primitive",
+      "description": "Command component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/command.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "command-basic"
+      ]
+    },
+    {
+      "name": "context-menu",
+      "version": "0.1.0",
+      "hash": "sha256-jJJ5QwVZhXhLo/OaeTQc2GIpolqrAztIXbhIKepMY6A=",
+      "type": "primitive",
+      "description": "Context Menu component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/context-menu.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "context-menu-basic"
+      ]
+    },
+    {
+      "name": "dialog",
+      "version": "0.1.0",
+      "hash": "sha256-bXNQzsI/6LBeHmWG8tpfjg8Ve2yMGOivTgsoDv35Y4U=",
+      "type": "primitive",
+      "description": "Dialog component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/dialog.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "dialog-basic"
+      ]
+    },
+    {
+      "name": "direction",
+      "version": "0.1.0",
+      "hash": "sha256-S3vnV8s5tb/qhuu/Cdk5pJ+A/i0Z2eo9VQF+p6H453g=",
+      "type": "primitive",
+      "description": "Direction component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/direction.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "direction-basic"
+      ]
+    },
+    {
+      "name": "drawer",
+      "version": "0.1.0",
+      "hash": "sha256-nYt+WWZ1vAyTK6aYqvtla2r0K9mt/E/Hcl8B9WcLY2Q=",
+      "type": "primitive",
+      "description": "Drawer component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/drawer.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "drawer-basic"
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "version": "0.1.0",
+      "hash": "sha256-lDrNj95MOoTNMmKWlvYMfzJ++5MZb7Vwa+eitvUxrkQ=",
+      "type": "primitive",
+      "description": "Dropdown Menu component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/dropdown-menu.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "dropdown-menu-basic"
+      ]
+    },
+    {
+      "name": "input",
+      "version": "0.1.0",
+      "hash": "sha256-ydJIHriBSrGYdjn3turNqOmG1Gd/ARYaRUB0936R6V0=",
+      "type": "primitive",
+      "description": "Input component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/input.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "input-basic"
+      ]
+    },
+    {
+      "name": "input-group",
+      "version": "0.1.0",
+      "hash": "sha256-TkHd+ri7Uv+ktxD817sIcL3osmN62R5BUb5qIzeLwuY=",
+      "type": "primitive",
+      "description": "Input Group component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/input-group.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "input-group-basic"
+      ]
+    },
+    {
+      "name": "input-otp",
+      "version": "0.1.0",
+      "hash": "sha256-6IFHD6c7nSVQzG9M+IHX8Wom8d94tZttUR752IyZE0M=",
+      "type": "primitive",
+      "description": "Input OTP component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/input-otp.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "input-otp-basic"
+      ]
+    },
+    {
+      "name": "item",
+      "version": "0.1.0",
+      "hash": "sha256-HSRztm6rlUEUkUWb4NC4+pJRoDYxuCdBX/QNJo70Bkc=",
+      "type": "primitive",
+      "description": "Item component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/item.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "item-basic"
+      ]
+    },
+    {
+      "name": "kbd",
+      "version": "0.1.0",
+      "hash": "sha256-giGHmceWI8+8Z5pvkiZpPANSm9hmjy/NcjFBiCLQygM=",
+      "type": "primitive",
+      "description": "Kbd component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/kbd.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "kbd-basic"
+      ]
+    },
+    {
+      "name": "label",
+      "version": "0.1.0",
+      "hash": "sha256-5pz8J9eMnvMbJIq46k+lQyfBA4hD9w77XNhdVMC/Hg4=",
+      "type": "primitive",
+      "description": "Label component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/label.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "label-basic"
+      ]
+    },
+    {
+      "name": "menubar",
+      "version": "0.1.0",
+      "hash": "sha256-Q2UCbaZUU79h9/L8Ccl/4I+SvqL+4UziENEYLKt/brk=",
+      "type": "primitive",
+      "description": "Menubar component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/menubar.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "menubar-basic"
+      ]
+    },
+    {
+      "name": "popover",
+      "version": "0.1.0",
+      "hash": "sha256-a3CV41rGufnkResEsz7PuFJ8S6KDSGC489kwYaHzaHU=",
+      "type": "primitive",
+      "description": "Popover component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/popover.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "popover-basic"
+      ]
+    },
+    {
+      "name": "progress",
+      "version": "0.1.0",
+      "hash": "sha256-f5CiYm9wBaCu+uSfsP8QyYw5p/B87rx11sNkr/aUz4k=",
+      "type": "primitive",
+      "description": "Progress component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/progress.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "progress-basic"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "version": "0.1.0",
+      "hash": "sha256-m6eAi3QEzfIVnIGIOjkpADO8Qwjyl464B5fJK4dCEwE=",
+      "type": "primitive",
+      "description": "Radio Group component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/radio-group.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "radio-group-basic"
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "version": "0.1.0",
+      "hash": "sha256-19AmAO/8pV0NytzowJyX693aOhnF+h1S3J9vcnsmxrE=",
+      "type": "primitive",
+      "description": "Scroll Area component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/scroll-area.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "scroll-area-basic"
+      ]
+    },
+    {
+      "name": "select",
+      "version": "0.1.0",
+      "hash": "sha256-4R5fCtZCdbqStbD/shA9Rtfg04zjemVokQH9SJWXjFc=",
+      "type": "primitive",
+      "description": "Select component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/select.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "select-basic"
+      ]
+    },
+    {
+      "name": "separator",
+      "version": "0.1.0",
+      "hash": "sha256-yVbEzKS4RC+pMU1gebn5deHuOdWASq8pZpkPYlisNCo=",
+      "type": "primitive",
+      "description": "Separator component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/separator.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "separator-basic"
+      ]
+    },
+    {
+      "name": "sheet",
+      "version": "0.1.0",
+      "hash": "sha256-ZTdDu+tbwLlOn4vYlwm3kb+fWjne5DGEtRxnOQyeHa4=",
+      "type": "primitive",
+      "description": "Sheet component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/sheet.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "sheet-basic"
+      ]
+    },
+    {
+      "name": "sidebar",
+      "version": "0.1.0",
+      "hash": "sha256-CS6v0fPmcNhQTNVDXNx7bbrqtSJcYsEuKgG5LtLvahk=",
+      "type": "primitive",
+      "description": "Sidebar component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/sidebar.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "sidebar-basic"
+      ]
+    },
+    {
+      "name": "slider",
+      "version": "0.1.0",
+      "hash": "sha256-I044/vWRab0C2PW1bKAuXsE6C9aEbDKJJ7kk4Smff7A=",
+      "type": "primitive",
+      "description": "Slider component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/slider.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "slider-basic"
+      ]
+    },
+    {
+      "name": "spinner",
+      "version": "0.1.0",
+      "hash": "sha256-D79V0vT9NRdl/7hEiy+/OdXRNzOUthCAx5wYY4LK+ZQ=",
+      "type": "primitive",
+      "description": "Spinner component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/spinner.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "spinner-basic"
+      ]
+    },
+    {
+      "name": "switch",
+      "version": "0.1.0",
+      "hash": "sha256-QG9W//5tpJhkrNpRkQqehHBOMNbfsS48fx9nqqQ40HU=",
+      "type": "primitive",
+      "description": "Switch component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/switch.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "switch-basic"
+      ]
+    },
+    {
+      "name": "tabs",
+      "version": "0.1.0",
+      "hash": "sha256-bFXF1XqK2ohLf89A68XWXuz4sIcoay55YJ1ClnyFWWg=",
+      "type": "primitive",
+      "description": "Tabs component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/tabs.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "tabs-basic"
+      ]
+    },
+    {
+      "name": "textarea",
+      "version": "0.1.0",
+      "hash": "sha256-4GMjSYpXApEL0+0dLczHGtrmftrKTUyEjB48pUHtutw=",
+      "type": "primitive",
+      "description": "Textarea component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/textarea.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "textarea-basic"
+      ]
+    },
+    {
+      "name": "toast",
+      "version": "0.1.0",
+      "hash": "sha256-PWizbMjKUcjXJgBmDn+R4S3KQstPPav2gDtJm6RdHFg=",
+      "type": "primitive",
+      "description": "Toast component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/toast.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "toast-basic"
+      ]
+    },
+    {
+      "name": "toggle",
+      "version": "0.1.0",
+      "hash": "sha256-X6ZZ0gTnOeKYyg0lVIWF8DKbYxQYgD7733AkazQX+iU=",
+      "type": "primitive",
+      "description": "Toggle component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/toggle.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "toggle-basic"
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "version": "0.1.0",
+      "hash": "sha256-lIrDZLvXuYeyOlI9xHDtEK1E4mPq0oASAUJ8r12HH+I=",
+      "type": "primitive",
+      "description": "Toggle Group component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/toggle-group.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "toggle-group-basic"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "version": "0.1.0",
+      "hash": "sha256-xmlS82znDtofgmb6WoO68mxFRUDGAfQ3KVix4267NMU=",
+      "type": "primitive",
+      "description": "Tooltip component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/ui/tooltip.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "tooltip-basic"
+      ]
+    },
+    {
+      "name": "floating-panel",
+      "version": "0.1.0",
+      "hash": "sha256-0KjYU1SBdESyXkizQciTBpdL/jV5gAo2bs+eIf2Q8BA=",
+      "type": "component",
+      "description": "Floating Panel component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/surfaces/floating-panel.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "floating-panel-basic"
+      ]
+    },
+    {
+      "name": "section-aware-navbar",
+      "version": "0.1.0",
+      "hash": "sha256-QUlJzjKCfUFGDUugslrpTywGwS0SO+wDOyNreVyMWPA=",
+      "type": "component",
+      "description": "Section Aware Navbar component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/navigation/section-aware-navbar.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "section-aware-navbar-basic"
+      ]
+    },
+    {
+      "name": "flip-card",
+      "version": "0.1.0",
+      "hash": "sha256-5qOUSln8IPwyZKjtiS8w3VXMTHe5/z5pTv/mrlu/NcI=",
+      "type": "component",
+      "description": "Flip Card component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/display/flip-card.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "flip-card-basic"
+      ]
+    },
+    {
+      "name": "command-palette",
+      "version": "0.1.0",
+      "hash": "sha256-J4jiGdzEk/DFFegSnXNg24Gnx156sCT6dD5wnlw0WEE=",
+      "type": "component",
+      "description": "Command Palette component with Alkamanas dark tokens and smooth motion defaults.",
+      "source": "packages/ui/src/components/command/CommandPalette.tsx",
+      "peerDependencies": [
+        "react",
+        "react-dom"
+      ],
+      "tokens": [
+        "--alka-ease-smooth",
+        "--alka-radius-control",
+        "--alka-panel-bg"
+      ],
+      "examples": [
+        "command-palette-basic"
+      ]
+    }
+  ]
+}
