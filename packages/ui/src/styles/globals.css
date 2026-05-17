@@ -63,14 +63,14 @@
   --alka-border: 36 22% 82%;
   --alka-input: 36 22% 82%;
   --alka-ring: 0 0% 0%;
-  --alka-panel-bg: 0 0% 100% / 0.72;
+  --alka-panel-bg: 0 0% 100% / 0.46;
   --alka-panel-solid-bg: 0 0% 100%;
   --alka-panel-border: 35 16% 20% / 0.1;
   --alka-panel-shadow: 35 24% 20% / 0.1;
   --alka-highlight-color: 0 0% 100%;
   --alka-shadow-color: 35 24% 20%;
-  --alka-navbar-bg: 0 0% 100% / 0.58;
-  --alka-navbar-border: 35 16% 20% / 0.1;
+  --alka-navbar-bg: var(--alka-panel-bg);
+  --alka-navbar-border: var(--alka-panel-border);
   --alka-navbar-text: 35 9% 8%;
   --alka-navbar-muted: 31 8% 42%;
   --alka-theme-color: #f5f5f7;
@@ -98,14 +98,14 @@
   --alka-border: 0 0% 18%;
   --alka-input: 0 0% 18%;
   --alka-ring: 0 0% 100%;
-  --alka-panel-bg: 0 0% 5% / 0.78;
+  --alka-panel-bg: 0 0% 5% / 0.42;
   --alka-panel-solid-bg: 0 0% 7%;
   --alka-panel-border: 0 0% 100% / 0.1;
   --alka-panel-shadow: 0 0% 0% / 0.36;
   --alka-highlight-color: 0 0% 100%;
   --alka-shadow-color: 0 0% 0%;
-  --alka-navbar-bg: 0 0% 5% / 0.7;
-  --alka-navbar-border: 0 0% 100% / 0.1;
+  --alka-navbar-bg: var(--alka-panel-bg);
+  --alka-navbar-border: var(--alka-panel-border);
   --alka-navbar-text: 0 0% 100%;
   --alka-navbar-muted: 0 0% 100% / 0.68;
   --alka-theme-color: #050505;
@@ -211,9 +211,9 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: hsl(0 0% 0% / 0.72);
-  -webkit-backdrop-filter: blur(12px) saturate(1.1);
-  backdrop-filter: blur(12px) saturate(1.1);
+  background: hsl(0 0% 0% / 0.24);
+  -webkit-backdrop-filter: blur(8px) saturate(1.08);
+  backdrop-filter: blur(8px) saturate(1.08);
   transition: opacity 520ms var(--alka-ease-smooth);
 }
 
@@ -673,6 +673,23 @@
   backdrop-filter: blur(8px) saturate(1.18);
 }
 
+.alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+.navbar-panel.alka-liquid-glass:not([data-quiet="true"]) {
+  --alka-liquid-glass-bg: hsl(var(--alka-navbar-bg));
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  border-color: hsl(var(--alka-navbar-border));
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.055), transparent 34%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 42%),
+    var(--alka-liquid-glass-bg);
+  background-color: hsl(var(--alka-navbar-bg));
+  box-shadow:
+    0 24px 72px hsl(var(--alka-shadow-color) / 0.34),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.025);
+}
+
 .alka-navbar-panel::after,
 .navbar-panel::after,
 .alka-glass-highlight::after {
@@ -711,6 +728,213 @@
   box-shadow: var(--alka-shadow-panel);
   -webkit-backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.14);
   backdrop-filter: blur(var(--alka-blur-panel)) saturate(1.14);
+}
+
+.alka-liquid-glass-filter-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.alka-liquid-glass {
+  --alka-liquid-glass-blur: 22px;
+  --alka-liquid-glass-lens-blur: 9px;
+  --alka-liquid-glass-base-lens-opacity: 0.76;
+  --alka-liquid-glass-base-sheen-opacity: 0.34;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  isolation: isolate;
+  overflow: hidden;
+  border-color: hsl(var(--alka-panel-border));
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.055), transparent 34%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 42%),
+    var(--alka-liquid-glass-bg);
+  box-shadow:
+    0 24px 72px hsl(var(--alka-shadow-color) / 0.34),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.025);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+}
+
+.alka-liquid-glass::before,
+.alka-liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.alka-liquid-glass::before {
+  z-index: 0;
+  background:
+    linear-gradient(135deg, hsl(var(--alka-highlight-color) / 0.028), transparent 30% 66%, hsl(var(--alka-highlight-color) / 0.018)),
+    radial-gradient(circle at 84% 16%, hsl(var(--alka-highlight-color) / 0.036), transparent 32%),
+    hsl(var(--alka-highlight-color) / 0.01);
+  opacity: var(--alka-liquid-glass-lens-opacity);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-lens-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-liquid-glass-lens-blur)) saturate(1.12);
+  -webkit-backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  filter: saturate(1.04);
+}
+
+.alka-liquid-glass::after {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.085), transparent 20%, transparent 72%, hsl(var(--alka-highlight-color) / 0.025)),
+    linear-gradient(90deg, hsl(var(--alka-highlight-color) / 0.055), transparent 18%, transparent 82%, hsl(var(--alka-highlight-color) / 0.04));
+  box-shadow:
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.16),
+    inset 1px 0 0 hsl(var(--alka-highlight-color) / 0.05),
+    inset -1px 0 0 hsl(var(--alka-highlight-color) / 0.04);
+  opacity: var(--alka-liquid-glass-sheen-opacity);
+  transition: opacity 420ms var(--alka-ease-smooth);
+}
+
+.alka-liquid-glass > * {
+  position: relative;
+  z-index: 2;
+}
+
+.alka-liquid-glass > .alka-sheet-close-button,
+.alka-liquid-glass > .alka-dialog-close-button {
+  position: absolute;
+  z-index: 3;
+}
+
+.alka-card-surface.alka-liquid-glass {
+  --alka-liquid-glass-blur: var(--alka-blur-panel);
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+}
+
+.alka-context-menu-content.alka-liquid-glass {
+  --alka-liquid-glass-blur: 24px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  box-shadow:
+    0 18px 54px hsl(var(--alka-shadow-color) / 0.32),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12);
+}
+
+.alka-select-content.alka-liquid-glass {
+  --alka-liquid-glass-blur: 24px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  box-shadow:
+    0 18px 54px hsl(var(--alka-shadow-color) / 0.32),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12);
+}
+
+.alka-command.alka-liquid-glass {
+  --alka-liquid-glass-blur: 24px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  box-shadow:
+    0 18px 54px hsl(var(--alka-shadow-color) / 0.32),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12);
+}
+
+.alka-select-content[data-state="closed"] {
+  animation: alka-select-out 460ms var(--alka-ease-smooth) both;
+}
+
+.alka-select-content[data-state="open"] {
+  animation: alka-select-in 760ms var(--alka-ease-smooth) both;
+}
+
+.alka-select-content[data-closing="true"] {
+  pointer-events: none;
+  animation: alka-select-out 460ms var(--alka-ease-smooth) both;
+}
+
+@keyframes alka-select-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alka-select-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.97);
+  }
+}
+
+.alka-sheet-content.alka-liquid-glass {
+  overflow: visible;
+}
+
+.alka-dialog-content.alka-liquid-glass,
+.alka-alert-dialog-content.alka-liquid-glass {
+  --alka-liquid-glass-blur: 26px;
+  --alka-liquid-glass-lens-blur: 9px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+}
+
+.alka-sheet-content.alka-liquid-glass {
+  --alka-liquid-glass-blur: 28px;
+  --alka-liquid-glass-lens-blur: 10px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+}
+
+.alka-liquid-glass[role="alert"] {
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+}
+
+.alka-navbar-panel.alka-liquid-glass[data-quiet="true"],
+.navbar-panel.alka-liquid-glass[data-quiet="true"] {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.alka-navbar-panel.alka-liquid-glass[data-quiet="true"]::before,
+.alka-navbar-panel.alka-liquid-glass[data-quiet="true"]::after,
+.navbar-panel.alka-liquid-glass[data-quiet="true"]::before,
+.navbar-panel.alka-liquid-glass[data-quiet="true"]::after {
+  opacity: 0;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .alka-liquid-glass {
+    background: hsl(var(--alka-panel-solid-bg) / 0.94);
+  }
+
+  .alka-liquid-glass::before {
+    display: none;
+  }
 }
 
 .alka-button-control {
@@ -809,6 +1033,121 @@
 .alka-button-control:focus-visible::after {
   transform: scaleY(1);
   opacity: 1;
+}
+
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):hover:not(:disabled),
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus:not(:disabled),
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-visible {
+  --alka-button-angle: 0deg;
+  background: hsl(var(--background) / 0.72);
+  color: hsl(var(--foreground));
+}
+
+.alka-combobox-trigger {
+  --alka-button-angle: 0deg;
+  border-color: hsl(var(--foreground) / 0.12) !important;
+  transition-property: --alka-button-angle, transform, color, border-color, box-shadow;
+}
+
+.alka-combobox-trigger:focus,
+.alka-combobox-trigger:focus-visible,
+.alka-combobox-trigger:focus-within {
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  border-color: hsl(var(--foreground) / 0.12) !important;
+  outline: none;
+}
+
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus,
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-visible,
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-within {
+  box-shadow:
+    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1) !important;
+}
+
+.alka-combobox-trigger::before {
+  background: conic-gradient(
+    from calc(var(--alka-button-angle) - 7deg),
+    hsl(var(--foreground) / 0.08) 0deg,
+    hsl(var(--foreground) / 0.92) 7deg,
+    hsl(var(--foreground) / 0.46) 14deg,
+    hsl(var(--foreground) / 0.08) 24deg,
+    hsl(var(--foreground) / 0.08) 180deg,
+    hsl(var(--foreground) / 0.92) 187deg,
+    hsl(var(--foreground) / 0.46) 194deg,
+    hsl(var(--foreground) / 0.08) 204deg,
+    hsl(var(--foreground) / 0.08) 360deg
+  );
+  transition:
+    --alka-button-angle 520ms var(--alka-ease-smooth),
+    opacity 140ms var(--alka-ease-smooth);
+}
+
+.alka-combobox-trigger::after,
+.alka-combobox-trigger:hover:not(:disabled)::after,
+.alka-combobox-trigger:focus:not(:disabled)::after,
+.alka-combobox-trigger:focus-visible::after {
+  transform: scaleY(0) !important;
+  opacity: 0 !important;
+}
+
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):hover:not(:disabled)::before,
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus:not(:disabled)::before,
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-visible::before {
+  --alka-button-angle: 0deg !important;
+  opacity: 0;
+}
+
+.alka-combobox-trigger[data-closing="true"] {
+  --alka-button-angle: 0deg !important;
+  border-color: hsl(var(--foreground) / 0.12) !important;
+  transition-property: --alka-button-angle, transform, color, box-shadow;
+}
+
+.alka-combobox-trigger[data-closing="true"]::before {
+  animation: alka-combobox-border-close 560ms cubic-bezier(0.38, 0, 0.2, 1) both;
+  transition: none;
+}
+
+.alka-combobox-trigger[data-state="open"]:not([data-closing="true"])::before,
+.alka-combobox-trigger[aria-expanded="true"]:not([data-closing="true"])::before {
+  --alka-button-angle: 88deg !important;
+  opacity: 1 !important;
+}
+
+.alka-combobox-trigger[data-state="open"]:not([data-closing="true"]),
+.alka-combobox-trigger[aria-expanded="true"]:not([data-closing="true"]) {
+  --alka-button-angle: 88deg !important;
+  border-color: transparent !important;
+  background: hsl(var(--background) / 0.72);
+}
+
+@keyframes alka-combobox-border-close {
+  0% {
+    --alka-button-angle: 88deg;
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.92;
+  }
+  100% {
+    --alka-button-angle: 0deg;
+    opacity: 0;
+  }
+}
+
+.alka-combobox-option.alka-combobox-option:hover,
+.alka-combobox-option.alka-combobox-option[data-current="true"],
+.alka-select-option.alka-select-option:hover,
+.alka-select-option.alka-select-option[data-state="checked"],
+.alka-command-item.alka-command-item:hover,
+.alka-command-item.alka-command-item[data-selected="true"] {
+  border-color: transparent !important;
+  background-color: hsl(var(--primary)) !important;
+  background-image: none !important;
+  color: hsl(var(--primary-foreground)) !important;
+  box-shadow: none !important;
 }
 
 .alka-input-field {
@@ -979,6 +1318,19 @@
   overflow: hidden;
 }
 
+.alka-tabs-list.alka-pill-surface {
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.055), transparent 34%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 42%),
+    hsl(var(--alka-panel-bg));
+  box-shadow:
+    0 16px 42px hsl(var(--alka-shadow-color) / 0.22),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.025);
+  -webkit-backdrop-filter: blur(22px) saturate(1.12);
+  backdrop-filter: blur(22px) saturate(1.12);
+}
+
 .alka-tabs-list::before {
   content: "";
   position: absolute;
@@ -987,16 +1339,20 @@
   left: 0;
   z-index: 0;
   width: var(--alka-tabs-pill-width, 0px);
-  border: 1px solid hsl(var(--alka-panel-border));
+  border: 1px solid hsl(var(--primary) / 0.28);
   border-radius: var(--alka-radius-pill);
-  background: hsl(var(--foreground) / 0.1);
+  background: hsl(var(--primary));
   box-shadow:
-    0 10px 24px hsl(var(--alka-shadow-color) / 0.18),
-    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.07);
+    0 1px 8px hsl(var(--primary) / 0.18),
+    0 14px 34px hsl(var(--primary) / 0.22),
+    inset 0 1px 0 hsl(var(--primary-foreground) / 0.16);
   opacity: var(--alka-tabs-pill-opacity, 0);
   transform: translate3d(var(--alka-tabs-pill-left, 0px), 0, 0);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   transition:
     opacity 240ms var(--alka-ease-smooth),
+    box-shadow 300ms var(--alka-ease-smooth),
     transform 680ms var(--alka-ease-smooth),
     width 680ms var(--alka-ease-smooth);
 }
@@ -1077,6 +1433,111 @@
 .alka-carousel-dot[data-active="true"]::before {
   width: 0.96rem;
   opacity: 1;
+}
+
+.alka-slider-track {
+  background:
+    linear-gradient(180deg, hsl(var(--foreground) / 0.1), hsl(var(--foreground) / 0.055)),
+    hsl(var(--muted) / 0.72);
+  box-shadow:
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08),
+    inset 0 0 0 1px hsl(var(--foreground) / 0.055);
+}
+
+.alka-slider-range {
+  border-radius: var(--alka-radius-pill);
+  background:
+    linear-gradient(117deg, hsl(var(--primary) / 0.92), hsl(var(--primary) / 0.58)),
+    hsl(var(--primary) / 0.78);
+  box-shadow:
+    0 0 22px hsl(var(--primary) / 0.18),
+    inset 0 1px 0 hsl(var(--primary-foreground) / 0.16);
+  max-width: 100%;
+  right: auto !important;
+  width: calc(var(--alka-slider-fill-percent, 0%) + var(--alka-slider-fill-offset, 0px));
+}
+
+.alka-slider-thumb.alka-liquid-glass {
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.28);
+  --alka-liquid-glass-blur: 18px;
+  --alka-liquid-glass-lens-blur: 7px;
+  --alka-liquid-glass-lens-opacity: 0.34;
+  --alka-liquid-glass-sheen-opacity: 0.62;
+  box-shadow:
+    0 1px 8px hsl(var(--alka-shadow-color) / 0.18),
+    0 14px 34px hsl(var(--alka-shadow-color) / 0.26),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.16);
+}
+
+.alka-slider-thumb.alka-liquid-glass::before,
+.alka-slider-thumb.alka-liquid-glass::after {
+  transition:
+    opacity 300ms var(--alka-ease-smooth),
+    box-shadow 300ms var(--alka-ease-smooth);
+}
+
+.alka-slider-thumb.alka-liquid-glass[data-state="active"] {
+  box-shadow:
+    0 1px 8px hsl(var(--alka-shadow-color) / 0.18),
+    0 18px 44px hsl(var(--alka-shadow-color) / 0.32),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.22);
+}
+
+.alka-slider-thumb.alka-liquid-glass[data-state="active"]::before {
+  opacity: 0.46;
+}
+
+.alka-slider-thumb.alka-liquid-glass[data-state="active"]::after {
+  opacity: 0.78;
+}
+
+.alka-switch-track {
+  border-color: hsl(var(--foreground) / 0.08);
+  background: hsl(var(--muted));
+  box-shadow:
+    0 8px 18px hsl(var(--alka-shadow-color) / 0.1),
+    inset 0 0 0 1px hsl(var(--foreground) / 0.035);
+}
+
+.alka-switch-track[data-state="checked"] {
+  border-color: hsl(var(--primary) / 0.22);
+  background: hsl(var(--primary));
+  box-shadow:
+    0 10px 26px hsl(var(--primary) / 0.18),
+    inset 0 0 0 1px hsl(var(--primary-foreground) / 0.12);
+}
+
+.alka-switch-thumb.alka-liquid-glass {
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.3);
+  --alka-liquid-glass-blur: 18px;
+  --alka-liquid-glass-lens-blur: 7px;
+  --alka-liquid-glass-lens-opacity: 0.34;
+  --alka-liquid-glass-sheen-opacity: 0.62;
+  box-shadow:
+    0 1px 8px hsl(var(--alka-shadow-color) / 0.18),
+    0 12px 30px hsl(var(--alka-shadow-color) / 0.26),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.16);
+}
+
+.alka-switch-thumb.alka-liquid-glass[data-state="unchecked"] {
+  transform: translateX(0);
+}
+
+.alka-switch-thumb.alka-liquid-glass[data-state="checked"] {
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.3);
+  transform: translateX(2.0625rem);
+  box-shadow:
+    0 1px 8px hsl(var(--alka-shadow-color) / 0.18),
+    0 14px 34px hsl(var(--alka-shadow-color) / 0.28),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.18);
+}
+
+.alka-sidebar-surface {
+  border-radius: var(--alka-radius-panel-lg);
+}
+
+.group[data-collapsible="icon"] .alka-sidebar-surface {
+  border-radius: calc((var(--sidebar-width-icon) + 2px) / 2);
 }
 
 .alka-tabs-content[data-state="active"] {

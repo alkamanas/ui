@@ -73,6 +73,7 @@ export * from "./components/skeletons/StatCardSkeleton";
 export * from "./components/skeletons/TableSkeleton";
 
 export * from "./components/surfaces/floating-panel";
+export * from "./components/surfaces/liquid-glass-filter";
 export * from "./components/navigation/section-aware-navbar";
 export * from "./components/display/flip-card";
 export * from "./components/command/CommandPalette";

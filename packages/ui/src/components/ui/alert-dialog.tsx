@@ -3,6 +3,7 @@ import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -14,11 +15,11 @@ const AlertDialogOverlay = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Overlay
-    className={cn(
-      "alka-alert-dialog-overlay fixed inset-0 z-50 bg-black/80 transition-opacity duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
-      className
-    )}
+    <AlertDialogPrimitive.Overlay
+      className={cn(
+        "alka-alert-dialog-overlay fixed inset-0 z-50 bg-black/25 backdrop-blur-sm transition-opacity duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        className
+      )}
     {...props}
     ref={ref}
   />
@@ -28,17 +29,20 @@ AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
 const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <AlertDialogPortal>
     <AlertDialogOverlay />
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
-        "alka-alert-dialog-content fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 rounded-[1.75rem] border border-white/10 bg-background/96 p-6 shadow-[0_28px_90px_hsl(var(--alka-shadow-color)_/_0.36)] backdrop-blur-2xl data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        "alka-alert-dialog-content alka-liquid-glass fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 rounded-[1.75rem] border border-white/10 p-6 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
         className
       )}
       {...props}
-    />
+    >
+      <LiquidGlassFilter />
+      {children}
+    </AlertDialogPrimitive.Content>
   </AlertDialogPortal>
 ))
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName

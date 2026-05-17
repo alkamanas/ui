@@ -1,10 +1,58 @@
+"use client"
+
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
-const Select = SelectPrimitive.Root
+const SelectMotionContext = React.createContext({ closing: false })
+
+function Select({
+  open,
+  defaultOpen,
+  onOpenChange,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>) {
+  const isControlled = open !== undefined
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen ?? false)
+  const currentOpen = isControlled ? open : internalOpen
+  const [closing, setClosing] = React.useState(false)
+  const closeTimeoutRef = React.useRef<number | undefined>(undefined)
+
+  React.useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+    }
+  }, [])
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+
+    if (nextOpen) {
+      setClosing(false)
+    } else if (currentOpen) {
+      setClosing(true)
+      closeTimeoutRef.current = window.setTimeout(() => setClosing(false), 620)
+    }
+
+    if (!isControlled) setInternalOpen(nextOpen)
+    onOpenChange?.(nextOpen)
+  }
+
+  const rootOpen = currentOpen || closing
+
+  return (
+    <SelectMotionContext.Provider value={{ closing }}>
+      <SelectPrimitive.Root
+        open={rootOpen}
+        onOpenChange={handleOpenChange}
+        {...props}
+      />
+    </SelectMotionContext.Provider>
+  )
+}
 
 const SelectGroup = SelectPrimitive.Group
 
@@ -13,21 +61,26 @@ const SelectValue = SelectPrimitive.Value
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-11 w-full items-center justify-between whitespace-nowrap rounded-[1rem] border border-input bg-background/72 px-3 py-2 text-sm shadow-sm ring-offset-background transition-[border-color,box-shadow] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      className
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
+>(({ className, children, ...props }, ref) => {
+  const { closing } = React.useContext(SelectMotionContext)
+
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "alka-button-control alka-combobox-trigger flex h-[3.125rem] w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-background/72 px-5 py-0 text-sm font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        className
+      )}
+      data-closing={closing ? "true" : undefined}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronDown className="h-4 w-4 opacity-50" />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  )
+})
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
 const SelectScrollUpButton = React.forwardRef<
@@ -68,33 +121,39 @@ SelectScrollDownButton.displayName =
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        "relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-y-auto overflow-x-hidden rounded-2xl border border-white/10 bg-popover/96 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] backdrop-blur-2xl transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
+>(({ className, children, position = "popper", sideOffset = 8, ...props }, ref) => {
+  const { closing } = React.useContext(SelectMotionContext)
+
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        ref={ref}
+        data-closing={closing ? "true" : undefined}
         className={cn(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+          "alka-select-content alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+          position === "popper" && "w-[var(--radix-select-trigger-width)]",
+          className
         )}
+        position={position}
+        sideOffset={sideOffset}
+        {...props}
       >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-))
+        <LiquidGlassFilter />
+        <SelectScrollUpButton />
+        <SelectPrimitive.Viewport
+          className={cn(
+            "relative z-10 grid gap-1 px-1",
+            position === "popper" &&
+              "h-[var(--radix-select-trigger-height)] w-full"
+          )}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+        <SelectScrollDownButton />
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  )
+})
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
 const SelectLabel = React.forwardRef<
@@ -112,23 +171,54 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
-    )}
-    {...props}
-  >
-    <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-))
+>(({ className, children, style, onMouseEnter, onMouseLeave, onPointerMove, onPointerLeave, ...props }, ref) => {
+  const [hovered, setHovered] = React.useState(false)
+
+  return (
+    <SelectPrimitive.Item
+      ref={ref}
+      className={cn(
+        "alka-select-option relative flex min-h-11 w-full cursor-pointer select-none items-center rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-12 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[highlighted]:bg-transparent data-[highlighted]:text-foreground data-[state=checked]:!border-transparent data-[state=checked]:!bg-primary data-[state=checked]:!text-primary-foreground data-[state=checked]:shadow-none data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
+        className
+      )}
+      {...props}
+      style={{
+        ...style,
+        ...(hovered
+          ? {
+              backgroundColor: "hsl(var(--primary))",
+              borderColor: "transparent",
+              boxShadow: "none",
+              color: "hsl(var(--primary-foreground))",
+            }
+          : null),
+      }}
+      onMouseEnter={(event) => {
+        setHovered(true)
+        onMouseEnter?.(event)
+      }}
+      onMouseLeave={(event) => {
+        setHovered(false)
+        onMouseLeave?.(event)
+      }}
+      onPointerMove={(event) => {
+        setHovered(true)
+        onPointerMove?.(event)
+      }}
+      onPointerLeave={(event) => {
+        setHovered(false)
+        onPointerLeave?.(event)
+      }}
+    >
+      <span className="absolute right-4 flex h-3.5 w-3.5 items-center justify-center">
+        <SelectPrimitive.ItemIndicator>
+          <Check className="h-4 w-4" />
+        </SelectPrimitive.ItemIndicator>
+      </span>
+      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    </SelectPrimitive.Item>
+  )
+})
 SelectItem.displayName = SelectPrimitive.Item.displayName
 
 const SelectSeparator = React.forwardRef<

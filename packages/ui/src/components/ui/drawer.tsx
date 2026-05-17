@@ -31,7 +31,7 @@ const DrawerContent = React.forwardRef<
     ref={ref}
     side={side}
     className={cn(
-      "rounded-t-[2rem] border-white/10 bg-background/96 shadow-[0_-24px_80px_hsl(var(--alka-shadow-color)_/_0.36)] backdrop-blur-2xl data-[state=open]:duration-700 data-[state=closed]:duration-500",
+      "rounded-t-[2rem] border-white/10 data-[state=open]:duration-700 data-[state=closed]:duration-500",
       className,
     )}
     {...props}

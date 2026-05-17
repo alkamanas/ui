@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
@@ -9,9 +10,9 @@ const cardVariants = cva(
     variants: {
       variant: {
         default:
-          "border-[hsl(var(--alka-panel-border))] bg-[hsl(var(--alka-panel-bg))] shadow-[var(--alka-shadow-panel)] backdrop-blur-[var(--alka-blur-panel)]",
+          "alka-card-surface alka-liquid-glass border-[hsl(var(--alka-panel-border))] shadow-[var(--alka-shadow-panel)]",
         soft:
-          "border-border/70 bg-card/72 shadow-[var(--alka-shadow-control)] backdrop-blur-[var(--alka-blur-soft)]",
+          "alka-card-surface alka-liquid-glass border-border/70 shadow-[var(--alka-shadow-control)]",
         solid:
           "border-border bg-card shadow-[var(--alka-shadow-control)] after:hidden",
         outline:
@@ -31,13 +32,20 @@ export interface CardProps
 const Card = React.forwardRef<
   HTMLDivElement,
   CardProps
->(({ className, variant, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(cardVariants({ variant, className }))}
-    {...props}
-  />
-))
+>(({ children, className, variant, ...props }, ref) => {
+  const useLiquidGlass = variant == null || variant === "default" || variant === "soft"
+
+  return (
+    <div
+      ref={ref}
+      className={cn(cardVariants({ variant, className }))}
+      {...props}
+    >
+      {useLiquidGlass ? <LiquidGlassFilter /> : null}
+      {children}
+    </div>
+  )
+})
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<

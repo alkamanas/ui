@@ -5,6 +5,7 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter";
 
 type NavbarTheme = "light" | "dark";
 
@@ -77,7 +78,7 @@ export function useActiveNavbarTheme({
   const [activeTheme, setActiveTheme] = React.useState<NavbarTheme>(defaultTheme);
 
   React.useEffect(() => {
-    if (!enabled || typeof window === "undefined") return;
+    if (typeof window === "undefined") return;
 
     const updateThemeMeta = (theme: NavbarTheme, themeColor: string) => {
       if (!syncThemeMeta) return;
@@ -112,8 +113,10 @@ export function useActiveNavbarTheme({
     };
 
     const syncNavbarState = () => {
-      const atTop = window.scrollY < 16;
+      const atTop = window.scrollY < 64;
       setIsAtTop(atTop);
+
+      if (!enabled) return;
 
       const sections = Array.from(document.querySelectorAll<HTMLElement>(sectionSelector));
       const activeSection =
@@ -181,7 +184,7 @@ export function SectionAwareNavbar({
 
   const resolvedTheme = theme === "auto" ? activeTheme : theme;
   const useDarkTheme = resolvedTheme === "dark";
-  const showPanel = mobileOpen || desktopMenuOpen || !isAtTop || theme !== "auto";
+  const showPanel = mobileOpen || desktopMenuOpen || !isAtTop;
 
   const mobileOverlayVariants: Variants = {
     closed: { pointerEvents: "none" as const, transition: { duration: 0.48 } },
@@ -238,6 +241,7 @@ export function SectionAwareNavbar({
         className,
       )}
     >
+      <LiquidGlassFilter />
       <div
         className="relative z-20 mx-auto max-w-7xl px-4 pt-0 sm:px-6 lg:px-8"
         onMouseLeave={() => setDesktopMenuOpen(false)}
@@ -245,7 +249,7 @@ export function SectionAwareNavbar({
         <div
           data-quiet={showPanel && !mobileOpen ? undefined : "true"}
           className={cn(
-            "alka-navbar-panel flex h-16 items-center justify-between rounded-full border px-5 transition-all duration-300 sm:px-7",
+            "alka-navbar-panel alka-liquid-glass flex h-16 items-center justify-between rounded-full border px-5 transition-all duration-300 sm:px-7",
             mobileOpen
               ? "border-transparent bg-transparent shadow-none backdrop-blur-none"
               : showPanel
@@ -337,7 +341,7 @@ export function SectionAwareNavbar({
               exit={{ y: -8, opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "absolute left-4 right-4 top-[4.75rem] hidden overflow-hidden rounded-[2rem] border p-3 shadow-[0_26px_80px_rgba(0,0,0,0.2)] backdrop-blur-2xl md:block sm:left-6 sm:right-6 lg:left-8 lg:right-8",
+                "alka-liquid-glass absolute left-4 right-4 top-[4.75rem] hidden rounded-[2rem] border p-3 md:block sm:left-6 sm:right-6 lg:left-8 lg:right-8",
                 useDarkTheme ? "border-white/10 bg-[#0b0b0b]/[0.92]" : "border-black/[0.08] bg-white/[0.94]",
               )}
               onMouseEnter={() => setDesktopMenuOpen(true)}

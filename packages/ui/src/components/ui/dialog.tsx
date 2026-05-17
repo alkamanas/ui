@@ -3,6 +3,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
 
 const Dialog = DialogPrimitive.Root
 
@@ -16,12 +17,12 @@ const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={cn(
-      "alka-dialog-overlay fixed inset-0 z-50 bg-black/80 transition-opacity duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
-      className
-    )}
+    <DialogPrimitive.Overlay
+      ref={ref}
+      className={cn(
+        "alka-dialog-overlay fixed inset-0 z-50 bg-black/25 backdrop-blur-sm transition-opacity duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        className
+      )}
     {...props}
   />
 ))
@@ -36,13 +37,14 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "alka-dialog-content fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 rounded-[1.75rem] border border-white/10 bg-background/96 p-6 shadow-[0_28px_90px_hsl(var(--alka-shadow-color)_/_0.36)] backdrop-blur-2xl data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        "alka-dialog-content alka-liquid-glass fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 rounded-[1.75rem] border border-white/10 p-6 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
         className
       )}
       {...props}
     >
+      <LiquidGlassFilter />
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      <DialogPrimitive.Close className="alka-dialog-close-button absolute right-4 top-4 rounded-full border border-white/10 bg-white/[0.06] p-2 text-foreground/70 opacity-80 ring-offset-background backdrop-blur-xl transition-[background-color,color,opacity] duration-300 hover:bg-white/[0.1] hover:text-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>

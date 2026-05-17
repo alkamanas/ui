@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
 
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const Switch = React.forwardRef<
@@ -9,15 +10,16 @@ const Switch = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(
-      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors duration-500 ease-[var(--alka-ease-smooth)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+      "alka-switch-track peer inline-flex h-9 w-[5.125rem] shrink-0 cursor-pointer items-center rounded-full border border-white/10 p-1 shadow-sm transition-[background-color,border-color,box-shadow] duration-500 ease-[var(--alka-ease-smooth)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-primary/28 data-[state=unchecked]:border-white/10",
       className
     )}
     {...props}
     ref={ref}
   >
+    <LiquidGlassFilter />
     <SwitchPrimitives.Thumb
       className={cn(
-        "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform duration-500 ease-[var(--alka-ease-smooth)] data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+        "alka-switch-thumb alka-liquid-glass pointer-events-none block h-7 w-10 rounded-full border border-white/14 ring-0 transition-[transform,box-shadow,opacity] duration-500 ease-[var(--alka-ease-smooth)]"
       )}
     />
   </SwitchPrimitives.Root>

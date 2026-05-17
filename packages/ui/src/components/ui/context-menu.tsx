@@ -2,6 +2,7 @@ import * as React from "react"
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"
 
+import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const ContextMenu = ContextMenuPrimitive.Root
@@ -40,31 +41,37 @@ ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName
 const ContextMenuSubContent = React.forwardRef<
   React.ElementRef<typeof ContextMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>
->(({ className, ...props }, ref) => (
+>(({ children, className, ...props }, ref) => (
   <ContextMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "z-50 min-w-[8rem] origin-[--radix-context-menu-content-transform-origin] overflow-hidden rounded-2xl border border-white/10 bg-popover/96 p-1 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] backdrop-blur-2xl transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+      "alka-context-menu-content alka-liquid-glass z-50 min-w-[8rem] origin-[--radix-context-menu-content-transform-origin] overflow-hidden rounded-2xl border border-white/10 p-1 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
       className
     )}
     {...props}
-  />
+  >
+    <LiquidGlassFilter />
+    {children}
+  </ContextMenuPrimitive.SubContent>
 ))
 ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName
 
 const ContextMenuContent = React.forwardRef<
   React.ElementRef<typeof ContextMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>
->(({ className, ...props }, ref) => (
+>(({ children, className, ...props }, ref) => (
   <ContextMenuPrimitive.Portal>
     <ContextMenuPrimitive.Content
       ref={ref}
       className={cn(
-        "z-50 max-h-[--radix-context-menu-content-available-height] min-w-[8rem] origin-[--radix-context-menu-content-transform-origin] overflow-y-auto overflow-x-hidden rounded-2xl border border-white/10 bg-popover/96 p-1 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] backdrop-blur-2xl transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+        "alka-context-menu-content alka-liquid-glass z-50 max-h-[--radix-context-menu-content-available-height] min-w-[8rem] origin-[--radix-context-menu-content-transform-origin] overflow-hidden rounded-2xl border border-white/10 p-1 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
         className
       )}
       {...props}
-    />
+    >
+      <LiquidGlassFilter />
+      {children}
+    </ContextMenuPrimitive.Content>
   </ContextMenuPrimitive.Portal>
 ))
 ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName
