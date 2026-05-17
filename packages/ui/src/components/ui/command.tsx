@@ -7,7 +7,7 @@ import { Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -24,7 +24,7 @@ const Command = React.forwardRef<
     )}
     {...props}
   >
-    {glass ? <LiquidGlassFilter /> : null}
+    {glass ? <GlassElementLayers /> : null}
     {children}
   </CommandPrimitive>
 ))
@@ -49,22 +49,58 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-  <div
-    className="mx-1 mb-2 mt-1 flex h-11 items-center border-b border-white/10 px-4"
-    cmdk-input-wrapper=""
-  >
-    <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
-    <CommandPrimitive.Input
-      ref={ref}
-      className={cn(
-        "flex h-11 w-full rounded-none bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
-  </div>
-))
+>(({ className, onValueChange, ...props }, ref) => {
+  const inputRef = React.useRef<React.ElementRef<typeof CommandPrimitive.Input> | null>(null)
+
+  const setInputRef = React.useCallback(
+    (node: React.ElementRef<typeof CommandPrimitive.Input> | null) => {
+      inputRef.current = node
+
+      if (typeof ref === "function") {
+        ref(node)
+      } else if (ref) {
+        ref.current = node
+      }
+    },
+    [ref]
+  )
+
+  const resetListScroll = React.useCallback(() => {
+    const list = inputRef.current
+      ?.closest("[cmdk-root]")
+      ?.querySelector<HTMLElement>("[cmdk-list]")
+
+    if (!list) return
+
+    requestAnimationFrame(() => {
+      list.scrollTop = 0
+      requestAnimationFrame(() => {
+        list.scrollTop = 0
+      })
+    })
+  }, [])
+
+  return (
+    <div
+      className="mx-1 mb-2 mt-1 flex h-11 items-center border-b border-white/10 px-4"
+      cmdk-input-wrapper=""
+    >
+      <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
+      <CommandPrimitive.Input
+        ref={setInputRef}
+        className={cn(
+          "flex h-11 w-full rounded-none bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        onValueChange={(value) => {
+          onValueChange?.(value)
+          resetListScroll()
+        }}
+        {...props}
+      />
+    </div>
+  )
+})
 
 CommandInput.displayName = CommandPrimitive.Input.displayName
 
@@ -129,7 +165,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "alka-command-item relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-4 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[disabled=true]:pointer-events-none data-[selected=true]:border-transparent data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground data-[selected=true]:shadow-none data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+      "alka-command-item relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-4 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[disabled=true]:pointer-events-none data-[selected=true]:shadow-none data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
       className
     )}
     {...props}

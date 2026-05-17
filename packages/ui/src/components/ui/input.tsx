@@ -2,11 +2,15 @@
 
 import * as React from "react"
 
+import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export interface InputProps extends React.ComponentProps<"input"> {
+  borderAnimationColor?: BorderAnimationColor
   floatingLabel?: boolean
   label?: React.ReactNode
+  surface?: "flat" | "gradient"
+  surfaceGradientColor?: SurfaceGradientColor
   variant?: "underline" | "pill"
   wrapperClassName?: string
 }
@@ -20,6 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
+      borderAnimationColor,
       defaultValue,
       disabled,
       floatingLabel = true,
@@ -29,6 +34,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onChange,
       onFocus,
       placeholder,
+      surface = "flat",
+      surfaceGradientColor,
       type,
       value,
       variant = "underline",
@@ -65,6 +72,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <span
         className={cn("alka-input-field", wrapperClassName)}
         data-closing={isClosing ? "true" : undefined}
+        data-border-animation-color={borderAnimationColor}
+        data-surface={surface}
+        data-surface-gradient-color={surfaceGradientColor}
         data-variant={variant}
         data-disabled={disabled ? "true" : undefined}
         data-filled={hasValue ? "true" : undefined}

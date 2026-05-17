@@ -17,3 +17,13 @@ Core usage:
 import { Button, Card, SectionAwareNavbar, FlipCard } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
 ```
+
+Current design/API notes for agents:
+
+- The docs app at `/apps/docs/src/App.tsx` is the source of truth for live previews and Code tab examples.
+- Code tab examples should be component-specific and copyable; avoid placeholder snippets that do not match the preview.
+- Glass surfaces come from `alka-liquid-glass` and support `data-glass-effect="blurry|realistic"`.
+- Primary color, border animation color and subtle gradient color are token/config driven. Use `borderAnimationColor` and `surfaceGradientColor` props where available.
+- Inputs, input groups, textareas, selects and comboboxes share the bordered pill animation style and flat/gradient surface options.
+- Select, combobox, command and sidebar menu option states should use primary-aware medium hover/selected backgrounds.
+- Sidebar collapse, accordion, carousel, sheet/dialog/drawer/alert and toast motion should stay smooth and token-based.

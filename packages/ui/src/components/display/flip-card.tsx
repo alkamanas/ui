@@ -241,8 +241,8 @@ export function FlipCard({
           height: floatingExpanded ? floatingLayout.expandedHeight : floatingLayout.height,
           transitionDuration: `${transitionMs}ms`,
           transitionTimingFunction: flipCardEase,
-          transform: floatingExpanded ? "translate3d(0, 0, 0) scale(1)" : "translate3d(0, 0, 0) scale(0.985)",
-          opacity: floatingExpanded ? 1 : 0.98,
+          transform: floatingExpanded ? "translate3d(0, 0, 0) scale(1)" : "translate3d(0, 0, 0) scale(0.998)",
+          opacity: 1,
         }
       : undefined;
 

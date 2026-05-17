@@ -5,7 +5,7 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter";
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter";
 
 type NavbarTheme = "light" | "dark";
 
@@ -241,7 +241,7 @@ export function SectionAwareNavbar({
         className,
       )}
     >
-      <LiquidGlassFilter />
+      <GlassElementLayers />
       <div
         className="relative z-20 mx-auto max-w-7xl px-4 pt-0 sm:px-6 lg:px-8"
         onMouseLeave={() => setDesktopMenuOpen(false)}
@@ -258,6 +258,7 @@ export function SectionAwareNavbar({
             panelClassName,
           )}
         >
+          <GlassElementLayers />
           <LinkComponent href="/" className="flex min-w-0 items-center">
             {brand}
           </LinkComponent>
@@ -346,6 +347,7 @@ export function SectionAwareNavbar({
               )}
               onMouseEnter={() => setDesktopMenuOpen(true)}
             >
+              <GlassElementLayers />
               <div className="grid gap-3 lg:grid-cols-[1.05fr_1fr]">
                 <div className={cn("rounded-[1.5rem] p-4", useDarkTheme ? "bg-white/[0.04]" : "bg-black/[0.025]")}>
                   {menu.eyebrow ? (

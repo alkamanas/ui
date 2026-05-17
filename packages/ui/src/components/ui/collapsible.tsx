@@ -7,22 +7,36 @@ import { cn } from "@/lib/utils"
 
 const Collapsible = CollapsiblePrimitive.Root
 
-const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger
+const CollapsibleTrigger = React.forwardRef<
+  React.ElementRef<typeof CollapsiblePrimitive.CollapsibleTrigger>,
+  React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.CollapsibleTrigger>
+>(({ className, ...props }, ref) => (
+  <CollapsiblePrimitive.CollapsibleTrigger
+    ref={ref}
+    className={cn("alka-collapsible-trigger", className)}
+    {...props}
+  />
+))
+CollapsibleTrigger.displayName = CollapsiblePrimitive.CollapsibleTrigger.displayName
+
+export type CollapsibleContentProps = React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Content> & {
+  containerClassName?: string
+}
 
 const CollapsibleContent = React.forwardRef<
   React.ElementRef<typeof CollapsiblePrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Content>
->(({ className, children, forceMount = true, ...props }, ref) => (
+  CollapsibleContentProps
+>(({ className, children, containerClassName, forceMount = true, ...props }, ref) => (
   <CollapsiblePrimitive.Content
     ref={ref}
     forceMount={forceMount}
     className={cn(
-      "grid overflow-hidden transition-[grid-template-rows,opacity,transform] duration-[620ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:grid-rows-[0fr] data-[state=closed]:opacity-0 data-[state=closed]:-translate-y-1 data-[state=open]:grid-rows-[1fr] data-[state=open]:opacity-100 data-[state=open]:translate-y-0",
-      className
+      "alka-collapsible-content grid overflow-hidden transition-[grid-template-rows] duration-[620ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:grid-rows-[0fr] data-[state=open]:grid-rows-[1fr]",
+      containerClassName
     )}
     {...props}
   >
-    <div className="min-h-0">{children}</div>
+    <div className={cn("alka-collapsible-inner min-h-0", className)}>{children}</div>
   </CollapsiblePrimitive.Content>
 ))
 CollapsibleContent.displayName = CollapsiblePrimitive.Content.displayName

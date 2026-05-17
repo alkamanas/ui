@@ -1,17 +1,33 @@
 import * as React from "react"
 
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
+import type { BorderAnimationColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
-const Item = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+export type ItemProps = React.HTMLAttributes<HTMLDivElement> & {
+  surface?: "solid" | "glass"
+  borderAnimation?: boolean
+  borderAnimationColor?: BorderAnimationColor
+}
+
+const Item = React.forwardRef<HTMLDivElement, ItemProps>(
+  ({ children, className, surface = "solid", borderAnimation = false, borderAnimationColor, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        "group/item flex items-center gap-4 rounded-2xl border border-border/70 bg-card/72 p-4 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[border-color,background-color,box-shadow] duration-500 ease-[var(--alka-ease-smooth)] hover:border-primary/24 hover:bg-card",
+        "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-4 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[--alka-button-angle,border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
+        surface === "glass" ? "alka-liquid-glass" : "bg-card/72",
         className,
       )}
+      data-surface={surface}
+      data-border-animation={borderAnimation ? "true" : undefined}
+      data-border-animation-color={borderAnimationColor}
       {...props}
-    />
+    >
+      {surface === "glass" && <GlassElementLayers />}
+      <span aria-hidden="true" className="alka-item-border" />
+      {children}
+    </div>
   ),
 )
 Item.displayName = "Item"
@@ -20,7 +36,7 @@ const ItemMedia = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivE
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("grid size-10 shrink-0 place-items-center rounded-xl bg-muted text-muted-foreground", className)}
+      className={cn("grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-muted-foreground", className)}
       {...props}
     />
   ),

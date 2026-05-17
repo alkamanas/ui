@@ -4,7 +4,7 @@ import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import {
   Command,
   CommandEmpty,
@@ -14,6 +14,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export type ComboboxOption = {
@@ -29,6 +30,9 @@ export type ComboboxProps = {
   placeholder?: string
   searchPlaceholder?: string
   emptyText?: string
+  surface?: "flat" | "gradient" | "bare"
+  borderAnimationColor?: BorderAnimationColor
+  surfaceGradientColor?: SurfaceGradientColor
   className?: string
   onValueChange?: (value: string) => void
 }
@@ -40,6 +44,9 @@ function Combobox({
   placeholder = "Select option",
   searchPlaceholder = "Search...",
   emptyText = "No results found.",
+  surface = "gradient",
+  borderAnimationColor,
+  surfaceGradientColor,
   className,
   onValueChange,
 }: ComboboxProps) {
@@ -94,7 +101,10 @@ function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          data-border-animation-color={borderAnimationColor}
           data-closing={closing ? "true" : undefined}
+          data-surface={surface}
+          data-surface-gradient-color={surfaceGradientColor}
           onClick={(event) => {
             if (!open && !closing) return
 
@@ -102,7 +112,7 @@ function Combobox({
             closeCombobox()
           }}
           className={cn(
-            "alka-combobox-trigger h-[3.125rem] w-full justify-between rounded-full bg-background/72 px-5 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:bg-background/72 hover:text-foreground data-[state=open]:bg-background/72",
+            "alka-combobox-trigger h-[3.125rem] w-full justify-between rounded-full bg-background/72 px-5 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
             className
           )}
         >
@@ -114,11 +124,12 @@ function Combobox({
       </PopoverTrigger>
       <PopoverContent
         align="center"
+        glass={false}
         sideOffset={8}
         data-closing={closing ? "true" : undefined}
         className="alka-select-content alka-liquid-glass w-[var(--radix-popover-trigger-width)] overflow-hidden rounded-3xl p-2"
       >
-        <LiquidGlassFilter />
+        <GlassElementLayers />
         <Command glass={false} className="relative z-10 gap-1 rounded-[1.5rem] bg-transparent [&_[cmdk-group]]:grid [&_[cmdk-group]]:gap-1 [&_[cmdk-group]]:p-0 [&_[cmdk-input-wrapper]]:mx-1 [&_[cmdk-input-wrapper]]:mb-2 [&_[cmdk-input-wrapper]]:mt-1 [&_[cmdk-input-wrapper]]:rounded-none [&_[cmdk-input-wrapper]]:border-0 [&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input-wrapper]]:border-white/10 [&_[cmdk-input-wrapper]]:bg-transparent [&_[cmdk-input-wrapper]]:px-4 [&_[cmdk-input-wrapper]]:backdrop-blur-none [&_[cmdk-input]]:h-11">
           <CommandInput placeholder={searchPlaceholder} />
           <CommandList className="max-h-[18rem]">
@@ -132,18 +143,6 @@ function Combobox({
                   className={cn(
                     "alka-combobox-option min-h-11 cursor-pointer rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-12 font-medium transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)]"
                   )}
-                  style={{
-                    backgroundColor:
-                      hoveredValue === option.value || selectedValue === option.value
-                        ? "hsl(var(--primary))"
-                        : "transparent",
-                    borderColor: "transparent",
-                    boxShadow: "none",
-                    color:
-                      hoveredValue === option.value || selectedValue === option.value
-                        ? "hsl(var(--primary-foreground))"
-                        : "hsl(var(--foreground))",
-                  }}
                   onMouseEnter={() => setHoveredValue(option.value)}
                   onMouseLeave={() => setHoveredValue(null)}
                   onSelect={() => selectValue(option.value)}

@@ -4,7 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter";
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -207,8 +207,8 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            <LiquidGlassFilter />
             <div className="alka-liquid-glass relative flex h-full w-full flex-col border-r border-sidebar-border">
+              <GlassElementLayers />
               {children}
             </div>
           </SheetContent>
@@ -230,7 +230,6 @@ const Sidebar = React.forwardRef<
         data-variant={variant}
         data-side={side}
       >
-        <LiquidGlassFilter />
         {/* This is what handles the sidebar gap on desktop */}
         <div
           className={cn(
@@ -267,6 +266,7 @@ const Sidebar = React.forwardRef<
                 : "bg-sidebar group-data-[collapsible=icon]:border group-data-[collapsible=icon]:border-sidebar-border"
             )}
           >
+            {variant === "floating" || variant === "inset" ? <GlassElementLayers /> : null}
             {children}
           </div>
         </div>
@@ -544,7 +544,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem";
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-xl p-2 text-left text-sm outline-none ring-sidebar-ring transition-[height,padding,gap,border-radius,color,background] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!h-12 group-data-[collapsible=icon]:!gap-0 group-data-[collapsible=icon]:!rounded-[24px] group-data-[collapsible=icon]:!px-[15px] group-data-[collapsible=icon]:!py-0 group-data-[collapsible=icon]:[&>span:last-child]:opacity-0 group-data-[collapsible=icon]:[&>[data-sidebar=menu-label]]:opacity-0 [&>span:last-child]:min-w-0 [&>span:last-child]:truncate [&>[data-sidebar=menu-label]]:min-w-0 [&>[data-sidebar=menu-label]]:truncate [&>[data-sidebar=menu-label]]:transition-[opacity,transform] [&>[data-sidebar=menu-label]]:duration-[var(--alka-motion-panel)] [&>[data-sidebar=menu-label]]:ease-[var(--alka-ease-smooth)] [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:transition-[width,height,transform] [&>svg]:duration-[var(--alka-motion-smooth)] group-data-[collapsible=icon]:[&>svg]:!size-6",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-xl p-2 text-left text-sm outline-none ring-sidebar-ring transition-[height,padding,gap,border-radius,color,background] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!h-12 group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!gap-0 group-data-[collapsible=icon]:!rounded-[24px] group-data-[collapsible=icon]:!px-0 group-data-[collapsible=icon]:!py-0 group-data-[collapsible=icon]:[&>span:last-child]:w-0 group-data-[collapsible=icon]:[&>span:last-child]:opacity-0 group-data-[collapsible=icon]:[&>[data-sidebar=menu-label]]:w-0 group-data-[collapsible=icon]:[&>[data-sidebar=menu-label]]:opacity-0 [&>span:last-child]:min-w-0 [&>span:last-child]:truncate [&>[data-sidebar=menu-label]]:min-w-0 [&>[data-sidebar=menu-label]]:truncate [&>[data-sidebar=menu-label]]:transition-[width,opacity,transform] [&>[data-sidebar=menu-label]]:duration-[var(--alka-motion-panel)] [&>[data-sidebar=menu-label]]:ease-[var(--alka-ease-smooth)] [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:transition-[width,height,transform] [&>svg]:duration-[var(--alka-motion-smooth)] group-data-[collapsible=icon]:[&>svg]:!size-6",
   {
     variants: {
       variant: {

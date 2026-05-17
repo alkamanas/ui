@@ -3,7 +3,7 @@ import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -40,7 +40,7 @@ const AlertDialogContent = React.forwardRef<
       )}
       {...props}
     >
-      <LiquidGlassFilter />
+      <GlassElementLayers />
       {children}
     </AlertDialogPrimitive.Content>
   </AlertDialogPortal>

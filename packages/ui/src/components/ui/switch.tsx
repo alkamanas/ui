@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
 
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const Switch = React.forwardRef<
@@ -16,12 +16,13 @@ const Switch = React.forwardRef<
     {...props}
     ref={ref}
   >
-    <LiquidGlassFilter />
     <SwitchPrimitives.Thumb
       className={cn(
         "alka-switch-thumb alka-liquid-glass pointer-events-none relative z-10 block h-7 w-10 rounded-full border border-white/14 ring-0 transition-[transform,box-shadow,opacity] duration-500 ease-[var(--alka-ease-smooth)]"
       )}
-    />
+    >
+      <GlassElementLayers />
+    </SwitchPrimitives.Thumb>
   </SwitchPrimitives.Root>
 ))
 Switch.displayName = SwitchPrimitives.Root.displayName

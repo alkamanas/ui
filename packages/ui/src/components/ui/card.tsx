@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
@@ -41,7 +41,7 @@ const Card = React.forwardRef<
       className={cn(cardVariants({ variant, className }))}
       {...props}
     >
-      {useLiquidGlass ? <LiquidGlassFilter /> : null}
+      {useLiquidGlass ? <GlassElementLayers /> : null}
       {children}
     </div>
   )

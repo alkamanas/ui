@@ -1,5 +1,5 @@
 import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter";
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter";
 import { cn } from "@/lib/utils";
 import { useFloatingSidebar } from "./FloatingSidebarProvider";
 
@@ -20,7 +20,7 @@ export const FloatingSidebar: React.FC<{ children: React.ReactNode }> = ({
           style={{ "--alka-sheet-width": "280px" } as React.CSSProperties}
         >
           <div className="alka-liquid-glass relative m-3 flex h-[calc(100%-1.5rem)] flex-col overflow-hidden rounded-3xl border">
-            <LiquidGlassFilter />
+            <GlassElementLayers />
             {children}
           </div>
         </SheetContent>
@@ -43,7 +43,7 @@ export const FloatingSidebar: React.FC<{ children: React.ReactNode }> = ({
             : SIDEBAR_WIDTH_COLLAPSED,
       }}
     >
-      <LiquidGlassFilter />
+      <GlassElementLayers />
       {children}
     </aside>
   );

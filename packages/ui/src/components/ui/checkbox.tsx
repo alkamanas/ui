@@ -11,13 +11,18 @@ const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      "grid h-5 w-5 place-content-center peer shrink-0 rounded-md border border-primary shadow transition-[background-color,color,border-color,box-shadow] duration-500 ease-[var(--alka-ease-smooth)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+      "group/checkbox peer relative grid size-6 shrink-0 cursor-pointer place-items-center overflow-hidden rounded-[0.55rem] border-2 border-muted-foreground/50 bg-transparent text-primary shadow-none transition-[border-color,box-shadow,color,transform] duration-500 ease-[var(--alka-ease-smooth)] hover:border-primary/70 hover:shadow-[0_0_0_6px_hsl(var(--primary)_/_0.045)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-primary",
       className
     )}
     {...props}
   >
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 rounded-[0.45rem] bg-primary opacity-0 shadow-[0_0_14px_hsl(var(--primary)_/_0.24)] transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] group-data-[state=checked]/checkbox:scale-100 group-data-[state=checked]/checkbox:opacity-100 group-data-[state=unchecked]/checkbox:scale-[0.45] group-data-[state=unchecked]/checkbox:opacity-0"
+    />
     <CheckboxPrimitive.Indicator
-      className={cn("grid place-content-center text-current transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] data-[state=checked]:scale-100 data-[state=unchecked]:scale-75")}
+      forceMount
+      className="relative z-10 grid size-full place-items-center text-primary-foreground opacity-0 transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] data-[state=checked]:scale-100 data-[state=checked]:opacity-100 data-[state=unchecked]:scale-[0.72] data-[state=unchecked]:opacity-0"
     >
       <Check className="h-4 w-4" />
     </CheckboxPrimitive.Indicator>

@@ -3,7 +3,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 
 const Dialog = DialogPrimitive.Root
 
@@ -48,7 +48,7 @@ const DialogContent = React.forwardRef<
       )}
       {...props}
     >
-      {glass ? <LiquidGlassFilter /> : null}
+      {glass ? <GlassElementLayers /> : null}
       {children}
       {showCloseButton ? (
         <DialogPrimitive.Close className="alka-dialog-close-button absolute right-4 top-4 rounded-full border border-white/10 bg-white/[0.06] p-2 text-foreground/70 opacity-80 ring-offset-background backdrop-blur-xl transition-[background-color,color,opacity] duration-300 hover:bg-white/[0.1] hover:text-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">

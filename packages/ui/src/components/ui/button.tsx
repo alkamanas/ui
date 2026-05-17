@@ -1,7 +1,7 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
@@ -9,15 +9,22 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow",
+        default: "border border-transparent bg-primary text-primary-foreground shadow",
+        solid: "border border-transparent bg-primary text-primary-foreground shadow",
+        glass:
+          "alka-liquid-glass alka-glass-element-host border border-white/10 bg-white/[0.045] text-foreground shadow-sm backdrop-blur-xl",
+        glassPrimary:
+          "alka-liquid-glass alka-glass-element-host border border-transparent bg-primary/[0.08] text-foreground shadow-sm backdrop-blur-xl",
+        glassDestructive:
+          "alka-liquid-glass alka-glass-element-host border border-transparent bg-destructive/[0.08] text-destructive shadow-sm backdrop-blur-xl",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "border border-transparent bg-destructive text-destructive-foreground shadow-sm",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-white/10 bg-white/[0.035] text-foreground shadow-sm backdrop-blur-xl",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "border border-white/10 bg-white/[0.035] text-foreground shadow-sm backdrop-blur-xl",
+        ghost: "border border-transparent bg-transparent text-foreground",
+        link: "border border-transparent bg-transparent text-primary underline-offset-4",
       },
       size: {
         default: "h-11 px-5 py-2.5",
@@ -40,15 +47,46 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+  ({ children, className, variant, size, asChild = false, ...props }, ref) => {
+    const buttonClassName = cn(buttonVariants({ variant, size, className }))
+    const isLiquidGlass =
+      !asChild && (variant === "glass" || variant === "glassPrimary" || variant === "glassDestructive")
+
+    if (asChild) {
+      const child = React.Children.toArray(children).find(React.isValidElement) as
+        | React.ReactElement<{ className?: string }>
+        | undefined
+
+      if (child) {
+        return React.cloneElement(child, {
+          ...props,
+          ...child.props,
+          className: cn(buttonClassName, child.props.className),
+          "data-variant": variant ?? "default",
+          "data-size": size ?? "default",
+          ref,
+        } as React.HTMLAttributes<HTMLElement> & { ref: typeof ref })
+      }
+    }
+
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+      <button
+        className={buttonClassName}
         data-variant={variant ?? "default"}
+        data-size={size ?? "default"}
         ref={ref}
         {...props}
-      />
+      >
+        {isLiquidGlass && <span aria-hidden="true" className="alka-button-glass-backdrop" />}
+        {isLiquidGlass && <GlassElementLayers depth={8} strength={72} chromaticAberration={8} />}
+        {isLiquidGlass ? (
+          <span className="relative z-[2] inline-flex w-full items-center justify-center gap-2 text-center">
+            {children}
+          </span>
+        ) : (
+          children
+        )}
+      </button>
     )
   }
 )

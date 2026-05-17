@@ -3,7 +3,7 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 type CarouselContextValue = {
@@ -155,49 +155,51 @@ const CarouselItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
 )
 CarouselItem.displayName = "CarouselItem"
 
-const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
-  ({ className, variant = "outline", size = "icon", onClick, ...props }, ref) => {
+type CarouselNavButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
+
+const CarouselPrevious = React.forwardRef<HTMLButtonElement, CarouselNavButtonProps>(
+  ({ className, onClick, ...props }, ref) => {
     const { scrollByPage } = useCarousel()
     return (
-      <Button
+      <button
         ref={ref}
-        variant={variant}
-        size={size}
+        type="button"
         aria-label="Previous slide"
-        className={cn("!absolute left-3 top-1/2 z-10 -translate-y-1/2 bg-background/72 backdrop-blur-xl", className)}
+        className={cn("alka-carousel-nav alka-liquid-glass alka-glass-element-host left-3", className)}
         onClick={(event) => {
           onClick?.(event)
           if (!event.defaultPrevented) scrollByPage(-1)
         }}
         {...props}
       >
+        <GlassElementLayers blur={2.2} depth={7} strength={68} chromaticAberration={7} />
         <ChevronLeft className="size-4" />
         <span className="sr-only">Previous slide</span>
-      </Button>
+      </button>
     )
   },
 )
 CarouselPrevious.displayName = "CarouselPrevious"
 
-const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
-  ({ className, variant = "outline", size = "icon", onClick, ...props }, ref) => {
+const CarouselNext = React.forwardRef<HTMLButtonElement, CarouselNavButtonProps>(
+  ({ className, onClick, ...props }, ref) => {
     const { scrollByPage } = useCarousel()
     return (
-      <Button
+      <button
         ref={ref}
-        variant={variant}
-        size={size}
+        type="button"
         aria-label="Next slide"
-        className={cn("!absolute right-3 top-1/2 z-10 -translate-y-1/2 bg-background/72 backdrop-blur-xl", className)}
+        className={cn("alka-carousel-nav alka-liquid-glass alka-glass-element-host right-3", className)}
         onClick={(event) => {
           onClick?.(event)
           if (!event.defaultPrevented) scrollByPage(1)
         }}
         {...props}
       >
+        <GlassElementLayers blur={2.2} depth={7} strength={68} chromaticAberration={7} />
         <ChevronRight className="size-4" />
         <span className="sr-only">Next slide</span>
-      </Button>
+      </button>
     )
   },
 )
@@ -242,7 +244,8 @@ function CarouselDots({ className, style, ...props }: React.HTMLAttributes<HTMLD
       style={style}
       {...props}
     >
-      <div className="alka-carousel-dots alka-pill-surface" data-direction={direction}>
+      <div className="alka-carousel-dots alka-pill-surface alka-liquid-glass alka-glass-element-host" data-direction={direction}>
+        <GlassElementLayers blur={2} depth={7} strength={64} chromaticAberration={7} />
         {Array.from({ length: itemCount }).map((_, index) => (
           <button
             key={index}
@@ -258,9 +261,10 @@ function CarouselDots({ className, style, ...props }: React.HTMLAttributes<HTMLD
         type="button"
         aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
         data-playing={isPlaying}
-        className="alka-carousel-play alka-pill-surface"
+        className="alka-carousel-play alka-pill-surface alka-liquid-glass alka-glass-element-host"
         onClick={() => setIsPlaying((playing) => !playing)}
       >
+        <GlassElementLayers blur={2} depth={7} strength={64} chromaticAberration={7} />
         {isPlaying ? <Pause className="size-4" /> : <Play className="size-4 fill-current" />}
       </button>
     </div>

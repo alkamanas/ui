@@ -5,7 +5,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { LiquidGlassFilter } from "@/components/surfaces/liquid-glass-filter"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 
 type SheetSide = "top" | "right" | "bottom" | "left" | "center"
 type SheetSize = "sm" | "md" | "lg" | "xl"
@@ -65,7 +65,7 @@ const SheetContent = React.forwardRef<
           data-size={size}
           {...props}
         >
-          <LiquidGlassFilter />
+          <GlassElementLayers />
           <div className="alka-sheet-body">{children}</div>
           {resolvedCloseButton !== "none" ? (
             <SheetPrimitive.Close
