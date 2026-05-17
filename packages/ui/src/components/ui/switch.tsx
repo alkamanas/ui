@@ -19,7 +19,7 @@ const Switch = React.forwardRef<
     <LiquidGlassFilter />
     <SwitchPrimitives.Thumb
       className={cn(
-        "alka-switch-thumb alka-liquid-glass pointer-events-none block h-7 w-10 rounded-full border border-white/14 ring-0 transition-[transform,box-shadow,opacity] duration-500 ease-[var(--alka-ease-smooth)]"
+        "alka-switch-thumb alka-liquid-glass pointer-events-none relative z-10 block h-7 w-10 rounded-full border border-white/14 ring-0 transition-[transform,box-shadow,opacity] duration-500 ease-[var(--alka-ease-smooth)]"
       )}
     />
   </SwitchPrimitives.Root>

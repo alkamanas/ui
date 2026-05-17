@@ -8,7 +8,9 @@ import {
   Command as CommandIcon,
   FileJson,
   GalleryHorizontal,
+  Maximize2,
   Menu,
+  Minimize2,
   Moon,
   MoreHorizontal,
   PanelsTopLeft,
@@ -73,6 +75,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -396,32 +399,84 @@ export function ${demoName}() {
 }
 
 function ComponentPreviewShell({ doc }: { doc: DocItem }) {
+  const [fullscreenOpen, setFullscreenOpen] = React.useState(false);
+
   return (
-    <Tabs key={doc.id} defaultValue="preview" className="w-full">
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <TabsList>
-          <TabsTrigger value="preview">
-            Preview
-          </TabsTrigger>
-          <TabsTrigger value="code">
-            Code
-          </TabsTrigger>
-        </TabsList>
-        <Badge variant="secondary" className="hidden rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] text-muted-foreground sm:inline-flex">
-          {doc.command}
-        </Badge>
-      </div>
-      <TabsContent value="preview" className="mt-0">
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-transparent">
-          <div className="relative flex min-h-[24rem] items-center justify-center p-6 sm:p-10">
-            <ComponentPreview id={doc.id} />
+    <>
+      <Tabs key={doc.id} defaultValue="preview" className="w-full">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <TabsList>
+            <TabsTrigger value="preview">
+              Preview
+            </TabsTrigger>
+            <TabsTrigger value="code">
+              Code
+            </TabsTrigger>
+          </TabsList>
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary" className="hidden rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] text-muted-foreground sm:inline-flex">
+              {doc.command}
+            </Badge>
+            <Button
+              type="button"
+              variant="secondary"
+              size="icon"
+              aria-label={`${doc.title} preview tam ekran aç`}
+              onClick={() => setFullscreenOpen(true)}
+              className="h-10 w-10 border border-white/[0.1] bg-black/35 text-white/80 shadow-[0_16px_34px_rgba(0,0,0,0.28)] backdrop-blur-xl hover:bg-white/[0.08] hover:text-white"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-      </TabsContent>
-      <TabsContent value="code" className="mt-0">
-        <CodeBlock>{getPreviewCode(doc)}</CodeBlock>
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="preview" className="mt-0">
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-transparent">
+            <div className="relative flex min-h-[24rem] items-center justify-center p-6 sm:p-10">
+              <ComponentPreview id={doc.id} />
+            </div>
+          </div>
+        </TabsContent>
+        <TabsContent value="code" className="mt-0">
+          <CodeBlock>{getPreviewCode(doc)}</CodeBlock>
+        </TabsContent>
+      </Tabs>
+
+      <Dialog open={fullscreenOpen} onOpenChange={setFullscreenOpen}>
+        <DialogContent
+          showCloseButton={false}
+          className="h-[calc(100dvh-1.25rem)] max-h-[calc(100dvh-1.25rem)] max-w-[calc(100vw-1.25rem)] gap-0 overflow-hidden rounded-[2rem] p-0 sm:h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-2rem)] sm:max-w-[calc(100vw-2rem)]"
+        >
+          <div className="relative flex h-full min-h-0 flex-col">
+            <div className="flex items-center justify-between gap-4 border-b border-white/[0.08] px-4 py-3 sm:px-5">
+              <div className="min-w-0">
+                <DialogTitle className="truncate text-sm font-semibold tracking-normal sm:text-base">
+                  {doc.title} preview
+                </DialogTitle>
+                <DialogDescription className="mt-1 hidden text-xs text-muted-foreground sm:block">
+                  Full screen component preview
+                </DialogDescription>
+              </div>
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="icon"
+                  aria-label="Tam ekran preview kapat"
+                  className="h-10 w-10 shrink-0 border border-white/[0.1] bg-white/[0.055] text-white/78 backdrop-blur-xl hover:bg-white/[0.09] hover:text-white"
+                >
+                  <Minimize2 className="h-4 w-4" />
+                </Button>
+              </DialogClose>
+            </div>
+            <div className="min-h-0 flex-1 overflow-auto p-4 sm:p-6">
+              <div className="relative flex min-h-full items-center justify-center rounded-[1.5rem] border border-white/[0.08] bg-transparent p-6 sm:p-10">
+                <ComponentPreview id={doc.id} />
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
@@ -525,6 +580,32 @@ function SidebarBrandRow({ label }: { label: string }) {
 }
 
 function WorkspaceShellBlock() {
+  const [dashboardTab, setDashboardTab] = React.useState("health");
+  const contentColumnRef = React.useRef<HTMLDivElement | null>(null);
+  const [shellHeight, setShellHeight] = React.useState<number | null>(null);
+
+  const measureShellHeight = React.useCallback(() => {
+    const contentColumn = contentColumnRef.current;
+    if (!contentColumn) return;
+
+    setShellHeight(Math.max(512, Math.ceil(contentColumn.scrollHeight)));
+  }, []);
+
+  React.useLayoutEffect(() => {
+    measureShellHeight();
+  }, [dashboardTab, measureShellHeight]);
+
+  React.useLayoutEffect(() => {
+    const contentColumn = contentColumnRef.current;
+    if (!contentColumn || typeof ResizeObserver === "undefined") return;
+
+    const observer = new ResizeObserver(measureShellHeight);
+    observer.observe(contentColumn);
+    Array.from(contentColumn.children).forEach((child) => observer.observe(child));
+
+    return () => observer.disconnect();
+  }, [measureShellHeight]);
+
   return (
     <BlockFrame
       id="blocks-dashboard"
@@ -535,8 +616,12 @@ function WorkspaceShellBlock() {
     >
       <div className="overflow-hidden rounded-3xl border border-white/[0.08] bg-transparent p-3">
         <SidebarProvider
-          className="relative min-h-[32rem]"
-          style={{ "--sidebar-width": "15rem", "--sidebar-width-icon": "4.25rem" } as React.CSSProperties}
+          className="relative min-h-[32rem] transition-[height] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]"
+          style={{
+            "--sidebar-width": "15rem",
+            "--sidebar-width-icon": "4.25rem",
+            height: shellHeight ? `${shellHeight}px` : undefined,
+          } as React.CSSProperties}
         >
           <SidebarExternalTrigger className="hidden lg:inline-flex" />
           <div className="grid h-full w-full gap-4 lg:grid-cols-[auto_minmax(0,1fr)]">
@@ -564,7 +649,7 @@ function WorkspaceShellBlock() {
               </SidebarContent>
               <SidebarRail />
             </Sidebar>
-            <div className="min-w-0 space-y-4">
+            <div ref={contentColumnRef} className="min-w-0 space-y-4">
               <div className="flex flex-col gap-3 rounded-3xl border border-white/[0.08] p-4 sm:flex-row sm:items-center sm:justify-between">
                 <Breadcrumb>
                   <BreadcrumbList>
@@ -586,7 +671,7 @@ function WorkspaceShellBlock() {
                 </div>
               </div>
 
-              <Tabs defaultValue="health" className="w-full">
+              <Tabs value={dashboardTab} onValueChange={setDashboardTab} className="w-full">
                 <TabsList>
                   <TabsTrigger value="health">Health</TabsTrigger>
                   <TabsTrigger value="traffic">Traffic</TabsTrigger>
@@ -1243,7 +1328,14 @@ function ComponentPreview({ id }: { id: string }) {
   if (id === "button-group") {
     return <ButtonGroup><Button variant="ghost">Day</Button><Button variant="secondary">Week</Button><Button variant="ghost">Month</Button></ButtonGroup>;
   }
-  if (id === "input") return <div className="grid max-w-xl gap-3"><Input placeholder="workspace-name" /><Input placeholder="studio.visetra.app" /></div>;
+  if (id === "input") {
+    return (
+      <div className="grid w-full max-w-xl gap-4">
+        <Input placeholder="workspace-name" />
+        <Input variant="pill" placeholder="studio.visetra.app" />
+      </div>
+    );
+  }
   if (id === "input-group") {
     return <InputGroup className="max-w-xl"><InputGroupAddon>https://</InputGroupAddon><InputGroupInput placeholder="studio.visetra.app" /><InputGroupAddon>.com</InputGroupAddon></InputGroup>;
   }

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -29,6 +29,8 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
     const viewportRef = React.useRef<HTMLDivElement | null>(null)
     const [activeIndex, setActiveIndex] = React.useState(0)
     const [itemCount, setItemCount] = React.useState(0)
+    const programmaticScrollRef = React.useRef<number | null>(null)
+    const programmaticScrollTimeoutRef = React.useRef<number | null>(null)
 
     const registerItem = React.useCallback(() => {
       setItemCount((count) => count + 1)
@@ -36,6 +38,8 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
     }, [])
 
     const syncActiveIndex = React.useCallback(() => {
+      if (programmaticScrollRef.current !== null) return
+
       const viewport = viewportRef.current
       if (!viewport) return
 
@@ -60,10 +64,29 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
       const viewport = viewportRef.current
       const item = viewport?.children.item(index) as HTMLElement | null
       if (!viewport || !item) return
+      const nextIndex = Math.min(Math.max(index, 0), Math.max(itemCount - 1, 0))
+
+      if (programmaticScrollTimeoutRef.current) {
+        window.clearTimeout(programmaticScrollTimeoutRef.current)
+      }
+
+      programmaticScrollRef.current = nextIndex
       const left = item.offsetLeft - (viewport.clientWidth - item.offsetWidth) / 2
       viewport.scrollTo({ left: Math.max(0, left), behavior: "smooth" })
-      setActiveIndex(Math.min(Math.max(index, 0), Math.max(itemCount - 1, 0)))
+      setActiveIndex(nextIndex)
+      programmaticScrollTimeoutRef.current = window.setTimeout(() => {
+        programmaticScrollRef.current = null
+        programmaticScrollTimeoutRef.current = null
+      }, 760)
     }, [itemCount])
+
+    React.useEffect(() => {
+      return () => {
+        if (programmaticScrollTimeoutRef.current) {
+          window.clearTimeout(programmaticScrollTimeoutRef.current)
+        }
+      }
+    }, [])
 
     const scrollByPage = React.useCallback(
       (direction: -1 | 1) => {
@@ -182,28 +205,64 @@ CarouselNext.displayName = "CarouselNext"
 
 function CarouselDots({ className, style, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const { activeIndex, itemCount, scrollTo } = useCarousel()
+  const [isPlaying, setIsPlaying] = React.useState(false)
+  const previousIndexRef = React.useRef(activeIndex)
+  const [direction, setDirection] = React.useState<"forward" | "backward">("forward")
+  const goToSlide = React.useCallback(
+    (index: number) => {
+      if (index !== activeIndex) {
+        setDirection(index > activeIndex ? "forward" : "backward")
+      }
+
+      scrollTo(index)
+    },
+    [activeIndex, scrollTo],
+  )
+
+  React.useEffect(() => {
+    if (!isPlaying || itemCount <= 1) return
+
+    const interval = window.setInterval(() => {
+      goToSlide((activeIndex + 1) % itemCount)
+    }, 4200)
+
+    return () => window.clearInterval(interval)
+  }, [activeIndex, goToSlide, isPlaying, itemCount])
+
+  React.useEffect(() => {
+    if (activeIndex === previousIndexRef.current) return
+
+    setDirection(activeIndex > previousIndexRef.current ? "forward" : "backward")
+    previousIndexRef.current = activeIndex
+  }, [activeIndex])
 
   return (
     <div
-      className={cn("alka-carousel-dots alka-pill-surface", className)}
-      style={
-        {
-          ...style,
-          "--alka-carousel-dot-offset": `${activeIndex * 2.1}rem`,
-        } as React.CSSProperties
-      }
+      className={cn("alka-carousel-controls", className)}
+      style={style}
       {...props}
     >
-      {Array.from({ length: itemCount }).map((_, index) => (
-        <button
-          key={index}
-          type="button"
-          aria-label={`Go to slide ${index + 1}`}
-          data-active={activeIndex === index}
-          className="alka-carousel-dot"
-          onClick={() => scrollTo(index)}
-        />
-      ))}
+      <div className="alka-carousel-dots alka-pill-surface" data-direction={direction}>
+        {Array.from({ length: itemCount }).map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            aria-label={`Go to slide ${index + 1}`}
+            data-active={activeIndex === index}
+            className="alka-carousel-dot"
+            onClick={() => goToSlide(index)}
+          />
+        ))}
+      </div>
+      <button
+        type="button"
+        aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
+        data-playing={isPlaying}
+        className="alka-carousel-play alka-pill-surface"
+        onClick={() => setIsPlaying((playing) => !playing)}
+      >
+        {isPlaying ? <Pause className="size-4" /> : <Play className="size-4 fill-current" />}
+      </button>
     </div>
   )
 }

@@ -234,7 +234,7 @@ const Sidebar = React.forwardRef<
         {/* This is what handles the sidebar gap on desktop */}
         <div
           className={cn(
-            "relative w-[var(--sidebar-width)] bg-transparent transition-[width] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
+            "relative w-[var(--sidebar-width)] bg-transparent transition-[width,height] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
             isRelative ? "h-full" : "h-svh",
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[side=right]:rotate-180",
@@ -245,7 +245,7 @@ const Sidebar = React.forwardRef<
         />
         <div
           className={cn(
-            "inset-y-0 z-10 w-[var(--sidebar-width)] transition-[left,right,width,padding] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
+            "inset-y-0 z-10 w-[var(--sidebar-width)] transition-[left,right,width,height,min-height,max-height,padding] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
             isRelative ? "absolute flex h-full" : "fixed hidden h-svh md:flex",
             side === "left"
               ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
@@ -261,7 +261,7 @@ const Sidebar = React.forwardRef<
           <div
             data-sidebar="sidebar"
             className={cn(
-              "alka-sidebar-surface flex h-full w-full flex-col overflow-hidden transition-[border-radius,box-shadow,background] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
+              "alka-sidebar-surface flex h-full w-full flex-col overflow-hidden transition-[width,height,min-height,max-height,border-radius,box-shadow,background] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
               variant === "floating" || variant === "inset"
                 ? "alka-liquid-glass relative rounded-3xl border border-sidebar-border"
                 : "bg-sidebar group-data-[collapsible=icon]:border group-data-[collapsible=icon]:border-sidebar-border"
@@ -379,7 +379,7 @@ const SidebarHeader = React.forwardRef<
       ref={ref}
       data-sidebar="header"
       className={cn(
-        "flex flex-col gap-2 p-2 transition-[padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3",
+        "flex flex-col gap-2 p-2 transition-[height,min-height,max-height,padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3",
         className
       )}
       {...props}
@@ -397,7 +397,7 @@ const SidebarFooter = React.forwardRef<
       ref={ref}
       data-sidebar="footer"
       className={cn(
-        "flex flex-col gap-2 p-2 transition-[padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3",
+        "flex flex-col gap-2 p-2 transition-[height,min-height,max-height,padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3",
         className
       )}
       {...props}
@@ -430,7 +430,7 @@ const SidebarContent = React.forwardRef<
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto transition-[padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto transition-[height,min-height,max-height,padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
       {...props}
@@ -448,7 +448,7 @@ const SidebarGroup = React.forwardRef<
       ref={ref}
       data-sidebar="group"
       className={cn(
-        "relative flex w-full min-w-0 flex-col p-2 transition-[padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2",
+        "relative flex w-full min-w-0 flex-col p-2 transition-[height,min-height,max-height,padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2",
         className
       )}
       {...props}
@@ -468,7 +468,7 @@ const SidebarGroupLabel = React.forwardRef<
       ref={ref}
       data-sidebar="group-label"
       className={cn(
-        "flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] duration-[var(--alka-motion-panel)] ease-[var(--alka-ease-smooth)] focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[height,min-height,max-height,margin,opacity] duration-[var(--alka-motion-panel)] ease-[var(--alka-ease-smooth)] focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className
       )}

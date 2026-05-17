@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 export interface InputProps extends React.ComponentProps<"input"> {
   floatingLabel?: boolean
   label?: React.ReactNode
+  variant?: "underline" | "pill"
   wrapperClassName?: string
 }
 
@@ -30,12 +31,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       placeholder,
       type,
       value,
+      variant = "underline",
       wrapperClassName,
       ...props
     },
     ref
   ) => {
     const [isSelected, setIsSelected] = React.useState(false)
+    const [isClosing, setIsClosing] = React.useState(false)
+    const closeTimeoutRef = React.useRef<number | undefined>(undefined)
     const [hasValue, setHasValue] = React.useState(() =>
       hasInputValue(value ?? defaultValue)
     )
@@ -51,13 +55,34 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       if (value !== undefined) setHasValue(hasInputValue(value))
     }, [value])
 
+    React.useEffect(() => {
+      return () => {
+        if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+      }
+    }, [])
+
     return (
       <span
         className={cn("alka-input-field", wrapperClassName)}
+        data-closing={isClosing ? "true" : undefined}
+        data-variant={variant}
         data-disabled={disabled ? "true" : undefined}
         data-filled={hasValue ? "true" : undefined}
         data-has-label={hasLabel ? "true" : "false"}
         data-selected={isSelected ? "true" : undefined}
+        onBlurCapture={(event) => {
+          if (event.currentTarget.contains(event.relatedTarget as Node | null)) return
+
+          if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+          setIsSelected(false)
+          setIsClosing(true)
+          closeTimeoutRef.current = window.setTimeout(() => setIsClosing(false), 620)
+        }}
+        onFocusCapture={() => {
+          if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+          setIsSelected(true)
+          setIsClosing(false)
+        }}
       >
         <input
           id={inputId}
@@ -74,7 +99,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           ref={ref}
           onBlur={(event) => {
-            setIsSelected(false)
             onBlur?.(event)
           }}
           onChange={(event) => {
@@ -82,7 +106,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             onChange?.(event)
           }}
           onFocus={(event) => {
-            setIsSelected(true)
             onFocus?.(event)
           }}
           {...props}

@@ -50,6 +50,7 @@ function Combobox({
   const [hoveredValue, setHoveredValue] = React.useState<string | null>(null)
   const selectedValue = value ?? internalValue
   const selectedOption = options.find((option) => option.value === selectedValue)
+  const popoverOpen = open || closing
 
   React.useEffect(() => {
     return () => {
@@ -57,34 +58,49 @@ function Combobox({
     }
   }, [])
 
+  const closeCombobox = React.useCallback(() => {
+    if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+
+    if (!open && !closing) return
+
+    setOpen(false)
+    setClosing(true)
+    closeTimeoutRef.current = window.setTimeout(() => setClosing(false), 300)
+  }, [closing, open])
+
   const handleOpenChange = (nextOpen: boolean) => {
     if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
 
     if (nextOpen) {
       setClosing(false)
       setHoveredValue(null)
-    } else if (open) {
-      setClosing(true)
-      closeTimeoutRef.current = window.setTimeout(() => setClosing(false), 620)
+      setOpen(true)
+      return
     }
 
-    setOpen(nextOpen)
+    closeCombobox()
   }
 
   const selectValue = (nextValue: string) => {
     if (value === undefined) setInternalValue(nextValue)
     onValueChange?.(nextValue)
-    setOpen(false)
+    closeCombobox()
   }
 
   return (
-    <Popover open={open} onOpenChange={handleOpenChange}>
+    <Popover open={popoverOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
           data-closing={closing ? "true" : undefined}
+          onClick={(event) => {
+            if (!open && !closing) return
+
+            event.preventDefault()
+            closeCombobox()
+          }}
           className={cn(
             "alka-combobox-trigger h-[3.125rem] w-full justify-between rounded-full bg-background/72 px-5 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:bg-background/72 hover:text-foreground data-[state=open]:bg-background/72",
             className
@@ -99,6 +115,7 @@ function Combobox({
       <PopoverContent
         align="center"
         sideOffset={8}
+        data-closing={closing ? "true" : undefined}
         className="alka-select-content alka-liquid-glass w-[var(--radix-popover-trigger-width)] overflow-hidden rounded-3xl p-2"
       >
         <LiquidGlassFilter />
