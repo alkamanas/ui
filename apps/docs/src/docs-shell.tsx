@@ -103,6 +103,8 @@ export function PageChrome({
   onSurfaceGradientColorChange,
   glassEffect,
   onGlassEffectChange,
+  routeMotion,
+  routeKey,
 }: {
   activeDoc: DocItem;
   children: React.ReactNode;
@@ -114,11 +116,13 @@ export function PageChrome({
   onSurfaceGradientColorChange: (value: SurfaceGradientColorId) => void;
   glassEffect: GlassEffectId;
   onGlassEffectChange: (value: GlassEffectId) => void;
+  routeMotion: "enter" | "exit";
+  routeKey: string;
 }) {
   const showPrimarySwitcher = activeDoc.id === "components" || componentIds.has(activeDoc.id);
 
   return (
-    <div className="theme-dark docs-shell text-foreground" data-border-animation-color={borderAnimationColor} data-glass-effect={glassEffect} data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme)}>
+    <div className="theme-dark docs-shell text-foreground" data-border-animation-color={borderAnimationColor} data-glass-effect="blurry" data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme)}>
       <LiquidGlassFilter />
       <Topbar activeTitle={activeDoc.title} />
       {showPrimarySwitcher ? (
@@ -138,7 +142,13 @@ export function PageChrome({
         <SidebarNav activeId={activeDoc.id} />
         <main className="min-w-0">
           <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 md:px-8 lg:grid-cols-[minmax(0,1fr)_220px] lg:px-10 lg:py-10">
-            <article className="min-w-0">{children}</article>
+            <article
+              key={routeKey}
+              className="docs-apple-motion-page min-w-0"
+              data-route-motion={routeMotion}
+            >
+              {children}
+            </article>
             <aside className="hidden lg:block">
               <div className="sticky top-4 space-y-4">
                 <div className="alka-liquid-glass space-y-3 rounded-2xl border p-4 text-sm">

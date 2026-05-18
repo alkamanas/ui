@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
@@ -53,20 +54,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       !asChild && (variant === "glass" || variant === "glassPrimary" || variant === "glassDestructive")
 
     if (asChild) {
-      const child = React.Children.toArray(children).find(React.isValidElement) as
-        | React.ReactElement<{ className?: string }>
-        | undefined
-
-      if (child) {
-        return React.cloneElement(child, {
-          ...props,
-          ...child.props,
-          className: cn(buttonClassName, child.props.className),
-          "data-variant": variant ?? "default",
-          "data-size": size ?? "default",
-          ref,
-        } as React.HTMLAttributes<HTMLElement> & { ref: typeof ref })
-      }
+      return (
+        <Slot
+          className={buttonClassName}
+          data-variant={variant ?? "default"}
+          data-size={size ?? "default"}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </Slot>
+      )
     }
 
     return (

@@ -8,17 +8,36 @@ import { PageChrome } from "./docs-shell";
 import { blockPageIds, componentIds, docs } from "./docs-data";
 import { getPrimaryThemeStyle, type BorderAnimationColorId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
 
-function getInitialDoc() {
-  if (typeof window === "undefined") return "blocks";
-  return window.location.hash.replace("#", "") || "blocks";
+const routeIds = new Set([...docs.map((item) => item.id), ...blockPageIds]);
+const routeTransitionMs = 360;
+
+function getHashDoc(fallback = "blocks") {
+  if (typeof window === "undefined") return fallback;
+  const hashId = window.location.hash.replace("#", "");
+  if (!hashId) return fallback;
+  return routeIds.has(hashId) ? hashId : fallback;
 }
 
 export default function App() {
-  const [activeId, setActiveId] = React.useState(getInitialDoc);
+  const [activeId, setActiveId] = React.useState(() => getHashDoc());
+  const [routeMotion, setRouteMotion] = React.useState<"enter" | "exit">("enter");
+  const activeIdRef = React.useRef(activeId);
+  const previousActiveIdRef = React.useRef(activeId);
+  const routeMotionRef = React.useRef(routeMotion);
+  const pendingIdRef = React.useRef<string | null>(null);
+  const routeTimeoutRef = React.useRef<number | undefined>(undefined);
   const [primaryTheme, setPrimaryTheme] = React.useState<PrimaryThemeId>("white");
   const [borderAnimationColor, setBorderAnimationColor] = React.useState<BorderAnimationColorId>("primary");
   const [surfaceGradientColor, setSurfaceGradientColor] = React.useState<SurfaceGradientColorId>("primary");
   const [glassEffect, setGlassEffect] = React.useState<GlassEffectId>("blurry");
+
+  React.useEffect(() => {
+    activeIdRef.current = activeId;
+  }, [activeId]);
+
+  React.useEffect(() => {
+    routeMotionRef.current = routeMotion;
+  }, [routeMotion]);
 
   React.useEffect(() => {
     document.body.classList.add("theme-dark");
@@ -31,9 +50,35 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
-    const onHashChange = () => setActiveId(getInitialDoc());
+    const completeRouteChange = () => {
+      const nextId = pendingIdRef.current;
+      if (!nextId) return;
+
+      pendingIdRef.current = null;
+      previousActiveIdRef.current = activeIdRef.current;
+      setActiveId(nextId);
+      setRouteMotion("enter");
+    };
+
+    const startRouteChange = (nextId: string) => {
+      if (nextId === activeIdRef.current && routeMotionRef.current !== "exit") return;
+
+      pendingIdRef.current = nextId;
+      if (routeTimeoutRef.current) window.clearTimeout(routeTimeoutRef.current);
+      setRouteMotion("exit");
+      routeTimeoutRef.current = window.setTimeout(completeRouteChange, routeTransitionMs);
+    };
+
+    const onHashChange = () => {
+      const nextId = getHashDoc(activeIdRef.current);
+      startRouteChange(nextId);
+    };
+
     window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+      if (routeTimeoutRef.current) window.clearTimeout(routeTimeoutRef.current);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -56,14 +101,18 @@ export default function App() {
   }, [primaryTheme]);
 
   React.useEffect(() => {
-    document.documentElement.dataset.glassEffect = glassEffect;
-    document.body.dataset.glassEffect = glassEffect;
+    document.documentElement.dataset.glassEffect = "blurry";
+    document.documentElement.dataset.glassRealisticStrategy = "auto";
+    document.body.dataset.glassEffect = "blurry";
+    document.body.dataset.glassRealisticStrategy = "auto";
 
     return () => {
       delete document.documentElement.dataset.glassEffect;
+      delete document.documentElement.dataset.glassRealisticStrategy;
       delete document.body.dataset.glassEffect;
+      delete document.body.dataset.glassRealisticStrategy;
     };
-  }, [glassEffect]);
+  }, []);
 
   React.useEffect(() => {
     document.documentElement.dataset.borderAnimationColor = borderAnimationColor;
@@ -90,7 +139,15 @@ export default function App() {
   const ActiveComponentPage = componentPageById[activeDoc.id];
 
   React.useEffect(() => {
-    if (!isBlocksPage || activeId === "blocks") return;
+    const previousActiveId = previousActiveIdRef.current;
+    if (
+      !isBlocksPage ||
+      activeId === "blocks" ||
+      !blockPageIds.has(previousActiveId) ||
+      previousActiveId === activeId
+    ) {
+      return;
+    }
 
     let secondFrame = 0;
     const firstFrame = window.requestAnimationFrame(() => {
@@ -115,7 +172,6 @@ export default function App() {
           keywords: [item.group, item.description],
           onSelect: () => {
             window.location.hash = item.id;
-            setActiveId(item.id);
           },
         })),
       }]}
@@ -131,6 +187,8 @@ export default function App() {
           onSurfaceGradientColorChange={setSurfaceGradientColor}
           glassEffect={glassEffect}
           onGlassEffectChange={setGlassEffect}
+          routeMotion={routeMotion}
+          routeKey={activeId}
         />
       ) : (
         <PageChrome
@@ -143,6 +201,8 @@ export default function App() {
           onSurfaceGradientColorChange={setSurfaceGradientColor}
           glassEffect={glassEffect}
           onGlassEffectChange={setGlassEffect}
+          routeMotion={routeMotion}
+          routeKey={activeId}
         >
           {activeDoc.id === "components" ? <DirectoryPage /> : componentIds.has(activeDoc.id) && ActiveComponentPage ? <ActiveComponentPage doc={activeDoc} /> : <SectionPage doc={activeDoc} />}
           <Separator className="my-12" />

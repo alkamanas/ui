@@ -1,4 +1,9 @@
 @import "./tokens.css";
 @import "./motion.css";
 @import "./surfaces.css";
-@import "./components.css";
+@import "./components/actions.css";
+@import "./components/forms.css";
+@import "./components/navigation.css";
+@import "./components/controls.css";
+@import "./components/display.css";
+@import "./components/motion.css";

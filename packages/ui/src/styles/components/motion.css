@@ -1,0 +1,29 @@
+.alka-tabs-content[data-state="active"] {
+  animation: alka-tabs-in 520ms var(--alka-ease-smooth) both;
+}
+
+@keyframes alka-tabs-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.alka-reduce-motion-safe {
+  transition-property: transform, opacity, color, background-color, border-color, box-shadow;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

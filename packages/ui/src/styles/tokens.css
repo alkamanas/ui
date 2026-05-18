@@ -51,6 +51,12 @@
   inherits: false;
 }
 
+@property --alka-surface-focus-alpha {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: true;
+}
+
 :root,
 .alka-theme-light,
 .theme-light {

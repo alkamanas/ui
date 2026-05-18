@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 
 export const LIQUID_GLASS_FILTER_ID = "alka-liquid-glass-lens"
 export type GlassEffect = "blurry" | "realistic"
+export type GlassRealisticStrategy = "auto" | "static" | "premium"
 
 export type DisplacementOptions = {
   height: number
@@ -16,6 +17,8 @@ export type DisplacementOptions = {
   strength?: number
   chromaticAberration?: number
 }
+
+const displacementFilterCache = new Map<string, string>()
 
 export const getDisplacementMap = ({
   height,
@@ -88,9 +91,14 @@ export const getDisplacementFilter = ({
   depth,
   strength = 100,
   chromaticAberration = 0,
-}: DisplacementOptions) =>
-  "data:image/svg+xml;utf8," +
-  encodeURIComponent(`<svg height="${height}" width="${width}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+}: DisplacementOptions) => {
+  const cacheKey = `${height}:${width}:${radius}:${depth}:${strength}:${chromaticAberration}`
+  const cached = displacementFilterCache.get(cacheKey)
+  if (cached) return cached
+
+  const filter =
+    "data:image/svg+xml;utf8," +
+    encodeURIComponent(`<svg height="${height}" width="${width}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <filter id="displace" color-interpolation-filters="sRGB">
             <feImage x="0" y="0" height="${height}" width="${width}" href="${getDisplacementMap({
@@ -150,7 +158,11 @@ export const getDisplacementFilter = ({
         </filter>
     </defs>
 </svg>`) +
-  "#displace"
+    "#displace"
+
+  displacementFilterCache.set(cacheKey, filter)
+  return filter
+}
 
 export function LiquidGlassFilter() {
   return (
@@ -197,17 +209,50 @@ type GlassEffectMetrics = {
   radius: number
 }
 
+type GlassContextValue = {
+  effect?: GlassEffect
+  realisticStrategy?: GlassRealisticStrategy
+}
+
+const GlassContext = React.createContext<GlassContextValue | null>(null)
+
+export type GlassProviderProps = GlassContextValue & {
+  children?: ReactNode
+}
+
+export function GlassProvider({ children, effect, realisticStrategy = "auto" }: GlassProviderProps) {
+  const value = React.useMemo<GlassContextValue>(
+    () => ({
+      effect,
+      realisticStrategy,
+    }),
+    [effect, realisticStrategy],
+  )
+
+  return <GlassContext.Provider value={value}>{children}</GlassContext.Provider>
+}
+
 function getDocumentGlassEffect(): GlassEffect {
   if (typeof document === "undefined") return "blurry"
   return document.documentElement.dataset.glassEffect === "realistic" ? "realistic" : "blurry"
 }
 
+function getDocumentGlassRealisticStrategy(): GlassRealisticStrategy {
+  if (typeof document === "undefined") return "auto"
+  const strategy = document.documentElement.dataset.glassRealisticStrategy
+  return strategy === "static" || strategy === "premium" ? strategy : "auto"
+}
+
 function useGlassEffect(effect?: GlassEffect) {
-  const [resolvedEffect, setResolvedEffect] = React.useState<GlassEffect>(() => effect ?? getDocumentGlassEffect())
+  const glassContext = React.useContext(GlassContext)
+  const requestedEffect = effect ?? glassContext?.effect
+  const [resolvedEffect, setResolvedEffect] = React.useState<GlassEffect>(
+    () => requestedEffect ?? getDocumentGlassEffect(),
+  )
 
   React.useEffect(() => {
-    if (effect) {
-      setResolvedEffect(effect)
+    if (requestedEffect) {
+      setResolvedEffect(requestedEffect)
       return
     }
 
@@ -220,13 +265,52 @@ function useGlassEffect(effect?: GlassEffect) {
     })
 
     return () => observer.disconnect()
-  }, [effect])
+  }, [requestedEffect])
 
   return resolvedEffect
 }
 
+function useGlassRealisticStrategy(realisticStrategy?: GlassRealisticStrategy) {
+  const glassContext = React.useContext(GlassContext)
+  const requestedStrategy = realisticStrategy ?? glassContext?.realisticStrategy
+  const [resolvedStrategy, setResolvedStrategy] = React.useState<GlassRealisticStrategy>(
+    () => requestedStrategy ?? getDocumentGlassRealisticStrategy(),
+  )
+
+  React.useEffect(() => {
+    if (requestedStrategy) {
+      setResolvedStrategy(requestedStrategy)
+      return
+    }
+
+    const updateStrategy = () => setResolvedStrategy(getDocumentGlassRealisticStrategy())
+    updateStrategy()
+    const observer = new MutationObserver(updateStrategy)
+    observer.observe(document.documentElement, {
+      attributeFilter: ["data-glass-realistic-strategy"],
+      attributes: true,
+    })
+
+    return () => observer.disconnect()
+  }, [requestedStrategy])
+
+  return resolvedStrategy
+}
+
+function resolveRealisticStrategy(
+  strategy: GlassRealisticStrategy,
+  metrics: GlassEffectMetrics | null,
+): Exclude<GlassRealisticStrategy, "auto"> {
+  if (strategy !== "auto") return strategy
+  if (!metrics) return "static"
+
+  const area = metrics.width * metrics.height
+  return metrics.width >= 280 && metrics.height >= 48 && area >= 30000 ? "premium" : "static"
+}
+
 export type GlassElementEffectOptions = {
   effect?: GlassEffect
+  realisticStrategy?: GlassRealisticStrategy
   blur?: number
   depth?: number
   strength?: number
@@ -240,11 +324,12 @@ export const GlassElementBackdrop = React.forwardRef<HTMLSpanElement, GlassEleme
   (
     {
       effect,
+      realisticStrategy,
       className,
-      blur = 2,
-      depth = 8,
-      strength = 72,
-      chromaticAberration = 8,
+      blur = 3.2,
+      depth = 12,
+      strength = 138,
+      chromaticAberration = 32,
       debug = false,
       style,
       ...props
@@ -252,6 +337,7 @@ export const GlassElementBackdrop = React.forwardRef<HTMLSpanElement, GlassEleme
     forwardedRef,
   ) => {
     const resolvedEffect = useGlassEffect(effect)
+    const resolvedStrategy = useGlassRealisticStrategy(realisticStrategy)
     const localRef = React.useRef<HTMLSpanElement | null>(null)
     const [metrics, setMetrics] = React.useState<GlassEffectMetrics | null>(null)
 
@@ -297,9 +383,15 @@ export const GlassElementBackdrop = React.forwardRef<HTMLSpanElement, GlassEleme
       return () => resizeObserver.disconnect()
     }, [resolvedEffect])
 
+    const effectiveStrategy = React.useMemo(
+      () => resolveRealisticStrategy(resolvedStrategy, metrics),
+      [metrics, resolvedStrategy],
+    )
+
     const effectStyle = React.useMemo<CSSProperties>(() => {
       if (resolvedEffect !== "realistic") return style as CSSProperties
       if (!metrics) return style as CSSProperties
+      if (effectiveStrategy !== "premium") return style as CSSProperties
 
       const filter = `blur(${blur / 2}px) url("${getDisplacementFilter({
         ...metrics,
@@ -320,7 +412,7 @@ export const GlassElementBackdrop = React.forwardRef<HTMLSpanElement, GlassEleme
         WebkitBackdropFilter: debug ? undefined : filter,
         backdropFilter: debug ? undefined : filter,
       }
-    }, [blur, chromaticAberration, debug, depth, metrics, resolvedEffect, strength, style])
+    }, [blur, chromaticAberration, debug, depth, effectiveStrategy, metrics, resolvedEffect, strength, style])
 
     if (resolvedEffect !== "realistic") return null
 
@@ -328,6 +420,8 @@ export const GlassElementBackdrop = React.forwardRef<HTMLSpanElement, GlassEleme
       <span
         aria-hidden="true"
         className={cn("alka-glass-element__backdrop", className)}
+        data-glass-effect={resolvedEffect}
+        data-glass-realistic-strategy={effectiveStrategy}
         ref={setRef}
         style={effectStyle}
         {...props}
@@ -339,13 +433,14 @@ GlassElementBackdrop.displayName = "GlassElementBackdrop"
 
 export function GlassElementLayers(props: GlassElementBackdropProps) {
   const resolvedEffect = useGlassEffect(props.effect)
+  const resolvedStrategy = useGlassRealisticStrategy(props.realisticStrategy)
 
   return (
     <>
       <LiquidGlassFilter />
       {resolvedEffect === "realistic" ? (
         <>
-          <GlassElementBackdrop {...props} effect={resolvedEffect} />
+          <GlassElementBackdrop {...props} effect={resolvedEffect} realisticStrategy={resolvedStrategy} />
           <span aria-hidden="true" className="alka-glass-element__tint" />
           <span aria-hidden="true" className="alka-glass-element__shine" />
         </>
@@ -360,9 +455,26 @@ export interface GlassElementProps extends React.HTMLAttributes<HTMLDivElement>,
 }
 
 export const GlassElement = React.forwardRef<HTMLDivElement, GlassElementProps>(
-  ({ children, className, contentClassName, blur, depth, strength, chromaticAberration, debug, ...props }, ref) => (
+  (
+    {
+      children,
+      className,
+      contentClassName,
+      effect,
+      realisticStrategy,
+      blur,
+      depth,
+      strength,
+      chromaticAberration,
+      debug,
+      ...props
+    },
+    ref,
+  ) => (
     <div ref={ref} className={cn("alka-glass-element alka-liquid-glass", className)} {...props}>
       <GlassElementLayers
+        effect={effect}
+        realisticStrategy={realisticStrategy}
         blur={blur}
         depth={depth}
         strength={strength}

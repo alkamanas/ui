@@ -5,6 +5,7 @@ import { axe } from "jest-axe";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { FlipCard } from "@/components/display/flip-card";
+import { ImageCard } from "@/components/display/image-card";
 import { SectionAwareNavbar } from "@/components/navigation/section-aware-navbar";
 import {
   Accordion,
@@ -51,6 +52,7 @@ import {
   CollapsibleTrigger,
   Combobox,
   Command,
+  CommandPaletteProvider,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -143,6 +145,8 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  FloatingPanel,
+  useCommandPalette,
 } from "@/index";
 
 afterEach(() => cleanup());
@@ -151,6 +155,11 @@ const options = [
   { value: "studio", label: "Visetra Studio" },
   { value: "web", label: "Visetra Web" },
 ];
+
+function CommandPaletteTrigger() {
+  const command = useCommandPalette();
+  return <Button onClick={command.open}>Open command palette</Button>;
+}
 
 const cases: Array<[string, React.ReactElement]> = [
   [
@@ -282,6 +291,23 @@ const cases: Array<[string, React.ReactElement]> = [
     </DropdownMenu>,
   ],
   ["flip-card", <FlipCard title="Sector card" description="Description" eyebrow="Sector" />],
+  [
+    "floating-panel",
+    <FloatingPanel>
+      <h2>Floating panel</h2>
+      <p>Panel content</p>
+    </FloatingPanel>,
+  ],
+  [
+    "image-card",
+    <ImageCard
+      imageSrc="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+      imageAlt="Industrial workspace"
+      subtitle="Operations"
+      title="Image card"
+      description="Readable content over imagery."
+    />,
+  ],
   ["input", <Input aria-label="Workspace name" placeholder="workspace" />],
   [
     "input-group",
@@ -323,7 +349,7 @@ const cases: Array<[string, React.ReactElement]> = [
     </Menubar>,
   ],
   [
-    "navbar",
+    "section-aware-navbar",
     <SectionAwareNavbar
       brand={<span>Alkamanas</span>}
       links={[{ href: "#components", label: "Components" }]}
@@ -413,6 +439,19 @@ const cases: Array<[string, React.ReactElement]> = [
       </Tooltip>
     </TooltipProvider>,
   ],
+  [
+    "command-palette",
+    <CommandPaletteProvider
+      groups={[
+        {
+          heading: "Navigation",
+          items: [{ key: "components", title: "Open components", onSelect: () => undefined }],
+        },
+      ]}
+    >
+      <CommandPaletteTrigger />
+    </CommandPaletteProvider>,
+  ],
 ];
 
 describe("component smoke and a11y", () => {
@@ -439,5 +478,27 @@ describe("component smoke and a11y", () => {
     await userEvent.click(screen.getByRole("button", { name: "Open dialog" }));
 
     expect(screen.getByRole("dialog")).toBeTruthy();
+  });
+
+  it("supports command palette opening in jsdom without axe violations", async () => {
+    const { container } = render(
+      <div className="theme-dark">
+        <CommandPaletteProvider
+          groups={[
+            {
+              heading: "Navigation",
+              items: [{ key: "components", title: "Open components", onSelect: () => undefined }],
+            },
+          ]}
+        >
+          <CommandPaletteTrigger />
+        </CommandPaletteProvider>
+      </div>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Open command palette" }));
+
+    expect(screen.getByRole("dialog")).toBeTruthy();
+    await expect(axe(container)).resolves.toHaveNoViolations();
   });
 });

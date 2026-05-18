@@ -155,7 +155,7 @@ function WorkspaceShellBlock() {
               <SidebarRail />
             </Sidebar>
             <div ref={contentColumnRef} className="min-w-0 space-y-4">
-              <div className="alka-liquid-glass flex flex-col gap-3 rounded-3xl border border-white/[0.08] px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="alka-liquid-glass flex flex-col gap-3 rounded-[2rem] border border-white/[0.08] px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:rounded-full">
                 <GlassElementLayers />
                 <div className="flex min-w-0 items-center gap-3">
                   <SidebarExternalTrigger inline className="hidden lg:inline-flex" />
@@ -168,9 +168,9 @@ function WorkspaceShellBlock() {
                   </Breadcrumb>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Combobox surface="bare" className="w-full sm:w-48" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} />
+                  <Combobox size="sm" surface="bare" className="w-full sm:w-48" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} />
                   <Select>
-                    <SelectTrigger surface="bare" className="w-full sm:w-40"><SelectValue placeholder="Cycle" /></SelectTrigger>
+                    <SelectTrigger size="sm" surface="bare" className="w-full sm:w-40"><SelectValue placeholder="Cycle" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="daily">Daily</SelectItem>
                       <SelectItem value="weekly">Weekly</SelectItem>
@@ -264,7 +264,7 @@ function LaunchFormBlock() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="block-name">Project name</Label>
-                <Input id="block-name" placeholder="visetra-studio" />
+                <Input id="block-name" variant="pill" placeholder="visetra-studio" />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="block-domain">Domain</Label>
@@ -277,13 +277,13 @@ function LaunchFormBlock() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <Combobox options={[{ value: "automotive", label: "Automotive" }, { value: "tire", label: "Tire industry" }, { value: "manufacturing", label: "Manufacturing" }]} placeholder="Select industry" />
+              <Combobox surface="flat" options={[{ value: "automotive", label: "Automotive" }, { value: "tire", label: "Tire industry" }, { value: "manufacturing", label: "Manufacturing" }]} placeholder="Select industry" />
               <Select>
-                <SelectTrigger><SelectValue placeholder="Deployment region" /></SelectTrigger>
+                <SelectTrigger surface="flat"><SelectValue placeholder="Deployment region" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="eu">Europe</SelectItem>
                   <SelectItem value="us">United States</SelectItem>
-                  <SelectItem value="tr">Türkiye</SelectItem>
+                  <SelectItem value="tr">Turkey</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -397,9 +397,9 @@ function StorytellingBlock() {
         <div className="grid gap-4">
           <FlipCard
             expandToViewport
-            eyebrow="Ağır yük & süreklilik"
-            title="Lastik Sanayi"
-            description="Flip card block içinde gerçek sektör kartı davranışı."
+            eyebrow="Heavy load and uptime"
+            title="Industrial Tire"
+            description="A production-style sector card tested inside a real block composition."
             image="/assets/sectors/tire-light.webp"
             minHeightClassName="min-h-[18rem]"
           />
@@ -482,7 +482,7 @@ function CommandSurfaceBlock() {
   );
 }
 
-function BlocksTopNav() {
+function BlocksTopNav({ glassEffect }: { glassEffect: GlassEffectId }) {
   return (
     <SectionAwareNavbar
       brand={
@@ -495,6 +495,8 @@ function BlocksTopNav() {
       }
       theme="dark"
       syncThemeMeta={false}
+      glassEffect={glassEffect}
+      glassRealisticStrategy="premium"
       links={[
         { href: "#blocks", label: "Blocks" },
         { href: "#components", label: "Components" },
@@ -515,6 +517,8 @@ export function BlocksPage({
   onSurfaceGradientColorChange,
   glassEffect,
   onGlassEffectChange,
+  routeMotion,
+  routeKey,
 }: {
   primaryTheme: PrimaryThemeId;
   onPrimaryThemeChange: (value: PrimaryThemeId) => void;
@@ -524,11 +528,13 @@ export function BlocksPage({
   onSurfaceGradientColorChange: (value: SurfaceGradientColorId) => void;
   glassEffect: GlassEffectId;
   onGlassEffectChange: (value: GlassEffectId) => void;
+  routeMotion: "enter" | "exit";
+  routeKey: string;
 }) {
   return (
-    <div id="blocks" className="theme-dark docs-shell min-h-dvh text-foreground" data-border-animation-color={borderAnimationColor} data-glass-effect={glassEffect} data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme)}>
+    <div id="blocks" className="theme-dark docs-shell min-h-dvh text-foreground" data-border-animation-color={borderAnimationColor} data-glass-effect="blurry" data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme)}>
       <LiquidGlassFilter />
-      <BlocksTopNav />
+      <BlocksTopNav glassEffect={glassEffect} />
       <PrimaryColorSwitcher
         value={primaryTheme}
         onChange={onPrimaryThemeChange}
@@ -540,14 +546,18 @@ export function BlocksPage({
         onGlassEffectChange={onGlassEffectChange}
         className="fixed bottom-4 right-4 z-40 w-[min(92vw,20rem)] lg:bottom-auto lg:top-28"
       />
-      <main className="relative z-10 mx-auto max-w-[1440px] px-4 pb-14 pt-28 sm:px-6 lg:px-8">
+      <main
+        key={routeKey}
+        className="docs-apple-motion-page relative z-10 mx-auto max-w-[1440px] px-4 pb-14 pt-28 sm:px-6 lg:px-8"
+        data-route-motion={routeMotion}
+      >
         <section id="overview" className="max-w-4xl">
           <Badge variant="secondary" className="rounded-full border-white/10 bg-white/[0.06] text-white/80">Blocks</Badge>
           <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal sm:text-6xl">
             Building blocks for Alkamanas interfaces.
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
-            Component directory’den ayrı bir blok galerisi. Her örnek gerçek `@alkamanas/ui` componentleriyle compose edildi; hover, focus, close motion, glass surface ve responsive davranışları bu sayfada birlikte test edebiliriz.
+            A block gallery separate from the component directory. Every example is composed from real `@alkamanas/ui` components so hover, focus, close motion, glass surfaces and responsive behavior can be tested together.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Button asChild><a href="#components">View Components</a></Button>

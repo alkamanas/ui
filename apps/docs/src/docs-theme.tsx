@@ -14,7 +14,7 @@ const primaryThemeOptions: Record<PrimaryThemeId, {
   swatch: string;
 }> = {
   white: {
-    label: "Beyaz",
+    label: "White",
     primary: "0 0% 100%",
     primaryForeground: "0 0% 2%",
     swatch: "#ffffff",
@@ -26,31 +26,31 @@ const primaryThemeOptions: Record<PrimaryThemeId, {
     swatch: "#c0a46d",
   },
   red: {
-    label: "Kırmızı",
+    label: "Red",
     primary: "5 100% 50%",
     primaryForeground: "0 0% 100%",
     swatch: "#ff1200",
   },
   blue: {
-    label: "Mavi",
+    label: "Blue",
     primary: "221 83% 53%",
     primaryForeground: "0 0% 100%",
     swatch: "#2563eb",
   },
   turquoise: {
-    label: "Turkuaz",
+    label: "Turquoise",
     primary: "187 92% 45%",
     primaryForeground: "0 0% 2%",
     swatch: "#06b6d4",
   },
   green: {
-    label: "Yeşil",
+    label: "Green",
     primary: "142 71% 45%",
     primaryForeground: "0 0% 2%",
     swatch: "#22c55e",
   },
   purple: {
-    label: "Mor",
+    label: "Purple",
     primary: "258 90% 66%",
     primaryForeground: "0 0% 100%",
     swatch: "#8b5cf6",
@@ -118,7 +118,7 @@ export function PrimaryColorSwitcher({
         </span>
         <button
           type="button"
-          aria-label={isCollapsed ? "Selector panelini göster" : "Selector panelini gizle"}
+          aria-label={isCollapsed ? "Show selector panel" : "Hide selector panel"}
           aria-expanded={!isCollapsed}
           onClick={() => setIsCollapsed((current) => !current)}
           className="docs-primary-switcher-toggle grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full border border-white/[0.1] bg-white/[0.04] text-muted-foreground transition-[background-color,border-color,color] duration-300 ease-[var(--alka-ease-smooth)] hover:border-primary/25 hover:bg-primary/10 hover:text-foreground"

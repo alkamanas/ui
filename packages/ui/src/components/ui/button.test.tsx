@@ -11,4 +11,16 @@ describe("Button", () => {
     expect(markup).toContain("alka-liquid-glass");
     expect(markup).toContain("Primary glass");
   });
+
+  it("uses Radix Slot semantics for asChild", () => {
+    const markup = renderToStaticMarkup(
+      <Button asChild>
+        <a href="/docs">Docs</a>
+      </Button>,
+    );
+
+    expect(markup.startsWith("<a ")).toBe(true);
+    expect(markup).toContain('href="/docs"');
+    expect(markup).toContain("alka-button-control");
+  });
 });

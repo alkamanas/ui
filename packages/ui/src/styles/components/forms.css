@@ -1,0 +1,698 @@
+.alka-input-field {
+  position: relative;
+  display: block;
+  min-height: 4rem;
+  width: 100%;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    transform 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    box-shadow 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    background-color 320ms cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.alka-input-field::before,
+.alka-input-field::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  bottom: 0.65rem;
+  left: 1rem;
+  pointer-events: none;
+}
+
+.alka-input-field::before {
+  height: 1px;
+  background: hsl(var(--border) / 0.64);
+}
+
+.alka-input-field::after {
+  right: 1rem;
+  left: 1rem;
+  height: 1.35px;
+  border-radius: 1.15rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    transparent 12%,
+    hsl(var(--alka-border-animation-color, var(--primary)) / 0.52) 28%,
+    hsl(var(--alka-border-animation-color, var(--primary)) / 0.92) 50%,
+    hsl(var(--alka-border-animation-color, var(--primary)) / 0.52) 72%,
+    transparent 88%,
+    transparent
+  );
+  width: auto;
+  background-size: 100% 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: translateX(-12%) scaleX(0.44);
+  transform-origin: left center;
+  transition:
+    opacity 320ms var(--alka-ease-smooth),
+    transform 520ms cubic-bezier(0.34, 0, 0.18, 1);
+}
+
+.alka-input-field:hover:not([data-disabled="true"]) {
+  box-shadow: none;
+}
+
+.alka-input-field[data-selected="true"],
+.alka-input-field:focus-within {
+  transform: none;
+  box-shadow: none;
+}
+
+.alka-input-field[data-selected="true"]::after,
+.alka-input-field:focus-within::after {
+  opacity: 1;
+  transform: translateX(0) scaleX(1);
+}
+
+.alka-input-field[data-variant="underline"][data-closing="true"]::after {
+  animation: alka-input-underline-close 360ms cubic-bezier(0.34, 0, 0.18, 1) both;
+}
+
+@keyframes alka-input-underline-close {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-12%) scaleX(0.44);
+  }
+}
+
+.alka-input-field[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.alka-input-control {
+  position: relative;
+  z-index: 1;
+  height: 4rem;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  padding: 1.65rem 1rem 0.55rem;
+  outline: none;
+  transition:
+    color 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 320ms cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.alka-input-field[data-variant="pill"] {
+  --alka-button-angle: 0deg;
+  --alka-surface-focus-alpha: 0;
+  min-height: 3.125rem;
+  overflow: visible;
+  border-radius: var(--alka-radius-pill);
+}
+
+.alka-input-field[data-variant="pill"]::before {
+  inset: 0;
+  height: auto;
+  border-radius: inherit;
+  clip-path: inset(0 round var(--alka-radius-pill));
+  padding: 1px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+}
+
+.alka-input-field[data-variant="pill"]::after {
+  inset: 1px;
+  height: auto;
+  border-radius: inherit;
+  clip-path: inset(0 round var(--alka-radius-pill));
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
+      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+    ),
+    transparent;
+  opacity: 1;
+  transform: none;
+  transition:
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    background-color 420ms var(--alka-ease-smooth);
+}
+
+.alka-input-field[data-variant="pill"][data-surface="gradient"]::after {
+  --alka-surface-focus-alpha: 1;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
+      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+    ),
+    hsl(var(--background) / 0.58);
+}
+
+.alka-input-field[data-variant="pill"][data-selected="true"],
+.alka-input-field[data-variant="pill"]:focus-within {
+  --alka-surface-focus-alpha: 1;
+}
+
+.alka-input-field[data-variant="pill"][data-closing="true"]:not([data-surface="gradient"]) {
+  --alka-surface-focus-alpha: 0;
+}
+
+.alka-input-field[data-variant="pill"] {
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  box-shadow:
+    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
+}
+
+.alka-input-field[data-variant="pill"] .alka-input-control {
+  height: 3.125rem;
+  padding: 0 3rem 0 1.25rem;
+  line-height: 3.125rem;
+}
+
+.alka-input-field[data-variant="pill"][data-has-label="false"] .alka-input-control {
+  padding: 0 1.25rem;
+}
+
+.alka-input-field[data-variant="pill"] .alka-input-label {
+  top: 50%;
+  left: 1.25rem;
+  color: hsl(var(--muted-foreground) / 0.76);
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  transition:
+    color 300ms var(--alka-ease-smooth),
+    opacity 260ms cubic-bezier(0.34, 0, 0.18, 1),
+    transform 300ms cubic-bezier(0.34, 0, 0.18, 1);
+}
+
+.alka-input-field[data-variant="pill"][data-selected="true"] .alka-input-label,
+.alka-input-field[data-variant="pill"]:focus-within .alka-input-label,
+.alka-input-field[data-variant="pill"][data-filled="true"] .alka-input-label {
+  top: 50%;
+  color: hsl(var(--muted-foreground) / 0.58);
+  opacity: 0;
+  transform: translateY(22%) scale(0.985);
+}
+
+.alka-input-group {
+  --alka-button-angle: 0deg;
+  --alka-surface-focus-alpha: 0;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  height: 3.125rem;
+  min-height: 3.125rem;
+  width: 100%;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  border-radius: var(--alka-radius-pill);
+  background: transparent;
+  box-shadow:
+    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
+  transform: translate3d(0, 0, 0) scale(1);
+  transition:
+    --alka-button-angle 420ms var(--alka-ease-smooth),
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    transform 420ms var(--alka-ease-smooth),
+    border-color 420ms var(--alka-ease-smooth),
+    box-shadow 420ms var(--alka-ease-smooth);
+}
+
+.alka-input-group::before,
+.alka-input-group::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.alka-input-group::before {
+  inset: 0;
+  z-index: 0;
+  padding: 1px;
+  opacity: 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.alka-input-group::after {
+  inset: 1px;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
+      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+    ),
+    transparent;
+  transition:
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    background-color 420ms var(--alka-ease-smooth);
+}
+
+.alka-input-group[data-surface="gradient"]::after {
+  --alka-surface-focus-alpha: 1;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
+      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+    ),
+    hsl(var(--background) / 0.58);
+}
+
+.alka-input-group[data-selected="true"],
+.alka-input-group:focus-within {
+  --alka-surface-focus-alpha: 1;
+  transform: translate3d(0, 0, 0) scale(0.992);
+}
+
+.alka-input-group[data-closing="true"]:not([data-surface="gradient"]) {
+  --alka-surface-focus-alpha: 0;
+}
+
+.alka-input-group-addon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-inline: 1.25rem;
+  color: hsl(var(--muted-foreground) / 0.78);
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.alka-input-group-input-wrap {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  min-width: 0;
+  flex: 1 1 0%;
+}
+
+.alka-input-group-input {
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0 0.25rem;
+  color: hsl(var(--foreground));
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: none;
+}
+
+.alka-input-group-input::placeholder {
+  color: transparent;
+}
+
+.alka-input-group-label {
+  position: absolute;
+  top: 50%;
+  left: 0.25rem;
+  max-width: calc(100% - 0.5rem);
+  overflow: hidden;
+  color: hsl(var(--muted-foreground) / 0.76);
+  font-size: 0.875rem;
+  line-height: 1;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transform: translateY(-50%) scale(1);
+  transform-origin: left top;
+  transition:
+    color 300ms var(--alka-ease-smooth),
+    opacity 260ms cubic-bezier(0.34, 0, 0.18, 1),
+    transform 300ms cubic-bezier(0.34, 0, 0.18, 1);
+  white-space: nowrap;
+}
+
+.alka-input-group:focus-within .alka-input-group-label,
+.alka-input-group-input-wrap[data-filled="true"] .alka-input-group-label {
+  color: hsl(var(--muted-foreground) / 0.58);
+  opacity: 0;
+  transform: translateY(22%) scale(0.985);
+}
+
+.alka-textarea-field {
+  --alka-button-angle: 0deg;
+  --alka-surface-focus-alpha: 0;
+  position: relative;
+  isolation: isolate;
+  display: block;
+  min-height: 8.5rem;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  border-radius: 1.5rem;
+  background: transparent;
+  box-shadow:
+    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
+  transition:
+    --alka-button-angle 420ms var(--alka-ease-smooth),
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    border-color 420ms var(--alka-ease-smooth),
+    box-shadow 420ms var(--alka-ease-smooth);
+}
+
+.alka-textarea-field::before,
+.alka-textarea-field::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.alka-textarea-field::before {
+  inset: 0;
+  z-index: 0;
+  padding: 1px;
+  opacity: 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.alka-textarea-field::after {
+  inset: 1px;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
+      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+    ),
+    transparent;
+  transition:
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    background-color 420ms var(--alka-ease-smooth);
+}
+
+.alka-textarea-field[data-surface="gradient"]::after {
+  --alka-surface-focus-alpha: 1;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
+      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+    ),
+    hsl(var(--background) / 0.58);
+}
+
+.alka-textarea-field[data-selected="true"],
+.alka-textarea-field:focus-within {
+  --alka-surface-focus-alpha: 1;
+}
+
+.alka-textarea-field[data-closing="true"]:not([data-surface="gradient"]) {
+  --alka-surface-focus-alpha: 0;
+}
+
+.alka-textarea-field[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.alka-textarea-control {
+  position: relative;
+  z-index: 1;
+  min-height: 8.5rem;
+  width: 100%;
+  resize: vertical;
+  border: 0;
+  background: transparent;
+  padding: 1.45rem 1.25rem 0.95rem;
+  color: hsl(var(--foreground));
+  font-size: 0.95rem;
+  line-height: 1.55;
+  outline: none;
+}
+
+.alka-textarea-control::placeholder {
+  color: transparent;
+}
+
+.alka-textarea-field[data-has-label="false"] .alka-textarea-control::placeholder {
+  color: hsl(var(--muted-foreground) / 0.68);
+}
+
+.alka-textarea-label {
+  position: absolute;
+  z-index: 2;
+  top: 1.45rem;
+  left: 1.25rem;
+  max-width: calc(100% - 2.5rem);
+  overflow: hidden;
+  color: hsl(var(--muted-foreground) / 0.76);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transform: translateY(0) scale(1);
+  transform-origin: left top;
+  transition:
+    color 300ms var(--alka-ease-smooth),
+    opacity 260ms cubic-bezier(0.34, 0, 0.18, 1),
+    transform 300ms cubic-bezier(0.34, 0, 0.18, 1);
+  white-space: nowrap;
+}
+
+.alka-textarea-field[data-selected="true"] .alka-textarea-label,
+.alka-textarea-field:focus-within .alka-textarea-label,
+.alka-textarea-field[data-filled="true"] .alka-textarea-label {
+  color: hsl(var(--muted-foreground) / 0.58);
+  opacity: 0;
+  transform: translateY(22%) scale(0.985);
+}
+
+.alka-input-otp {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.alka-input-otp-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alka-input-otp-slot {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: 3.125rem;
+  height: 3.125rem;
+  place-items: center;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  border-radius: 1.05rem;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.065), transparent 36%),
+    linear-gradient(135deg, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.032), hsl(var(--background) / 0.64) 48%, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.024)),
+    hsl(var(--background) / 0.58);
+  box-shadow:
+    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1),
+    inset 0 1px 0 hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.07),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.04);
+  color: hsl(var(--foreground));
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1;
+  text-align: center;
+  outline: none;
+  transition:
+    --alka-button-angle 420ms var(--alka-ease-smooth),
+    background-color 320ms var(--alka-ease-smooth),
+    border-color 320ms var(--alka-ease-smooth),
+    box-shadow 320ms var(--alka-ease-smooth),
+    color 320ms var(--alka-ease-smooth),
+    transform 320ms var(--alka-ease-smooth);
+}
+
+.alka-input-otp-slot input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  text-align: center;
+  outline: none;
+}
+
+.alka-input-otp-slot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.alka-input-otp-slot:hover {
+  border-color: hsl(var(--primary) / 0.22);
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.12), transparent 42%),
+    linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--background) / 0.58) 52%, hsl(var(--primary) / 0.06)),
+    hsl(var(--background) / 0.58);
+}
+
+.alka-input-otp-slot[data-selected="true"],
+.alka-input-otp-slot:focus-within,
+.alka-input-otp-slot[data-filled="true"] {
+  border-color: transparent;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.22), transparent 42%),
+    linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--primary) / 0.12));
+  box-shadow:
+    0 14px 32px hsl(var(--alka-shadow-color) / 0.1),
+    0 0 0 1px hsl(var(--primary) / 0.08),
+    inset 0 1px 0 hsl(var(--primary) / 0.12);
+  transform: scale(0.992);
+}
+
+.alka-input-otp-separator {
+  width: 0.65rem;
+  height: 1px;
+  border-radius: 999px;
+  background: hsl(var(--primary) / 0.34);
+}
+
+.alka-input-control::placeholder {
+  color: hsl(var(--muted-foreground) / 0.68);
+}
+
+.alka-input-field[data-has-label="true"] .alka-input-control::placeholder {
+  color: transparent;
+}
+
+.alka-input-field[data-has-label="false"] .alka-input-control {
+  padding: 0.8rem 1rem;
+}
+
+.alka-input-control:focus,
+.alka-input-control:focus-visible {
+  outline: none;
+}
+
+.alka-input-label {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 1rem;
+  max-width: calc(100% - 2rem);
+  overflow: hidden;
+  color: hsl(var(--muted-foreground) / 0.76);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transform: translateY(-50%);
+  transform-origin: left top;
+  transition:
+    color 520ms var(--alka-ease-smooth),
+    top 520ms var(--alka-ease-smooth),
+    transform 520ms var(--alka-ease-smooth);
+  white-space: nowrap;
+}
+
+.alka-input-field[data-selected="true"] .alka-input-label,
+.alka-input-field:focus-within .alka-input-label,
+.alka-input-field[data-filled="true"] .alka-input-label {
+  top: 0.8rem;
+  color: hsl(var(--primary) / 0.82);
+  transform: translateY(0) scale(0.78);
+}
+
+.alka-input-field[data-variant="pill"][data-selected="true"] .alka-input-label,
+.alka-input-field[data-variant="pill"]:focus-within .alka-input-label,
+.alka-input-field[data-variant="pill"][data-filled="true"] .alka-input-label {
+  top: 50%;
+  color: hsl(var(--muted-foreground) / 0.58);
+  opacity: 0;
+  transform: translateY(22%) scale(0.985);
+}
+
+.alka-input-field-compact {
+  min-height: 2.25rem;
+  border-radius: 0.9rem;
+  box-shadow: none;
+}
+
+.alka-input-field-compact::before,
+.alka-input-field-compact::after {
+  right: 0.75rem;
+  bottom: 0.42rem;
+  left: 0.75rem;
+}
+
+.alka-input-field-compact::after {
+  height: 1px;
+}
+
+.alka-input-field-compact .alka-input-control {
+  height: 2.25rem;
+  padding: 0.45rem 0.75rem;
+}
+
+.alka-input-field-compact .alka-input-label {
+  left: 0.75rem;
+  font-size: 0.78rem;
+}

@@ -108,14 +108,23 @@ const SelectGroup = SelectPrimitive.Group
 
 const SelectValue = SelectPrimitive.Value
 
+export type SelectTriggerSize = "default" | "sm" | "lg"
+
+const selectTriggerSizeClasses: Record<SelectTriggerSize, string> = {
+  default: "h-[3.125rem] px-5 text-sm",
+  sm: "h-10 px-4 text-xs",
+  lg: "h-12 px-6 text-base",
+}
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
     borderAnimationColor?: BorderAnimationColor
+    size?: SelectTriggerSize
     surface?: "flat" | "gradient" | "bare"
     surfaceGradientColor?: SurfaceGradientColor
   }
->(({ className, children, borderAnimationColor, surface = "gradient", surfaceGradientColor, ...props }, ref) => {
+>(({ className, children, borderAnimationColor, size = "default", surface = "gradient", surfaceGradientColor, ...props }, ref) => {
   const { closing } = React.useContext(SelectMotionContext)
 
   return (
@@ -123,10 +132,12 @@ const SelectTrigger = React.forwardRef<
       ref={ref}
       data-border-animation-color={borderAnimationColor}
       data-closing={closing ? "true" : undefined}
+      data-size={size}
       data-surface={surface}
       data-surface-gradient-color={surfaceGradientColor}
       className={cn(
-        "alka-button-control alka-combobox-trigger flex h-[3.125rem] w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-background/72 px-5 py-0 text-sm font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-background/72 py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        selectTriggerSizeClasses[size],
         className
       )}
       {...props}

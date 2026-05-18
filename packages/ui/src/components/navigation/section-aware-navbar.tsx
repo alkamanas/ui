@@ -5,7 +5,13 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter";
+import {
+  GlassElementLayers,
+  LiquidGlassFilter,
+  type GlassEffect,
+  type GlassRealisticStrategy,
+} from "@/components/surfaces/liquid-glass-filter";
+import { buttonVariants } from "@/components/ui/button";
 
 type NavbarTheme = "light" | "dark";
 
@@ -47,6 +53,8 @@ export type SectionAwareNavbarProps = {
   syncThemeMeta?: boolean;
   sectionSelector?: string;
   probeY?: number;
+  glassEffect?: GlassEffect;
+  glassRealisticStrategy?: GlassRealisticStrategy;
   mobileMenuLabel?: string;
   mobileMenuCloseLabel?: string;
 };
@@ -161,6 +169,8 @@ export function SectionAwareNavbar({
   syncThemeMeta = true,
   sectionSelector,
   probeY,
+  glassEffect,
+  glassRealisticStrategy,
   mobileMenuLabel = "Open menu",
   mobileMenuCloseLabel = "Close menu",
 }: SectionAwareNavbarProps) {
@@ -185,6 +195,7 @@ export function SectionAwareNavbar({
   const resolvedTheme = theme === "auto" ? activeTheme : theme;
   const useDarkTheme = resolvedTheme === "dark";
   const showPanel = mobileOpen || desktopMenuOpen || !isAtTop;
+  const showPanelGlass = showPanel && !mobileOpen;
 
   const mobileOverlayVariants: Variants = {
     closed: { pointerEvents: "none" as const, transition: { duration: 0.48 } },
@@ -215,6 +226,10 @@ export function SectionAwareNavbar({
   const mobileMenuTextClass = useDarkTheme ? "text-white" : "text-[#1d1d1f]";
   const mobileMenuMutedClass = useDarkTheme ? "text-white/56" : "text-[#6e6e73]";
   const mobileMenuBorderClass = useDarkTheme ? "border-white/12" : "border-black/10";
+  const navbarGlassOptions = {
+    effect: glassEffect,
+    realisticStrategy: glassRealisticStrategy,
+  };
 
   const renderDesktopLink = (item: NavbarLinkItem) => (
     <LinkComponent
@@ -222,7 +237,7 @@ export function SectionAwareNavbar({
       href={item.href}
       onClick={item.onSelect as React.MouseEventHandler<HTMLElement> | undefined}
       className={cn(
-        "rounded-full px-4 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] transition-all duration-300",
+        "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
         navTextClass,
       )}
     >
@@ -241,13 +256,14 @@ export function SectionAwareNavbar({
         className,
       )}
     >
-      <GlassElementLayers />
+      <LiquidGlassFilter />
       <div
-        className="relative z-20 mx-auto max-w-7xl px-4 pt-0 sm:px-6 lg:px-8"
+        data-panel-visible={showPanelGlass ? "true" : "false"}
+        className="alka-navbar-shell relative z-20 mx-auto px-4 pt-0 sm:px-6 lg:px-8"
         onMouseLeave={() => setDesktopMenuOpen(false)}
       >
         <div
-          data-quiet={showPanel && !mobileOpen ? undefined : "true"}
+          data-quiet={showPanelGlass ? undefined : "true"}
           className={cn(
             "alka-navbar-panel alka-liquid-glass flex h-16 items-center justify-between rounded-full border px-5 transition-all duration-300 sm:px-7",
             mobileOpen
@@ -258,7 +274,7 @@ export function SectionAwareNavbar({
             panelClassName,
           )}
         >
-          <GlassElementLayers />
+          {showPanelGlass ? <GlassElementLayers {...navbarGlassOptions} /> : null}
           <LinkComponent href="/" className="flex min-w-0 items-center">
             {brand}
           </LinkComponent>
@@ -271,7 +287,7 @@ export function SectionAwareNavbar({
                 onMouseEnter={() => setDesktopMenuOpen(true)}
                 aria-expanded={desktopMenuOpen}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-full px-4 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] transition-all duration-300",
+                  "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
                   desktopMenuOpen
                     ? useDarkTheme
                       ? "bg-white/10 text-white"
@@ -297,7 +313,7 @@ export function SectionAwareNavbar({
               <LinkComponent
                 href={cta.href}
                 onClick={cta.onSelect as React.MouseEventHandler<HTMLElement> | undefined}
-                className="rounded-full bg-primary px-5 py-3 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-primary-foreground shadow-[0_10px_24px_hsl(var(--alka-primary)_/_0.22)] transition-colors hover:bg-primary/90"
+                className={buttonVariants({ variant: "default", size: "sm" })}
               >
                 {cta.label}
               </LinkComponent>
@@ -347,7 +363,7 @@ export function SectionAwareNavbar({
               )}
               onMouseEnter={() => setDesktopMenuOpen(true)}
             >
-              <GlassElementLayers />
+              <GlassElementLayers {...navbarGlassOptions} />
               <div className="grid gap-3 lg:grid-cols-[1.05fr_1fr]">
                 <div className={cn("rounded-[1.5rem] p-4", useDarkTheme ? "bg-white/[0.04]" : "bg-black/[0.025]")}>
                   {menu.eyebrow ? (
@@ -550,7 +566,7 @@ export function SectionAwareNavbar({
                       closeMobileMenu();
                       cta.onSelect?.();
                     }}
-                    className="rounded-full bg-primary px-5 py-2.5 text-[13px] font-semibold text-primary-foreground shadow-[0_10px_24px_hsl(var(--alka-primary)_/_0.22)] transition-colors hover:bg-primary/90"
+                    className={cn(buttonVariants({ variant: "default", size: "sm" }), "text-[13px]")}
                   >
                     {cta.label}
                   </LinkComponent>

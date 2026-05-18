@@ -85,6 +85,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   FlipCard,
+  ImageCard,
   Input,
   InputGroup,
   InputGroupAddon,
@@ -576,7 +577,21 @@ export function ComponentPreview({ id }: { id: string }) {
   if (id === "toggle-group") return <ToggleGroup defaultValue="center"><ToggleGroupItem value="left">Left</ToggleGroupItem><ToggleGroupItem value="center">Center</ToggleGroupItem><ToggleGroupItem value="right">Right</ToggleGroupItem></ToggleGroup>;
   if (id === "tooltip") return <TooltipProvider><Tooltip><TooltipTrigger asChild><Button variant="outline">Hover</Button></TooltipTrigger><TooltipContent>Tooltip content</TooltipContent></Tooltip></TooltipProvider>;
   if (id === "flip-card") {
-    return <div className="alka-theme-dark w-full max-w-xl rounded-3xl bg-[#050505] p-6 text-white"><FlipCard expandToViewport eyebrow="Ağır yük & süreklilik" title="Lastik Sanayi" description="Kart kendi konumundan çıkarak viewport dialog'a büyür." image="/assets/sectors/tire-light.webp" minHeightClassName="min-h-[20rem]" /></div>;
+    return <div className="alka-theme-dark w-full max-w-xl rounded-3xl bg-[#050505] p-6 text-white"><FlipCard expandToViewport eyebrow="Heavy load and uptime" title="Industrial Tire" description="The card expands from its own position into a viewport dialog." image="/assets/sectors/tire-light.webp" minHeightClassName="min-h-[20rem]" /></div>;
+  }
+  if (id === "image-card") {
+    return (
+      <div className="w-full max-w-[26rem]">
+        <ImageCard
+          className="aspect-[3/4] min-h-0"
+          imageSrc="/assets/sectors/automotive-light.webp"
+          imageAlt="Close-up of an automotive manufacturing surface"
+          subtitle="Manufacturing"
+          title="Industrial intelligence"
+          description="A full-bleed image card with a masked blurred copy area."
+        />
+      </div>
+    );
   }
   return <div className="rounded-2xl border border-dashed border-white/[0.12] p-8 text-sm text-muted-foreground">Preview is available through the exported primitive API.</div>;
 }

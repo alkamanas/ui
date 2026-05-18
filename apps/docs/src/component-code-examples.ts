@@ -376,13 +376,26 @@ export function FlipCardDemo() {
     <div className="alka-theme-dark w-full max-w-xl rounded-3xl bg-[#050505] p-6 text-white">
       <FlipCard
         expandToViewport
-        eyebrow="Ağır yük & süreklilik"
-        title="Lastik Sanayi"
-        description="Kart kendi konumundan çıkarak viewport dialog'a büyür."
+        eyebrow="Heavy load and uptime"
+        title="Industrial Tire"
+        description="The card expands from its own position into a viewport dialog."
         image="/assets/sectors/tire-light.webp"
         minHeightClassName="min-h-[20rem]"
       />
     </div>
+  );
+}`,
+  "image-card": `import { ImageCard } from "@alkamanas/ui";
+
+export function ImageCardDemo() {
+  return (
+    <ImageCard
+      imageSrc="/assets/sectors/automotive-light.webp"
+      imageAlt="Close-up of an automotive manufacturing surface"
+      subtitle="Manufacturing"
+      title="Industrial intelligence"
+      description="A full-bleed image card with a gradient-masked blurred copy area."
+    />
   );
 }`,
   input: `import { Badge, Input } from "@alkamanas/ui";

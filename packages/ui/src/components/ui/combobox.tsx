@@ -23,6 +23,8 @@ export type ComboboxOption = {
   keywords?: string[]
 }
 
+export type ComboboxSize = "default" | "sm" | "lg"
+
 export type ComboboxProps = {
   options: ComboboxOption[]
   value?: string
@@ -31,10 +33,17 @@ export type ComboboxProps = {
   searchPlaceholder?: string
   emptyText?: string
   surface?: "flat" | "gradient" | "bare"
+  size?: ComboboxSize
   borderAnimationColor?: BorderAnimationColor
   surfaceGradientColor?: SurfaceGradientColor
   className?: string
   onValueChange?: (value: string) => void
+}
+
+const comboboxSizeClasses: Record<ComboboxSize, string> = {
+  default: "h-[3.125rem] px-5 text-sm",
+  sm: "h-10 px-4 text-xs",
+  lg: "h-12 px-6 text-base",
 }
 
 function Combobox({
@@ -45,6 +54,7 @@ function Combobox({
   searchPlaceholder = "Search...",
   emptyText = "No results found.",
   surface = "gradient",
+  size = "default",
   borderAnimationColor,
   surfaceGradientColor,
   className,
@@ -52,6 +62,7 @@ function Combobox({
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [closing, setClosing] = React.useState(false)
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
   const closeTimeoutRef = React.useRef<number | undefined>(undefined)
   const [internalValue, setInternalValue] = React.useState(defaultValue ?? "")
   const selectedValue = value ?? internalValue
@@ -71,6 +82,7 @@ function Combobox({
 
     setOpen(false)
     setClosing(true)
+    requestAnimationFrame(() => triggerRef.current?.blur())
     closeTimeoutRef.current = window.setTimeout(() => setClosing(false), 300)
   }, [closing, open])
 
@@ -96,7 +108,9 @@ function Combobox({
     <Popover open={popoverOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <Button
+          ref={triggerRef}
           variant="outline"
+          size={size}
           role="combobox"
           aria-label={selectedOption?.label ?? placeholder}
           aria-expanded={open}
@@ -111,7 +125,8 @@ function Combobox({
             closeCombobox()
           }}
           className={cn(
-            "alka-combobox-trigger h-[3.125rem] w-full justify-between rounded-full bg-background/72 px-5 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
+            "alka-combobox-trigger w-full justify-between rounded-full bg-background/72 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
+            comboboxSizeClasses[size],
             className
           )}
         >
@@ -126,6 +141,10 @@ function Combobox({
         glass={false}
         sideOffset={8}
         data-closing={closing ? "true" : undefined}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault()
+          triggerRef.current?.blur()
+        }}
         className="alka-select-content alka-liquid-glass w-[var(--radix-popover-trigger-width)] overflow-hidden rounded-3xl p-2"
       >
         <GlassElementLayers />

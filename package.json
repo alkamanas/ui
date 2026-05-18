@@ -21,12 +21,14 @@
     "dev": "pnpm --filter @alkamanas/ui build && pnpm --filter @alkamanas/docs dev",
     "lint": "eslint apps/docs/src apps/docs/vite.config.ts packages/ui/src packages/cli/src",
     "test": "vitest run --config packages/ui/vitest.config.ts",
+    "test:check": "node scripts/check-component-a11y-coverage.mjs",
+    "test:coverage-check": "pnpm test:check",
     "typecheck": "pnpm --filter @alkamanas/ui typecheck && pnpm --filter @alkamanas/cli typecheck && pnpm --filter @alkamanas/docs typecheck",
     "pack:ui": "pnpm --dir packages/ui pack --pack-destination /tmp",
     "pack:cli": "pnpm --dir packages/cli pack --pack-destination /tmp",
     "registry:update": "node scripts/update-registry.mjs",
     "registry:check": "node scripts/update-registry.mjs --check",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check && pnpm build && pnpm pack:ui && pnpm pack:cli"
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:check && pnpm registry:check && pnpm build && pnpm pack:ui && pnpm pack:cli"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.7",

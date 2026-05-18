@@ -42,6 +42,7 @@ import { TogglePage } from "./toggle";
 import { ToggleGroupPage } from "./toggle-group";
 import { TooltipPage } from "./tooltip";
 import { FlipCardPage } from "./flip-card";
+import { ImageCardPage } from "./image-card";
 import type { ComponentPageComponent } from "./shared";
 
 export const componentPageById: Record<string, ComponentPageComponent> = {
@@ -89,4 +90,5 @@ export const componentPageById: Record<string, ComponentPageComponent> = {
   "toggle-group": ToggleGroupPage,
   "tooltip": TooltipPage,
   "flip-card": FlipCardPage,
+  "image-card": ImageCardPage,
 };

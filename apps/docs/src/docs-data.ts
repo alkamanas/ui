@@ -104,6 +104,14 @@ export const docs: DocItem[] = [
     importCode: 'import { FlipCard } from "@alkamanas/ui";',
   },
   {
+    id: "image-card",
+    title: "Image Card",
+    group: "Patterns",
+    description: "Image-first card with a gradient-masked blurred content area for title, subtitle and description.",
+    command: "npx alka add image-card",
+    importCode: 'import { ImageCard } from "@alkamanas/ui";',
+  },
+  {
     id: "registry",
     title: "Registry",
     group: "Registry",

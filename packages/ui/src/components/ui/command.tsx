@@ -6,7 +6,7 @@ import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 
 const Command = React.forwardRef<
@@ -38,6 +38,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
         showCloseButton={false}
         className="max-w-xl gap-0 overflow-visible p-0"
       >
+        <DialogTitle className="sr-only">Command palette</DialogTitle>
         <Command className="min-h-[22rem]">
           {children}
         </Command>

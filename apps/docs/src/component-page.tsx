@@ -7,14 +7,14 @@ import { CodeBlock } from "./docs-shell";
 
 export function DirectoryPage() {
   return (
-    <div>
+    <div className="docs-component-page">
       <section id="overview" className="max-w-3xl">
         <Badge variant="secondary" className="rounded-full border-white/10 bg-white/[0.06] text-white/80">Directory</Badge>
         <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal sm:text-5xl">
           Components Directory
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Soldaki floating panelden component seçip preview, import ve registry örneklerine geçebilirsin.
+          Select a component from the floating sidebar to inspect its preview, import path and registry command.
         </p>
       </section>
       <section id="preview" className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -45,7 +45,7 @@ export function SectionPage({ doc }: { doc: DocItem }) {
   };
 
   return (
-    <div>
+    <div className="docs-component-page">
       <section id="overview" className="max-w-3xl">
         <Badge variant="secondary" className="rounded-full">{doc.group}</Badge>
         <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal sm:text-5xl">{doc.title}</h1>

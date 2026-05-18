@@ -1,8 +1,8 @@
 # @alkamanas/ui
 
-Premium React UI primitives, motion patterns, and design tokens for Alkamanas applications.
+React primitives, theme tokens, motion patterns, and glass surface components for Alkamanas interfaces.
 
-The package is extracted from the Visetra Studio and Visetra Web interface systems. It preserves the dark glass dashboard aesthetic, section-aware navbar behavior, smooth mobile navigation motion, and viewport-expanding flip card pattern.
+This package contains the public component library used by the Alkamanas UI workspace. It is built for product screens that need dense layouts, polished form controls, animated overlays, section-aware navigation, and reusable glass surfaces.
 
 ## Install
 
@@ -10,24 +10,45 @@ The package is extracted from the Visetra Studio and Visetra Web interface syste
 pnpm add @alkamanas/ui
 ```
 
+Import styles once in your application:
+
 ```tsx
-import { Button, Input, Sheet, Tabs } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
 ```
 
-## Usage
+Then import components from the package entrypoint:
 
 ```tsx
-import { Button, Card, CardContent, CardHeader, CardTitle } from "@alkamanas/ui";
+import { Button, Card, Input, Sheet, Tabs } from "@alkamanas/ui";
+```
+
+## Peer Dependencies
+
+The package expects React and React DOM from the host app:
+
+```bash
+pnpm add react react-dom
+```
+
+Optional peers:
+
+- `lucide-react`: used by examples and icon-forward components.
+- `react-hook-form`: used by form integrations.
+
+## Quick Example
+
+```tsx
+import { Button, Card, CardContent, CardHeader, CardTitle, Input } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
 
-export function Example() {
+export function LoginPanel() {
   return (
-    <Card>
+    <Card className="max-w-md">
       <CardHeader>
-        <CardTitle>Workspace</CardTitle>
+        <CardTitle>Access workspace</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="grid gap-4">
+        <Input variant="pill" placeholder="Email address" />
         <Button>Continue</Button>
       </CardContent>
     </Card>
@@ -35,39 +56,172 @@ export function Example() {
 }
 ```
 
-## Highlights
+## Component Catalog
 
-- Token-driven light and dark themes.
-- Token-driven primary color system with white default in dark mode.
-- Semantic `success`, `warning`, `info` and `chart-1..5` tokens for product dashboards and status surfaces.
-- Shared glass system with blurry and realistic chromatic modes.
-- Solid and glass button variants with subtle hover feedback.
-- Apple-inspired bottom-attached Sheet with `size="sm" | "md" | "lg" | "xl"`.
-- Animated Tabs and Carousel pagination with glass pill surfaces.
-- Code-copy friendly primitives powered by Radix UI.
-- Visetra Web style section-aware navbar and flip cards.
+### Actions
+
+- `Button`
+- `ButtonGroup`
+- `Toggle`
+- `ToggleGroup`
+
+### Forms
+
+- `Checkbox`
+- `Combobox`
+- `Input`
+- `InputGroup`
+- `InputOTP`
+- `Label`
+- `RadioGroup`
+- `Select`
+- `Slider`
+- `Switch`
+- `Textarea`
+
+### Overlays
+
+- `AlertDialog`
+- `ContextMenu`
+- `Dialog`
+- `Drawer`
+- `DropdownMenu`
+- `Popover`
+- `Sheet`
+- `Toast`
+- `Tooltip`
+
+### Navigation
+
+- `Breadcrumb`
+- `Menubar`
+- `SectionAwareNavbar`
+- `Sidebar`
+- `Tabs`
+
+### Display And Feedback
+
+- `Accordion`
+- `Avatar`
+- `Badge`
+- `Card`
+- `Carousel`
+- `Collapsible`
+- `Direction`
+- `FlipCard`
+- `ImageCard`
+- `Item`
+- `Kbd`
+- `Progress`
+- `ScrollArea`
+- `Separator`
+- `Spinner`
+
+### Command And Shell
+
+- `Command`
+- `CommandPalette`
+- `FloatingPanel`
+
+## Glass Surfaces
+
+The library includes a shared glass system used by cards, nav surfaces, overlays, items, and shell panels.
+
+```tsx
+import { GlassProvider, SectionAwareNavbar } from "@alkamanas/ui";
+
+export function Shell() {
+  return (
+    <GlassProvider effect="blurry" realisticStrategy="auto">
+      <SectionAwareNavbar
+        theme="dark"
+        brand={<span>Alkamanas UI</span>}
+        links={[{ href: "#components", label: "Components" }]}
+      />
+    </GlassProvider>
+  );
+}
+```
+
+Glass options:
+
+- `effect="blurry"`: default cost-efficient blur treatment.
+- `effect="realistic"`: chromatic displacement glass.
+- `realisticStrategy="auto"`: automatic cost-aware strategy.
+- `realisticStrategy="static"`: shared static lens treatment.
+- `realisticStrategy="premium"`: per-surface displacement treatment.
+
+Individual components can override provider defaults when they expose glass props, for example:
+
+```tsx
+<SectionAwareNavbar
+  theme="dark"
+  glassEffect="realistic"
+  glassRealisticStrategy="premium"
+  brand={<span>Alkamanas UI</span>}
+/>
+```
+
+## Theme Scopes
+
+Use theme scopes when light and dark surfaces live on the same route:
+
+```tsx
+<section className="alka-theme-dark theme-dark">
+  <DarkDashboard />
+</section>
+
+<section className="alka-theme-light theme-light">
+  <LightPanel />
+</section>
+```
+
+The token system includes primary color, semantic status colors, chart colors, glass surfaces, border animation colors, surface gradients, radius, shadow, blur, and motion variables.
+
+## Section-Aware Navbar
+
+`SectionAwareNavbar` can follow page sections marked with `data-navbar-theme`:
+
+```tsx
+<section data-navbar-theme="dark" data-theme-color="#050505">
+  <DarkHero />
+</section>
+
+<section data-navbar-theme="light" data-theme-color="#f5f5f7">
+  <LightContent />
+</section>
+```
+
+The navbar can switch contrast, sync theme metadata, and hide the panel while it is at the top of the page.
 
 ## Package Format
 
-This package is ESM-only and publishes a single JavaScript entrypoint. CommonJS `require()` is not supported; older Jest or Node setups need ESM-aware configuration or transpilation. Component subpath exports are intentionally omitted until the build emits real per-component chunks and declarations.
-
-## Exports
-
-The main package export includes all components:
+`@alkamanas/ui` is ESM-only. CommonJS `require()` is not supported.
 
 ```tsx
-import { Button, Dialog, Sheet, SectionAwareNavbar, FlipCard } from "@alkamanas/ui";
-```
-
-Styles are exported separately:
-
-```tsx
+import { Button, Dialog, Sheet } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
 ```
 
-## Publish
+The package currently publishes one JavaScript entrypoint plus a stylesheet. Subpath component exports are intentionally omitted until the build emits real per-component chunks and declarations.
 
-This package is intended to be published under the `@alkamanas` npm organization:
+## Development
+
+From the workspace root:
+
+```bash
+pnpm --filter @alkamanas/ui typecheck
+pnpm --filter @alkamanas/ui test
+pnpm --filter @alkamanas/ui build
+```
+
+Update registry metadata after changing public component source:
+
+```bash
+pnpm registry:update
+```
+
+## Publishing
 
 ```bash
 pnpm --filter @alkamanas/ui build

@@ -59,6 +59,104 @@ body {
       linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.42));
   }
 
+  .docs-apple-motion-page {
+    --docs-apple-enter-duration: 920ms;
+    --docs-apple-exit-duration: 360ms;
+    --docs-apple-stagger: 56ms;
+    transform-origin: 50% 0%;
+  }
+
+  .docs-apple-motion-page[data-route-motion="exit"] {
+    pointer-events: none;
+  }
+
+  .docs-apple-motion-page > :where(section, article),
+  .docs-component-page > :where(section, article),
+  .docs-component-page #preview > :where(article),
+  .docs-component-page > section > :where(div) {
+    will-change: opacity, transform, filter;
+  }
+
+  .docs-apple-motion-page[data-route-motion="enter"] > :where(section, article),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > :where(section, article),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page #preview > :where(article),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > section > :where(div) {
+    animation: docs-apple-block-appear 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--docs-apple-local-delay, 0ms) + 70ms);
+  }
+
+  .docs-apple-motion-page[data-route-motion="enter"] > :nth-child(1),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > :nth-child(1),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page #preview > :nth-child(1),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > section > :nth-child(1) {
+    --docs-apple-local-delay: 0ms;
+  }
+
+  .docs-apple-motion-page[data-route-motion="enter"] > :nth-child(2),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > :nth-child(2),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page #preview > :nth-child(2),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > section > :nth-child(2) {
+    --docs-apple-local-delay: calc(var(--docs-apple-stagger) * 1);
+  }
+
+  .docs-apple-motion-page[data-route-motion="enter"] > :nth-child(3),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > :nth-child(3),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page #preview > :nth-child(3),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > section > :nth-child(3) {
+    --docs-apple-local-delay: calc(var(--docs-apple-stagger) * 2);
+  }
+
+  .docs-apple-motion-page[data-route-motion="enter"] > :nth-child(4),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > :nth-child(4),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page #preview > :nth-child(4),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > section > :nth-child(4) {
+    --docs-apple-local-delay: calc(var(--docs-apple-stagger) * 3);
+  }
+
+  .docs-apple-motion-page[data-route-motion="enter"] > :nth-child(n + 5),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > :nth-child(n + 5),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page #preview > :nth-child(n + 5),
+  .docs-apple-motion-page[data-route-motion="enter"] .docs-component-page > section > :nth-child(n + 5) {
+    --docs-apple-local-delay: calc(var(--docs-apple-stagger) * 4);
+  }
+
+  .docs-apple-motion-page[data-route-motion="exit"] > :where(section, article),
+  .docs-apple-motion-page[data-route-motion="exit"] .docs-component-page > :where(section, article),
+  .docs-apple-motion-page[data-route-motion="exit"] .docs-component-page #preview > :where(article),
+  .docs-apple-motion-page[data-route-motion="exit"] .docs-component-page > section > :where(div) {
+    animation: docs-apple-block-disappear 240ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  }
+
+  @keyframes docs-apple-block-appear {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 1.45rem, 0);
+      filter: blur(7px);
+    }
+    45% {
+      opacity: 1;
+      filter: blur(2px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes docs-apple-block-disappear {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(0, -0.55rem, 0);
+      filter: blur(5px);
+    }
+  }
+
   .docs-primary-switcher {
     --docs-switcher-handle-size: 4.25rem;
     transform: translate3d(0, 0, 0);
@@ -202,6 +300,19 @@ body {
 
     .docs-primary-switcher[data-collapsed="true"] .docs-primary-switcher-toggle svg {
       transform: rotate(180deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .docs-apple-motion-page,
+    .docs-apple-motion-page > :where(section, article),
+    .docs-component-page > :where(section, article),
+    .docs-component-page #preview > :where(article),
+    .docs-component-page > section > :where(div) {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      filter: none !important;
+      transform: none !important;
     }
   }
 
