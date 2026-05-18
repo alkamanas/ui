@@ -15,7 +15,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "bin": {
-    "alka": "./dist/index.js"
+    "alka": "dist/index.js"
   },
   "files": [
     "dist",
