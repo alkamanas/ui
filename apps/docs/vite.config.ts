@@ -14,6 +14,5 @@ export default defineConfig({
       "@alkamanas/ui": resolve(__dirname, "../../packages/ui/src/index.ts"),
       "@": resolve(__dirname, "../../packages/ui/src"),
     },
-    preserveSymlinks: true,
   },
 });
