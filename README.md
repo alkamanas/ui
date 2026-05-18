@@ -18,11 +18,12 @@ The library currently includes core primitives such as Button, Input, Sheet, Dia
 - Viewport-expanding flip cards.
 - Apple-inspired sheet, carousel, tabs, and disclosure interactions.
 - Shared glass panel and pill surface standards.
+- Semantic `success`, `warning`, `info`, and `chart-1..5` tokens for dashboards, badges, and stat visuals.
 
 ## Install
 
 ```bash
-npm install @alkamanas/ui
+pnpm add @alkamanas/ui
 ```
 
 ```tsx
@@ -33,27 +34,42 @@ import "@alkamanas/ui/styles.css";
 ## Development
 
 ```bash
-npm install
-npm run typecheck
-npm run lint
-npm run build
-npm run dev
+corepack enable
+pnpm install
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm build
+pnpm dev
 ```
 
 The docs app runs with Vite and is the primary playground:
 
 ```bash
-npm run dev -w @alkamanas/docs
+pnpm --filter @alkamanas/docs dev
 ```
+
+This repository uses pnpm workspaces. Do not commit npm `package-lock.json`; `pnpm-lock.yaml` is the canonical lockfile.
+
+## Package Format
+
+`@alkamanas/ui` is ESM-only. CommonJS `require()` is not supported; older Jest or Node setups need ESM-aware configuration or transpilation. The package exposes one JavaScript entrypoint plus the stylesheet:
+
+```tsx
+import { Button, Card } from "@alkamanas/ui";
+import "@alkamanas/ui/styles.css";
+```
+
+Subpath component exports are intentionally not listed until the build creates real per-component entrypoints.
 
 ## Publishing
 
 Packages are scoped under the `@alkamanas` npm organization. Publishing should be performed by an npm account that has access to the `alkamanas` owner scope.
 
 ```bash
-npm run build
-npm publish -w @alkamanas/ui --access public
-npm publish -w @alkamanas/cli --access public
+pnpm build
+pnpm --filter @alkamanas/ui publish --access public
+pnpm --filter @alkamanas/cli publish --access public
 ```
 
 `@alkamanas/docs` is private and ignored by Changesets.
@@ -63,8 +79,5 @@ npm publish -w @alkamanas/cli --access public
 Before pushing or publishing, run:
 
 ```bash
-npm run typecheck
-npm run lint
-npm run build
-npm run pack:ui
+pnpm verify
 ```

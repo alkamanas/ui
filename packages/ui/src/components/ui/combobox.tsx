@@ -54,7 +54,6 @@ function Combobox({
   const [closing, setClosing] = React.useState(false)
   const closeTimeoutRef = React.useRef<number | undefined>(undefined)
   const [internalValue, setInternalValue] = React.useState(defaultValue ?? "")
-  const [hoveredValue, setHoveredValue] = React.useState<string | null>(null)
   const selectedValue = value ?? internalValue
   const selectedOption = options.find((option) => option.value === selectedValue)
   const popoverOpen = open || closing
@@ -80,7 +79,6 @@ function Combobox({
 
     if (nextOpen) {
       setClosing(false)
-      setHoveredValue(null)
       setOpen(true)
       return
     }
@@ -100,6 +98,7 @@ function Combobox({
         <Button
           variant="outline"
           role="combobox"
+          aria-label={selectedOption?.label ?? placeholder}
           aria-expanded={open}
           data-border-animation-color={borderAnimationColor}
           data-closing={closing ? "true" : undefined}
@@ -143,8 +142,6 @@ function Combobox({
                   className={cn(
                     "alka-combobox-option min-h-11 cursor-pointer rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-12 font-medium transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)]"
                   )}
-                  onMouseEnter={() => setHoveredValue(option.value)}
-                  onMouseLeave={() => setHoveredValue(null)}
                   onSelect={() => selectValue(option.value)}
                 >
                   {option.label}

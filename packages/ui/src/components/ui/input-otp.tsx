@@ -108,6 +108,7 @@ const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
       >
         <input
           ref={setInputRef}
+          aria-label={`Digit ${index + 1} of ${context.maxLength}`}
           inputMode="numeric"
           autoComplete="one-time-code"
           maxLength={1}

@@ -18,10 +18,19 @@ type RegistryManifest = {
 };
 
 const currentFile = fileURLToPath(import.meta.url);
+const packageRoot = resolve(dirname(currentFile), "..");
 const repoRoot = resolve(dirname(currentFile), "../../..");
-const manifestPath = join(repoRoot, "registry/registry.json");
+const manifestPathCandidates = [
+  join(packageRoot, "registry/registry.json"),
+  join(repoRoot, "registry/registry.json"),
+];
+const manifestPath = manifestPathCandidates.find((candidate) => existsSync(candidate));
 
 function readManifest(): RegistryManifest {
+  if (!manifestPath) {
+    throw new Error("Registry manifest was not found in the CLI package.");
+  }
+
   return JSON.parse(readFileSync(manifestPath, "utf8")) as RegistryManifest;
 }
 
@@ -45,10 +54,14 @@ function getFlagValue(args: string[], flag: string) {
 }
 
 function copyItem(item: RegistryItem, cwd: string) {
-  const sourcePath = join(repoRoot, item.source);
+  const sourcePathCandidates = [
+    join(packageRoot, item.source),
+    join(repoRoot, item.source),
+  ];
+  const sourcePath = sourcePathCandidates.find((candidate) => existsSync(candidate));
   const targetPath = join(cwd, "components/alkamanas", `${item.name}.tsx`);
 
-  if (!existsSync(sourcePath)) {
+  if (!sourcePath) {
     throw new Error(`Registry source does not exist: ${item.source}`);
   }
 

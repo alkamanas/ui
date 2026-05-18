@@ -19,6 +19,7 @@
   ],
   "files": [
     "dist",
+    "LICENSE",
     "README.md"
   ],
   "main": "./dist/index.js",
@@ -30,203 +31,27 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css",
-    "./button": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./card": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./navbar": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./flip-card": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./floating-panel": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./accordion": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./alert-dialog": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./avatar": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./badge": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./breadcrumb": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./button-group": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./carousel": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./checkbox": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./collapsible": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./combobox": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./command": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./context-menu": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./dialog": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./direction": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./drawer": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./dropdown-menu": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./input": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./input-group": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./input-otp": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./item": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./kbd": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./label": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./menubar": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./popover": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./progress": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./radio-group": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./scroll-area": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./select": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./separator": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./sheet": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./sidebar": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./slider": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./spinner": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./switch": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./tabs": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./textarea": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./toast": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./toggle": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./toggle-group": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./tooltip": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./section-aware-navbar": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./command-palette": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+    "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsup && node scripts/prepend-use-client.mjs && cp src/styles/globals.css dist/styles.css",
+    "build": "tsup && node scripts/prepend-use-client.mjs && node scripts/build-styles.mjs",
+    "prepack": "pnpm run build",
+    "test": "vitest run --config vitest.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {
+    "lucide-react": "^0.561.0",
     "react": ">=18.3.0 || >=19.0.0",
-    "react-dom": ">=18.3.0 || >=19.0.0"
+    "react-dom": ">=18.3.0 || >=19.0.0",
+    "react-hook-form": "^7.73.1"
+  },
+  "peerDependenciesMeta": {
+    "lucide-react": {
+      "optional": true
+    },
+    "react-hook-form": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -256,12 +81,12 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "framer-motion": "^12.38.0",
-    "lucide-react": "^0.561.0",
-    "react-hook-form": "^7.73.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "lucide-react": "^0.561.0",
+    "react-hook-form": "^7.73.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "tsup": "^8.5.1",

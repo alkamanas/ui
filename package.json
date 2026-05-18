@@ -17,14 +17,34 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build -w @alkamanas/ui && npm run build -w @alkamanas/cli && npm run build -w @alkamanas/docs",
-    "dev": "npm run build -w @alkamanas/ui && npm run dev -w @alkamanas/docs",
-    "lint": "npm run lint -w @alkamanas/docs",
-    "typecheck": "npm run typecheck -w @alkamanas/ui && npm run typecheck -w @alkamanas/docs",
-    "pack:ui": "npm pack -w @alkamanas/ui --dry-run"
+    "build": "pnpm --filter @alkamanas/ui build && pnpm --filter @alkamanas/cli build && pnpm --filter @alkamanas/docs build",
+    "dev": "pnpm --filter @alkamanas/ui build && pnpm --filter @alkamanas/docs dev",
+    "lint": "eslint apps/docs/src apps/docs/vite.config.ts packages/ui/src packages/cli/src",
+    "test": "vitest run --config packages/ui/vitest.config.ts",
+    "typecheck": "pnpm --filter @alkamanas/ui typecheck && pnpm --filter @alkamanas/cli typecheck && pnpm --filter @alkamanas/docs typecheck",
+    "pack:ui": "pnpm --dir packages/ui pack --pack-destination /tmp",
+    "pack:cli": "pnpm --dir packages/cli pack --pack-destination /tmp",
+    "registry:update": "node scripts/update-registry.mjs",
+    "registry:check": "node scripts/update-registry.mjs --check",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check && pnpm build && pnpm pack:ui && pnpm pack:cli"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.7",
-    "turbo": "^2.6.3"
+    "@eslint/js": "^9.39.2",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/jest-axe": "3.5.9",
+    "eslint": "^9.39.2",
+    "globals": "^16.5.0",
+    "jest-axe": "10.0.0",
+    "jsdom": "29.1.1",
+    "turbo": "^2.6.3",
+    "typescript-eslint": "^8.50.0",
+    "vitest": "^4.1.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

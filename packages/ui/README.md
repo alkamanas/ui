@@ -7,7 +7,7 @@ The package is extracted from the Visetra Studio and Visetra Web interface syste
 ## Install
 
 ```bash
-npm install @alkamanas/ui
+pnpm add @alkamanas/ui
 ```
 
 ```tsx
@@ -38,12 +38,18 @@ export function Example() {
 ## Highlights
 
 - Token-driven light and dark themes.
-- Black/white primary color system.
-- Smooth conic-gradient button hover borders.
+- Token-driven primary color system with white default in dark mode.
+- Semantic `success`, `warning`, `info` and `chart-1..5` tokens for product dashboards and status surfaces.
+- Shared glass system with blurry and realistic chromatic modes.
+- Solid and glass button variants with subtle hover feedback.
 - Apple-inspired bottom-attached Sheet with `size="sm" | "md" | "lg" | "xl"`.
 - Animated Tabs and Carousel pagination with glass pill surfaces.
 - Code-copy friendly primitives powered by Radix UI.
 - Visetra Web style section-aware navbar and flip cards.
+
+## Package Format
+
+This package is ESM-only and publishes a single JavaScript entrypoint. CommonJS `require()` is not supported; older Jest or Node setups need ESM-aware configuration or transpilation. Component subpath exports are intentionally omitted until the build emits real per-component chunks and declarations.
 
 ## Exports
 
@@ -64,6 +70,6 @@ import "@alkamanas/ui/styles.css";
 This package is intended to be published under the `@alkamanas` npm organization:
 
 ```bash
-npm run build -w @alkamanas/ui
-npm publish -w @alkamanas/ui --access public
+pnpm --filter @alkamanas/ui build
+pnpm --filter @alkamanas/ui publish --access public
 ```

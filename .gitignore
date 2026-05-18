@@ -3,11 +3,12 @@ dist
 .next
 .turbo
 .codex
+packages/cli/registry
 .DS_Store
 coverage
 *.tsbuildinfo
 .env
 .env.*
 !.env.example
-pnpm-lock.yaml
 package-lock.json
+**/* 2.*
