@@ -1,6 +1,6 @@
 {
   "name": "@alkamanas/ui",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Premium React UI primitives and patterns for Alkamanas.",
   "license": "MIT",
   "type": "module",
@@ -19,6 +19,7 @@
   ],
   "files": [
     "dist",
+    "!dist/**/*.map",
     "LICENSE",
     "README.md"
   ],
@@ -86,10 +87,13 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "lucide-react": "^0.561.0",
+    "postcss": "^8.5.14",
     "react-hook-form": "^7.73.1",
+    "tailwindcss": "^4.3.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   }

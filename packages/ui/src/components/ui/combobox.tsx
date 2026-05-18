@@ -53,7 +53,7 @@ function Combobox({
   placeholder = "Select option",
   searchPlaceholder = "Search...",
   emptyText = "No results found.",
-  surface = "gradient",
+  surface = "flat",
   size = "default",
   borderAnimationColor,
   surfaceGradientColor,
@@ -125,7 +125,7 @@ function Combobox({
             closeCombobox()
           }}
           className={cn(
-            "alka-combobox-trigger w-full justify-between rounded-full bg-background/72 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
+            "alka-combobox-trigger w-full justify-between rounded-full bg-transparent py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
             comboboxSizeClasses[size],
             className
           )}
@@ -163,7 +163,7 @@ function Combobox({
                   )}
                   onSelect={() => selectValue(option.value)}
                 >
-                  {option.label}
+                  <span className="min-w-0 truncate whitespace-nowrap">{option.label}</span>
                   <Check className={cn("absolute right-4 size-4", selectedValue === option.value ? "opacity-100" : "opacity-0")} />
                 </CommandItem>
               ))}

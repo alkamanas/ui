@@ -129,7 +129,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "alka-tabs-trigger relative z-10 inline-flex h-[2.625rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-4 py-0 text-sm font-medium leading-none ring-offset-background transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+      "alka-tabs-trigger relative z-10 inline-flex h-[2.625rem] cursor-pointer appearance-none items-center justify-center whitespace-nowrap rounded-full border border-transparent bg-transparent px-4 py-0 text-sm font-medium leading-none ring-offset-background transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
       className
     )}
     {...props}

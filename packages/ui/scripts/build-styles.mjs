@@ -1,6 +1,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import postcss from "postcss";
+import tailwindcss from "@tailwindcss/postcss";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const packageRoot = join(currentDir, "..");
@@ -18,4 +20,15 @@ function inlineImports(path, seen = new Set()) {
 }
 
 mkdirSync(dirname(outputPath), { recursive: true });
-writeFileSync(outputPath, `${inlineImports(sourcePath).trim()}\n`);
+
+const inputCss = [
+  '@import "tailwindcss/utilities.css" layer(utilities);',
+  '@source "../";',
+  inlineImports(sourcePath).trim(),
+].join("\n");
+
+const result = await postcss([tailwindcss({ optimize: true })]).process(inputCss, {
+  from: join(packageRoot, "src/styles/__alka-package-styles.css"),
+});
+
+writeFileSync(outputPath, `${result.css.trim()}\n`);

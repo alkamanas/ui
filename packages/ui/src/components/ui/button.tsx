@@ -6,7 +6,7 @@ import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "alka-button-control inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "alka-button-control inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -50,8 +50,23 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, className, variant, size, asChild = false, ...props }, ref) => {
     const buttonClassName = cn(buttonVariants({ variant, size, className }))
+    const resolvedSize = size ?? "default"
+    const childArray = React.Children.toArray(children)
+    const isTextOnlyIcon =
+      resolvedSize === "icon" && childArray.length === 1 && typeof childArray[0] === "string"
     const isLiquidGlass =
       !asChild && (variant === "glass" || variant === "glassPrimary" || variant === "glassDestructive")
+    const content = (
+      <span
+        className={cn(
+          "alka-button-content relative z-[2] inline-flex items-center justify-center gap-2 text-center",
+          resolvedSize === "icon" && "alka-button-icon-content h-full w-full",
+        )}
+        data-text-icon={isTextOnlyIcon ? "true" : undefined}
+      >
+        {children}
+      </span>
+    )
 
     if (asChild) {
       return (
@@ -77,13 +92,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLiquidGlass && <span aria-hidden="true" className="alka-button-glass-backdrop" />}
         {isLiquidGlass && <GlassElementLayers depth={8} strength={72} chromaticAberration={8} />}
-        {isLiquidGlass ? (
-          <span className="relative z-[2] inline-flex w-full items-center justify-center gap-2 text-center">
-            {children}
-          </span>
-        ) : (
-          children
-        )}
+        {content}
       </button>
     )
   }

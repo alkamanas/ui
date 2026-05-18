@@ -60,7 +60,7 @@ const SheetContent = React.forwardRef<
         <SheetOverlay />
         <SheetPrimitive.Content
           ref={ref}
-          className={cn("alka-sheet-content alka-liquid-glass", className)}
+          className={cn("alka-sheet-content theme-dark alka-theme-dark alka-liquid-glass", className)}
           data-side={side}
           data-size={size}
           {...props}
@@ -93,7 +93,7 @@ const SheetHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-2 text-center sm:text-left",
+      "alka-sheet-header flex flex-col text-center sm:text-left",
       className
     )}
     {...props}
@@ -121,7 +121,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold text-foreground", className)}
+    className={cn("alka-sheet-title text-lg font-semibold text-foreground", className)}
     {...props}
   />
 ))
@@ -133,7 +133,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("alka-sheet-description text-sm text-muted-foreground", className)}
     {...props}
   />
 ))

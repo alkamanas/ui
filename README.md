@@ -249,6 +249,22 @@ Run the docs app directly:
 pnpm --filter @alkamanas/docs dev
 ```
 
+Run the examples gallery:
+
+```bash
+pnpm dev:examples
+```
+
+`apps/examples` lists complete example pages as cards and opens each example as a full page built from `@alkamanas/ui` components. The first example is a basic landing page.
+
+Run the npm consumer test app:
+
+```bash
+pnpm dev:npm-test
+```
+
+`apps/npm-test` is a Vite admin dashboard that installs `@alkamanas/ui` from npm instead of using the local workspace source alias. Use it after publishing to validate package resolution, styles, overlays, form controls, cards, navigation, and CLI-facing registry assumptions as a real consumer would.
+
 Build only the UI package:
 
 ```bash

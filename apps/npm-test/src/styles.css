@@ -1,0 +1,164 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #050505;
+}
+
+.test-app {
+  min-height: 100vh;
+}
+
+.page-shell {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.test-section {
+  padding: 38px 0;
+}
+
+.test-section-first {
+  padding-top: 132px;
+}
+
+.hero-grid,
+.two-column-grid,
+.metric-grid,
+.form-grid,
+.dashboard-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.72fr);
+  align-items: stretch;
+}
+
+.two-column-grid {
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+}
+
+.metric-grid,
+.form-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dashboard-card {
+  min-height: 640px;
+}
+
+.dashboard-layout {
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: inherit;
+}
+
+.workspace-column,
+.stack,
+.section-heading {
+  display: grid;
+  gap: 18px;
+}
+
+.stack-tight {
+  gap: 10px;
+}
+
+.inline-flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.inline-flow-between {
+  justify-content: space-between;
+}
+
+.toolbar-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 1fr)) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.metadata-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px 18px;
+  align-items: center;
+}
+
+.field {
+  display: grid;
+  gap: 9px;
+}
+
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.layout-separator {
+  margin: 24px 0;
+}
+
+.image-test-card {
+  min-height: 320px;
+  aspect-ratio: 1.08;
+}
+
+.floating-action {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+}
+
+@media (max-width: 960px) {
+  .page-shell {
+    width: min(100% - 28px, 720px);
+  }
+
+  .hero-grid,
+  .two-column-grid,
+  .metric-grid,
+  .form-grid,
+  .dashboard-layout,
+  .toolbar-grid,
+  .control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-test-card {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .test-section-first {
+    padding-top: 112px;
+  }
+}

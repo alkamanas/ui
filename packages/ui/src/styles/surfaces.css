@@ -44,6 +44,20 @@
   z-index: 2;
 }
 
+.alka-navbar-brand,
+.alka-navbar-brand:visited {
+  color: hsl(var(--alka-navbar-text));
+  font-family: var(--alka-font-sans);
+  font-weight: 650;
+  letter-spacing: 0;
+  text-decoration: none;
+  transition: color 300ms var(--alka-ease-smooth);
+}
+
+.alka-navbar-brand:hover {
+  color: hsl(var(--alka-navbar-text));
+}
+
 .alka-navbar-panel[data-quiet="true"],
 .navbar-panel[data-quiet="true"] {
   -webkit-backdrop-filter: none;
@@ -214,6 +228,25 @@
 .alka-liquid-glass > .alka-dialog-close-button {
   position: absolute;
   z-index: 3;
+}
+
+.alka-dialog-close-button {
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.alka-dialog-close-button > svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
 }
 
 .alka-card-surface.alka-liquid-glass {

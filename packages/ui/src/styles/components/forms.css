@@ -142,7 +142,7 @@
     linear-gradient(
       135deg,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
+      transparent 48%,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
     ),
     transparent;
@@ -160,10 +160,10 @@
     linear-gradient(
       135deg,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--background) / 0.34) 48%,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
     ),
-    hsl(var(--background) / 0.58);
+    hsl(var(--background) / 0.34);
 }
 
 .alka-input-field[data-variant="pill"][data-selected="true"],
@@ -270,7 +270,7 @@
     linear-gradient(
       135deg,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
+      transparent 48%,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
     ),
     transparent;
@@ -286,10 +286,10 @@
     linear-gradient(
       135deg,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--background) / 0.34) 48%,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
     ),
-    hsl(var(--background) / 0.58);
+    hsl(var(--background) / 0.34);
 }
 
 .alka-input-group[data-selected="true"],
@@ -420,7 +420,7 @@
     linear-gradient(
       135deg,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
+      transparent 48%,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
     ),
     transparent;
@@ -436,10 +436,10 @@
     linear-gradient(
       135deg,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
+      hsl(var(--background) / 0.34) 48%,
       hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
     ),
-    hsl(var(--background) / 0.58);
+    hsl(var(--background) / 0.34);
 }
 
 .alka-textarea-field[data-selected="true"],
@@ -520,6 +520,8 @@
 }
 
 .alka-input-otp-slot {
+  --alka-button-angle: 0deg;
+  --alka-surface-focus-alpha: 0;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -528,15 +530,10 @@
   place-items: center;
   border: 1px solid hsl(var(--foreground) / 0.12);
   border-radius: 1.05rem;
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.065), transparent 36%),
-    linear-gradient(135deg, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.032), hsl(var(--background) / 0.64) 48%, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.024)),
-    hsl(var(--background) / 0.58);
+  background: transparent;
   box-shadow:
     0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1),
-    inset 0 1px 0 hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.07),
-    inset 0 -1px 0 hsl(var(--foreground) / 0.04);
+    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
   color: hsl(var(--foreground));
   font-size: 1rem;
   font-weight: 650;
@@ -554,7 +551,7 @@
 
 .alka-input-otp-slot input {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
   border: 0;
@@ -571,7 +568,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   border-radius: inherit;
   padding: 1px;
   pointer-events: none;
@@ -586,21 +583,34 @@
   mask-composite: exclude;
 }
 
+.alka-input-otp-slot::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.13)), transparent 42%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.09)),
+      transparent 52%,
+      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.06))
+    );
+  transition:
+    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    opacity 320ms var(--alka-ease-smooth);
+}
+
 .alka-input-otp-slot:hover {
   border-color: hsl(var(--primary) / 0.22);
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.12), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--background) / 0.58) 52%, hsl(var(--primary) / 0.06)),
-    hsl(var(--background) / 0.58);
 }
 
 .alka-input-otp-slot[data-selected="true"],
-.alka-input-otp-slot:focus-within,
-.alka-input-otp-slot[data-filled="true"] {
+.alka-input-otp-slot:focus-within {
+  --alka-surface-focus-alpha: 1;
   border-color: transparent;
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.22), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--primary) / 0.12));
   box-shadow:
     0 14px 32px hsl(var(--alka-shadow-color) / 0.1),
     0 0 0 1px hsl(var(--primary) / 0.08),

@@ -15,13 +15,13 @@ export const PageHeader: React.FC<{
   >
     <div className="min-w-0">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+        <h1 className="alka-text-title text-2xl font-semibold text-foreground">
           {title}
         </h1>
         {titleAdornment}
       </div>
       {description ? (
-        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        <p className="alka-text-description mt-1 text-sm text-muted-foreground">{description}</p>
       ) : null}
     </div>
     {actions ? (

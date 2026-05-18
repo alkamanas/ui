@@ -1,0 +1,66 @@
+.alka-card-header,
+.alka-dialog-header,
+.alka-alert-dialog-header,
+.alka-sheet-header {
+  gap: 0.5rem;
+}
+
+.alka-text-title,
+.alka-card-title,
+.alka-dialog-title,
+.alka-alert-dialog-title,
+.alka-sheet-title,
+.alka-item-title {
+  margin: 0;
+  padding-block: 0.035em 0.08em;
+  color: inherit;
+  font-family: var(--alka-font-sans);
+  letter-spacing: 0;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+.alka-card-title {
+  font-size: clamp(1.25rem, 1.05rem + 0.5vw, 1.5rem);
+}
+
+.alka-dialog-title,
+.alka-alert-dialog-title,
+.alka-sheet-title {
+  font-size: 1.125rem;
+}
+
+.alka-item-title {
+  padding-block: 0.02em 0.04em;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  text-wrap: nowrap;
+}
+
+.alka-text-description,
+.alka-card-description,
+.alka-dialog-description,
+.alka-alert-dialog-description,
+.alka-sheet-description,
+.alka-item-description {
+  margin: 0;
+  color: hsl(var(--muted-foreground));
+  font-family: var(--alka-font-sans);
+  letter-spacing: 0;
+  line-height: 1.55;
+}
+
+.alka-item-description {
+  line-height: 1.35;
+}
+
+.alka-card-header > .alka-card-title + .alka-card-description,
+.alka-dialog-header > .alka-dialog-title + .alka-dialog-description,
+.alka-alert-dialog-header > .alka-alert-dialog-title + .alka-alert-dialog-description,
+.alka-sheet-header > .alka-sheet-title + .alka-sheet-description {
+  margin-top: 0.125rem;
+}
+
+.alka-card-content > .alka-progress + .alka-card-description {
+  margin-top: 0.55rem;
+}

@@ -90,7 +90,7 @@ const CommandInput = React.forwardRef<
       <CommandPrimitive.Input
         ref={setInputRef}
         className={cn(
-          "flex h-11 w-full rounded-none bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+          "alka-command-input flex h-11 w-full rounded-none bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         onValueChange={(value) => {

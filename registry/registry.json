@@ -30,7 +30,7 @@
     {
       "name": "alert-dialog",
       "version": "0.1.0",
-      "hash": "sha256-tcQ1fmfW676gEHl64M1wSlg0qGgDXozX3jXwblbJnYk=",
+      "hash": "sha256-Guxq+zNGgtqSAy8LXERqEtTSFmxAbJB6+bZB2x+izyU=",
       "type": "primitive",
       "description": "Alert Dialog component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/alert-dialog.tsx",
@@ -94,7 +94,7 @@
     {
       "name": "badge",
       "version": "0.1.0",
-      "hash": "sha256-quSSjqwWiSX5ZFShXAU6ShFHist3YS16KznxmmXchxs=",
+      "hash": "sha256-eZsVWdCMgLNXQoNo74vQ3ykSjKj4yVrWZCa+ae0FJu8=",
       "type": "primitive",
       "description": "Badge component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/badge.tsx",
@@ -113,6 +113,7 @@
         "--alka-border-animation-color",
         "--alka-button-angle",
         "--alka-ease-smooth",
+        "--alka-font-sans",
         "--alka-glass-element-bg",
         "--alka-glass-element-shine-opacity",
         "--alka-glass-element-tint-opacity",
@@ -139,7 +140,7 @@
     {
       "name": "breadcrumb",
       "version": "0.1.0",
-      "hash": "sha256-w9PcsNgvxekdiDC6x/6tkFaG/odvH0LD7YcrsKa2WE4=",
+      "hash": "sha256-1ndZdkqb8gx6RuYkc4s7FJ/yGaOVsBPAiIW+HQLLSUY=",
       "type": "primitive",
       "description": "Breadcrumb component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/breadcrumb.tsx",
@@ -152,7 +153,7 @@
     {
       "name": "button",
       "version": "0.1.0",
-      "hash": "sha256-igpFPpp+wnC+FwkXk1MRDR2kDqvMNAvKVG1jOBegrxY=",
+      "hash": "sha256-9AxEb+28aNc7sYoISiGOnN0tqst3MtMyR9nwbNNGDQQ=",
       "type": "primitive",
       "description": "Button component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/button.tsx",
@@ -216,7 +217,7 @@
     {
       "name": "card",
       "version": "0.1.0",
-      "hash": "sha256-VYG2Gjj2fB9QCQyQ5WfYm76BG1xvGKJ/8/918eU1qVs=",
+      "hash": "sha256-MxQB22lzkJynop+LMY8TmK6cjMohfN1vpwII2trWpXk=",
       "type": "component",
       "description": "Card component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/card.tsx",
@@ -310,7 +311,7 @@
     {
       "name": "checkbox",
       "version": "0.1.0",
-      "hash": "sha256-xcMO7wsu1IZHQ9NIQvfpDG9hQy81ZXyBdTOir5GZZmQ=",
+      "hash": "sha256-gzFdRQKiFbV3AX+WorFKUK8QiaGaNGlIqO2t9X2DVPI=",
       "type": "primitive",
       "description": "Checkbox component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/checkbox.tsx",
@@ -394,7 +395,7 @@
     {
       "name": "combobox",
       "version": "0.1.0",
-      "hash": "sha256-oskrpVARb6rA/7ausrjDBQ3ws3TiqwgYPDLQV6XM13c=",
+      "hash": "sha256-TYBuxkx48XJv4rG4M1FZCQAkdPx3WZKl7pZUc5q3fNQ=",
       "type": "primitive",
       "description": "Combobox component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/combobox.tsx",
@@ -445,7 +446,7 @@
     {
       "name": "command",
       "version": "0.1.0",
-      "hash": "sha256-sfdWeMDLtDRoCayN6AexHebHxEsmeegOcreRkAb8los=",
+      "hash": "sha256-KohCBxjod6ELLK1Sd1Dtxd5ZBkFKboJ+l06b09RVpAM=",
       "type": "primitive",
       "description": "Command component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/command.tsx",
@@ -464,6 +465,7 @@
         "--alka-border-animation-color",
         "--alka-button-angle",
         "--alka-ease-smooth",
+        "--alka-font-sans",
         "--alka-glass-button-highlight",
         "--alka-glass-element-bg",
         "--alka-glass-element-shine-opacity",
@@ -496,7 +498,7 @@
     {
       "name": "context-menu",
       "version": "0.1.0",
-      "hash": "sha256-PLsDZeIgRkHWwz0Ep9l6QJrLD2Wk63SMSDOrXs09w0A=",
+      "hash": "sha256-6jHYM9cqX/d1vl9MKw50+QvZs0L3SEWIeuJPSBeXcuE=",
       "type": "primitive",
       "description": "Context Menu component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/context-menu.tsx",
@@ -547,7 +549,7 @@
     {
       "name": "dialog",
       "version": "0.1.0",
-      "hash": "sha256-TrzJKGbAKyX78UhuREjpbWgZbDXP8sYoNsdgqoMbv1s=",
+      "hash": "sha256-G2yS2W9JXfecW+8Xl2lbMmt9zaO3qnHKC1P2qlnUSX4=",
       "type": "primitive",
       "description": "Dialog component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/dialog.tsx",
@@ -624,7 +626,7 @@
     {
       "name": "dropdown-menu",
       "version": "0.1.0",
-      "hash": "sha256-EGYOgBs6mu4NHhqwWKVGk3pxH8D/T8Hj3h+vyh5Qc8k=",
+      "hash": "sha256-h2MXSgJ1S6QZ2D/y3cLShoD+TkVUcl+RLG24OuEN6Kk=",
       "type": "primitive",
       "description": "Dropdown Menu component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/dropdown-menu.tsx",
@@ -857,7 +859,7 @@
     {
       "name": "popover",
       "version": "0.1.0",
-      "hash": "sha256-SKfknBtdNHG4vQ0thfJLMjKCUTLAxAxm0vxDdBntvhU=",
+      "hash": "sha256-z/nhqbEfF/xiFKnn7waC8A2/XyKRfQ/DKuCtSOjvaJI=",
       "type": "primitive",
       "description": "Popover component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/popover.tsx",
@@ -951,7 +953,7 @@
     {
       "name": "radio-group",
       "version": "0.1.0",
-      "hash": "sha256-E83dXOjtUF1WNRENcwLGOjKdrBUwX6iZkxXRh8k6A2I=",
+      "hash": "sha256-Jmx41XYDUnlv3MwJbGt2lLUDQMufZukJS7k0E7Wemrs=",
       "type": "primitive",
       "description": "Radio Group component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/radio-group.tsx",
@@ -1006,7 +1008,7 @@
     {
       "name": "select",
       "version": "0.1.0",
-      "hash": "sha256-by1N5E2eikivB8bHJdwIaz4s5eBJFKEDTxJLWo1K998=",
+      "hash": "sha256-PBUjT5/+NuiPH9zSJed2JPq2fjzGP4IeRr8VozBzO1g=",
       "type": "primitive",
       "description": "Select component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/select.tsx",
@@ -1070,7 +1072,7 @@
     {
       "name": "sheet",
       "version": "0.1.0",
-      "hash": "sha256-7ZP4lUoum3xNUPOyclsllXwEGHQL6T9lf8koSMWORMc=",
+      "hash": "sha256-Kb4AAPPLBY4lKe6+ZlFNGGewS5ExnWwwLY+zARK6qag=",
       "type": "primitive",
       "description": "Sheet component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/sheet.tsx",
@@ -1277,7 +1279,7 @@
     {
       "name": "tabs",
       "version": "0.1.0",
-      "hash": "sha256-1oLjb+taqKFhuCz4MSVgLkLT5S1SknKU8kE41ALen8A=",
+      "hash": "sha256-40DSjCmUjBg+InFzsdAoEtQfFHFarefY3Ld1l2A2ItQ=",
       "type": "primitive",
       "description": "Tabs component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/tabs.tsx",
@@ -1451,7 +1453,7 @@
     {
       "name": "tooltip",
       "version": "0.1.0",
-      "hash": "sha256-V7zxRbFWTmtcxJ+zU5rWBx9kE9XzCjUqGhBF/2ZsSAM=",
+      "hash": "sha256-Zag5jfIGN1qzkijCycH//DpR3351nnK9Rac5/v30cko=",
       "type": "primitive",
       "description": "Tooltip component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/ui/tooltip.tsx",
@@ -1566,7 +1568,7 @@
     {
       "name": "section-aware-navbar",
       "version": "0.1.0",
-      "hash": "sha256-F/taFcZ/QEdSb0uvdasuAM2PDEJxNRM1dkaYx65UVqc=",
+      "hash": "sha256-7ep4jQ/OecHG6/4BPins88sJ8XikxzepanjBWSgW8FU=",
       "type": "component",
       "description": "Section Aware Navbar component with Alkamanas dark tokens and smooth motion defaults.",
       "source": "packages/ui/src/components/navigation/section-aware-navbar.tsx",

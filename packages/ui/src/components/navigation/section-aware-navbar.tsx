@@ -237,7 +237,7 @@ export function SectionAwareNavbar({
       href={item.href}
       onClick={item.onSelect as React.MouseEventHandler<HTMLElement> | undefined}
       className={cn(
-        "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+        "rounded-full px-4 py-2 text-sm font-medium no-underline transition-all duration-300",
         navTextClass,
       )}
     >
@@ -275,7 +275,7 @@ export function SectionAwareNavbar({
           )}
         >
           {showPanelGlass ? <GlassElementLayers {...navbarGlassOptions} /> : null}
-          <LinkComponent href="/" className="flex min-w-0 items-center">
+          <LinkComponent href="/" className="alka-navbar-brand flex min-w-0 items-center no-underline">
             {brand}
           </LinkComponent>
 
@@ -383,7 +383,7 @@ export function SectionAwareNavbar({
                             item.onSelect?.();
                           }}
                           className={cn(
-                            "group grid grid-cols-[2.75rem_minmax(0,1fr)] gap-4 rounded-[1.25rem] border p-4 transition-all duration-300",
+                            "group grid grid-cols-[2.75rem_minmax(0,1fr)] gap-4 rounded-[1.25rem] border p-4 no-underline transition-all duration-300",
                             useDarkTheme
                               ? "border-white/8 bg-black/15 hover:border-white/18 hover:bg-white/[0.06]"
                               : "border-black/[0.06] bg-white/70 hover:border-black/[0.12] hover:bg-white",
@@ -445,7 +445,7 @@ export function SectionAwareNavbar({
                               item.onSelect?.();
                             }}
                             className={cn(
-                              "group flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-300",
+                              "group flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-sm font-medium no-underline transition-all duration-300",
                               useDarkTheme
                                 ? "border-white/8 text-white/72 hover:border-white/18 hover:bg-white/[0.06] hover:text-white"
                                 : "border-black/[0.07] text-foreground/72 hover:border-black/[0.14] hover:bg-black/[0.025] hover:text-foreground",
@@ -531,7 +531,7 @@ export function SectionAwareNavbar({
                                 closeMobileMenu();
                                 item.onSelect?.();
                               }}
-                              className="block rounded-xl px-1 py-2 text-[1.02rem] font-semibold leading-tight transition-colors hover:text-current"
+                              className="block rounded-xl px-1 py-2 text-[1.02rem] font-semibold leading-tight no-underline transition-colors hover:text-current"
                             >
                               {item.label}
                             </LinkComponent>
@@ -551,7 +551,7 @@ export function SectionAwareNavbar({
                       closeMobileMenu();
                       item.onSelect?.();
                     }}
-                    className="flex h-[50px] items-center text-[26px] font-semibold leading-[1.2]"
+                    className="flex h-[50px] items-center text-[26px] font-semibold leading-[1.2] no-underline"
                   >
                     {item.label}
                   </LinkComponent>

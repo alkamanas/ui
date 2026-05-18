@@ -18,8 +18,12 @@
   ],
   "scripts": {
     "build": "pnpm --filter @alkamanas/ui build && pnpm --filter @alkamanas/cli build && pnpm --filter @alkamanas/docs build",
+    "build:examples": "pnpm --filter @alkamanas/examples build",
+    "build:npm-test": "pnpm --filter @alkamanas/npm-test build",
     "dev": "pnpm --filter @alkamanas/ui build && pnpm --filter @alkamanas/docs dev",
-    "lint": "eslint apps/docs/src apps/docs/vite.config.ts packages/ui/src packages/cli/src",
+    "dev:examples": "pnpm --filter @alkamanas/examples dev",
+    "dev:npm-test": "pnpm --filter @alkamanas/npm-test dev",
+    "lint": "eslint apps/docs/src apps/docs/vite.config.ts apps/examples/src apps/examples/vite.config.ts apps/npm-test/src apps/npm-test/vite.config.ts packages/ui/src packages/cli/src",
     "test": "vitest run --config packages/ui/vitest.config.ts",
     "test:check": "node scripts/check-component-a11y-coverage.mjs",
     "test:coverage-check": "pnpm test:check",

@@ -50,14 +50,14 @@ ItemContent.displayName = "ItemContent"
 
 const ItemTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("truncate text-sm font-semibold", className)} {...props} />
+    <div ref={ref} className={cn("alka-item-title truncate text-sm font-semibold", className)} {...props} />
   ),
 )
 ItemTitle.displayName = "ItemTitle"
 
 const ItemDescription = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("truncate text-sm text-muted-foreground", className)} {...props} />
+    <div ref={ref} className={cn("alka-item-description truncate text-sm text-muted-foreground", className)} {...props} />
   ),
 )
 ItemDescription.displayName = "ItemDescription"

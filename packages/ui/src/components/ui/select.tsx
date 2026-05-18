@@ -124,7 +124,7 @@ const SelectTrigger = React.forwardRef<
     surface?: "flat" | "gradient" | "bare"
     surfaceGradientColor?: SurfaceGradientColor
   }
->(({ className, children, borderAnimationColor, size = "default", surface = "gradient", surfaceGradientColor, ...props }, ref) => {
+>(({ className, children, borderAnimationColor, size = "default", surface = "flat", surfaceGradientColor, ...props }, ref) => {
   const { closing } = React.useContext(SelectMotionContext)
 
   return (
@@ -136,7 +136,7 @@ const SelectTrigger = React.forwardRef<
       data-surface={surface}
       data-surface-gradient-color={surfaceGradientColor}
       className={cn(
-        "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-background/72 py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-transparent py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
         selectTriggerSizeClasses[size],
         className
       )}
@@ -205,7 +205,7 @@ const SelectContent = React.forwardRef<
           }
         }}
         className={cn(
-          "alka-select-content alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+          "alka-select-content theme-dark alka-theme-dark alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
           position === "popper" && "w-[var(--radix-select-trigger-width)]",
           className
         )}
@@ -219,7 +219,7 @@ const SelectContent = React.forwardRef<
           className={cn(
             "relative z-10 grid gap-1 px-1",
             position === "popper" &&
-              "h-[var(--radix-select-trigger-height)] w-full"
+              "w-full"
           )}
         >
           {children}
@@ -274,7 +274,9 @@ const SelectItem = React.forwardRef<
           <Check className="h-4 w-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemText>
+        <span className="block min-w-0 truncate whitespace-nowrap">{children}</span>
+      </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )
 })

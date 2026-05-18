@@ -45,7 +45,7 @@ const ContextMenuSubContent = React.forwardRef<
   <ContextMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "alka-context-menu-content alka-liquid-glass z-50 grid min-w-[12rem] origin-[--radix-context-menu-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+      "alka-context-menu-content theme-dark alka-theme-dark alka-liquid-glass z-50 grid min-w-[12rem] origin-[--radix-context-menu-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
       className
     )}
     {...props}
@@ -64,7 +64,7 @@ const ContextMenuContent = React.forwardRef<
     <ContextMenuPrimitive.Content
       ref={ref}
       className={cn(
-        "alka-context-menu-content alka-liquid-glass z-50 grid max-h-[--radix-context-menu-content-available-height] min-w-[12rem] origin-[--radix-context-menu-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+        "alka-context-menu-content theme-dark alka-theme-dark alka-liquid-glass z-50 grid max-h-[--radix-context-menu-content-available-height] min-w-[12rem] origin-[--radix-context-menu-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
         className
       )}
       {...props}
