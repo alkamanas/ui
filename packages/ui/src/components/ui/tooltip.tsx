@@ -19,7 +19,7 @@ const TooltipContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "alka-tooltip-content theme-dark alka-theme-dark alka-liquid-glass z-50 origin-[--radix-tooltip-content-transform-origin] overflow-hidden rounded-2xl border border-white/10 px-3.5 py-2 text-xs font-medium text-popover-foreground shadow-[0_12px_34px_hsl(var(--alka-shadow-color)_/_0.22)] transition-[opacity,transform] duration-300 ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.98] data-[state=closed]:opacity-0 data-[state=delayed-open]:scale-100 data-[state=delayed-open]:opacity-100 data-[state=instant-open]:scale-100 data-[state=instant-open]:opacity-100",
+        "alka-tooltip-content alka-liquid-glass z-50 origin-[--radix-tooltip-content-transform-origin] overflow-hidden rounded-2xl border border-border/70 px-3.5 py-2 text-xs font-medium text-popover-foreground shadow-[0_12px_34px_hsl(var(--alka-shadow-color)_/_0.22)] transition-[opacity,transform] duration-300 ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.98] data-[state=closed]:opacity-0 data-[state=delayed-open]:scale-100 data-[state=delayed-open]:opacity-100 data-[state=instant-open]:scale-100 data-[state=instant-open]:opacity-100",
         className
       )}
       {...props}

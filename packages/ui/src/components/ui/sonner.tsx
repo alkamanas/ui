@@ -43,7 +43,7 @@ export const Toaster = ({
         ...toastOptions,
         classNames: {
           toast:
-            "alka-toast alka-liquid-glass group toast border border-white/10 text-popover-foreground",
+            "alka-toast alka-liquid-glass group toast border border-border/70 text-popover-foreground",
           description: "group-[.toast]:text-muted-foreground",
           actionButton:
             "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",

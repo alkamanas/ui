@@ -15,7 +15,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
     <div
       ref={ref}
       className={cn(
-        "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-4 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[--alka-button-angle,border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
+        "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-5 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[--alka-button-angle,border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
         surface === "glass" ? "alka-liquid-glass" : "bg-card/72",
         className,
       )}

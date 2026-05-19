@@ -40,9 +40,9 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "alka-dialog-content theme-dark alka-theme-dark fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        "alka-dialog-content fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
         glass
-          ? "alka-liquid-glass rounded-[1.75rem] border border-white/10 p-6"
+          ? "alka-liquid-glass rounded-[1.75rem] border border-border/70 p-6"
           : "border-0 bg-transparent p-0 shadow-none",
         className
       )}
@@ -51,7 +51,7 @@ const DialogContent = React.forwardRef<
       {glass ? <GlassElementLayers /> : null}
       {children}
       {showCloseButton ? (
-        <DialogPrimitive.Close className="alka-dialog-close-button absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] p-0 text-foreground/70 opacity-80 ring-offset-background backdrop-blur-xl transition-[background-color,color,opacity] duration-300 hover:bg-white/[0.1] hover:text-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+        <DialogPrimitive.Close className="alka-dialog-close-button absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-background/55 p-0 text-foreground/70 opacity-80 backdrop-blur-xl transition-[background-color,border-color,color,opacity] duration-300 hover:bg-muted/60 hover:text-foreground hover:opacity-100 focus:outline-none focus-visible:border-foreground/20 focus-visible:bg-muted/60 disabled:pointer-events-none">
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
@@ -81,7 +81,7 @@ const DialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
       className
     )}
     {...props}

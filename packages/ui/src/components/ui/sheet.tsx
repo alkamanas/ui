@@ -60,7 +60,7 @@ const SheetContent = React.forwardRef<
         <SheetOverlay />
         <SheetPrimitive.Content
           ref={ref}
-          className={cn("alka-sheet-content theme-dark alka-theme-dark alka-liquid-glass", className)}
+          className={cn("alka-sheet-content alka-liquid-glass", className)}
           data-side={side}
           data-size={size}
           {...props}

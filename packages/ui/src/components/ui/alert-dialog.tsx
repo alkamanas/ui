@@ -35,7 +35,7 @@ const AlertDialogContent = React.forwardRef<
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
-        "alka-alert-dialog-content theme-dark alka-theme-dark alka-liquid-glass fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 rounded-[1.75rem] border border-white/10 p-6 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        "alka-alert-dialog-content alka-liquid-glass fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 rounded-[1.75rem] border border-border/70 p-6 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
         className
       )}
       {...props}
@@ -67,7 +67,7 @@ const AlertDialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
       className
     )}
     {...props}

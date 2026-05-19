@@ -18,7 +18,7 @@ const Command = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      "alka-command relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground",
+      "alka-command relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground",
       glass ? "alka-liquid-glass" : "border-transparent bg-transparent p-0 shadow-none",
       className
     )}
@@ -83,7 +83,7 @@ const CommandInput = React.forwardRef<
 
   return (
     <div
-      className="mx-1 mb-2 mt-1 flex h-11 items-center border-b border-white/10 px-4"
+      className="mx-1 mb-2 mt-1 flex h-11 items-center border-b border-border/70 px-4"
       cmdk-input-wrapper=""
     >
       <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -153,7 +153,7 @@ const CommandSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
-    className={cn("mx-1 my-2 h-px bg-white/10", className)}
+    className={cn("mx-1 my-2 h-px bg-border/70", className)}
     {...props}
   />
 ))

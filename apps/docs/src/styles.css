@@ -3,17 +3,108 @@
 @import "../../../packages/ui/src/styles/globals.css";
 
 html {
-  background: #050505;
+  background: hsl(var(--background));
   scroll-behavior: smooth;
+}
+
+/* Keep docs-level theme tuning outside Tailwind layers so it wins over package CSS. */
+body.theme-light,
+.theme-light.docs-shell {
+  --alka-panel-bg: 0 0% 93% / 0.3;
+  --alka-navbar-bg: 0 0% 93% / 0.3;
+  --alka-panel-border: 0 0% 0% / 0.105;
+  --alka-navbar-border: 0 0% 0% / 0.095;
+  --alka-panel-shadow: 0 0% 0% / 0.035;
+  --alka-highlight-color: 0 0% 88%;
+  --alka-shadow-color: 0 0% 0%;
+  --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.035);
+  --alka-shadow-panel: 0 4px 12px hsl(var(--alka-shadow-color) / 0.022);
+  --alka-shadow-floating: 0 6px 16px hsl(var(--alka-shadow-color) / 0.03);
+  --alka-shadow-modal: 0 10px 24px hsl(var(--alka-shadow-color) / 0.045), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12);
+}
+
+body.theme-light .alka-liquid-glass,
+.theme-light.docs-shell .alka-liquid-glass {
+  --alka-liquid-glass-blur: 26px;
+  --alka-liquid-glass-lens-blur: 12px;
+  --alka-liquid-glass-base-lens-opacity: 0.58;
+  --alka-liquid-glass-base-sheen-opacity: 0.18;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-glass-element-tint-opacity: 0.28;
+  --alka-glass-element-shine-opacity: 0.2;
+  background:
+    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
+    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.04), transparent 58%),
+    linear-gradient(145deg, hsl(0 0% 0% / 0.032), hsl(0 0% 93% / 0.15) 48%, hsl(0 0% 0% / 0.026)),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 48%),
+    var(--alka-liquid-glass-bg);
+  border-color: hsl(0 0% 0% / 0.095);
+  box-shadow:
+    0 4px 12px hsl(var(--alka-shadow-color) / 0.022),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.28),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.028);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+}
+
+body.theme-light .alka-card-surface.alka-liquid-glass,
+body.theme-light .alka-item-surface[data-surface="glass"],
+body.theme-light .alka-dropdown-content.alka-liquid-glass,
+body.theme-light .alka-context-menu-content.alka-liquid-glass,
+body.theme-light .alka-select-content.alka-liquid-glass,
+body.theme-light .alka-command.alka-liquid-glass,
+body.theme-light .alka-popover-content.alka-liquid-glass,
+body.theme-light .alka-tooltip-content.alka-liquid-glass,
+body.theme-light .alka-dialog-content.alka-liquid-glass,
+body.theme-light .alka-alert-dialog-content.alka-liquid-glass,
+body.theme-light .alka-sheet-content.alka-liquid-glass,
+body.theme-light .alka-toast.alka-liquid-glass,
+.theme-light.docs-shell .alka-card-surface.alka-liquid-glass,
+.theme-light.docs-shell .alka-item-surface[data-surface="glass"] {
+  box-shadow:
+    0 4px 12px hsl(var(--alka-shadow-color) / 0.022),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.28),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.028);
+}
+
+body.theme-light .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+.theme-light.docs-shell .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+.theme-light.docs-shell .navbar-panel.alka-liquid-glass:not([data-quiet="true"]) {
+  --alka-glass-element-tint-opacity: 0.28;
+  --alka-glass-element-shine-opacity: 0.2;
+  background:
+    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
+    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.04), transparent 58%),
+    linear-gradient(145deg, hsl(0 0% 0% / 0.032), hsl(0 0% 93% / 0.15) 48%, hsl(0 0% 0% / 0.026)),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 48%),
+    var(--alka-liquid-glass-bg);
+  border-color: hsl(0 0% 0% / 0.095);
+  box-shadow:
+    0 5px 16px hsl(var(--alka-shadow-color) / 0.03),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.3),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.03);
+}
+
+body.theme-light .alka-item-surface,
+body.theme-light .alka-accordion-item,
+body.theme-light .alka-accordion-item[data-state="open"],
+.theme-light.docs-shell .alka-item-surface,
+.theme-light.docs-shell .alka-accordion-item,
+.theme-light.docs-shell .alka-accordion-item[data-state="open"] {
+  box-shadow: none !important;
 }
 
 body {
   margin: 0;
-  background: #050505;
+  background: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--alka-font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 420ms var(--alka-ease-smooth),
+    color 420ms var(--alka-ease-smooth);
 }
 
 ::selection {
@@ -33,7 +124,10 @@ body {
     position: relative;
     min-height: 100dvh;
     overflow-x: clip;
-    background: #050505;
+    background: hsl(var(--background));
+    transition:
+      background-color 420ms var(--alka-ease-smooth),
+      color 420ms var(--alka-ease-smooth);
   }
 
   .docs-shell::before {
@@ -57,6 +151,103 @@ body {
       linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 28%),
       linear-gradient(90deg, rgba(255, 255, 255, 0.025), transparent 34%, rgba(255, 255, 255, 0.018)),
       linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.42));
+  }
+
+  .theme-light.docs-shell::after {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.03), transparent 24%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.025), transparent 34%, rgba(0, 0, 0, 0.018)),
+      linear-gradient(180deg, transparent, rgba(238, 238, 238, 0.48));
+  }
+
+  .theme-light.docs-shell::before {
+    opacity: 0.1;
+  }
+
+  .theme-light.docs-shell {
+    --alka-panel-bg: 0 0% 93% / 0.3;
+    --alka-navbar-bg: 0 0% 93% / 0.3;
+    --alka-panel-border: 0 0% 0% / 0.105;
+    --alka-navbar-border: 0 0% 0% / 0.095;
+    --alka-panel-shadow: 0 0% 0% / 0.035;
+    --alka-highlight-color: 0 0% 88%;
+    --alka-shadow-color: 0 0% 0%;
+    --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.035);
+    --alka-shadow-panel: 0 4px 12px hsl(var(--alka-shadow-color) / 0.022);
+    --alka-shadow-floating: 0 6px 16px hsl(var(--alka-shadow-color) / 0.03);
+    --alka-shadow-modal: 0 10px 24px hsl(var(--alka-shadow-color) / 0.045), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12);
+  }
+
+  body.theme-light .alka-liquid-glass,
+  .theme-light.docs-shell .alka-liquid-glass {
+    --alka-liquid-glass-blur: 26px;
+    --alka-liquid-glass-lens-blur: 12px;
+    --alka-liquid-glass-base-lens-opacity: 0.58;
+    --alka-liquid-glass-base-sheen-opacity: 0.18;
+    --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+    --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+    --alka-glass-element-tint-opacity: 0.28;
+    --alka-glass-element-shine-opacity: 0.2;
+    background:
+      radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
+      radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.04), transparent 58%),
+      linear-gradient(145deg, hsl(0 0% 0% / 0.032), hsl(0 0% 93% / 0.15) 48%, hsl(0 0% 0% / 0.026)),
+      linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 48%),
+      var(--alka-liquid-glass-bg);
+    border-color: hsl(0 0% 0% / 0.095);
+    box-shadow:
+      0 4px 12px hsl(var(--alka-shadow-color) / 0.022),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.28),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.028);
+    -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+    backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+  }
+
+  body.theme-light .alka-card-surface.alka-liquid-glass,
+  body.theme-light .alka-item-surface[data-surface="glass"],
+  body.theme-light .alka-dropdown-content.alka-liquid-glass,
+  body.theme-light .alka-context-menu-content.alka-liquid-glass,
+  body.theme-light .alka-select-content.alka-liquid-glass,
+  body.theme-light .alka-command.alka-liquid-glass,
+  body.theme-light .alka-popover-content.alka-liquid-glass,
+  body.theme-light .alka-tooltip-content.alka-liquid-glass,
+  body.theme-light .alka-dialog-content.alka-liquid-glass,
+  body.theme-light .alka-alert-dialog-content.alka-liquid-glass,
+  body.theme-light .alka-sheet-content.alka-liquid-glass,
+  body.theme-light .alka-toast.alka-liquid-glass,
+  .theme-light.docs-shell .alka-card-surface.alka-liquid-glass,
+  .theme-light.docs-shell .alka-item-surface[data-surface="glass"] {
+    box-shadow:
+      0 4px 12px hsl(var(--alka-shadow-color) / 0.022),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.28),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.028);
+  }
+
+  body.theme-light .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+  .theme-light.docs-shell .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+  .theme-light.docs-shell .navbar-panel.alka-liquid-glass:not([data-quiet="true"]) {
+    --alka-glass-element-tint-opacity: 0.28;
+    --alka-glass-element-shine-opacity: 0.2;
+    background:
+      radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
+      radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.04), transparent 58%),
+      linear-gradient(145deg, hsl(0 0% 0% / 0.032), hsl(0 0% 93% / 0.15) 48%, hsl(0 0% 0% / 0.026)),
+      linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 48%),
+      var(--alka-liquid-glass-bg);
+    border-color: hsl(0 0% 0% / 0.095);
+    box-shadow:
+      0 5px 16px hsl(var(--alka-shadow-color) / 0.03),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.3),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.03);
+  }
+
+  body.theme-light .alka-item-surface,
+  body.theme-light .alka-accordion-item,
+  body.theme-light .alka-accordion-item[data-state="open"],
+  .theme-light.docs-shell .alka-item-surface,
+  .theme-light.docs-shell .alka-accordion-item,
+  .theme-light.docs-shell .alka-accordion-item[data-state="open"] {
+    box-shadow: none !important;
   }
 
   .docs-apple-motion-page {

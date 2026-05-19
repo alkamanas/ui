@@ -46,7 +46,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "alka-dropdown-content theme-dark alka-theme-dark alka-liquid-glass z-50 grid min-w-[12rem] origin-[--radix-dropdown-menu-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+      "alka-dropdown-content alka-liquid-glass z-50 grid min-w-[12rem] origin-[--radix-dropdown-menu-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
       className
     )}
     {...props}
@@ -67,7 +67,7 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "alka-dropdown-content theme-dark alka-theme-dark alka-liquid-glass z-50 grid max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[12rem] origin-[--radix-dropdown-menu-content-transform-origin] gap-1 overflow-y-auto overflow-x-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+        "alka-dropdown-content alka-liquid-glass z-50 grid max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[12rem] origin-[--radix-dropdown-menu-content-transform-origin] gap-1 overflow-y-auto overflow-x-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
         className
       )}
       {...props}
@@ -167,7 +167,7 @@ const DropdownMenuSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn("relative z-10 my-1 h-px bg-white/10", className)}
+    className={cn("relative z-10 my-1 h-px bg-border/70", className)}
     {...props}
   />
 ))

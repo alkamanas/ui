@@ -118,20 +118,26 @@ export function ButtonDemo() {
       </div>
       <div className="flex flex-wrap gap-3">
         <Button variant="glassPrimary">Primary glass</Button>
+        <Button variant="glassSecondary">Secondary glass</Button>
         <Button variant="glassDestructive">Destructive glass</Button>
         <Button variant="outline">Outline glass</Button>
       </div>
     </div>
   );
 }`,
-  "button-group": `import { Button, ButtonGroup } from "@alkamanas/ui";
+  "button-group": `import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button, ButtonGroup, ButtonGroupSeparator } from "@alkamanas/ui";
 
 export function ButtonGroupDemo() {
   return (
-    <ButtonGroup>
-      <Button variant="ghost">Day</Button>
-      <Button variant="secondary">Week</Button>
-      <Button variant="ghost">Month</Button>
+    <ButtonGroup aria-label="Carousel navigation">
+      <Button variant="ghost" size="icon" aria-label="Previous">
+        <ChevronLeft />
+      </Button>
+      <ButtonGroupSeparator />
+      <Button variant="ghost" size="icon" aria-label="Next">
+        <ChevronRight />
+      </Button>
     </ButtonGroup>
   );
 }`,

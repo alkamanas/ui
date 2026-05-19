@@ -84,7 +84,7 @@ import {
   toast,
 } from "@alkamanas/ui";
 
-const packageVersion = "0.1.5";
+const packageVersion = "0.1.6";
 
 const workspaceOptions = [
   { value: "studio", label: "Studio operations" },

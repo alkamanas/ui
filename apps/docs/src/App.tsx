@@ -6,7 +6,7 @@ import { DirectoryPage, SectionPage } from "./component-page";
 import { componentPageById } from "./component-pages";
 import { PageChrome } from "./docs-shell";
 import { blockPageIds, componentIds, docs } from "./docs-data";
-import { getPrimaryThemeStyle, type BorderAnimationColorId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
+import { getPrimaryThemeStyle, type BorderAnimationColorId, type DocsThemeModeId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
 
 const routeIds = new Set([...docs.map((item) => item.id), ...blockPageIds]);
 const routeTransitionMs = 360;
@@ -27,6 +27,7 @@ export default function App() {
   const pendingIdRef = React.useRef<string | null>(null);
   const routeTimeoutRef = React.useRef<number | undefined>(undefined);
   const [primaryTheme, setPrimaryTheme] = React.useState<PrimaryThemeId>("white");
+  const [themeMode, setThemeMode] = React.useState<DocsThemeModeId>("dark");
   const [borderAnimationColor, setBorderAnimationColor] = React.useState<BorderAnimationColorId>("primary");
   const [surfaceGradientColor, setSurfaceGradientColor] = React.useState<SurfaceGradientColorId>("primary");
   const [glassEffect, setGlassEffect] = React.useState<GlassEffectId>("blurry");
@@ -40,14 +41,20 @@ export default function App() {
   }, [routeMotion]);
 
   React.useEffect(() => {
-    document.body.classList.add("theme-dark");
-    document.documentElement.classList.add("theme-dark");
+    const nextClass = `theme-${themeMode}`;
+    const previousClass = themeMode === "dark" ? "theme-light" : "theme-dark";
+    document.body.classList.remove(previousClass);
+    document.documentElement.classList.remove(previousClass);
+    document.body.classList.add(nextClass);
+    document.documentElement.classList.add(nextClass);
+    document.documentElement.style.colorScheme = themeMode;
 
     return () => {
-      document.body.classList.remove("theme-dark");
-      document.documentElement.classList.remove("theme-dark");
+      document.body.classList.remove(nextClass);
+      document.documentElement.classList.remove(nextClass);
+      document.documentElement.style.removeProperty("color-scheme");
     };
-  }, []);
+  }, [themeMode]);
 
   React.useEffect(() => {
     const completeRouteChange = () => {
@@ -82,7 +89,7 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
-    const variables = getPrimaryThemeStyle(primaryTheme);
+    const variables = getPrimaryThemeStyle(primaryTheme, themeMode);
     const targets = [document.documentElement, document.body];
 
     Object.entries(variables).forEach(([property, value]) => {
@@ -98,12 +105,12 @@ export default function App() {
         });
       });
     };
-  }, [primaryTheme]);
+  }, [primaryTheme, themeMode]);
 
   React.useEffect(() => {
-    document.documentElement.dataset.glassEffect = "blurry";
+    document.documentElement.dataset.glassEffect = glassEffect;
     document.documentElement.dataset.glassRealisticStrategy = "auto";
-    document.body.dataset.glassEffect = "blurry";
+    document.body.dataset.glassEffect = glassEffect;
     document.body.dataset.glassRealisticStrategy = "auto";
 
     return () => {
@@ -112,7 +119,7 @@ export default function App() {
       delete document.body.dataset.glassEffect;
       delete document.body.dataset.glassRealisticStrategy;
     };
-  }, []);
+  }, [glassEffect]);
 
   React.useEffect(() => {
     document.documentElement.dataset.borderAnimationColor = borderAnimationColor;
@@ -181,6 +188,8 @@ export default function App() {
         <BlocksPage
           primaryTheme={primaryTheme}
           onPrimaryThemeChange={setPrimaryTheme}
+          themeMode={themeMode}
+          onThemeModeChange={setThemeMode}
           borderAnimationColor={borderAnimationColor}
           onBorderAnimationColorChange={setBorderAnimationColor}
           surfaceGradientColor={surfaceGradientColor}
@@ -195,6 +204,8 @@ export default function App() {
           activeDoc={activeDoc}
           primaryTheme={primaryTheme}
           onPrimaryThemeChange={setPrimaryTheme}
+          themeMode={themeMode}
+          onThemeModeChange={setThemeMode}
           borderAnimationColor={borderAnimationColor}
           onBorderAnimationColorChange={setBorderAnimationColor}
           surfaceGradientColor={surfaceGradientColor}

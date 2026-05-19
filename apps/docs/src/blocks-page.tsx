@@ -2,7 +2,7 @@ import * as React from "react";
 import { Bell, Boxes, Check, MoreHorizontal, PanelsTopLeft, Settings, Sparkles, Terminal } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardTitle, Carousel, CarouselContent, CarouselDots, CarouselItem, CarouselNext, CarouselPrevious, Checkbox, Combobox, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, FlipCard, GlassElementLayers, Input, InputGroup, InputGroupAddon, InputGroupInput, Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, Kbd, Label, LiquidGlassFilter, Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger, Popover, PopoverContent, PopoverTrigger, Progress, RadioGroup, RadioGroupItem, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SectionAwareNavbar, Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, Slider, Switch, Tabs, TabsContent, TabsList, TabsTrigger, Textarea, toast, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, useSidebar } from "@alkamanas/ui";
 
-import { getPrimaryThemeStyle, PrimaryColorSwitcher, type BorderAnimationColorId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
+import { getPrimaryThemeStyle, PrimaryColorSwitcher, type BorderAnimationColorId, type DocsThemeModeId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
 
 function BlockFrame({
   id,
@@ -482,7 +482,7 @@ function CommandSurfaceBlock() {
   );
 }
 
-function BlocksTopNav({ glassEffect }: { glassEffect: GlassEffectId }) {
+function BlocksTopNav({ glassEffect, themeMode }: { glassEffect: GlassEffectId; themeMode: DocsThemeModeId }) {
   return (
     <SectionAwareNavbar
       brand={
@@ -493,7 +493,7 @@ function BlocksTopNav({ glassEffect }: { glassEffect: GlassEffectId }) {
           <span className="leading-none">Alkamanas UI</span>
         </span>
       }
-      theme="dark"
+      theme={themeMode}
       syncThemeMeta={false}
       glassEffect={glassEffect}
       glassRealisticStrategy="premium"
@@ -511,6 +511,8 @@ function BlocksTopNav({ glassEffect }: { glassEffect: GlassEffectId }) {
 export function BlocksPage({
   primaryTheme,
   onPrimaryThemeChange,
+  themeMode,
+  onThemeModeChange,
   borderAnimationColor,
   onBorderAnimationColorChange,
   surfaceGradientColor,
@@ -522,6 +524,8 @@ export function BlocksPage({
 }: {
   primaryTheme: PrimaryThemeId;
   onPrimaryThemeChange: (value: PrimaryThemeId) => void;
+  themeMode: DocsThemeModeId;
+  onThemeModeChange: (value: DocsThemeModeId) => void;
   borderAnimationColor: BorderAnimationColorId;
   onBorderAnimationColorChange: (value: BorderAnimationColorId) => void;
   surfaceGradientColor: SurfaceGradientColorId;
@@ -532,12 +536,14 @@ export function BlocksPage({
   routeKey: string;
 }) {
   return (
-    <div id="blocks" className="theme-dark docs-shell min-h-dvh text-foreground" data-border-animation-color={borderAnimationColor} data-glass-effect="blurry" data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme)}>
+    <div id="blocks" className={`theme-${themeMode} alka-theme-${themeMode} docs-shell min-h-dvh text-foreground`} data-border-animation-color={borderAnimationColor} data-glass-effect={glassEffect} data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme, themeMode)}>
       <LiquidGlassFilter />
-      <BlocksTopNav glassEffect={glassEffect} />
+      <BlocksTopNav glassEffect={glassEffect} themeMode={themeMode} />
       <PrimaryColorSwitcher
         value={primaryTheme}
         onChange={onPrimaryThemeChange}
+        themeMode={themeMode}
+        onThemeModeChange={onThemeModeChange}
         borderAnimationColor={borderAnimationColor}
         onBorderAnimationColorChange={onBorderAnimationColorChange}
         surfaceGradientColor={surfaceGradientColor}

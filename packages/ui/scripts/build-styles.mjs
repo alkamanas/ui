@@ -22,6 +22,7 @@ function inlineImports(path, seen = new Set()) {
 mkdirSync(dirname(outputPath), { recursive: true });
 
 const inputCss = [
+  '@import "tailwindcss/theme.css" layer(theme);',
   '@import "tailwindcss/utilities.css" layer(utilities);',
   '@source "../";',
   inlineImports(sourcePath).trim(),
@@ -31,4 +32,9 @@ const result = await postcss([tailwindcss({ optimize: true })]).process(inputCss
   from: join(packageRoot, "src/styles/__alka-package-styles.css"),
 });
 
-writeFileSync(outputPath, `${result.css.trim()}\n`);
+const defaultColorTokenPattern =
+  /--color-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d+:[^;]+;/g;
+
+const css = result.css.replace(defaultColorTokenPattern, "").trim();
+
+writeFileSync(outputPath, `${css}\n`);

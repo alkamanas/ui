@@ -48,7 +48,7 @@
   backdrop-filter: blur(42px) saturate(1.32);
 }
 
-[data-glass-effect="realistic"] .alka-slider-thumb.alka-liquid-glass > .alka-slider-thumb-backdrop {
+[data-glass-effect="realistic"] .alka-slider-thumb.alka-liquid-glass:not([data-glass-effect="blurry"]) > .alka-slider-thumb-backdrop {
   display: block;
   background: hsl(var(--background) / 0.08);
 }

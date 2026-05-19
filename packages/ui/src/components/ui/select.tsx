@@ -32,6 +32,8 @@ const SelectMotionContext = React.createContext<{
   closing: false,
 })
 
+const selectCloseTimeout = 620
+
 function Select({
   open,
   defaultOpen,
@@ -88,7 +90,7 @@ function Select({
       onOpenChange?.(false)
       closeTimeoutRef.current = window.setTimeout(() => {
         setClosing(false)
-      }, 300)
+      }, selectCloseTimeout)
       return
     }
   }
@@ -205,7 +207,7 @@ const SelectContent = React.forwardRef<
           }
         }}
         className={cn(
-          "alka-select-content theme-dark alka-theme-dark alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+          "alka-select-content alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
           position === "popper" && "w-[var(--radix-select-trigger-width)]",
           className
         )}

@@ -4,6 +4,7 @@ import {
   Bell,
   Boxes,
   Check,
+  ChevronLeft,
   ChevronRight,
   FileJson,
   MoreHorizontal,
@@ -41,6 +42,7 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonGroup,
+  ButtonGroupSeparator,
   Card,
   CardContent,
   CardDescription,
@@ -457,6 +459,7 @@ export function ComponentPreview({ id }: { id: string }) {
           </div>
           <div className="flex flex-wrap gap-3">
             <Button variant="glassPrimary">Primary glass</Button>
+            <Button variant="glassSecondary">Secondary glass</Button>
             <Button variant="glassDestructive">Destructive glass</Button>
             <Button variant="outline">Outline glass</Button>
           </div>
@@ -465,7 +468,17 @@ export function ComponentPreview({ id }: { id: string }) {
     );
   }
   if (id === "button-group") {
-    return <ButtonGroup><Button variant="ghost">Day</Button><Button variant="secondary">Week</Button><Button variant="ghost">Month</Button></ButtonGroup>;
+    return (
+      <ButtonGroup aria-label="Carousel navigation">
+        <Button variant="ghost" size="icon" aria-label="Previous">
+          <ChevronLeft />
+        </Button>
+        <ButtonGroupSeparator />
+        <Button variant="ghost" size="icon" aria-label="Next">
+          <ChevronRight />
+        </Button>
+      </ButtonGroup>
+    );
   }
   if (id === "input") {
     return (

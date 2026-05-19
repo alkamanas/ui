@@ -5,5 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 4327,
+    strictPort: true,
+    hmr: false,
+    headers: {
+      "Cache-Control": "no-store, max-age=0",
+    },
   },
 });

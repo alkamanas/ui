@@ -40,6 +40,7 @@ export function SolidButtonExample() {
       "preview": (
         <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-3">
           <Button variant="glassPrimary">Primary glass</Button>
+          <Button variant="glassSecondary">Secondary glass</Button>
           <Button variant="glassDestructive">Destructive glass</Button>
           <Button variant="outline">Outline</Button>
         </div>
@@ -50,6 +51,7 @@ export function GlassButtonExample() {
   return (
     <div className="flex flex-wrap gap-3">
       <Button variant="glassPrimary">Primary glass</Button>
+      <Button variant="glassSecondary">Secondary glass</Button>
       <Button variant="glassDestructive">Destructive glass</Button>
       <Button variant="outline">Outline</Button>
     </div>
@@ -143,6 +145,10 @@ export function ButtonAsChildExample() {
     {
       "name": "glassPrimary",
       "description": "Primary-tinted glass action with subtle token color in the surface."
+    },
+    {
+      "name": "glassSecondary",
+      "description": "Secondary liquid-glass action while the solid secondary variant remains unchanged."
     },
     {
       "name": "glassDestructive",

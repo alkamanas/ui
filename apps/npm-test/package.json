@@ -4,13 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 4327",
+    "predev": "rm -rf node_modules/.vite",
+    "dev": "vite --force --host 0.0.0.0 --port 4327",
+    "prestart": "rm -rf node_modules/.vite",
     "build": "tsc -p tsconfig.json --noEmit && vite build",
-    "start": "vite --host 0.0.0.0 --port 4327",
+    "start": "vite --force --host 0.0.0.0 --port 4327",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@alkamanas/ui": "0.1.5",
+    "@alkamanas/ui": "0.1.6",
     "lucide-react": "^0.561.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"

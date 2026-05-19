@@ -3,7 +3,7 @@ import { Command as CommandIcon, Menu, Search } from "lucide-react";
 import { Button, GlassElementLayers, LiquidGlassFilter, useCommandPalette } from "@alkamanas/ui";
 
 import { componentIds, groupedDocs, type DocItem } from "./docs-data";
-import { getPrimaryThemeStyle, PrimaryColorSwitcher, type BorderAnimationColorId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
+import { getPrimaryThemeStyle, PrimaryColorSwitcher, type BorderAnimationColorId, type DocsThemeModeId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
 
 function Brand() {
   return (
@@ -97,6 +97,8 @@ export function PageChrome({
   children,
   primaryTheme,
   onPrimaryThemeChange,
+  themeMode,
+  onThemeModeChange,
   borderAnimationColor,
   onBorderAnimationColorChange,
   surfaceGradientColor,
@@ -110,6 +112,8 @@ export function PageChrome({
   children: React.ReactNode;
   primaryTheme: PrimaryThemeId;
   onPrimaryThemeChange: (value: PrimaryThemeId) => void;
+  themeMode: DocsThemeModeId;
+  onThemeModeChange: (value: DocsThemeModeId) => void;
   borderAnimationColor: BorderAnimationColorId;
   onBorderAnimationColorChange: (value: BorderAnimationColorId) => void;
   surfaceGradientColor: SurfaceGradientColorId;
@@ -122,13 +126,15 @@ export function PageChrome({
   const showPrimarySwitcher = activeDoc.id === "components" || componentIds.has(activeDoc.id);
 
   return (
-    <div className="theme-dark docs-shell text-foreground" data-border-animation-color={borderAnimationColor} data-glass-effect="blurry" data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme)}>
+    <div className={`theme-${themeMode} alka-theme-${themeMode} docs-shell text-foreground`} data-border-animation-color={borderAnimationColor} data-glass-effect={glassEffect} data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme, themeMode)}>
       <LiquidGlassFilter />
       <Topbar activeTitle={activeDoc.title} />
       {showPrimarySwitcher ? (
         <PrimaryColorSwitcher
           value={primaryTheme}
           onChange={onPrimaryThemeChange}
+          themeMode={themeMode}
+          onThemeModeChange={onThemeModeChange}
           borderAnimationColor={borderAnimationColor}
           onBorderAnimationColorChange={onBorderAnimationColorChange}
           surfaceGradientColor={surfaceGradientColor}
@@ -164,6 +170,8 @@ export function PageChrome({
                   <PrimaryColorSwitcher
                     value={primaryTheme}
                     onChange={onPrimaryThemeChange}
+                    themeMode={themeMode}
+                    onThemeModeChange={onThemeModeChange}
                     borderAnimationColor={borderAnimationColor}
                     onBorderAnimationColorChange={onBorderAnimationColorChange}
                     surfaceGradientColor={surfaceGradientColor}

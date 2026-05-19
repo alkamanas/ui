@@ -3,6 +3,7 @@
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 type TabsMotionContextValue = {
@@ -103,9 +104,10 @@ const TabsList = React.forwardRef<
         setForwardedRef(ref, node)
       }}
       className={cn(
-        "alka-tabs-list alka-pill-surface inline-flex h-[3.125rem] items-center justify-center rounded-full p-1 text-muted-foreground",
+        "alka-tabs-list alka-pill-surface alka-liquid-glass inline-flex h-[3.125rem] items-center justify-center rounded-full p-1 text-muted-foreground",
         className
       )}
+      data-glass-effect="blurry"
       style={
         {
           ...style,
@@ -116,6 +118,8 @@ const TabsList = React.forwardRef<
       }
       {...props}
     >
+      <GlassElementLayers effect="blurry" />
+      <span aria-hidden="true" className="alka-tabs-glass-border" />
       {children}
     </TabsPrimitive.List>
   )

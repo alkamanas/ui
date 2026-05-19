@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import {
   Command,
@@ -46,6 +45,8 @@ const comboboxSizeClasses: Record<ComboboxSize, string> = {
   lg: "h-12 px-6 text-base",
 }
 
+const comboboxCloseTimeout = 620
+
 function Combobox({
   options,
   value,
@@ -83,7 +84,7 @@ function Combobox({
     setOpen(false)
     setClosing(true)
     requestAnimationFrame(() => triggerRef.current?.blur())
-    closeTimeoutRef.current = window.setTimeout(() => setClosing(false), 300)
+    closeTimeoutRef.current = window.setTimeout(() => setClosing(false), comboboxCloseTimeout)
   }, [closing, open])
 
   const handleOpenChange = (nextOpen: boolean) => {
@@ -107,17 +108,19 @@ function Combobox({
   return (
     <Popover open={popoverOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
-        <Button
+        <button
           ref={triggerRef}
-          variant="outline"
-          size={size}
+          type="button"
           role="combobox"
           aria-label={selectedOption?.label ?? placeholder}
-          aria-expanded={open}
+          aria-expanded={popoverOpen}
           data-border-animation-color={borderAnimationColor}
           data-closing={closing ? "true" : undefined}
+          data-size={size}
+          data-state={popoverOpen ? "open" : "closed"}
           data-surface={surface}
           data-surface-gradient-color={surfaceGradientColor}
+          data-variant="outline"
           onClick={(event) => {
             if (!open && !closing) return
 
@@ -125,16 +128,16 @@ function Combobox({
             closeCombobox()
           }}
           className={cn(
-            "alka-combobox-trigger w-full justify-between rounded-full bg-transparent py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
+            "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-transparent py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
             comboboxSizeClasses[size],
             className
           )}
         >
-          <span className={cn(!selectedOption && "text-muted-foreground")}>
+          <span className={cn("min-w-0 truncate whitespace-nowrap", !selectedOption && "text-muted-foreground")}>
             {selectedOption?.label ?? placeholder}
           </span>
           <ChevronsUpDown className="size-4 opacity-50" />
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent
         align="center"
@@ -148,7 +151,7 @@ function Combobox({
         className="alka-select-content alka-liquid-glass w-[var(--radix-popover-trigger-width)] overflow-hidden rounded-3xl p-2"
       >
         <GlassElementLayers />
-        <Command glass={false} className="relative z-10 gap-1 rounded-[1.5rem] bg-transparent [&_[cmdk-group]]:grid [&_[cmdk-group]]:gap-1 [&_[cmdk-group]]:p-0 [&_[cmdk-input-wrapper]]:mx-1 [&_[cmdk-input-wrapper]]:mb-2 [&_[cmdk-input-wrapper]]:mt-1 [&_[cmdk-input-wrapper]]:rounded-none [&_[cmdk-input-wrapper]]:border-0 [&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input-wrapper]]:border-white/10 [&_[cmdk-input-wrapper]]:bg-transparent [&_[cmdk-input-wrapper]]:px-4 [&_[cmdk-input-wrapper]]:backdrop-blur-none [&_[cmdk-input]]:h-11">
+        <Command glass={false} className="relative z-10 gap-1 rounded-[1.5rem] bg-transparent [&_[cmdk-group]]:grid [&_[cmdk-group]]:gap-1 [&_[cmdk-group]]:p-0 [&_[cmdk-input-wrapper]]:mx-1 [&_[cmdk-input-wrapper]]:mb-2 [&_[cmdk-input-wrapper]]:mt-1 [&_[cmdk-input-wrapper]]:rounded-none [&_[cmdk-input-wrapper]]:border-0 [&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input-wrapper]]:border-border/70 [&_[cmdk-input-wrapper]]:bg-transparent [&_[cmdk-input-wrapper]]:px-4 [&_[cmdk-input-wrapper]]:backdrop-blur-none [&_[cmdk-input]]:h-11">
           <CommandInput placeholder={searchPlaceholder} />
           <CommandList className="max-h-[18rem]">
             <CommandEmpty>{emptyText}</CommandEmpty>

@@ -446,6 +446,15 @@
   opacity: 1;
 }
 
+:root:not(.theme-dark):not(.alka-theme-dark) .alka-accordion-item,
+:root:not(.theme-dark):not(.alka-theme-dark) .alka-accordion-item[data-state="open"],
+.alka-theme-light .alka-accordion-item,
+.alka-theme-light .alka-accordion-item[data-state="open"],
+.theme-light .alka-accordion-item,
+.theme-light .alka-accordion-item[data-state="open"] {
+  box-shadow: none;
+}
+
 .alka-accordion-trigger {
   position: relative;
   z-index: 2;
