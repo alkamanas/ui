@@ -134,8 +134,8 @@ importers:
   apps/npm-test:
     dependencies:
       '@alkamanas/ui':
-        specifier: 0.1.6
-        version: 0.1.6(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)
+        specifier: 0.1.7
+        version: 0.1.7(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)
       lucide-react:
         specifier: ^0.561.0
         version: 0.561.0(react@19.2.4)
@@ -303,8 +303,8 @@ importers:
 
 packages:
 
-  '@alkamanas/ui@0.1.6':
-    resolution: {integrity: sha512-vfvA3znqauDDb0IcmUWNf1x8XkMxq8H0/RWP2IRVFgeCFAnz9OxysUKIIhDPHthkwlvscfh7mgi/IRGZW77dcA==}
+  '@alkamanas/ui@0.1.7':
+    resolution: {integrity: sha512-I9V8wB/k8r7RyUSpS9aAl4R48acUzlaZFGSowN+CFnN94YlFgaOrYqemJa7bG7o2us5yR7RViUDQF8cmb0Zx7g==}
     peerDependencies:
       lucide-react: ^0.561.0
       react: '>=18.3.0 || >=19.0.0'
@@ -3232,7 +3232,7 @@ packages:
 
 snapshots:
 
-  '@alkamanas/ui@0.1.6(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)':
+  '@alkamanas/ui@0.1.7(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@radix-ui/react-alert-dialog': 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@radix-ui/react-avatar': 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
