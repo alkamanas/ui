@@ -145,6 +145,8 @@ export function TestDashboard() {
             brand="Alkamanas npm test"
             cta={{ href: "#workspace", label: "Open workspace" }}
             defaultTheme="dark"
+            glassEffect="realistic"
+            glassRealisticStrategy="premium"
             links={[
               { href: "#overview", label: "Overview" },
               { href: "#workspace", label: "Workspace" },
