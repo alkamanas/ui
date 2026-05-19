@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Avatar,
   AvatarFallback,
@@ -84,7 +84,7 @@ import {
   toast,
 } from "@alkamanas/ui";
 
-const packageVersion = "0.1.6";
+const packageVersion = "0.1.7";
 
 const workspaceOptions = [
   { value: "studio", label: "Studio operations" },
@@ -136,6 +136,16 @@ export function TestDashboard() {
     () => workspaceOptions.find((option) => option.value === workspace)?.label ?? "Workspace",
     [workspace],
   );
+
+  useEffect(() => {
+    const themeClasses = ["alka-theme-dark", "theme-dark"];
+    document.documentElement.classList.add(...themeClasses);
+    document.body.classList.add(...themeClasses);
+    return () => {
+      document.documentElement.classList.remove(...themeClasses);
+      document.body.classList.remove(...themeClasses);
+    };
+  }, []);
 
   return (
     <GlassProvider effect="blurry" realisticStrategy="auto">
