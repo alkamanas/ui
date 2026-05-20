@@ -7,6 +7,7 @@ import { componentPageById } from "./component-pages";
 import { PageChrome } from "./docs-shell";
 import { blockPageIds, componentIds, docs } from "./docs-data";
 import { getPrimaryThemeStyle, type BorderAnimationColorId, type DocsThemeModeId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
+import { TypographyPage } from "./typography-page";
 
 const routeIds = new Set([...docs.map((item) => item.id), ...blockPageIds]);
 const routeTransitionMs = 360;
@@ -41,17 +42,18 @@ export default function App() {
   }, [routeMotion]);
 
   React.useEffect(() => {
-    const nextClass = `theme-${themeMode}`;
-    const previousClass = themeMode === "dark" ? "theme-light" : "theme-dark";
-    document.body.classList.remove(previousClass);
-    document.documentElement.classList.remove(previousClass);
-    document.body.classList.add(nextClass);
-    document.documentElement.classList.add(nextClass);
+    const nextClasses = [`theme-${themeMode}`, `alka-theme-${themeMode}`];
+    const previousMode = themeMode === "dark" ? "light" : "dark";
+    const previousClasses = [`theme-${previousMode}`, `alka-theme-${previousMode}`];
+    document.body.classList.remove(...previousClasses);
+    document.documentElement.classList.remove(...previousClasses);
+    document.body.classList.add(...nextClasses);
+    document.documentElement.classList.add(...nextClasses);
     document.documentElement.style.colorScheme = themeMode;
 
     return () => {
-      document.body.classList.remove(nextClass);
-      document.documentElement.classList.remove(nextClass);
+      document.body.classList.remove(...nextClasses);
+      document.documentElement.classList.remove(...nextClasses);
       document.documentElement.style.removeProperty("color-scheme");
     };
   }, [themeMode]);
@@ -215,7 +217,7 @@ export default function App() {
           routeMotion={routeMotion}
           routeKey={activeId}
         >
-          {activeDoc.id === "components" ? <DirectoryPage /> : componentIds.has(activeDoc.id) && ActiveComponentPage ? <ActiveComponentPage doc={activeDoc} /> : <SectionPage doc={activeDoc} />}
+          {activeDoc.id === "components" ? <DirectoryPage /> : activeDoc.id === "typography" ? <TypographyPage doc={activeDoc} /> : componentIds.has(activeDoc.id) && ActiveComponentPage ? <ActiveComponentPage doc={activeDoc} /> : <SectionPage doc={activeDoc} />}
           <Separator className="my-12" />
           <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
             <span>Built from Visetra Studio primitives with Apple-inspired smooth interaction references.</span>

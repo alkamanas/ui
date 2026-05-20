@@ -11,6 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "border border-transparent bg-primary text-primary-foreground shadow",
+        flat: "border border-transparent bg-primary text-primary-foreground shadow",
         solid: "border border-transparent bg-primary text-primary-foreground shadow",
         glass:
           "alka-liquid-glass text-foreground",
@@ -37,7 +38,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "flat",
       size: "default",
     },
   }
@@ -79,7 +80,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <Slot
           className={buttonClassName}
-          data-variant={variant ?? "default"}
+          data-variant={variant ?? "flat"}
           data-size={size ?? "default"}
           ref={ref}
           {...props}
@@ -93,7 +94,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         className={buttonClassName}
         data-glass-effect={isLiquidGlass ? "blurry" : undefined}
-        data-variant={variant ?? "default"}
+        data-variant={variant ?? "flat"}
         data-size={size ?? "default"}
         ref={ref}
         {...props}

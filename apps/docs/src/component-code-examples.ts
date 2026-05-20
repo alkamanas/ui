@@ -72,12 +72,19 @@ export function AvatarDemo() {
 
 export function BadgeDemo() {
   return (
-    <div className="flex flex-wrap gap-2">
-      <Badge>Default</Badge>
-      <Badge variant="secondary">Secondary</Badge>
-      <Badge variant="success">Success</Badge>
-      <Badge variant="warning">Warning</Badge>
-      <Badge variant="info">Info</Badge>
+    <div className="grid gap-4">
+      <div className="flex flex-wrap gap-2">
+        <Badge>Default</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="warning">Warning</Badge>
+        <Badge variant="info">Info</Badge>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <Badge size="sm" variant="outline">Small</Badge>
+        <Badge size="md" variant="outline">Medium</Badge>
+        <Badge size="lg" variant="outline">Large</Badge>
+      </div>
     </div>
   );
 }`,
@@ -111,7 +118,8 @@ export function ButtonDemo() {
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap gap-3">
-        <Button>Primary</Button>
+        <Button>Flat</Button>
+        <Button variant="flat">Primary flat</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="destructive">Destructive</Button>
         <Button variant="ghost">Ghost</Button>
@@ -490,21 +498,21 @@ export function InputOTPDemo() {
 export function ItemDemo() {
   return (
     <div className="grid gap-3">
-      <Item surface="solid">
+      <Item>
         <ItemMedia>01</ItemMedia>
         <ItemContent>
-          <ItemTitle>Default item</ItemTitle>
+          <ItemTitle>Flat item</ItemTitle>
           <ItemDescription>Default hover stays calm.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Badge variant="secondary">Active</Badge>
         </ItemActions>
       </Item>
-      <Item surface="glass" borderAnimation borderAnimationColor="contrast">
+      <Item surface="glass">
         <ItemMedia>02</ItemMedia>
         <ItemContent>
-          <ItemTitle>Animated item</ItemTitle>
-          <ItemDescription>Border animation can be enabled per item.</ItemDescription>
+          <ItemTitle>Glass item</ItemTitle>
+          <ItemDescription>Hover keeps the standard border without animation.</ItemDescription>
         </ItemContent>
       </Item>
     </div>
@@ -540,23 +548,45 @@ export function LabelDemo() {
 
 export function MenubarDemo() {
   return (
-    <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem>New</MenubarItem>
-          <MenubarItem>Save</MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
+    <div className="grid gap-3">
+      <Menubar>
+        <MenubarMenu>
+          <MenubarTrigger>File</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>New</MenubarItem>
+            <MenubarItem>Save</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
+      <Menubar surface="glass">
+        <MenubarMenu>
+          <MenubarTrigger>View</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Zoom in</MenubarItem>
+            <MenubarItem>Zoom out</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
+    </div>
   );
 }`,
-  navbar: `import { SectionAwareNavbar } from "@alkamanas/ui";
+  navbar: `import { Navbar, NavbarCTA } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
 
 export function NavbarDemo() {
   return (
-    <SectionAwareNavbar
-      brand={<span className="text-sm font-semibold text-white">Alkamanas</span>}
+    <Navbar
+      logo={{
+        wide: {
+          dark: <span className="text-sm font-semibold text-white">Alkamanas UI</span>,
+          light: <span className="text-sm font-semibold text-black">Alkamanas UI</span>,
+        },
+        compact: {
+          dark: <span className="text-sm font-semibold text-white">A</span>,
+          light: <span className="text-sm font-semibold text-black">A</span>,
+        },
+      }}
+      logoWidths={{ wide: "9.5rem", compact: "2rem" }}
       theme="dark"
       syncThemeMeta={false}
       links={[
@@ -564,7 +594,8 @@ export function NavbarDemo() {
         { href: "#sidebar", label: "Shell" },
         { href: "#theming", label: "Theme" },
       ]}
-      cta={{ href: "#installation", label: "Install" }}
+      rightSlot={<NavbarCTA href="#installation">Install</NavbarCTA>}
+      mobileFooterSlot={<NavbarCTA href="#installation">Install</NavbarCTA>}
     />
   );
 }`,
@@ -785,7 +816,7 @@ export function SwitchDemo() {
 export function TabsDemo() {
   return (
     <Tabs defaultValue="200" className="max-w-2xl">
-      <TabsList>
+      <TabsList surface="flat">
         {["200", "100", "48", "35"].map((mm) => (
           <TabsTrigger key={mm} value={mm}>{mm} mm</TabsTrigger>
         ))}

@@ -4,12 +4,12 @@ import { Button } from "@alkamanas/ui";
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 const details: ComponentPageDetails = {
-  "summary": "Button is the primary action primitive. It supports solid and glass treatments, preserves fixed control geometry, and keeps hover feedback subtle instead of lifting the control.",
+  "summary": "Button is the primary action primitive. It supports flat and glass treatments, preserves fixed control geometry, and keeps hover feedback subtle instead of lifting the control.",
   "examples": [
     {
-      "id": "button-solid-actions",
-      "title": "Solid action set",
-      "description": "Use solid buttons for primary decisions and dialog actions. Secondary matches the cancel action treatment used across overlays.",
+      "id": "button-flat-actions",
+      "title": "Flat action set",
+      "description": "Use flat buttons for primary decisions and dialog actions. Secondary matches the cancel action treatment used across overlays.",
       "preview": (
         <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-3">
           <Button>Primary</Button>
@@ -21,7 +21,7 @@ const details: ComponentPageDetails = {
       ),
       "code": `import { Button } from "@alkamanas/ui";
 
-export function SolidButtonExample() {
+export function FlatButtonExample() {
   return (
     <div className="flex flex-wrap gap-3">
       <Button>Primary</Button>
@@ -132,11 +132,15 @@ export function ButtonAsChildExample() {
   "variants": [
     {
       "name": "default",
-      "description": "Primary solid action using the active primary token."
+      "description": "Primary flat action using the active primary token."
+    },
+    {
+      "name": "flat",
+      "description": "Named primary flat action and the default Button variant."
     },
     {
       "name": "solid",
-      "description": "Alias for primary solid action when naming needs to contrast with glass."
+      "description": "Compatibility alias for the primary flat action."
     },
     {
       "name": "glass",
@@ -148,7 +152,7 @@ export function ButtonAsChildExample() {
     },
     {
       "name": "glassSecondary",
-      "description": "Secondary liquid-glass action while the solid secondary variant remains unchanged."
+      "description": "Secondary liquid-glass action while the flat secondary variant remains unchanged."
     },
     {
       "name": "glassDestructive",
@@ -156,11 +160,11 @@ export function ButtonAsChildExample() {
     },
     {
       "name": "destructive",
-      "description": "Solid destructive action using the destructive token."
+      "description": "Flat destructive action using the destructive token."
     },
     {
       "name": "outline",
-      "description": "Bordered low-emphasis control with the same sizing as solid buttons."
+      "description": "Bordered low-emphasis control with the same sizing as flat buttons."
     },
     {
       "name": "secondary",
@@ -197,7 +201,7 @@ export function ButtonAsChildExample() {
     {
       "name": "variant",
       "type": "ButtonVariant",
-      "description": "Visual treatment. Includes solid, glass, destructive, outline, ghost, link and primary glass variants."
+      "description": "Visual treatment. Includes flat, glass, destructive, outline, ghost, link and primary glass variants."
     },
     {
       "name": "size",

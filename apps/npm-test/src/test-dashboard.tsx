@@ -45,7 +45,7 @@ import {
   Progress,
   RadioGroup,
   RadioGroupItem,
-  SectionAwareNavbar,
+  SectionAwareNavbar as Navbar,
   Select,
   SelectContent,
   SelectItem,
@@ -151,7 +151,7 @@ export function TestDashboard() {
     <GlassProvider effect="blurry" realisticStrategy="auto">
       <TooltipProvider>
         <div className="test-app alka-theme-dark theme-dark">
-          <SectionAwareNavbar
+          <Navbar
             brand="Alkamanas npm test"
             cta={{ href: "#workspace", label: "Open workspace" }}
             defaultTheme="dark"

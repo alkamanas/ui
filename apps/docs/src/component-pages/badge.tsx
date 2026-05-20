@@ -1,7 +1,63 @@
+import { Badge } from "@alkamanas/ui";
+
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 const details: ComponentPageDetails = {
   "summary": "Badge is a display primitive in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
+  "examples": [
+    {
+      "id": "badge-variants",
+      "title": "Variants",
+      "description": "Badges default to a compact size for dense status labels and metadata.",
+      "preview": (
+        <div className="flex flex-wrap gap-2">
+          <Badge>Default</Badge>
+          <Badge variant="secondary">Secondary</Badge>
+          <Badge variant="success">Success</Badge>
+          <Badge variant="warning">Warning</Badge>
+          <Badge variant="info">Info</Badge>
+          <Badge variant="outline">Outline</Badge>
+        </div>
+      ),
+      "code": `import { Badge } from "@alkamanas/ui";
+
+export function BadgeVariantsExample() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Badge>Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="info">Info</Badge>
+      <Badge variant="outline">Outline</Badge>
+    </div>
+  );
+}`
+    },
+    {
+      "id": "badge-sizes",
+      "title": "Sizes",
+      "description": "Use md or lg only when the badge needs to align with larger controls or card headers.",
+      "preview": (
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge size="sm" variant="outline">Small</Badge>
+          <Badge size="md" variant="outline">Medium</Badge>
+          <Badge size="lg" variant="outline">Large</Badge>
+        </div>
+      ),
+      "code": `import { Badge } from "@alkamanas/ui";
+
+export function BadgeSizesExample() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Badge size="sm" variant="outline">Small</Badge>
+      <Badge size="md" variant="outline">Medium</Badge>
+      <Badge size="lg" variant="outline">Large</Badge>
+    </div>
+  );
+}`
+    }
+  ],
   "anatomy": [
     "Import Badge from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
@@ -19,15 +75,29 @@ const details: ComponentPageDetails = {
   ],
   "sizes": [
     {
-      "name": "content",
-      "description": "Uses intrinsic sizing unless a fixed control size is documented for this component."
+      "name": "sm",
+      "description": "Default compact badge for status labels, filters and metadata."
     },
     {
-      "name": "responsive",
-      "description": "Keeps text and controls within their parent bounds on mobile and desktop layouts."
+      "name": "md",
+      "description": "Previous roomy badge size for card headers or larger toolbar labels."
+    },
+    {
+      "name": "lg",
+      "description": "High-emphasis badge for larger marketing or feature labels."
     }
   ],
   "props": [
+    {
+      "name": "variant",
+      "type": "default | secondary | destructive | success | warning | info | outline",
+      "description": "Visual treatment and semantic color."
+    },
+    {
+      "name": "size",
+      "type": "sm | md | lg",
+      "description": "Controls badge height, padding and font size. Defaults to sm."
+    },
     {
       "name": "className",
       "type": "string",

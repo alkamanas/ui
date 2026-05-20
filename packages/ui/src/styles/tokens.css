@@ -59,7 +59,10 @@
 
 :root,
 .alka-theme-light,
-.theme-light {
+.theme-light,
+[data-theme="light"],
+[data-section-theme="light"],
+[data-navbar-theme="light"] {
   color-scheme: light;
   --alka-background: 0 0% 92%;
   --alka-foreground: 0 0% 8%;
@@ -105,7 +108,10 @@
 }
 
 .alka-theme-dark,
-.theme-dark {
+.theme-dark,
+[data-theme="dark"],
+[data-section-theme="dark"],
+[data-navbar-theme="dark"] {
   color-scheme: dark;
   --alka-background: 0 0% 2%;
   --alka-foreground: 36 31% 93%;
@@ -228,7 +234,13 @@
 .alka-theme-light,
 .theme-light,
 .alka-theme-dark,
-.theme-dark {
+.theme-dark,
+[data-theme="light"],
+[data-section-theme="light"],
+[data-navbar-theme="light"],
+[data-theme="dark"],
+[data-section-theme="dark"],
+[data-navbar-theme="dark"] {
   font-family: var(--alka-font-sans);
   --background: var(--alka-background);
   --foreground: var(--alka-foreground);
@@ -271,7 +283,10 @@
 }
 
 .alka-theme-dark,
-.theme-dark {
+.theme-dark,
+[data-theme="dark"],
+[data-section-theme="dark"],
+[data-navbar-theme="dark"] {
   --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.08);
   --alka-shadow-panel: 0 16px 44px hsl(var(--alka-shadow-color) / 0.18);
   --alka-shadow-floating: 0 18px 54px hsl(var(--alka-shadow-color) / 0.24);

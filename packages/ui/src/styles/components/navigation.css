@@ -11,7 +11,7 @@
   --alka-liquid-glass-lens-blur: 9px;
   --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
   --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
-  --alka-liquid-glass-border-width: 1.5px;
+  --alka-liquid-glass-border-width: 1px;
   background:
     radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.055), transparent 34%),
     linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 42%),
@@ -34,7 +34,7 @@
   inset: 0;
   z-index: 1;
   border-radius: inherit;
-  padding: var(--alka-liquid-glass-border-width, 1.5px);
+  padding: var(--alka-liquid-glass-border-width, 1px);
   pointer-events: none;
   background:
     radial-gradient(circle at 0 0, hsl(var(--alka-liquid-glass-border-color) / 0.24) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.1) 24px, transparent 38px),
@@ -100,9 +100,10 @@
     width 680ms var(--alka-ease-smooth);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-tabs-list.alka-pill-surface.alka-liquid-glass::before,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-tabs-list.alka-pill-surface.alka-liquid-glass::before,
 .alka-theme-light .alka-tabs-list.alka-pill-surface.alka-liquid-glass::before,
 .theme-light .alka-tabs-list.alka-pill-surface.alka-liquid-glass::before,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-tabs-list.alka-pill-surface.alka-liquid-glass::before,
 .alka-tabs-list.alka-pill-surface.alka-liquid-glass::before {
   content: "";
   background: hsl(var(--primary)) !important;
@@ -111,9 +112,10 @@
   backdrop-filter: none !important;
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-tabs-list.alka-pill-surface.alka-liquid-glass::after,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-tabs-list.alka-pill-surface.alka-liquid-glass::after,
 .alka-theme-light .alka-tabs-list.alka-pill-surface.alka-liquid-glass::after,
 .theme-light .alka-tabs-list.alka-pill-surface.alka-liquid-glass::after,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-tabs-list.alka-pill-surface.alka-liquid-glass::after,
 .alka-tabs-list.alka-pill-surface.alka-liquid-glass::after {
   content: none !important;
 }
@@ -132,10 +134,11 @@
   position: absolute;
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-tabs-list.alka-pill-surface,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-tabs-list.alka-pill-surface,
 .alka-theme-light .alka-tabs-list.alka-pill-surface,
-.theme-light .alka-tabs-list.alka-pill-surface {
-  --alka-liquid-glass-border-width: 2px;
+.theme-light .alka-tabs-list.alka-pill-surface,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-tabs-list.alka-pill-surface {
+  --alka-liquid-glass-border-width: 1px;
   border: 1px solid transparent;
   background:
     radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
@@ -152,9 +155,23 @@
   backdrop-filter: blur(24px) saturate(1.18) contrast(1.02);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-tabs-glass-border,
+.alka-tabs-list.alka-pill-surface[data-surface="flat"] {
+  --alka-liquid-glass-border-width: 1px;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 48%),
+    hsl(var(--card) / 0.72);
+  box-shadow:
+    0 1px 2px hsl(var(--alka-shadow-color) / 0.035),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-tabs-glass-border,
 .alka-theme-light .alka-tabs-glass-border,
-.theme-light .alka-tabs-glass-border {
+.theme-light .alka-tabs-glass-border,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-tabs-glass-border {
   background:
     radial-gradient(circle at 0 0, hsl(var(--alka-liquid-glass-border-color) / 0.14) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.07) 24px, transparent 38px),
     radial-gradient(circle at 100% 100%, hsl(var(--alka-liquid-glass-border-color) / 0.16) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.078) 24px, transparent 38px),
@@ -172,9 +189,10 @@
     );
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-tabs-glass-border::before,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-tabs-glass-border::before,
 .alka-theme-light .alka-tabs-glass-border::before,
-.theme-light .alka-tabs-glass-border::before {
+.theme-light .alka-tabs-glass-border::before,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-tabs-glass-border::before {
   background:
     linear-gradient(90deg, hsl(var(--alka-liquid-glass-border-color) / 0.082), hsl(var(--alka-liquid-glass-border-color) / 0.026) 84%, transparent 94%) 0 0 / 46% 2px no-repeat,
     linear-gradient(180deg, hsl(var(--alka-liquid-glass-border-color) / 0.068), hsl(var(--alka-liquid-glass-border-color) / 0.022) 84%, transparent 94%) 0 0 / 2px 46% no-repeat,
@@ -212,6 +230,20 @@
 
 .alka-tabs-trigger[data-state="active"]:hover {
   color: hsl(var(--primary-foreground));
+}
+
+.alka-menubar[data-surface="flat"] {
+  border-color: hsl(var(--foreground) / 0.12);
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 48%),
+    hsl(var(--card) / 0.72);
+  box-shadow:
+    0 1px 2px hsl(var(--alka-shadow-color) / 0.035),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08);
+}
+
+.alka-menubar[data-surface="glass"] {
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
 }
 
 .alka-carousel-controls {

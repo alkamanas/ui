@@ -66,20 +66,93 @@ function SidebarNav({ activeId }: { activeId: string }) {
   );
 }
 
-function Topbar({ activeTitle }: { activeTitle: string }) {
+function Topbar({ activeId, activeTitle }: { activeId: string; activeTitle: string }) {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setMenuOpen(false);
+  }, [activeId]);
+
+  React.useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
-    <header className="alka-liquid-glass sticky top-0 z-40 rounded-b-2xl border-x-0 border-t-0 lg:hidden">
-      <GlassElementLayers />
-      <div className="flex h-16 items-center justify-between px-4">
+    <header className="docs-mobile-topbar sticky top-3 z-50 mx-3 mb-3 lg:hidden" data-open={menuOpen}>
+      <div className="docs-mobile-topbar-panel alka-liquid-glass relative z-20 flex h-16 items-center justify-between overflow-hidden rounded-full border px-3.5">
+        <GlassElementLayers />
         <Brand />
-        <div className="flex items-center gap-2">
+        <div className="relative z-10 flex items-center gap-2">
           <CommandButton />
-          <Button variant="ghost" size="icon" aria-label="Open menu">
-            <Menu className="h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="docs-mobile-menu"
+            className="docs-mobile-menu-trigger"
+            onClick={() => {
+              setMenuOpen((open) => !open);
+            }}
+          >
+            <Menu className="docs-mobile-menu-icon h-4 w-4" />
+            <span className="docs-mobile-menu-lines" aria-hidden="true">
+              <span />
+              <span />
+            </span>
           </Button>
         </div>
       </div>
-      <div className="border-t border-border/70 px-4 py-2 text-sm text-muted-foreground">{activeTitle}</div>
+      <div
+        id="docs-mobile-menu"
+        className="docs-mobile-menu fixed inset-0 z-10 overflow-y-auto px-5 pb-10 pt-24"
+        aria-hidden={!menuOpen}
+      >
+        <div className="docs-mobile-menu-bg fixed inset-x-0 top-0 h-dvh" aria-hidden="true" />
+        <nav className="docs-mobile-menu-content relative mx-auto max-w-[520px]">
+          <p className="pb-5 pt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground/70">
+            {activeTitle}
+          </p>
+          <div className="grid gap-7">
+            {Object.entries(groupedDocs).map(([group, items]) =>
+              items.length ? (
+                <div key={group} className="grid gap-2">
+                  <p className="px-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground/55">
+                    {group}
+                  </p>
+                  <div className="grid gap-1">
+                    {items.map((item) => (
+                      <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        data-active={activeId === item.id}
+                        className="docs-mobile-menu-link"
+                        onClick={closeMenu}
+                      >
+                        <span>{item.title}</span>
+                        <span className="text-sm text-muted-foreground/55">{item.group === "Components" ? "Component" : item.group}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : null,
+            )}
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
@@ -128,7 +201,7 @@ export function PageChrome({
   return (
     <div className={`theme-${themeMode} alka-theme-${themeMode} docs-shell text-foreground`} data-border-animation-color={borderAnimationColor} data-glass-effect={glassEffect} data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme, themeMode)}>
       <LiquidGlassFilter />
-      <Topbar activeTitle={activeDoc.title} />
+      <Topbar activeId={activeDoc.id} activeTitle={activeDoc.title} />
       {showPrimarySwitcher ? (
         <PrimaryColorSwitcher
           value={primaryTheme}

@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import "@/styles/globals.css";
+import "@alkamanas/ui/styles.css";
 import "./styles.css";
 import { ExamplesApp } from "./examples-app";
 

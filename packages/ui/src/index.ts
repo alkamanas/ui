@@ -24,7 +24,6 @@ export { default as DraggableNumberInput } from "./components/ui/draggable-numbe
 export { Drawer, DrawerTrigger, DrawerClose, DrawerPortal, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "./components/ui/drawer";
 export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup } from "./components/ui/dropdown-menu";
 export { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "./components/ui/empty";
-export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from "./components/ui/form";
 export { HoverCard, HoverCardTrigger, HoverCardContent } from "./components/ui/hover-card";
 export { Icons } from "./components/ui/icons";
 export { type InputProps, Input } from "./components/ui/input";
@@ -69,7 +68,7 @@ export { StatCardSkeleton } from "./components/skeletons/StatCardSkeleton";
 export { TableSkeleton } from "./components/skeletons/TableSkeleton";
 export { type FloatingPanelProps, FloatingPanel, floatingPanelVariants } from "./components/surfaces/floating-panel";
 export { LIQUID_GLASS_FILTER_ID, type GlassEffect, type GlassRealisticStrategy, type DisplacementOptions, getDisplacementMap, getDisplacementFilter, LiquidGlassFilter, type GlassProviderProps, GlassProvider, type GlassElementEffectOptions, type GlassElementBackdropProps, GlassElementBackdrop, GlassElementLayers, type GlassElementProps, GlassElement } from "./components/surfaces/liquid-glass-filter";
-export { type NavbarLinkItem, type NavbarMenuGroup, type NavbarLinkRendererProps, type SectionAwareNavbarProps, useActiveNavbarTheme, SectionAwareNavbar } from "./components/navigation/section-aware-navbar";
+export { type NavbarLogoWidths, type NavbarLogoVariant, type NavbarLogoConfig, type NavbarLinkItem, type NavbarMenuGroup, type NavbarLinkRendererProps, type NavbarRenderLink, type NavbarLinkProps, type NavbarCTAProps, type NavbarMenuItemProps, type NavbarLogoProps, type NavbarProps, type SectionAwareNavbarProps, NavbarLogo, NavbarLink, NavbarCTA, NavbarMenuItem, NavbarMenuSecondaryItem, useActiveNavbarTheme, Navbar, SectionAwareNavbar } from "./components/navigation/section-aware-navbar";
 export { type FlipCardProps, FlipCard } from "./components/display/flip-card";
 export { type ImageCardProps, ImageCard } from "./components/display/image-card";
 export { type CommandPaletteItem, type CommandPaletteGroup, type CommandPaletteProviderProps, CommandPaletteProvider, useCommandPalette } from "./components/command/CommandPalette";

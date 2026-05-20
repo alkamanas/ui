@@ -45,7 +45,7 @@ import {
   ItemTitle,
   Kbd,
   Progress,
-  SectionAwareNavbar,
+  Navbar,
   Tabs,
   TabsContent,
   TabsList,
@@ -113,7 +113,7 @@ export function ExamplesApp() {
   return (
     <GlassProvider effect="blurry" realisticStrategy="auto">
       <TooltipProvider>
-        <div className="examples-app alka-theme-dark theme-dark">
+        <div className="examples-app alka-theme-dark" data-theme="dark">
           {activeExample === "home" ? (
             <ExamplesHome onOpenExample={setActiveExample} />
           ) : (
@@ -194,7 +194,7 @@ function ExamplesHome({
 function BasicLandingExample({ onBack, title }: { onBack: () => void; title?: string }) {
   return (
     <>
-      <SectionAwareNavbar
+      <Navbar
         brand={
           <span className="landing-brand">
             <span className="landing-brand-mark" />

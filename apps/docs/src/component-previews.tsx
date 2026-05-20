@@ -121,7 +121,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SectionAwareNavbar,
+  Navbar,
   Separator,
   Sheet,
   SheetContent,
@@ -245,7 +245,7 @@ function AppleCarouselPreview() {
 function AppleTabsPreview() {
   return (
     <Tabs defaultValue="200" className="max-w-2xl">
-      <TabsList>
+      <TabsList surface="flat">
         {["200", "100", "48", "35", "28", "24", "13"].map((mm) => (
           <TabsTrigger key={mm} value={mm} className="rounded-full px-4">{mm} mm</TabsTrigger>
         ))}
@@ -271,8 +271,9 @@ function NavbarPreview() {
         </p>
         <div className="h-16 rounded-2xl border border-white/[0.06] bg-white/[0.025]" />
       </div>
-      <SectionAwareNavbar
+      <Navbar
         brand={<span className="text-sm font-semibold text-white">Alkamanas</span>}
+        logoWidths={{ wide: "7.25rem", compact: "2rem" }}
         theme="dark"
         syncThemeMeta={false}
         links={[
@@ -444,7 +445,7 @@ export function ComponentPreview({ id }: { id: string }) {
       <div className="grid w-full max-w-3xl gap-4">
         <div className="rounded-[1.75rem] border border-white/[0.1] p-4 sm:p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <Badge variant="secondary" className="rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Solid</Badge>
+            <Badge variant="secondary" className="rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat</Badge>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button>Primary</Button>
@@ -558,7 +559,7 @@ export function ComponentPreview({ id }: { id: string }) {
     return <AlertDialog><AlertDialogTrigger asChild><Button variant="destructive">Delete project</Button></AlertDialogTrigger><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Delete project?</AlertDialogTitle><AlertDialogDescription>This action keeps the soft dialog motion but requires explicit confirmation.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction>Continue</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>;
   }
   if (id === "avatar") return <Avatar><AvatarImage src="/assets/sectors/automotive-light.webp" /><AvatarFallback>VS</AvatarFallback></Avatar>;
-  if (id === "badge") return <div className="flex flex-wrap gap-2"><Badge>Default</Badge><Badge variant="secondary">Secondary</Badge><Badge variant="success">Success</Badge><Badge variant="warning">Warning</Badge><Badge variant="info">Info</Badge></div>;
+  if (id === "badge") return <div className="grid gap-4"><div className="flex flex-wrap gap-2"><Badge>Default</Badge><Badge variant="secondary">Secondary</Badge><Badge variant="success">Success</Badge><Badge variant="warning">Warning</Badge><Badge variant="info">Info</Badge></div><div className="flex flex-wrap items-center gap-2"><Badge size="sm" variant="outline">Small</Badge><Badge size="md" variant="outline">Medium</Badge><Badge size="lg" variant="outline">Large</Badge></div></div>;
   if (id === "breadcrumb") return <Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href="#components">Components</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Breadcrumb</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>;
   if (id === "checkbox") return <div className="flex items-center gap-3"><Checkbox id="preview-checkbox" defaultChecked /><Label htmlFor="preview-checkbox">Enable smooth motion</Label></div>;
   if (id === "collapsible") return <Collapsible><CollapsibleTrigger asChild><Button variant="outline">Toggle details</Button></CollapsibleTrigger><CollapsibleContent className="mt-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 text-sm text-muted-foreground">A compact disclosure region.</CollapsibleContent></Collapsible>;
@@ -569,7 +570,7 @@ export function ComponentPreview({ id }: { id: string }) {
   if (id === "direction") return <DirectionProvider dir="rtl" className="max-w-md rounded-2xl border border-white/[0.08] p-4"><p className="text-sm">RTL scoped content</p></DirectionProvider>;
   if (id === "drawer") return <Drawer><DrawerTrigger asChild><Button>Open drawer</Button></DrawerTrigger><DrawerContent><DrawerHeader><DrawerTitle>Drawer</DrawerTitle><DrawerDescription>Bottom sheet motion.</DrawerDescription></DrawerHeader></DrawerContent></Drawer>;
   if (id === "dropdown-menu") return <DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline">Open menu</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>Profile</DropdownMenuItem><DropdownMenuItem>Settings</DropdownMenuItem></DropdownMenuContent></DropdownMenu>;
-  if (id === "item") return <div className="grid w-full max-w-xl gap-3"><Item surface="solid"><ItemMedia><User className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Default item</ItemTitle><ItemDescription>Default item keeps hover calm without border animation.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Active</Badge></ItemActions></Item><Item surface="glass" borderAnimation><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Primary border animation</ItemTitle><ItemDescription>borderAnimation uses primary by default.</ItemDescription></ItemContent><ItemActions><Badge>Live</Badge></ItemActions></Item><Item surface="glass" borderAnimation borderAnimationColor="contrast"><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Contrast border animation</ItemTitle><ItemDescription>Set borderAnimationColor to contrast.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Contrast</Badge></ItemActions></Item></div>;
+  if (id === "item") return <div className="grid w-full max-w-xl gap-3"><Item><ItemMedia><User className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Flat item</ItemTitle><ItemDescription>Default item keeps hover calm without border animation.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Active</Badge></ItemActions></Item><Item surface="glass"><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Glass item</ItemTitle><ItemDescription>Glass keeps the same calm hover behavior.</ItemDescription></ItemContent><ItemActions><Badge>Live</Badge></ItemActions></Item><Item surface="glass"><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Themed glass item</ItemTitle><ItemDescription>Surface, border and shadow tokens follow theme.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Theme</Badge></ItemActions></Item></div>;
   if (id === "kbd") return <div className="flex gap-2"><Kbd>⌘</Kbd><Kbd>K</Kbd></div>;
   if (id === "label") return <div className="grid w-full max-w-sm gap-2"><Label htmlFor="label-preview">Workspace</Label><Input id="label-preview" variant="pill" floatingLabel={false} placeholder="visetra" /></div>;
   if (id === "menubar") return <Menubar><MenubarMenu><MenubarTrigger>File</MenubarTrigger><MenubarContent><MenubarItem>New</MenubarItem><MenubarItem>Save</MenubarItem></MenubarContent></MenubarMenu></Menubar>;

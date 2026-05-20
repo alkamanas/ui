@@ -14,6 +14,23 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 
 type NavbarTheme = "light" | "dark";
+type NavbarLogoTone = NavbarTheme;
+type NavbarLogoSize = "wide" | "compact";
+type NavbarLogoToneMap = Partial<Record<NavbarLogoTone, React.ReactNode>>;
+export type NavbarLogoWidths = Partial<Record<NavbarLogoSize, React.CSSProperties["width"]>>;
+
+export type NavbarLogoVariant = React.ReactNode | NavbarLogoToneMap;
+
+export type NavbarLogoConfig = {
+  wide?: NavbarLogoVariant;
+  compact?: NavbarLogoVariant;
+  widths?: NavbarLogoWidths;
+  wideWidth?: React.CSSProperties["width"];
+  compactWidth?: React.CSSProperties["width"];
+  light?: React.ReactNode;
+  dark?: React.ReactNode;
+  fallback?: React.ReactNode;
+};
 
 export type NavbarLinkItem = {
   href: string;
@@ -40,11 +57,44 @@ export type NavbarLinkRendererProps = {
   onClick?: React.MouseEventHandler<HTMLElement>;
 };
 
-export type SectionAwareNavbarProps = {
-  brand: React.ReactNode;
+export type NavbarRenderLink = React.ComponentType<NavbarLinkRendererProps>;
+
+export type NavbarLinkProps = Omit<NavbarLinkItem, "label"> & {
+  label?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+  linkComponent?: NavbarRenderLink;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+};
+
+export type NavbarCTAProps = NavbarLinkProps;
+
+export type NavbarMenuItemProps = Omit<NavbarLinkProps, "children" | "label"> & {
+  label: React.ReactNode;
+  eyebrow?: React.ReactNode;
+  description?: React.ReactNode;
+  icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  theme?: NavbarTheme;
+};
+
+export type NavbarLogoProps = {
+  logo?: NavbarLogoConfig | React.ReactNode;
+  brand?: React.ReactNode;
+  widths?: NavbarLogoWidths;
+  theme?: NavbarTheme;
+  className?: string;
+};
+
+export type NavbarProps = {
+  brand?: React.ReactNode;
+  logo?: NavbarLogoConfig | React.ReactNode;
+  logoWidths?: NavbarLogoWidths;
   links?: NavbarLinkItem[];
   menu?: NavbarMenuGroup;
   cta?: NavbarLinkItem;
+  actions?: React.ReactNode;
+  rightSlot?: React.ReactNode;
+  mobileFooterSlot?: React.ReactNode;
   className?: string;
   panelClassName?: string;
   linkComponent?: React.ComponentType<NavbarLinkRendererProps>;
@@ -59,6 +109,8 @@ export type SectionAwareNavbarProps = {
   mobileMenuCloseLabel?: string;
 };
 
+export type SectionAwareNavbarProps = NavbarProps;
+
 const mobileMenuEase = [0.4, 0, 0.6, 1] as const;
 
 function DefaultLink({ href, className, children, onClick }: NavbarLinkRendererProps) {
@@ -66,6 +118,217 @@ function DefaultLink({ href, className, children, onClick }: NavbarLinkRendererP
     <a href={href} className={className} onClick={onClick}>
       {children}
     </a>
+  );
+}
+
+function isLogoToneMap(variant: NavbarLogoVariant): variant is NavbarLogoToneMap {
+  return (
+    !!variant &&
+    typeof variant === "object" &&
+    !React.isValidElement(variant) &&
+    !Array.isArray(variant) &&
+    ("light" in variant || "dark" in variant)
+  );
+}
+
+function resolveLogoVariant(variant: NavbarLogoVariant | undefined, theme: NavbarTheme) {
+  if (!variant || !isLogoToneMap(variant)) return variant;
+  return variant[theme] ?? variant.light ?? variant.dark;
+}
+
+function resolveLogoNode(
+  logo: NavbarLogoConfig | React.ReactNode | undefined,
+  theme: NavbarTheme,
+  size: NavbarLogoSize,
+) {
+  if (!logo || React.isValidElement(logo) || typeof logo !== "object") return logo;
+
+  const config = logo as NavbarLogoConfig;
+  const sizeVariant = size === "compact" ? config.compact : config.wide;
+  return (
+    resolveLogoVariant(sizeVariant, theme) ??
+    config[theme] ??
+    config.fallback ??
+    resolveLogoVariant(config.wide, theme) ??
+    resolveLogoVariant(config.compact, theme)
+  );
+}
+
+function resolveLogoWidths(
+  logo: NavbarLogoConfig | React.ReactNode | undefined,
+  widths?: NavbarLogoWidths,
+): NavbarLogoWidths {
+  if (!logo || React.isValidElement(logo) || typeof logo !== "object" || Array.isArray(logo)) {
+    return widths ?? {};
+  }
+
+  const config = logo as NavbarLogoConfig;
+
+  return {
+    wide: widths?.wide ?? config.widths?.wide ?? config.wideWidth,
+    compact: widths?.compact ?? config.widths?.compact ?? config.compactWidth,
+  };
+}
+
+function logoWidthStyle(width: React.CSSProperties["width"] | undefined): React.CSSProperties | undefined {
+  return width === undefined ? undefined : { width };
+}
+
+export function NavbarLogo({ logo, brand, widths, theme = "light", className }: NavbarLogoProps) {
+  const wideLogo = resolveLogoNode(logo, theme, "wide") ?? brand;
+  const compactLogo = resolveLogoNode(logo, theme, "compact") ?? wideLogo;
+  const resolvedWidths = resolveLogoWidths(logo, widths);
+
+  return (
+    <span className={cn("alka-navbar-logo flex min-w-0 items-center", className)}>
+      <span className="hidden min-w-0 shrink-0 items-center [&>*]:max-w-full md:flex" style={logoWidthStyle(resolvedWidths.wide)}>
+        {wideLogo}
+      </span>
+      <span className="flex min-w-0 shrink-0 items-center [&>*]:max-w-full md:hidden" style={logoWidthStyle(resolvedWidths.compact)}>
+        {compactLogo}
+      </span>
+    </span>
+  );
+}
+
+export function NavbarLink({
+  href,
+  label,
+  children,
+  className,
+  linkComponent: LinkComponent = DefaultLink,
+  onClick,
+  onSelect,
+}: NavbarLinkProps) {
+  return (
+    <LinkComponent
+      href={href}
+      onClick={(event) => {
+        onClick?.(event);
+        onSelect?.();
+      }}
+      className={cn(
+        "rounded-full px-4 py-2 text-sm font-medium no-underline transition-all duration-300",
+        className,
+      )}
+    >
+      {children ?? label}
+    </LinkComponent>
+  );
+}
+
+export function NavbarCTA({
+  href,
+  label,
+  children,
+  className,
+  linkComponent: LinkComponent = DefaultLink,
+  onClick,
+  onSelect,
+}: NavbarCTAProps) {
+  return (
+    <LinkComponent
+      href={href}
+      onClick={(event) => {
+        onClick?.(event);
+        onSelect?.();
+      }}
+      className={cn(buttonVariants({ variant: "default", size: "sm" }), className)}
+    >
+      {children ?? label}
+    </LinkComponent>
+  );
+}
+
+export function NavbarMenuItem({
+  href,
+  label,
+  description,
+  eyebrow,
+  icon: Icon,
+  theme = "light",
+  className,
+  linkComponent: LinkComponent = DefaultLink,
+  onClick,
+  onSelect,
+}: NavbarMenuItemProps) {
+  const useDarkTheme = theme === "dark";
+
+  return (
+    <LinkComponent
+      href={href}
+      onClick={(event) => {
+        onClick?.(event);
+        onSelect?.();
+      }}
+      className={cn(
+        "group grid grid-cols-[2.75rem_minmax(0,1fr)] gap-4 rounded-[1.25rem] border p-4 no-underline transition-all duration-300",
+        useDarkTheme
+          ? "border-white/8 bg-black/15 hover:border-white/18 hover:bg-white/[0.06]"
+          : "border-black/[0.06] bg-white/70 hover:border-black/[0.12] hover:bg-white",
+        className,
+      )}
+    >
+      <span
+        className={cn(
+          "flex h-11 w-11 items-center justify-center rounded-2xl border",
+          useDarkTheme ? "border-white/10 bg-white/[0.04] text-white" : "border-black/[0.08] bg-black/[0.03] text-primary",
+        )}
+      >
+        {Icon ? <Icon className="h-5 w-5" strokeWidth={1.8} /> : <ArrowRight className="h-5 w-5" strokeWidth={1.8} />}
+      </span>
+      <span className="min-w-0">
+        {eyebrow ? (
+          <span className={cn("block font-mono text-[0.6rem] uppercase tracking-[0.16em]", useDarkTheme ? "text-white/40" : "text-muted-foreground")}>
+            {eyebrow}
+          </span>
+        ) : null}
+        <span className={cn("mt-1 block text-base font-semibold", useDarkTheme ? "text-white" : "text-foreground")}>
+          {label}
+        </span>
+        {description ? (
+          <span className={cn("mt-1.5 line-clamp-2 block text-sm leading-relaxed", useDarkTheme ? "text-white/55" : "text-muted-foreground")}>
+            {description}
+          </span>
+        ) : null}
+      </span>
+    </LinkComponent>
+  );
+}
+
+export function NavbarMenuSecondaryItem({
+  href,
+  label,
+  icon: Icon,
+  theme = "light",
+  className,
+  linkComponent: LinkComponent = DefaultLink,
+  onClick,
+  onSelect,
+}: NavbarMenuItemProps) {
+  const useDarkTheme = theme === "dark";
+
+  return (
+    <LinkComponent
+      href={href}
+      onClick={(event) => {
+        onClick?.(event);
+        onSelect?.();
+      }}
+      className={cn(
+        "group flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-sm font-medium no-underline transition-all duration-300",
+        useDarkTheme
+          ? "border-white/8 text-white/72 hover:border-white/18 hover:bg-white/[0.06] hover:text-white"
+          : "border-black/[0.07] text-foreground/72 hover:border-black/[0.14] hover:bg-black/[0.025] hover:text-foreground",
+        className,
+      )}
+    >
+      <span className="flex items-center gap-3">
+        {Icon ? <Icon className="h-4 w-4" strokeWidth={1.8} /> : null}
+        {label}
+      </span>
+      <ArrowRight className="h-4 w-4 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100" />
+    </LinkComponent>
   );
 }
 
@@ -156,11 +419,16 @@ export function useActiveNavbarTheme({
   return { activeTheme, isAtTop };
 }
 
-export function SectionAwareNavbar({
+export function Navbar({
   brand,
+  logo,
+  logoWidths,
   links = [],
   menu,
   cta,
+  actions,
+  rightSlot,
+  mobileFooterSlot,
   className,
   panelClassName,
   linkComponent: LinkComponent = DefaultLink,
@@ -173,7 +441,7 @@ export function SectionAwareNavbar({
   glassRealisticStrategy,
   mobileMenuLabel = "Open menu",
   mobileMenuCloseLabel = "Close menu",
-}: SectionAwareNavbarProps) {
+}: NavbarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [desktopMenuOpen, setDesktopMenuOpen] = React.useState(false);
@@ -232,17 +500,15 @@ export function SectionAwareNavbar({
   };
 
   const renderDesktopLink = (item: NavbarLinkItem) => (
-    <LinkComponent
+    <NavbarLink
       key={item.href}
+      {...item}
       href={item.href}
-      onClick={item.onSelect as React.MouseEventHandler<HTMLElement> | undefined}
+      linkComponent={LinkComponent}
       className={cn(
-        "rounded-full px-4 py-2 text-sm font-medium no-underline transition-all duration-300",
         navTextClass,
       )}
-    >
-      {item.label}
-    </LinkComponent>
+    />
   );
 
   return (
@@ -252,7 +518,8 @@ export function SectionAwareNavbar({
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "fixed inset-x-0 top-5 z-[1200]",
-        useDarkTheme ? "theme-dark alka-theme-dark" : "theme-light alka-theme-light",
+        "alka-navbar-root",
+        useDarkTheme ? "alka-theme-dark" : "alka-theme-light",
         className,
       )}
     >
@@ -276,7 +543,7 @@ export function SectionAwareNavbar({
         >
           {showPanelGlass ? <GlassElementLayers {...navbarGlassOptions} /> : null}
           <LinkComponent href="/" className="alka-navbar-brand flex min-w-0 items-center no-underline">
-            {brand}
+            <NavbarLogo logo={logo} brand={brand} widths={logoWidths} theme={resolvedTheme} />
           </LinkComponent>
 
           <div className="hidden items-center gap-2 md:flex">
@@ -310,14 +577,14 @@ export function SectionAwareNavbar({
 
           <div className="hidden items-center gap-3 md:flex">
             {cta ? (
-              <LinkComponent
+              <NavbarCTA
+                {...cta}
                 href={cta.href}
-                onClick={cta.onSelect as React.MouseEventHandler<HTMLElement> | undefined}
-                className={buttonVariants({ variant: "default", size: "sm" })}
-              >
-                {cta.label}
-              </LinkComponent>
+                linkComponent={LinkComponent}
+              />
             ) : null}
+            {actions}
+            {rightSlot}
           </div>
 
           <motion.button
@@ -373,41 +640,17 @@ export function SectionAwareNavbar({
                   ) : null}
                   <div className="mt-4 grid gap-3">
                     {menu.items.map((item) => {
-                      const Icon = item.icon;
                       return (
-                        <LinkComponent
+                        <NavbarMenuItem
                           key={item.href}
+                          {...item}
                           href={item.href}
+                          linkComponent={LinkComponent}
+                          theme={resolvedTheme}
                           onClick={() => {
                             setDesktopMenuOpen(false);
-                            item.onSelect?.();
                           }}
-                          className={cn(
-                            "group grid grid-cols-[2.75rem_minmax(0,1fr)] gap-4 rounded-[1.25rem] border p-4 no-underline transition-all duration-300",
-                            useDarkTheme
-                              ? "border-white/8 bg-black/15 hover:border-white/18 hover:bg-white/[0.06]"
-                              : "border-black/[0.06] bg-white/70 hover:border-black/[0.12] hover:bg-white",
-                          )}
-                        >
-                          <span className={cn("flex h-11 w-11 items-center justify-center rounded-2xl border", useDarkTheme ? "border-white/10 bg-white/[0.04] text-white" : "border-black/[0.08] bg-black/[0.03] text-primary")}>
-                            {Icon ? <Icon className="h-5 w-5" strokeWidth={1.8} /> : <ArrowRight className="h-5 w-5" strokeWidth={1.8} />}
-                          </span>
-                          <span className="min-w-0">
-                            {item.eyebrow ? (
-                              <span className={cn("block font-mono text-[0.6rem] uppercase tracking-[0.16em]", useDarkTheme ? "text-white/40" : "text-muted-foreground")}>
-                                {item.eyebrow}
-                              </span>
-                            ) : null}
-                            <span className={cn("mt-1 block text-base font-semibold", useDarkTheme ? "text-white" : "text-foreground")}>
-                              {item.label}
-                            </span>
-                            {item.description ? (
-                              <span className={cn("mt-1.5 line-clamp-2 block text-sm leading-relaxed", useDarkTheme ? "text-white/55" : "text-muted-foreground")}>
-                                {item.description}
-                              </span>
-                            ) : null}
-                          </span>
-                        </LinkComponent>
+                        />
                       );
                     })}
                   </div>
@@ -435,28 +678,17 @@ export function SectionAwareNavbar({
                   {menu.secondaryItems?.length ? (
                     <div className="grid gap-2 sm:grid-cols-2">
                       {menu.secondaryItems.map((item) => {
-                        const Icon = item.icon;
                         return (
-                          <LinkComponent
+                          <NavbarMenuSecondaryItem
                             key={item.href}
+                            {...item}
                             href={item.href}
+                            linkComponent={LinkComponent}
+                            theme={resolvedTheme}
                             onClick={() => {
                               setDesktopMenuOpen(false);
-                              item.onSelect?.();
                             }}
-                            className={cn(
-                              "group flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-sm font-medium no-underline transition-all duration-300",
-                              useDarkTheme
-                                ? "border-white/8 text-white/72 hover:border-white/18 hover:bg-white/[0.06] hover:text-white"
-                                : "border-black/[0.07] text-foreground/72 hover:border-black/[0.14] hover:bg-black/[0.025] hover:text-foreground",
-                            )}
-                          >
-                            <span className="flex items-center gap-3">
-                              {Icon ? <Icon className="h-4 w-4" strokeWidth={1.8} /> : null}
-                              {item.label}
-                            </span>
-                            <ArrowRight className="h-4 w-4 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100" />
-                          </LinkComponent>
+                          />
                         );
                       })}
                     </div>
@@ -558,18 +790,20 @@ export function SectionAwareNavbar({
                 </motion.div>
               ))}
 
-              {cta ? (
+              {cta || mobileFooterSlot ? (
                 <motion.div variants={mobileItemVariants} className={cn("mt-8 flex items-center justify-between gap-3 border-t pt-5", mobileMenuBorderClass)}>
-                  <LinkComponent
-                    href={cta.href}
-                    onClick={() => {
-                      closeMobileMenu();
-                      cta.onSelect?.();
-                    }}
-                    className={cn(buttonVariants({ variant: "default", size: "sm" }), "text-[13px]")}
-                  >
-                    {cta.label}
-                  </LinkComponent>
+                  {cta ? (
+                    <NavbarCTA
+                      {...cta}
+                      href={cta.href}
+                      linkComponent={LinkComponent}
+                      onClick={() => {
+                        closeMobileMenu();
+                      }}
+                      className="text-[13px]"
+                    />
+                  ) : null}
+                  {mobileFooterSlot}
                 </motion.div>
               ) : null}
             </motion.div>
@@ -579,3 +813,5 @@ export function SectionAwareNavbar({
     </motion.nav>
   );
 }
+
+export const SectionAwareNavbar = Navbar;

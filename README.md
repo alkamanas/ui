@@ -19,7 +19,7 @@ The project is designed for applications that need dense operational screens, ex
 - **Package-first primitives**: import stable components from `@alkamanas/ui`.
 - **Registry-friendly customization**: use registry copies when a product needs to deeply modify a component.
 - **Token-driven visuals**: color, radius, blur, shadows, and motion use CSS variables rather than hard-coded values.
-- **Section-aware theming**: light and dark sections can coexist on one page through `.alka-theme-light`, `.alka-theme-dark`, `.theme-light`, and `.theme-dark`.
+- **Section-aware theming**: light and dark sections can coexist on one page through `.alka-theme-light` and `.alka-theme-dark` scopes.
 - **Glass surfaces**: components can use the shared liquid glass system with `blurry` and opt-in `realistic` effects.
 - **Smooth motion**: open, close, focus, blur, hover, and route transitions use shared easing tokens and respect `prefers-reduced-motion`.
 - **ESM-first packaging**: the package ships modern ESM output and a single stylesheet export.
@@ -65,7 +65,7 @@ Alkamanas UI currently includes the following public component surface.
 
 - Breadcrumb
 - Menubar
-- Navbar / SectionAwareNavbar
+- Navbar
 - Sidebar
 - Tabs
 
@@ -106,7 +106,7 @@ pnpm add react react-dom
 pnpm add lucide-react react-hook-form
 ```
 
-`lucide-react` and `react-hook-form` are peer dependencies marked optional. Add them when you use icon-heavy examples or form integrations that depend on them.
+`lucide-react` and `react-hook-form` are peer dependencies marked optional. Add `lucide-react` when you use icon-forward components such as `Navbar`; add `react-hook-form` only when importing form integrations from `@alkamanas/ui/form`.
 
 ## Basic Usage
 
@@ -133,19 +133,32 @@ export function WorkspaceCard() {
 The default glass mode is the cost-efficient `blurry` surface. Components that support the shared glass layers can opt into the realistic displacement effect without changing the rest of the app:
 
 ```tsx
-import { SectionAwareNavbar } from "@alkamanas/ui";
+import { Navbar, NavbarCTA } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
 
-export function Navbar() {
+export function ProductNavbar() {
   return (
-    <SectionAwareNavbar
+    <Navbar
       theme="dark"
       glassEffect="realistic"
       glassRealisticStrategy="premium"
-      brand={<span>Alkamanas UI</span>}
+      logo={{
+        wide: {
+          dark: <span>Alkamanas UI</span>,
+          light: <span>Alkamanas UI</span>,
+        },
+        compact: {
+          dark: <span>A</span>,
+          light: <span>A</span>,
+        },
+      }}
+      logoWidths={{ wide: "10rem", compact: "2.25rem" }}
       links={[
         { href: "#blocks", label: "Blocks" },
         { href: "#components", label: "Components" },
       ]}
+      rightSlot={<NavbarCTA href="#install">Install</NavbarCTA>}
+      mobileFooterSlot={<NavbarCTA href="#install">Install</NavbarCTA>}
     />
   );
 }
@@ -167,17 +180,19 @@ Import the stylesheet once near the application root:
 import "@alkamanas/ui/styles.css";
 ```
 
-Then scope sections with the theme classes:
+Then scope sections with the namespaced theme classes or section theme attributes:
 
 ```tsx
-<section className="alka-theme-dark theme-dark">
+<section className="alka-theme-dark">
   <Dashboard />
 </section>
 
-<section className="alka-theme-light theme-light">
+<section data-section-theme="light">
   <Settings />
 </section>
 ```
+
+`data-theme`, `data-section-theme` and `data-navbar-theme` all provide local light/dark tokens for contained components. If no section scope is present, components inherit the global app theme.
 
 Primary color, semantic states, charts, border animation color, and surface gradient color are controlled with CSS variables. The system includes tokens for:
 
@@ -192,7 +207,7 @@ Primary color, semantic states, charts, border animation color, and surface grad
 
 ## Navbar Theme Switching
 
-`SectionAwareNavbar` can read sections marked with `data-navbar-theme`:
+`Navbar` can read sections marked with `data-navbar-theme`; the same attribute also themes components inside that section:
 
 ```tsx
 <main>
@@ -275,14 +290,21 @@ pnpm --filter @alkamanas/ui build
 
 `@alkamanas/ui` is ESM-only. CommonJS `require()` is not supported. Projects using older Jest or Node setups need ESM-aware configuration or transpilation.
 
-The package exposes one JavaScript entrypoint and one stylesheet:
+The package exposes a full JavaScript entrypoint and stylesheet:
 
 ```tsx
 import { Button, Card, Sheet } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
 ```
 
-Subpath component exports are intentionally omitted until the build emits real per-component chunks and declarations.
+For lower-risk consumer integration, use focused subpaths when available:
+
+```tsx
+import { Navbar } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
+
+import { Form, FormField } from "@alkamanas/ui/form";
+```
 
 ## Publishing
 

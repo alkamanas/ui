@@ -1,7 +1,11 @@
 import { defineConfig } from "tsup";
+import { getComponentEntryObject } from "./scripts/component-entries.mjs";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: {
+    index: "src/index.ts",
+    ...getComponentEntryObject(),
+  },
   format: ["esm"],
   dts: true,
   sourcemap: false,

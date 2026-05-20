@@ -3,7 +3,17 @@
 Use package imports for primitives and stable patterns:
 
 ```tsx
-import { Button, Card, SectionAwareNavbar } from "@alkamanas/ui";
+import { Button, Card } from "@alkamanas/ui";
+```
+
+Use focused subpath imports when a target app should avoid pulling unrelated component dependencies or global CSS:
+
+```tsx
+import { Navbar, NavbarCTA } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
+
+import { Button } from "@alkamanas/ui/button";
+import "@alkamanas/ui/button.css";
 ```
 
 Use registry copy when the component is expected to be customized deeply in the target project.
@@ -13,20 +23,28 @@ Implementation rules:
 - Preserve `components/ui`, `components/shell` and `components/skeletons` naming unless there is a clear migration reason.
 - Every public component accepts `className` when it renders a visible root.
 - Prefer CSS variables over hard-coded visual values.
-- Light and dark sections must work inside the same page through `.alka-theme-light`, `.alka-theme-dark`, `.theme-light` and `.theme-dark` scopes.
+- Light and dark sections must work inside the same page through namespaced `.alka-theme-light` / `.alka-theme-dark` scopes and through `data-theme`, `data-section-theme` or `data-navbar-theme` values. Do not add new package selectors that target generic `.theme-light` or `.theme-dark`.
 - Navbar theme switching follows sections marked with `data-navbar-theme="light|dark"` and optional `data-theme-color`.
+- Components should inherit light/dark tokens from their closest section theme; if a section is not marked, they should fall back to the global app theme.
+- The public navbar component is `Navbar`. `SectionAwareNavbar` is only a backwards-compatible alias.
+- Navbar supports `logo` variants for `wide` and `compact`, each with optional `light` and `dark` alternatives. Use `NavbarCTA`, `NavbarMenuItem` and `NavbarMenuSecondaryItem` for composed navbar actions and menus.
 - Motion uses `--alka-motion-*` and `--alka-ease-*` tokens where practical, and must respect `prefers-reduced-motion`.
 - Components that rely on browser APIs must be client components.
 - Add docs examples for light and dark scopes when adding new public visual components.
+- Every public component should remain available through both the root package barrel and focused `@alkamanas/ui/<component>` plus `@alkamanas/ui/<component>.css` exports.
 
 Current system conventions:
 
 - Primary color is token-driven. Keep `--alka-primary`, `--primary`, `--alka-primary-foreground` and `--primary-foreground` aligned; do not hard-code component highlight colors.
+- Package CSS output strips generic `.theme-light` and `.theme-dark` selectors. Keep compatibility inside docs/apps only when needed, not in published CSS.
+- `styles.css` is the full library stylesheet. Prefer component CSS subpaths such as `@alkamanas/ui/card.css` or `@alkamanas/ui/navbar.css` for consumer apps that already own Tailwind/theme globals.
+- `react-hook-form` is optional and must only be imported by `@alkamanas/ui/form`; root imports and unrelated component subpaths must not depend on it.
+- `lucide-react` is optional with a broad `>=0.469.0 <1.0.0` peer range. Icon-forward component subpaths may require it, but unrelated subpaths should not.
 - Border animation color is configurable at app level through `data-border-animation-color="primary|contrast"` and can be overridden per supported component with `borderAnimationColor`.
 - Spotlight/subtle surface gradients are configurable through `data-surface-gradient-color="primary|contrast"` and per-component `surfaceGradientColor`.
 - Glass surfaces use one shared `alka-liquid-glass` system with `data-glass-effect="blurry|realistic"`. `blurry` is the default; `realistic` enables the chromatic SVG displacement glass.
 - Components with selectable surfaces should prefer `surface="flat" | "gradient"`; use `surface="bare"` only in composed glass panels where the parent panel supplies the background.
-- `Button` has solid variants and glass variants (`glassPrimary`, `glassDestructive`, `outline`). Glass buttons should keep the same padding as solid buttons and should not use the old conic hover border effect.
+- `Button` defaults to the flat variant. `solid` remains a compatibility alias, while glass variants (`glassPrimary`, `glassDestructive`, `outline`) opt into the glass treatment. Glass buttons should keep the same padding as flat buttons and should not use the old conic hover border effect.
 - `Input`, `InputGroup`, `Textarea`, `SelectTrigger` and `Combobox` should keep matching pill/bordered focus behavior, close/open motion and optional gradient variants.
 - `CommandItem`, select options, combobox options and sidebar menu items share the command-like rounded item language with primary-aware hover/selected states.
 - `Slider` track is intentionally shorter by one thumb width and centered so the filled range ends at the thumb center at 0 and 100.

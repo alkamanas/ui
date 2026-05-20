@@ -37,20 +37,28 @@ function MenubarSub({
 
 const Menubar = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
->(({ children, className, ...props }, ref) => (
-  <MenubarPrimitive.Root
-    ref={ref}
-    className={cn(
-      "alka-menubar alka-liquid-glass inline-flex h-[3.125rem] items-center gap-1 rounded-full border border-border/70 p-1 text-muted-foreground",
-      className
-    )}
-    {...props}
-  >
-    <GlassElementLayers />
-    {children}
-  </MenubarPrimitive.Root>
-))
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root> & {
+    surface?: "flat" | "glass"
+  }
+>(({ children, className, surface = "flat", ...props }, ref) => {
+  const isGlass = surface === "glass"
+
+  return (
+    <MenubarPrimitive.Root
+      ref={ref}
+      className={cn(
+        "alka-menubar inline-flex h-[3.125rem] items-center gap-1 rounded-full border border-border/70 p-1 text-muted-foreground",
+        isGlass && "alka-liquid-glass",
+        className
+      )}
+      data-surface={surface}
+      {...props}
+    >
+      {isGlass && <GlassElementLayers />}
+      {children}
+    </MenubarPrimitive.Root>
+  )
+})
 Menubar.displayName = MenubarPrimitive.Root.displayName
 
 const MenubarTrigger = React.forwardRef<

@@ -5,30 +5,31 @@ import type { BorderAnimationColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export type ItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  surface?: "solid" | "glass"
+  surface?: "flat" | "glass" | "solid"
   borderAnimation?: boolean
   borderAnimationColor?: BorderAnimationColor
 }
 
 const Item = React.forwardRef<HTMLDivElement, ItemProps>(
-  ({ children, className, surface = "solid", borderAnimation = false, borderAnimationColor, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-5 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[--alka-button-angle,border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
-        surface === "glass" ? "alka-liquid-glass" : "bg-card/72",
-        className,
-      )}
-      data-surface={surface}
-      data-border-animation={borderAnimation ? "true" : undefined}
-      data-border-animation-color={borderAnimationColor}
-      {...props}
-    >
-      {surface === "glass" && <GlassElementLayers />}
-      <span aria-hidden="true" className="alka-item-border" />
-      {children}
-    </div>
-  ),
+  ({ children, className, surface = "flat", borderAnimation: _borderAnimation, borderAnimationColor: _borderAnimationColor, ...props }, ref) => {
+    const resolvedSurface = surface === "solid" ? "flat" : surface
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-5 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
+          resolvedSurface === "glass" ? "alka-liquid-glass" : "bg-card/72",
+          className,
+        )}
+        data-surface={resolvedSurface}
+        {...props}
+      >
+        {resolvedSurface === "glass" && <GlassElementLayers />}
+        {children}
+      </div>
+    )
+  },
 )
 Item.displayName = "Item"
 

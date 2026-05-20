@@ -33,7 +33,7 @@ pnpm add react react-dom
 Optional peers:
 
 - `lucide-react`: used by examples and icon-forward components.
-- `react-hook-form`: used by form integrations.
+- `react-hook-form`: used only by form integrations imported from `@alkamanas/ui/form`.
 
 ## Quick Example
 
@@ -95,7 +95,7 @@ export function LoginPanel() {
 
 - `Breadcrumb`
 - `Menubar`
-- `SectionAwareNavbar`
+- `Navbar`
 - `Sidebar`
 - `Tabs`
 
@@ -128,15 +128,22 @@ export function LoginPanel() {
 The library includes a shared glass system used by cards, nav surfaces, overlays, items, and shell panels.
 
 ```tsx
-import { GlassProvider, SectionAwareNavbar } from "@alkamanas/ui";
+import { GlassProvider } from "@alkamanas/ui";
+import { Navbar, NavbarCTA } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
 
 export function Shell() {
   return (
     <GlassProvider effect="blurry" realisticStrategy="auto">
-      <SectionAwareNavbar
+      <Navbar
         theme="dark"
-        brand={<span>Alkamanas UI</span>}
+        logo={{
+          wide: { dark: <span>Alkamanas UI</span>, light: <span>Alkamanas UI</span> },
+          compact: { dark: <span>A</span>, light: <span>A</span> },
+        }}
+        logoWidths={{ wide: "10rem", compact: "2.25rem" }}
         links={[{ href: "#components", label: "Components" }]}
+        rightSlot={<NavbarCTA href="#install">Install</NavbarCTA>}
       />
     </GlassProvider>
   );
@@ -154,7 +161,7 @@ Glass options:
 Individual components can override provider defaults when they expose glass props, for example:
 
 ```tsx
-<SectionAwareNavbar
+<Navbar
   theme="dark"
   glassEffect="realistic"
   glassRealisticStrategy="premium"
@@ -167,11 +174,11 @@ Individual components can override provider defaults when they expose glass prop
 Use theme scopes when light and dark surfaces live on the same route:
 
 ```tsx
-<section className="alka-theme-dark theme-dark">
+<section className="alka-theme-dark">
   <DarkDashboard />
 </section>
 
-<section className="alka-theme-light theme-light">
+<section className="alka-theme-light">
   <LightPanel />
 </section>
 ```
@@ -180,7 +187,7 @@ The token system includes primary color, semantic status colors, chart colors, g
 
 ## Section-Aware Navbar
 
-`SectionAwareNavbar` can follow page sections marked with `data-navbar-theme`:
+`Navbar` can follow page sections marked with `data-navbar-theme`:
 
 ```tsx
 <section data-navbar-theme="dark" data-theme-color="#050505">
@@ -203,7 +210,14 @@ import { Button, Dialog, Sheet } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
 ```
 
-The package currently publishes one JavaScript entrypoint plus a stylesheet. Subpath component exports are intentionally omitted until the build emits real per-component chunks and declarations.
+The package publishes a full JavaScript entrypoint plus focused subpaths for dependency-sensitive integrations:
+
+```tsx
+import { Navbar } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
+
+import { Form, FormField } from "@alkamanas/ui/form";
+```
 
 ## Development
 

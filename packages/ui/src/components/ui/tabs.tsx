@@ -56,11 +56,14 @@ Tabs.displayName = TabsPrimitive.Root.displayName
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ children, className, style, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+    surface?: "flat" | "glass"
+  }
+>(({ children, className, style, surface = "glass", ...props }, ref) => {
   const { value } = React.useContext(TabsMotionContext)
   const listRef = React.useRef<React.ElementRef<typeof TabsPrimitive.List> | null>(null)
   const [pill, setPill] = React.useState({ left: 0, width: 0, ready: false })
+  const isGlass = surface === "glass"
 
   const updatePill = React.useCallback(() => {
     const list = listRef.current
@@ -104,10 +107,12 @@ const TabsList = React.forwardRef<
         setForwardedRef(ref, node)
       }}
       className={cn(
-        "alka-tabs-list alka-pill-surface alka-liquid-glass inline-flex h-[3.125rem] items-center justify-center rounded-full p-1 text-muted-foreground",
+        "alka-tabs-list alka-pill-surface inline-flex h-[3.125rem] items-center justify-center rounded-full p-1 text-muted-foreground",
+        isGlass && "alka-liquid-glass",
         className
       )}
-      data-glass-effect="blurry"
+      data-glass-effect={isGlass ? "blurry" : undefined}
+      data-surface={surface}
       style={
         {
           ...style,
@@ -118,8 +123,8 @@ const TabsList = React.forwardRef<
       }
       {...props}
     >
-      <GlassElementLayers effect="blurry" />
-      <span aria-hidden="true" className="alka-tabs-glass-border" />
+      {isGlass && <GlassElementLayers effect="blurry" />}
+      {isGlass && <span aria-hidden="true" className="alka-tabs-glass-border" />}
       {children}
     </TabsPrimitive.List>
   )

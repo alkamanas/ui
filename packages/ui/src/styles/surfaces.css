@@ -95,8 +95,8 @@
   --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
   --alka-liquid-glass-border-color: var(--alka-highlight-color);
   --alka-liquid-glass-border-baseline-color: var(--foreground);
-  --alka-liquid-glass-border-opacity: 0.78;
-  --alka-liquid-glass-border-width: 1.5px;
+  --alka-liquid-glass-border-opacity: 0.62;
+  --alka-liquid-glass-border-width: 1px;
   isolation: isolate;
   overflow: hidden;
   border-color: transparent;
@@ -229,9 +229,10 @@
     inset 0 -1px 0 hsl(var(--foreground) / 0.035);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-liquid-glass,
 .alka-theme-light .alka-liquid-glass,
-.theme-light .alka-liquid-glass {
+.theme-light .alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-liquid-glass {
   --alka-liquid-glass-blur: 26px;
   --alka-liquid-glass-lens-blur: 12px;
   --alka-liquid-glass-base-lens-opacity: 0.58;
@@ -240,8 +241,8 @@
   --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
   --alka-liquid-glass-border-color: 0 0% 100%;
   --alka-liquid-glass-border-baseline-color: 0 0% 100%;
-  --alka-liquid-glass-border-opacity: 0.72;
-  --alka-liquid-glass-border-width: 2px;
+  --alka-liquid-glass-border-opacity: 0.54;
+  --alka-liquid-glass-border-width: 1px;
   --alka-glass-element-tint-opacity: 0.28;
   --alka-glass-element-shine-opacity: 0.2;
   --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
@@ -265,9 +266,10 @@
   backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-liquid-glass::before,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-liquid-glass::before,
 .alka-theme-light .alka-liquid-glass::before,
-.theme-light .alka-liquid-glass::before {
+.theme-light .alka-liquid-glass::before,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-liquid-glass::before {
   background:
     linear-gradient(90deg, hsl(0 0% 68% / 0.13), hsl(0 0% 68% / 0.04) 84%, transparent 94%) 0 0 / 46% 2px no-repeat,
     linear-gradient(180deg, hsl(0 0% 68% / 0.11), hsl(0 0% 68% / 0.035) 84%, transparent 94%) 0 0 / 2px 46% no-repeat,
@@ -281,45 +283,49 @@
   backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.24) contrast(1.04);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-liquid-glass::after,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-liquid-glass::after,
 .alka-theme-light .alka-liquid-glass::after,
-.theme-light .alka-liquid-glass::after {
+.theme-light .alka-liquid-glass::after,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-liquid-glass::after {
   background:
-    radial-gradient(circle at 0 0, hsl(0 0% 100% / 1) 0 4px, hsl(0 0% 100% / 0.62) 12px, hsl(0 0% 100% / 0.24) 26px, transparent 42px),
-    radial-gradient(circle at 100% 100%, hsl(0 0% 100% / 1) 0 4px, hsl(0 0% 100% / 0.66) 12px, hsl(0 0% 100% / 0.26) 26px, transparent 42px),
+    radial-gradient(circle at 0 0, hsl(0 0% 100% / 0.72) 0 2px, hsl(0 0% 100% / 0.42) 8px, hsl(0 0% 100% / 0.16) 20px, transparent 34px),
+    radial-gradient(circle at 100% 100%, hsl(0 0% 100% / 0.74) 0 2px, hsl(0 0% 100% / 0.44) 8px, hsl(0 0% 100% / 0.18) 20px, transparent 34px),
     conic-gradient(
       from 45deg,
-      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.08) 0deg 20deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.12) 54deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.2) 90deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.13) 138deg,
-      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.09) 176deg 188deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.13) 224deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.22) 270deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.14) 318deg,
-      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.08) 350deg 360deg
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.046) 0deg 20deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.074) 54deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.13) 90deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.084) 138deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.052) 176deg 188deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.084) 224deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.14) 270deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.092) 318deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.046) 350deg 360deg
     );
   box-shadow: none;
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-glass-element__backdrop,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-glass-element__backdrop,
 .alka-theme-light .alka-glass-element__backdrop,
-.theme-light .alka-glass-element__backdrop {
+.theme-light .alka-glass-element__backdrop,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-glass-element__backdrop {
   background: hsl(var(--background) / 0.045);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-glass-element__tint,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-glass-element__tint,
 .alka-theme-light .alka-glass-element__tint,
-.theme-light .alka-glass-element__tint {
+.theme-light .alka-glass-element__tint,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-glass-element__tint {
   background:
     radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.18), transparent 48%),
     linear-gradient(145deg, hsl(0 0% 0% / 0.022), transparent 52%, hsl(var(--alka-highlight-color) / 0.08)),
     hsl(0 0% 93% / 0.06);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-glass-element__shine,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-glass-element__shine,
 .alka-theme-light .alka-glass-element__shine,
-.theme-light .alka-glass-element__shine {
+.theme-light .alka-glass-element__shine,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-glass-element__shine {
   background:
     linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.075), transparent 28%, transparent 72%, hsl(0 0% 0% / 0.018)),
     linear-gradient(90deg, hsl(var(--alka-highlight-color) / 0.04), transparent 16%, transparent 84%, hsl(0 0% 0% / 0.018));
@@ -328,6 +334,87 @@
     inset 1px 0 0 hsl(var(--alka-highlight-color) / 0.035),
     inset -1px 0 0 hsl(0 0% 0% / 0.025),
     inset 0 -1px 0 hsl(0 0% 0% / 0.035);
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-liquid-glass {
+  --alka-liquid-glass-blur: 22px;
+  --alka-liquid-glass-lens-blur: 9px;
+  --alka-liquid-glass-base-lens-opacity: 0.62;
+  --alka-liquid-glass-base-sheen-opacity: 0.22;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-border-color: var(--alka-highlight-color);
+  --alka-liquid-glass-border-baseline-color: var(--foreground);
+  --alka-liquid-glass-border-opacity: 0.62;
+  --alka-liquid-glass-border-width: 1px;
+  --alka-glass-element-tint-opacity: 0.58;
+  --alka-glass-element-shine-opacity: 0.38;
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  border-color: transparent;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.032), transparent 34%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.018), transparent 42%),
+    var(--alka-liquid-glass-bg);
+  box-shadow:
+    0 24px 72px hsl(var(--alka-shadow-color) / 0.34),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.045),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.015);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-liquid-glass::before {
+  background:
+    linear-gradient(90deg, hsl(var(--alka-liquid-glass-border-color) / 0.09), hsl(var(--alka-liquid-glass-border-color) / 0.018) 84%, transparent 94%) 0 0 / 46% 2px no-repeat,
+    linear-gradient(180deg, hsl(var(--alka-liquid-glass-border-color) / 0.07), hsl(var(--alka-liquid-glass-border-color) / 0.014) 84%, transparent 94%) 0 0 / 2px 46% no-repeat,
+    linear-gradient(270deg, hsl(var(--alka-liquid-glass-border-color) / 0.09), hsl(var(--alka-liquid-glass-border-color) / 0.018) 84%, transparent 94%) 100% 100% / 46% 2px no-repeat,
+    linear-gradient(0deg, hsl(var(--alka-liquid-glass-border-color) / 0.07), hsl(var(--alka-liquid-glass-border-color) / 0.014) 84%, transparent 94%) 100% 100% / 2px 46% no-repeat,
+    linear-gradient(135deg, hsl(var(--alka-highlight-color) / 0.014), transparent 30% 66%, hsl(var(--alka-highlight-color) / 0.01)),
+    radial-gradient(circle at 84% 16%, hsl(var(--alka-highlight-color) / 0.018), transparent 32%),
+    hsl(var(--alka-highlight-color) / 0.006);
+  opacity: var(--alka-liquid-glass-lens-opacity);
+  -webkit-backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-liquid-glass::after {
+  background:
+    radial-gradient(circle at 0 0, hsl(var(--alka-liquid-glass-border-color) / 0.24) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.1) 24px, transparent 38px),
+    radial-gradient(circle at 100% 100%, hsl(var(--alka-liquid-glass-border-color) / 0.28) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.12) 24px, transparent 38px),
+    conic-gradient(
+      from 45deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.024) 0deg 20deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.052) 54deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.13) 90deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.076) 138deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.026) 176deg 188deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.06) 224deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.16) 270deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.08) 318deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.024) 350deg 360deg
+    );
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-glass-element__backdrop {
+  background: hsl(var(--background) / 0.018);
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-glass-element__tint {
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.034), transparent 34%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.022), transparent 62%),
+    hsl(var(--background) / 0.075);
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-glass-element__shine {
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.075), transparent 28%, transparent 72%, hsl(var(--foreground) / 0.018)),
+    linear-gradient(90deg, hsl(var(--alka-highlight-color) / 0.04), transparent 16%, transparent 84%, hsl(var(--foreground) / 0.018));
+  box-shadow:
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12),
+    inset 1px 0 0 hsl(var(--alka-highlight-color) / 0.035),
+    inset -1px 0 0 hsl(var(--foreground) / 0.025),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.035);
 }
 
 .alka-liquid-glass:has(> .alka-glass-element__backdrop[data-glass-effect="realistic"][data-glass-realistic-strategy="premium"]) {
@@ -409,39 +496,7 @@
   z-index: 0;
 }
 
-.alka-item-surface .alka-item-border {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: inherit;
-  padding: 1px;
-  pointer-events: none;
-  opacity: 0;
-  background: conic-gradient(
-    from calc(var(--alka-button-angle) - 7deg),
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 0deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.82) 7deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.42) 14deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 24deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 180deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.82) 187deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.42) 194deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 204deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  transition:
-    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
-    opacity var(--alka-border-opacity-duration, 260ms) var(--alka-ease-smooth);
-}
-
+.alka-item-surface[data-surface="flat"],
 .alka-item-surface[data-surface="solid"] {
   background:
     linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.028), transparent 56%),
@@ -467,21 +522,6 @@
   box-shadow:
     0 16px 44px hsl(var(--alka-shadow-color) / 0.18),
     inset 0 1px 0 hsl(var(--primary) / 0.08);
-}
-
-.alka-item-surface[data-border-animation="true"]:hover,
-.alka-item-surface[data-border-animation="true"]:focus-within {
-  --alka-button-angle: var(--alka-border-active-angle, 88deg);
-  border-color: transparent;
-}
-
-.alka-item-surface[data-border-animation="true"]:hover .alka-item-border,
-.alka-item-surface[data-border-animation="true"]:focus-within .alka-item-border {
-  --alka-button-angle: var(--alka-border-active-angle, 88deg);
-  opacity: 1;
-  transition:
-    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
-    opacity var(--alka-border-opacity-duration, 260ms) var(--alka-ease-smooth);
 }
 
 .alka-context-menu-content.alka-liquid-glass,
@@ -696,18 +736,18 @@ body[data-alka-select-open="true"] {
   z-index: 2;
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-card-surface.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-item-surface[data-surface="glass"],
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-context-menu-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-dropdown-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-popover-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-tooltip-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-select-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-command.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-dialog-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-alert-dialog-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-sheet-content.alka-liquid-glass,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-toast.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-card-surface.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-item-surface[data-surface="glass"],
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-context-menu-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-dropdown-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-popover-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-tooltip-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-select-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-command.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-dialog-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-alert-dialog-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-sheet-content.alka-liquid-glass,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-toast.alka-liquid-glass,
 .alka-theme-light .alka-card-surface.alka-liquid-glass,
 .alka-theme-light .alka-item-surface[data-surface="glass"],
 .alka-theme-light .alka-context-menu-content.alka-liquid-glass,
@@ -731,7 +771,19 @@ body[data-alka-select-open="true"] {
 .theme-light .alka-dialog-content.alka-liquid-glass,
 .theme-light .alka-alert-dialog-content.alka-liquid-glass,
 .theme-light .alka-sheet-content.alka-liquid-glass,
-.theme-light .alka-toast.alka-liquid-glass {
+.theme-light .alka-toast.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-card-surface.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-item-surface[data-surface="glass"],
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-context-menu-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-dropdown-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-popover-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-tooltip-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-select-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-command.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-dialog-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-alert-dialog-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-sheet-content.alka-liquid-glass,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-toast.alka-liquid-glass {
   --alka-liquid-glass-blur: 26px;
   --alka-liquid-glass-lens-blur: 12px;
   --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
@@ -752,6 +804,36 @@ body[data-alka-select-open="true"] {
   backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
 }
 
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-card-surface.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-item-surface[data-surface="glass"],
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-context-menu-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-dropdown-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-popover-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-tooltip-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-select-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-command.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-dialog-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-alert-dialog-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-sheet-content.alka-liquid-glass,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-toast.alka-liquid-glass {
+  --alka-liquid-glass-blur: var(--alka-blur-panel);
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  border-color: hsl(var(--alka-panel-border)) !important;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-highlight-color) / 0.032), transparent 34%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.018), transparent 42%),
+    var(--alka-liquid-glass-bg) !important;
+  box-shadow:
+    0 24px 72px hsl(var(--alka-shadow-color) / 0.34),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.045),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.015) !important;
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+}
+
 .alka-navbar-panel.alka-liquid-glass[data-quiet="true"],
 .navbar-panel.alka-liquid-glass[data-quiet="true"] {
   border-color: transparent;
@@ -762,10 +844,18 @@ body[data-alka-select-open="true"] {
   backdrop-filter: none;
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-item-surface,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-item-surface,
 .alka-theme-light .alka-item-surface,
-.theme-light .alka-item-surface {
+.theme-light .alka-item-surface,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-item-surface {
   box-shadow: none !important;
+}
+
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-item-surface:hover,
+:is(.alka-theme-dark, [data-theme="dark"], [data-section-theme="dark"], [data-navbar-theme="dark"]) .alka-item-surface:focus-within {
+  box-shadow:
+    0 16px 44px hsl(var(--alka-shadow-color) / 0.18),
+    inset 0 1px 0 hsl(var(--primary) / 0.08) !important;
 }
 
 .alka-navbar-panel.alka-liquid-glass[data-quiet="true"]::before,

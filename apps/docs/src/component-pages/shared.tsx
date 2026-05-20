@@ -110,7 +110,7 @@ function getPreviewCode(doc: DocItem) {
   const demoName = `${doc.title.replace(/[^a-zA-Z0-9]+/g, "")}Demo`;
   const importLine = doc.importCode ?? `import { ${doc.title.replace(/\s+/g, "")} } from "@alkamanas/ui";`;
   const componentName =
-    doc.id === "navbar" ? "SectionAwareNavbar" : doc.title.replace(/\s+/g, "");
+    doc.id === "navbar" ? "Navbar" : doc.title.replace(/\s+/g, "");
   const registryCommand = doc.command ? `\n\n// ${doc.command}` : "";
 
   if (previewCodeById[doc.id]) {

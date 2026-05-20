@@ -15,11 +15,11 @@ const details: ComponentPageDetails = {
   "summary": "Item is a display primitive in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
   "examples": [
     {
-      "id": "item-solid",
-      "title": "Solid item",
-      "description": "The default solid item keeps hover calm and leaves border animation disabled unless explicitly requested.",
+      "id": "item-flat",
+      "title": "Flat item",
+      "description": "The default flat item keeps hover calm and leaves border animation disabled.",
       "preview": (
-        <Item className="w-full max-w-xl" surface="solid">
+        <Item className="w-full max-w-xl">
           <ItemMedia><User className="h-4 w-4" /></ItemMedia>
           <ItemContent>
             <ItemTitle>Default item</ItemTitle>
@@ -38,9 +38,9 @@ const details: ComponentPageDetails = {
   ItemTitle,
 } from "@alkamanas/ui";
 
-export function SolidItemExample() {
+export function FlatItemExample() {
   return (
-    <Item surface="solid">
+    <Item>
       <ItemMedia />
       <ItemContent>
         <ItemTitle>Default item</ItemTitle>
@@ -56,22 +56,22 @@ export function SolidItemExample() {
     {
       "id": "item-glass",
       "title": "Glass item",
-      "description": "Glass items use the shared glass panel. Border animation can be enabled per item and colored with primary or contrast tokens.",
+      "description": "Glass items use the shared glass panel while keeping hover states calm.",
       "preview": (
         <div className="grid w-full max-w-xl gap-3">
-          <Item surface="glass" borderAnimation>
+          <Item surface="glass">
             <ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia>
             <ItemContent>
-              <ItemTitle>Primary border animation</ItemTitle>
-              <ItemDescription>borderAnimation uses primary by default.</ItemDescription>
+              <ItemTitle>Glass item</ItemTitle>
+              <ItemDescription>Hover keeps the standard border without animation.</ItemDescription>
             </ItemContent>
             <ItemActions><Badge>Live</Badge></ItemActions>
           </Item>
-          <Item surface="glass" borderAnimation borderAnimationColor="contrast">
+          <Item surface="glass">
             <ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia>
             <ItemContent>
-              <ItemTitle>Contrast border animation</ItemTitle>
-              <ItemDescription>Set borderAnimationColor to contrast.</ItemDescription>
+              <ItemTitle>Calm glass item</ItemTitle>
+              <ItemDescription>Surface, border and shadow tokens still follow theme.</ItemDescription>
             </ItemContent>
             <ItemActions><Badge variant="secondary">Contrast</Badge></ItemActions>
           </Item>
@@ -81,11 +81,11 @@ export function SolidItemExample() {
 
 export function GlassItemExample() {
   return (
-    <Item surface="glass" borderAnimation borderAnimationColor="contrast">
+    <Item surface="glass">
       <ItemMedia />
       <ItemContent>
-        <ItemTitle>Contrast border animation</ItemTitle>
-        <ItemDescription>Set borderAnimationColor to contrast.</ItemDescription>
+        <ItemTitle>Glass item</ItemTitle>
+        <ItemDescription>Hover keeps the standard border without animation.</ItemDescription>
       </ItemContent>
     </Item>
   );
@@ -95,7 +95,7 @@ export function GlassItemExample() {
   "anatomy": [
     "Import Item from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, primary and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -119,6 +119,11 @@ export function GlassItemExample() {
   ],
   "props": [
     {
+      "name": "surface",
+      "type": "flat | glass",
+      "description": "Controls the root surface. Defaults to flat; solid is kept as a compatibility alias for flat."
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Merged onto the visible root when the primitive renders one."
@@ -132,7 +137,7 @@ export function GlassItemExample() {
   "accessibility": [
     "Preserve the underlying Radix or native semantics when composing custom children.",
     "Keep interactive labels visible, or provide aria-label for icon-only controls.",
-    "Keyboard focus states should remain visible against both glass and solid surfaces."
+    "Keyboard focus states should remain visible against both flat and glass surfaces."
   ],
   "motion": [
     "Motion uses --alka-motion-* and --alka-ease-* tokens and should respect prefers-reduced-motion.",

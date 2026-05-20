@@ -14,14 +14,30 @@ Key files:
 Core usage:
 
 ```tsx
-import { Button, Card, SectionAwareNavbar, FlipCard } from "@alkamanas/ui";
+import { Button, Card, FlipCard } from "@alkamanas/ui";
 import "@alkamanas/ui/styles.css";
+```
+
+Focused consumer usage:
+
+```tsx
+import { Navbar, NavbarCTA } from "@alkamanas/ui/navbar";
+import "@alkamanas/ui/navbar.css";
+
+import { Button } from "@alkamanas/ui/button";
+import "@alkamanas/ui/button.css";
 ```
 
 Current design/API notes for agents:
 
 - The docs app at `/apps/docs/src/App.tsx` is the source of truth for live previews and Code tab examples.
 - Code tab examples should be component-specific and copyable; avoid placeholder snippets that do not match the preview.
+- Every public component should be available through `@alkamanas/ui/<component>` and `@alkamanas/ui/<component>.css` in addition to the root package barrel.
+- `Navbar` is the public navbar name. `SectionAwareNavbar` is a compatibility alias.
+- Navbar supports `wide`/`compact` logo variants with `light`/`dark` alternatives, plus `NavbarCTA`, `NavbarMenuItem` and `NavbarMenuSecondaryItem`.
+- Use `.alka-theme-light`, `.alka-theme-dark`, `data-theme`, `data-section-theme` and `data-navbar-theme` for package-facing theme scopes. Components inherit the closest section theme and fall back to the global app theme. Do not rely on generic `.theme-light` or `.theme-dark` in published CSS.
+- `react-hook-form` is optional and isolated to `@alkamanas/ui/form`.
+- `lucide-react` is optional and accepts `>=0.469.0 <1.0.0`.
 - Glass surfaces come from `alka-liquid-glass` and support `data-glass-effect="blurry|realistic"`.
 - Primary color, border animation color and subtle gradient color are token/config driven. Use `borderAnimationColor` and `surfaceGradientColor` props where available.
 - Inputs, input groups, textareas, selects and comboboxes share the bordered pill animation style and flat/gradient surface options.

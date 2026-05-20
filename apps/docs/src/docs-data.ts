@@ -79,6 +79,12 @@ export const docs: DocItem[] = [
     description: "Use section-level light and dark scopes with Alkamanas tokens.",
   },
   {
+    id: "typography",
+    title: "Typography",
+    group: "Sections",
+    description: "Apply Alkamanas type tokens to headings, body copy, labels and dense data.",
+  },
+  {
     id: "cli",
     title: "CLI",
     group: "Sections",
@@ -89,10 +95,10 @@ export const docs: DocItem[] = [
     title,
     description,
     group: "Components" as const,
-    command: id === "navbar" ? "npx alka add section-aware-navbar" : `npx alka add ${id}`,
+    command: id === "navbar" ? "pnpm add @alkamanas/ui lucide-react" : `npx alka add ${id}`,
     importCode:
       id === "navbar"
-        ? 'import { SectionAwareNavbar } from "@alkamanas/ui";'
+        ? 'import { Navbar } from "@alkamanas/ui/navbar";\nimport "@alkamanas/ui/navbar.css";'
         : `import { ${title.replace(/\s+/g, "")} } from "@alkamanas/ui";`,
   })),
   {

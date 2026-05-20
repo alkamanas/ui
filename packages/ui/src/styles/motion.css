@@ -446,12 +446,14 @@
   opacity: 1;
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-accordion-item,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-accordion-item[data-state="open"],
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-accordion-item,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-accordion-item[data-state="open"],
 .alka-theme-light .alka-accordion-item,
 .alka-theme-light .alka-accordion-item[data-state="open"],
 .theme-light .alka-accordion-item,
-.theme-light .alka-accordion-item[data-state="open"] {
+.theme-light .alka-accordion-item[data-state="open"],
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-accordion-item,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-accordion-item[data-state="open"] {
   box-shadow: none;
 }
 

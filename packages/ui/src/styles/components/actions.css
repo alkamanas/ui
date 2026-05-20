@@ -133,9 +133,10 @@
   background: hsl(var(--border) / 0.78);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-button-group,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-button-group,
 .alka-theme-light .alka-button-group,
-.theme-light .alka-button-group {
+.theme-light .alka-button-group,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-button-group {
   --alka-liquid-glass-bg: hsl(var(--background) / 0.42);
   border-color: hsl(var(--foreground) / 0.12);
   box-shadow:
@@ -144,12 +145,14 @@
     inset 0 -1px 0 hsl(var(--foreground) / 0.04);
 }
 
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-button-group > .alka-button-control:hover,
-:root:not(.theme-dark):not(.alka-theme-dark) .alka-button-group > .alka-button-control:focus-visible,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-button-group > .alka-button-control:hover,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-button-group > .alka-button-control:focus-visible,
 .alka-theme-light .alka-button-group > .alka-button-control:hover,
 .alka-theme-light .alka-button-group > .alka-button-control:focus-visible,
 .theme-light .alka-button-group > .alka-button-control:hover,
-.theme-light .alka-button-group > .alka-button-control:focus-visible {
+.theme-light .alka-button-group > .alka-button-control:focus-visible,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-button-group > .alka-button-control:hover,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-button-group > .alka-button-control:focus-visible {
   background: hsl(var(--foreground) / 0.075) !important;
 }
 
