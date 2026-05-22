@@ -352,7 +352,7 @@
   --alka-accordion-radius: 1.75rem;
   --alka-accordion-expanded-width: min(100%, 30rem);
   --alka-accordion-ease: cubic-bezier(0.34, 0, 0.18, 1);
-  --alka-accordion-gradient-color: var(--alka-border-animation-color, var(--primary));
+  --alka-accordion-gradient-color: var(--alka-border-animation-color, var(--alka-default-border-animation-color));
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -444,6 +444,17 @@
 
 .alka-accordion-item[data-state="open"]::before {
   opacity: 1;
+}
+
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-accordion-item,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-accordion-item[data-state="open"],
+.alka-theme-light .alka-accordion-item,
+.alka-theme-light .alka-accordion-item[data-state="open"],
+.theme-light .alka-accordion-item,
+.theme-light .alka-accordion-item[data-state="open"],
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-accordion-item,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-accordion-item[data-state="open"] {
+  box-shadow: none;
 }
 
 .alka-accordion-trigger {

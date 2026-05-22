@@ -2,15 +2,13 @@
 
 import * as React from "react"
 
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 export interface InputProps extends React.ComponentProps<"input"> {
-  borderAnimationColor?: BorderAnimationColor
   floatingLabel?: boolean
   label?: React.ReactNode
-  surface?: "flat" | "gradient"
-  surfaceGradientColor?: SurfaceGradientColor
+  surface?: "flat" | "gradient" | "glass"
   variant?: "underline" | "pill"
   wrapperClassName?: string
 }
@@ -24,7 +22,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
-      borderAnimationColor,
       defaultValue,
       disabled,
       floatingLabel = true,
@@ -35,7 +32,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onFocus,
       placeholder,
       surface = "flat",
-      surfaceGradientColor,
       type,
       value,
       variant = "underline",
@@ -57,6 +53,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       : undefined
     const hasLabel =
       labelContent !== undefined && labelContent !== null && labelContent !== ""
+    const useGlassSurface = surface === "glass" && variant === "pill"
+    const renderedSurface = useGlassSurface ? "glass" : surface === "glass" ? "flat" : surface
 
     React.useEffect(() => {
       if (value !== undefined) setHasValue(hasInputValue(value))
@@ -70,11 +68,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <span
-        className={cn("alka-input-field", wrapperClassName)}
+        className={cn("alka-input-field", useGlassSurface && "alka-liquid-glass", wrapperClassName)}
         data-closing={isClosing ? "true" : undefined}
-        data-border-animation-color={borderAnimationColor}
-        data-surface={surface}
-        data-surface-gradient-color={surfaceGradientColor}
+        data-surface={renderedSurface}
         data-variant={variant}
         data-disabled={disabled ? "true" : undefined}
         data-filled={hasValue ? "true" : undefined}
@@ -94,6 +90,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           setIsClosing(false)
         }}
       >
+        {useGlassSurface ? <GlassElementLayers /> : null}
         <input
           id={inputId}
           type={type}

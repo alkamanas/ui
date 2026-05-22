@@ -12,7 +12,7 @@ const details: ComponentPageDetails = {
       "preview": (
         <div className="grid w-full max-w-xl gap-4">
           <Textarea surface="flat" placeholder="Write a note..." />
-          <Textarea borderAnimationColor="contrast" surface="flat" placeholder="Contrast border..." />
+          <Textarea wrapperClassName="border-animation-primary" surface="flat" placeholder="Custom border..." />
         </div>
       ),
       "code": `import { Textarea } from "@alkamanas/ui";
@@ -22,9 +22,9 @@ export function FlatTextareaExample() {
     <div className="grid gap-4">
       <Textarea surface="flat" placeholder="Write a note..." />
       <Textarea
-        borderAnimationColor="contrast"
+        wrapperClassName="border-animation-primary"
         surface="flat"
-        placeholder="Contrast border..."
+        placeholder="Custom border..."
       />
     </div>
   );
@@ -36,8 +36,8 @@ export function FlatTextareaExample() {
       "description": "Use the subtle gradient surface for richer form sections while keeping the field readable.",
       "preview": (
         <div className="grid w-full max-w-xl gap-4">
-          <Textarea surface="gradient" placeholder="Primary spotlight..." />
-          <Textarea surfaceGradientColor="contrast" surface="gradient" placeholder="Contrast spotlight..." />
+          <Textarea surface="gradient" placeholder="Default spotlight..." />
+          <Textarea wrapperClassName="gradient-primary/50" surface="gradient" placeholder="Primary / 50 spotlight..." />
         </div>
       ),
       "code": `import { Textarea } from "@alkamanas/ui";
@@ -46,8 +46,8 @@ export function GradientTextareaExample() {
   return (
     <Textarea
       surface="gradient"
-      surfaceGradientColor="contrast"
-      placeholder="Contrast spotlight..."
+      wrapperClassName="gradient-primary/50"
+      placeholder="Primary / 50 spotlight..."
     />
   );
 }`
@@ -56,7 +56,7 @@ export function GradientTextareaExample() {
   "anatomy": [
     "Import Textarea from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, default border animation, default gradient and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -65,7 +65,7 @@ export function GradientTextareaExample() {
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to dark/light section and glass mode changes from the docs selector. Primary is opt-in through utility classes."
     }
   ],
   "sizes": [
@@ -80,14 +80,14 @@ export function GradientTextareaExample() {
   ],
   "props": [
     {
-      "name": "className",
+      "name": "wrapperClassName",
       "type": "string",
-      "description": "Merged onto the visible root when the primitive renders one."
+      "description": "Merged onto the visible field wrapper. Use utilities such as gradient-primary/50 and border-animation-primary to assign gradient and focus colors."
     },
     {
-      "name": "children",
-      "type": "ReactNode",
-      "description": "Used for composition in compound primitives."
+      "name": "className",
+      "type": "string",
+      "description": "Merged onto the native textarea control."
     }
   ],
   "accessibility": [
@@ -102,6 +102,10 @@ export function GradientTextareaExample() {
   "tokens": [
     "--alka-ease-smooth",
     "--alka-radius-control",
+    "--alka-gradient-color",
+    "--alka-gradient-opacity",
+    "--alka-border-animation-color",
+    "--alka-border-animation-opacity",
     "--alka-panel-bg"
   ]
 };

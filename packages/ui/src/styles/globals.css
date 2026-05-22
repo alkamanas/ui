@@ -1,6 +1,7 @@
 @import "./tokens.css";
 @import "./motion.css";
 @import "./surfaces.css";
+@import "./components/typography.css";
 @import "./components/actions.css";
 @import "./components/forms.css";
 @import "./components/navigation.css";

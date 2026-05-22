@@ -5,7 +5,6 @@ import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
 import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 let openSelectCount = 0
@@ -31,6 +30,8 @@ const SelectMotionContext = React.createContext<{
 }>({
   closing: false,
 })
+
+const selectCloseTimeout = 620
 
 function Select({
   open,
@@ -88,7 +89,7 @@ function Select({
       onOpenChange?.(false)
       closeTimeoutRef.current = window.setTimeout(() => {
         setClosing(false)
-      }, 300)
+      }, selectCloseTimeout)
       return
     }
   }
@@ -119,29 +120,27 @@ const selectTriggerSizeClasses: Record<SelectTriggerSize, string> = {
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
-    borderAnimationColor?: BorderAnimationColor
     size?: SelectTriggerSize
-    surface?: "flat" | "gradient" | "bare"
-    surfaceGradientColor?: SurfaceGradientColor
+    surface?: "flat" | "gradient" | "glass" | "bare"
   }
->(({ className, children, borderAnimationColor, size = "default", surface = "gradient", surfaceGradientColor, ...props }, ref) => {
+>(({ className, children, size = "default", surface = "flat", ...props }, ref) => {
   const { closing } = React.useContext(SelectMotionContext)
 
   return (
     <SelectPrimitive.Trigger
       ref={ref}
-      data-border-animation-color={borderAnimationColor}
       data-closing={closing ? "true" : undefined}
       data-size={size}
       data-surface={surface}
-      data-surface-gradient-color={surfaceGradientColor}
       className={cn(
-        "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-background/72 py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-transparent py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        surface === "glass" && "alka-liquid-glass",
         selectTriggerSizeClasses[size],
         className
       )}
       {...props}
     >
+      {surface === "glass" ? <GlassElementLayers /> : null}
       {children}
       <SelectPrimitive.Icon asChild>
         <ChevronDown className="h-4 w-4 opacity-50" />
@@ -205,7 +204,7 @@ const SelectContent = React.forwardRef<
           }
         }}
         className={cn(
-          "alka-select-content alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-white/10 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+          "alka-select-content alka-liquid-glass relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] origin-[--radix-select-content-transform-origin] overflow-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
           position === "popper" && "w-[var(--radix-select-trigger-width)]",
           className
         )}
@@ -219,7 +218,7 @@ const SelectContent = React.forwardRef<
           className={cn(
             "relative z-10 grid gap-1 px-1",
             position === "popper" &&
-              "h-[var(--radix-select-trigger-height)] w-full"
+              "w-full"
           )}
         >
           {children}
@@ -274,7 +273,9 @@ const SelectItem = React.forwardRef<
           <Check className="h-4 w-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemText>
+        <span className="block min-w-0 truncate whitespace-nowrap">{children}</span>
+      </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )
 })

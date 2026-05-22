@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import {
   Command,
@@ -14,7 +13,6 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export type ComboboxOption = {
@@ -32,10 +30,8 @@ export type ComboboxProps = {
   placeholder?: string
   searchPlaceholder?: string
   emptyText?: string
-  surface?: "flat" | "gradient" | "bare"
+  surface?: "flat" | "gradient" | "glass" | "bare"
   size?: ComboboxSize
-  borderAnimationColor?: BorderAnimationColor
-  surfaceGradientColor?: SurfaceGradientColor
   className?: string
   onValueChange?: (value: string) => void
 }
@@ -46,6 +42,8 @@ const comboboxSizeClasses: Record<ComboboxSize, string> = {
   lg: "h-12 px-6 text-base",
 }
 
+const comboboxCloseTimeout = 620
+
 function Combobox({
   options,
   value,
@@ -53,10 +51,8 @@ function Combobox({
   placeholder = "Select option",
   searchPlaceholder = "Search...",
   emptyText = "No results found.",
-  surface = "gradient",
+  surface = "flat",
   size = "default",
-  borderAnimationColor,
-  surfaceGradientColor,
   className,
   onValueChange,
 }: ComboboxProps) {
@@ -83,7 +79,7 @@ function Combobox({
     setOpen(false)
     setClosing(true)
     requestAnimationFrame(() => triggerRef.current?.blur())
-    closeTimeoutRef.current = window.setTimeout(() => setClosing(false), 300)
+    closeTimeoutRef.current = window.setTimeout(() => setClosing(false), comboboxCloseTimeout)
   }, [closing, open])
 
   const handleOpenChange = (nextOpen: boolean) => {
@@ -107,17 +103,17 @@ function Combobox({
   return (
     <Popover open={popoverOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
-        <Button
+        <button
           ref={triggerRef}
-          variant="outline"
-          size={size}
+          type="button"
           role="combobox"
           aria-label={selectedOption?.label ?? placeholder}
-          aria-expanded={open}
-          data-border-animation-color={borderAnimationColor}
+          aria-expanded={popoverOpen}
           data-closing={closing ? "true" : undefined}
+          data-size={size}
+          data-state={popoverOpen ? "open" : "closed"}
           data-surface={surface}
-          data-surface-gradient-color={surfaceGradientColor}
+          data-variant="outline"
           onClick={(event) => {
             if (!open && !closing) return
 
@@ -125,16 +121,18 @@ function Combobox({
             closeCombobox()
           }}
           className={cn(
-            "alka-combobox-trigger w-full justify-between rounded-full bg-background/72 py-0 font-medium text-foreground shadow-sm transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground",
+            "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-transparent py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+            surface === "glass" && "alka-liquid-glass",
             comboboxSizeClasses[size],
             className
           )}
         >
-          <span className={cn(!selectedOption && "text-muted-foreground")}>
+          {surface === "glass" ? <GlassElementLayers /> : null}
+          <span className={cn("min-w-0 truncate whitespace-nowrap", !selectedOption && "text-muted-foreground")}>
             {selectedOption?.label ?? placeholder}
           </span>
           <ChevronsUpDown className="size-4 opacity-50" />
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent
         align="center"
@@ -148,7 +146,7 @@ function Combobox({
         className="alka-select-content alka-liquid-glass w-[var(--radix-popover-trigger-width)] overflow-hidden rounded-3xl p-2"
       >
         <GlassElementLayers />
-        <Command glass={false} className="relative z-10 gap-1 rounded-[1.5rem] bg-transparent [&_[cmdk-group]]:grid [&_[cmdk-group]]:gap-1 [&_[cmdk-group]]:p-0 [&_[cmdk-input-wrapper]]:mx-1 [&_[cmdk-input-wrapper]]:mb-2 [&_[cmdk-input-wrapper]]:mt-1 [&_[cmdk-input-wrapper]]:rounded-none [&_[cmdk-input-wrapper]]:border-0 [&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input-wrapper]]:border-white/10 [&_[cmdk-input-wrapper]]:bg-transparent [&_[cmdk-input-wrapper]]:px-4 [&_[cmdk-input-wrapper]]:backdrop-blur-none [&_[cmdk-input]]:h-11">
+        <Command glass={false} className="relative z-10 gap-1 rounded-[1.5rem] bg-transparent [&_[cmdk-group]]:grid [&_[cmdk-group]]:gap-1 [&_[cmdk-group]]:p-0 [&_[cmdk-input-wrapper]]:mx-1 [&_[cmdk-input-wrapper]]:mb-2 [&_[cmdk-input-wrapper]]:mt-1 [&_[cmdk-input-wrapper]]:rounded-none [&_[cmdk-input-wrapper]]:border-0 [&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input-wrapper]]:border-border/70 [&_[cmdk-input-wrapper]]:bg-transparent [&_[cmdk-input-wrapper]]:px-4 [&_[cmdk-input-wrapper]]:backdrop-blur-none [&_[cmdk-input]]:h-11">
           <CommandInput placeholder={searchPlaceholder} />
           <CommandList className="max-h-[18rem]">
             <CommandEmpty>{emptyText}</CommandEmpty>
@@ -163,7 +161,7 @@ function Combobox({
                   )}
                   onSelect={() => selectValue(option.value)}
                 >
-                  {option.label}
+                  <span className="min-w-0 truncate whitespace-nowrap">{option.label}</span>
                   <Check className={cn("absolute right-4 size-4", selectedValue === option.value ? "opacity-100" : "opacity-0")} />
                 </CommandItem>
               ))}

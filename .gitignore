@@ -3,6 +3,8 @@ dist
 .next
 .turbo
 .codex
+.codex-logs/
+.codex-run-logs
 packages/cli/registry
 .DS_Store
 coverage

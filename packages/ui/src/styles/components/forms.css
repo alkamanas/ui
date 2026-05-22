@@ -8,7 +8,7 @@
   background: transparent;
   box-shadow: none;
   transition:
-    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
     transform 320ms cubic-bezier(0.4, 0, 0.6, 1),
     box-shadow 320ms cubic-bezier(0.4, 0, 0.6, 1),
     background-color 320ms cubic-bezier(0.4, 0, 0.6, 1);
@@ -38,9 +38,9 @@
     90deg,
     transparent,
     transparent 12%,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.52) 28%,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.92) 50%,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.52) 72%,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.52)) 28%,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.92)) 50%,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.52)) 72%,
     transparent 88%,
     transparent
   );
@@ -108,7 +108,7 @@
 }
 
 .alka-input-field[data-variant="pill"] {
-  --alka-button-angle: 0deg;
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
   --alka-surface-focus-alpha: 0;
   min-height: 3.125rem;
   overflow: visible;
@@ -138,32 +138,32 @@
   border-radius: inherit;
   clip-path: inset(0 round var(--alka-radius-pill));
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      transparent 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
     transparent;
   opacity: 1;
   transform: none;
   transition:
-    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
-    background-color 420ms var(--alka-ease-smooth);
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    background-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
 }
 
 .alka-input-field[data-variant="pill"][data-surface="gradient"]::after {
   --alka-surface-focus-alpha: 1;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      hsl(var(--background) / 0.34) 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
-    hsl(var(--background) / 0.58);
+    hsl(var(--background) / 0.34);
 }
 
 .alka-input-field[data-variant="pill"][data-selected="true"],
@@ -177,9 +177,7 @@
 
 .alka-input-field[data-variant="pill"] {
   border: 1px solid hsl(var(--foreground) / 0.12);
-  box-shadow:
-    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
+  box-shadow: none;
 }
 
 .alka-input-field[data-variant="pill"] .alka-input-control {
@@ -214,7 +212,7 @@
 }
 
 .alka-input-group {
-  --alka-button-angle: 0deg;
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
   --alka-surface-focus-alpha: 0;
   position: relative;
   isolation: isolate;
@@ -227,16 +225,14 @@
   border: 1px solid hsl(var(--foreground) / 0.12);
   border-radius: var(--alka-radius-pill);
   background: transparent;
-  box-shadow:
-    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
+  box-shadow: none;
   transform: translate3d(0, 0, 0) scale(1);
   transition:
-    --alka-button-angle 420ms var(--alka-ease-smooth),
-    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
-    transform 420ms var(--alka-ease-smooth),
-    border-color 420ms var(--alka-ease-smooth),
-    box-shadow 420ms var(--alka-ease-smooth);
+    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    transform var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    border-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    box-shadow var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
 }
 
 .alka-input-group::before,
@@ -266,30 +262,30 @@
   inset: 1px;
   z-index: 0;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      transparent 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
     transparent;
   transition:
-    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
-    background-color 420ms var(--alka-ease-smooth);
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    background-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
 }
 
 .alka-input-group[data-surface="gradient"]::after {
   --alka-surface-focus-alpha: 1;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      hsl(var(--background) / 0.34) 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
-    hsl(var(--background) / 0.58);
+    hsl(var(--background) / 0.34);
 }
 
 .alka-input-group[data-selected="true"],
@@ -300,6 +296,148 @@
 
 .alka-input-group[data-closing="true"]:not([data-surface="gradient"]) {
   --alka-surface-focus-alpha: 0;
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"],
+.alka-input-group[data-surface="glass"] {
+  --alka-input-glass-color: var(--alka-gradient-color, var(--alka-default-gradient-color));
+  --alka-input-glass-border-color: var(--alka-border-animation-color, var(--alka-default-border-animation-color));
+  --alka-liquid-glass-blur: 20px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  --alka-liquid-glass-border-color: var(--alka-highlight-color);
+  --alka-liquid-glass-border-opacity: 0.56;
+  border: 0;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-input-glass-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.09)), transparent 38%),
+    radial-gradient(circle at 86% 100%, hsl(var(--alka-input-glass-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.06)), transparent 44%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.026), transparent 46%),
+    var(--alka-liquid-glass-bg);
+  box-shadow:
+    0 12px 32px hsl(var(--alka-shadow-color) / 0.16),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.055),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.018);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"]::before,
+.alka-input-group[data-surface="glass"]::before {
+  inset: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, hsl(var(--alka-liquid-glass-border-color) / 0.09), hsl(var(--alka-liquid-glass-border-color) / 0.018) 84%, transparent 94%) 0 0 / 46% 2px no-repeat,
+    linear-gradient(180deg, hsl(var(--alka-liquid-glass-border-color) / 0.07), hsl(var(--alka-liquid-glass-border-color) / 0.014) 84%, transparent 94%) 0 0 / 2px 46% no-repeat,
+    linear-gradient(270deg, hsl(var(--alka-liquid-glass-border-color) / 0.09), hsl(var(--alka-liquid-glass-border-color) / 0.018) 84%, transparent 94%) 100% 100% / 46% 2px no-repeat,
+    linear-gradient(0deg, hsl(var(--alka-liquid-glass-border-color) / 0.07), hsl(var(--alka-liquid-glass-border-color) / 0.014) 84%, transparent 94%) 100% 100% / 2px 46% no-repeat,
+    linear-gradient(135deg, hsl(var(--alka-highlight-color) / 0.014), transparent 30% 66%, hsl(var(--alka-highlight-color) / 0.01)),
+    radial-gradient(circle at 84% 16%, hsl(var(--alka-highlight-color) / 0.018), transparent 32%),
+    hsl(var(--alka-highlight-color) / 0.006);
+  opacity: var(--alka-liquid-glass-lens-opacity);
+  -webkit-mask: none;
+  mask: none;
+  -webkit-backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  filter: saturate(1.04);
+  transform: none;
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"]::after,
+.alka-input-group[data-surface="glass"]::after {
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
+  inset: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  padding: var(--alka-liquid-glass-border-width, 1px);
+  border-radius: inherit;
+  background:
+    conic-gradient(
+      from calc(var(--alka-button-angle) - 7deg),
+      hsl(var(--alka-input-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.08)) 0deg,
+      hsl(var(--alka-input-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.92)) 7deg,
+      hsl(var(--alka-input-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.46)) 14deg,
+      transparent 24deg,
+      transparent 180deg,
+      hsl(var(--alka-input-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.92)) 187deg,
+      hsl(var(--alka-input-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.46)) 194deg,
+      transparent 204deg,
+      transparent 360deg
+    ),
+    radial-gradient(circle at 0 0, hsl(var(--alka-liquid-glass-border-color) / 0.24) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.1) 24px, transparent 38px),
+    radial-gradient(circle at 100% 100%, hsl(var(--alka-liquid-glass-border-color) / 0.28) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.12) 24px, transparent 38px),
+    conic-gradient(
+      from 45deg,
+      hsl(var(--foreground) / 0.024) 0deg 20deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.052) 54deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.13) 90deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.076) 138deg,
+      hsl(var(--foreground) / 0.026) 176deg 188deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.06) 224deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.16) 270deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.08) 318deg,
+      hsl(var(--foreground) / 0.024) 350deg 360deg
+    );
+  box-shadow: none;
+  opacity: var(--alka-liquid-glass-border-opacity, var(--alka-liquid-glass-sheen-opacity));
+  transform: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition:
+    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    opacity 420ms var(--alka-ease-smooth),
+    background-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"][data-selected="true"],
+.alka-input-field[data-variant="pill"][data-surface="glass"]:focus-within,
+.alka-input-group[data-surface="glass"][data-selected="true"],
+.alka-input-group[data-surface="glass"]:focus-within {
+  --alka-liquid-glass-border-color: var(--alka-input-glass-border-color);
+  --alka-liquid-glass-border-opacity: 0.82;
+  box-shadow:
+    0 14px 38px hsl(var(--alka-shadow-color) / 0.18),
+    0 0 0 1px hsl(var(--alka-input-glass-border-color) / 0.08),
+    inset 0 1px 0 hsl(var(--alka-input-glass-color) / 0.12),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.018);
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"][data-selected="true"]::after,
+.alka-input-field[data-variant="pill"][data-surface="glass"]:focus-within::after,
+.alka-input-group[data-surface="glass"][data-selected="true"]::after,
+.alka-input-group[data-surface="glass"]:focus-within::after {
+  --alka-button-angle: var(--alka-border-active-angle, 88deg);
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"][data-closing="true"]::before,
+.alka-input-group[data-surface="glass"][data-closing="true"]::before {
+  animation: none;
+  opacity: var(--alka-liquid-glass-lens-opacity);
+}
+
+.alka-input-field[data-variant="pill"][data-surface="glass"][data-closing="true"]::after,
+.alka-input-group[data-surface="glass"][data-closing="true"]::after {
+  animation: alka-combobox-border-close var(--alka-border-close-duration, 520ms) var(--alka-border-close-ease, var(--alka-ease-smooth)) both;
+  transition: none;
 }
 
 .alka-input-group-addon {
@@ -368,7 +506,7 @@
 }
 
 .alka-textarea-field {
-  --alka-button-angle: 0deg;
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
   --alka-surface-focus-alpha: 0;
   position: relative;
   isolation: isolate;
@@ -379,14 +517,12 @@
   border: 1px solid hsl(var(--foreground) / 0.12);
   border-radius: 1.5rem;
   background: transparent;
-  box-shadow:
-    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1);
+  box-shadow: none;
   transition:
-    --alka-button-angle 420ms var(--alka-ease-smooth),
-    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
-    border-color 420ms var(--alka-ease-smooth),
-    box-shadow 420ms var(--alka-ease-smooth);
+    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    border-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    box-shadow var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
 }
 
 .alka-textarea-field::before,
@@ -416,30 +552,30 @@
   inset: 1px;
   z-index: 0;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      transparent 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
     transparent;
   transition:
-    --alka-surface-focus-alpha 420ms var(--alka-ease-smooth),
-    background-color 420ms var(--alka-ease-smooth);
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    background-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
 }
 
 .alka-textarea-field[data-surface="gradient"]::after {
   --alka-surface-focus-alpha: 1;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      hsl(var(--background) / 0.34) 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
-    hsl(var(--background) / 0.58);
+    hsl(var(--background) / 0.34);
 }
 
 .alka-textarea-field[data-selected="true"],
@@ -520,6 +656,8 @@
 }
 
 .alka-input-otp-slot {
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
+  --alka-surface-focus-alpha: 0;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -528,15 +666,8 @@
   place-items: center;
   border: 1px solid hsl(var(--foreground) / 0.12);
   border-radius: 1.05rem;
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.065), transparent 36%),
-    linear-gradient(135deg, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.032), hsl(var(--background) / 0.64) 48%, hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.024)),
-    hsl(var(--background) / 0.58);
-  box-shadow:
-    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1),
-    inset 0 1px 0 hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.07),
-    inset 0 -1px 0 hsl(var(--foreground) / 0.04);
+  background: transparent;
+  box-shadow: none;
   color: hsl(var(--foreground));
   font-size: 1rem;
   font-weight: 650;
@@ -544,7 +675,7 @@
   text-align: center;
   outline: none;
   transition:
-    --alka-button-angle 420ms var(--alka-ease-smooth),
+    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
     background-color 320ms var(--alka-ease-smooth),
     border-color 320ms var(--alka-ease-smooth),
     box-shadow 320ms var(--alka-ease-smooth),
@@ -554,7 +685,7 @@
 
 .alka-input-otp-slot input {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
   border: 0;
@@ -571,7 +702,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   border-radius: inherit;
   padding: 1px;
   pointer-events: none;
@@ -586,25 +717,35 @@
   mask-composite: exclude;
 }
 
+.alka-input-otp-slot::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.13)), transparent 42%),
+    linear-gradient(
+      135deg,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.09)),
+      transparent 52%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.06))
+    );
+  transition:
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    opacity var(--alka-border-opacity-duration, 260ms) var(--alka-ease-smooth);
+}
+
 .alka-input-otp-slot:hover {
   border-color: hsl(var(--primary) / 0.22);
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.12), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--background) / 0.58) 52%, hsl(var(--primary) / 0.06)),
-    hsl(var(--background) / 0.58);
 }
 
 .alka-input-otp-slot[data-selected="true"],
-.alka-input-otp-slot:focus-within,
-.alka-input-otp-slot[data-filled="true"] {
+.alka-input-otp-slot:focus-within {
+  --alka-surface-focus-alpha: 1;
   border-color: transparent;
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.22), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--primary) / 0.12));
-  box-shadow:
-    0 14px 32px hsl(var(--alka-shadow-color) / 0.1),
-    0 0 0 1px hsl(var(--primary) / 0.08),
-    inset 0 1px 0 hsl(var(--primary) / 0.12);
+  box-shadow: none;
   transform: scale(0.992);
 }
 

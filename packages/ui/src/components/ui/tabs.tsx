@@ -3,6 +3,7 @@
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 type TabsMotionContextValue = {
@@ -55,11 +56,14 @@ Tabs.displayName = TabsPrimitive.Root.displayName
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ children, className, style, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+    surface?: "flat" | "glass"
+  }
+>(({ children, className, style, surface = "glass", ...props }, ref) => {
   const { value } = React.useContext(TabsMotionContext)
   const listRef = React.useRef<React.ElementRef<typeof TabsPrimitive.List> | null>(null)
   const [pill, setPill] = React.useState({ left: 0, width: 0, ready: false })
+  const isGlass = surface === "glass"
 
   const updatePill = React.useCallback(() => {
     const list = listRef.current
@@ -104,8 +108,11 @@ const TabsList = React.forwardRef<
       }}
       className={cn(
         "alka-tabs-list alka-pill-surface inline-flex h-[3.125rem] items-center justify-center rounded-full p-1 text-muted-foreground",
+        isGlass && "alka-liquid-glass",
         className
       )}
+      data-glass-effect={isGlass ? "blurry" : undefined}
+      data-surface={surface}
       style={
         {
           ...style,
@@ -116,6 +123,8 @@ const TabsList = React.forwardRef<
       }
       {...props}
     >
+      {isGlass && <GlassElementLayers effect="blurry" />}
+      {isGlass && <span aria-hidden="true" className="alka-tabs-glass-border" />}
       {children}
     </TabsPrimitive.List>
   )
@@ -129,7 +138,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "alka-tabs-trigger relative z-10 inline-flex h-[2.625rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-4 py-0 text-sm font-medium leading-none ring-offset-background transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+      "alka-tabs-trigger relative z-10 inline-flex h-[2.625rem] cursor-pointer appearance-none items-center justify-center whitespace-nowrap rounded-full border border-transparent bg-transparent px-4 py-0 text-sm font-medium leading-none ring-offset-background transition-[opacity,transform] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
       className
     )}
     {...props}

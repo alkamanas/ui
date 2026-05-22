@@ -2,14 +2,15 @@ import { ArrowRight, Settings } from "lucide-react";
 import { Button } from "@alkamanas/ui";
 
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
+import { getDocHref } from "../docs-routes";
 
 const details: ComponentPageDetails = {
-  "summary": "Button is the primary action primitive. It supports solid and glass treatments, preserves fixed control geometry, and keeps hover feedback subtle instead of lifting the control.",
+  "summary": "Button is the primary action primitive. It supports flat and glass treatments, preserves fixed control geometry, and keeps hover feedback subtle instead of lifting the control.",
   "examples": [
     {
-      "id": "button-solid-actions",
-      "title": "Solid action set",
-      "description": "Use solid buttons for primary decisions and dialog actions. Secondary matches the cancel action treatment used across overlays.",
+      "id": "button-flat-actions",
+      "title": "Flat action set",
+      "description": "Use flat buttons for primary decisions and dialog actions. Secondary matches the cancel action treatment used across overlays.",
       "preview": (
         <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-3">
           <Button>Primary</Button>
@@ -21,7 +22,7 @@ const details: ComponentPageDetails = {
       ),
       "code": `import { Button } from "@alkamanas/ui";
 
-export function SolidButtonExample() {
+export function FlatButtonExample() {
   return (
     <div className="flex flex-wrap gap-3">
       <Button>Primary</Button>
@@ -40,6 +41,7 @@ export function SolidButtonExample() {
       "preview": (
         <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-3">
           <Button variant="glassPrimary">Primary glass</Button>
+          <Button variant="glassSecondary">Secondary glass</Button>
           <Button variant="glassDestructive">Destructive glass</Button>
           <Button variant="outline">Outline</Button>
         </div>
@@ -50,6 +52,7 @@ export function GlassButtonExample() {
   return (
     <div className="flex flex-wrap gap-3">
       <Button variant="glassPrimary">Primary glass</Button>
+      <Button variant="glassSecondary">Secondary glass</Button>
       <Button variant="glassDestructive">Destructive glass</Button>
       <Button variant="outline">Outline</Button>
     </div>
@@ -100,7 +103,7 @@ export function ButtonSizeExample() {
       "preview": (
         <div className="flex w-full max-w-3xl items-center justify-center">
           <Button asChild>
-            <a href="#components">
+            <a href={getDocHref("components")}>
               Browse components
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -113,7 +116,7 @@ import { Button } from "@alkamanas/ui";
 export function ButtonAsChildExample() {
   return (
     <Button asChild>
-      <a href="#components">
+      <a href="/components">
         Browse components
         <ArrowRight className="h-4 w-4" />
       </a>
@@ -130,11 +133,15 @@ export function ButtonAsChildExample() {
   "variants": [
     {
       "name": "default",
-      "description": "Primary solid action using the active primary token."
+      "description": "Primary flat action using the active primary token."
+    },
+    {
+      "name": "flat",
+      "description": "Named primary flat action and the default Button variant."
     },
     {
       "name": "solid",
-      "description": "Alias for primary solid action when naming needs to contrast with glass."
+      "description": "Compatibility alias for the primary flat action."
     },
     {
       "name": "glass",
@@ -145,16 +152,20 @@ export function ButtonAsChildExample() {
       "description": "Primary-tinted glass action with subtle token color in the surface."
     },
     {
+      "name": "glassSecondary",
+      "description": "Secondary liquid-glass action while the flat secondary variant remains unchanged."
+    },
+    {
       "name": "glassDestructive",
       "description": "Destructive glass action for lower-emphasis risk controls."
     },
     {
       "name": "destructive",
-      "description": "Solid destructive action using the destructive token."
+      "description": "Flat destructive action using the destructive token."
     },
     {
       "name": "outline",
-      "description": "Bordered low-emphasis control with the same sizing as solid buttons."
+      "description": "Bordered low-emphasis control with the same sizing as flat buttons."
     },
     {
       "name": "secondary",
@@ -191,7 +202,7 @@ export function ButtonAsChildExample() {
     {
       "name": "variant",
       "type": "ButtonVariant",
-      "description": "Visual treatment. Includes solid, glass, destructive, outline, ghost, link and primary glass variants."
+      "description": "Visual treatment. Includes flat, glass, destructive, outline, ghost, link and primary glass variants."
     },
     {
       "name": "size",
@@ -222,7 +233,7 @@ export function ButtonAsChildExample() {
     "--alka-radius-pill",
     "--alka-ease-smooth",
     "--alka-glass-element-bg",
-    "--alka-primary",
+    "--primary",
     "--destructive"
   ]
 };

@@ -29,6 +29,11 @@ const details: ComponentPageDetails = {
   ],
   "props": [
     {
+      "name": "TabsList surface",
+      "type": "flat | glass",
+      "description": "Controls the list surface. Glass keeps the liquid layers; flat uses the tokenized non-glass surface."
+    },
+    {
       "name": "defaultValue",
       "type": "string",
       "description": "Initial active tab."
@@ -47,7 +52,7 @@ const details: ComponentPageDetails = {
   "accessibility": [
     "Preserve the underlying Radix or native semantics when composing custom children.",
     "Keep interactive labels visible, or provide aria-label for icon-only controls.",
-    "Keyboard focus states should remain visible against both glass and solid surfaces."
+    "Keyboard focus states should remain visible against both flat and glass surfaces."
   ],
   "motion": [
     "The selected pill moves as a stable thumb behind the active item.",

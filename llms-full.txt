@@ -7,13 +7,27 @@ Theme scopes:
 ```tsx
 <section className="alka-theme-dark" data-navbar-theme="dark" data-theme-color="#05060a" />
 <section className="alka-theme-light" data-navbar-theme="light" data-theme-color="#f5f5f7" />
+<section data-section-theme="dark" />
 ```
+
+Components inherit tokens from the closest `.alka-theme-*`, `data-theme`, `data-section-theme` or `data-navbar-theme` scope. Unmarked sections fall back to the global app theme.
 
 Navbar:
 
-- `SectionAwareNavbar` scans `[data-navbar-theme]` sections.
+- `Navbar` scans `[data-navbar-theme]` sections. `SectionAwareNavbar` remains only as a backwards-compatible alias.
 - It uses the Visetra Web mobile menu timing and height reveal pattern.
 - It can sync browser `theme-color` metadata through `syncThemeMeta`.
+- It supports `logo` variants for `wide` and `compact`, each with optional `light` and `dark` alternatives.
+- Use `NavbarCTA`, `NavbarMenuItem` and `NavbarMenuSecondaryItem` for composed actions and menus.
+- Prefer `import { Navbar } from "@alkamanas/ui/navbar"` and `import "@alkamanas/ui/navbar.css"` for consumer apps.
+
+Package exports:
+
+- Every public component should have a JS/DTS subpath and matching CSS subpath, for example `@alkamanas/ui/button` and `@alkamanas/ui/button.css`.
+- `@alkamanas/ui/styles.css` is the full-library stylesheet; focused component CSS is safer for host apps that already own Tailwind/theme globals.
+- Package CSS must use `.alka-theme-light` and `.alka-theme-dark`. Avoid adding new generic `.theme-light` or `.theme-dark` selectors to published CSS.
+- `react-hook-form` is optional and isolated to `@alkamanas/ui/form`.
+- `lucide-react` is optional with peer range `>=0.469.0 <1.0.0`.
 
 Flip cards:
 
@@ -24,4 +38,4 @@ Flip cards:
 Registry:
 
 - Primitive components are available as package exports.
-- Registry metadata includes dependencies, tokens, examples and source paths.
+- Registry metadata includes dependencies, tokens and source paths. Run `pnpm registry:update` only when intentionally accepting broad registry hash/token drift.

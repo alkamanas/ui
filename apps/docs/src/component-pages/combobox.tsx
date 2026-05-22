@@ -18,7 +18,7 @@ const details: ComponentPageDetails = {
       "preview": (
         <div className="grid w-full max-w-md gap-4">
           <Combobox surface="flat" options={productOptions} />
-          <Combobox borderAnimationColor="contrast" surface="flat" options={productOptions} />
+          <Combobox className="border-animation-primary" surface="flat" options={productOptions} />
         </div>
       ),
       "code": `import { Combobox } from "@alkamanas/ui";
@@ -36,11 +36,11 @@ export function FlatComboboxExample() {
     {
       "id": "combobox-gradient",
       "title": "Gradient searchable trigger",
-      "description": "Gradient Combobox triggers share the Input spotlight model and can derive the gradient from primary or contrast tokens.",
+      "description": "Gradient Combobox triggers share the Input spotlight model and can receive color through gradient utility classes.",
       "preview": (
         <div className="grid w-full max-w-md gap-4">
           <Combobox surface="gradient" options={productOptions} />
-          <Combobox surfaceGradientColor="contrast" surface="gradient" options={productOptions} />
+          <Combobox className="gradient-primary/50" surface="gradient" options={productOptions} />
         </div>
       ),
       "code": `import { Combobox } from "@alkamanas/ui";
@@ -55,7 +55,35 @@ export function GradientComboboxExample() {
   return (
     <Combobox
       surface="gradient"
-      surfaceGradientColor="contrast"
+      className="gradient-primary/50"
+      options={productOptions}
+    />
+  );
+}`
+    },
+    {
+      "id": "combobox-glass",
+      "title": "Glass searchable trigger",
+      "description": "Glass Combobox triggers remove the component border, use the shared liquid glass surface and animate the glass border on focus/open.",
+      "preview": (
+        <div className="grid w-full max-w-md gap-4">
+          <Combobox surface="glass" options={productOptions} />
+          <Combobox className="gradient-primary/50 border-animation-primary" surface="glass" options={productOptions} />
+        </div>
+      ),
+      "code": `import { Combobox } from "@alkamanas/ui";
+
+const productOptions = [
+  { value: "studio", label: "Visetra Studio" },
+  { value: "web", label: "Visetra Web" },
+  { value: "ui", label: "Alkamanas UI" },
+];
+
+export function GlassComboboxExample() {
+  return (
+    <Combobox
+      surface="glass"
+      className="gradient-primary/50 border-animation-primary"
       options={productOptions}
     />
   );
@@ -94,7 +122,7 @@ export function ComboboxSizesExample() {
   "anatomy": [
     "Import Combobox from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, default border animation, default gradient and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -103,7 +131,7 @@ export function ComboboxSizesExample() {
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to dark/light section and glass mode changes from the docs selector. Primary is opt-in through utility classes."
     }
   ],
   "sizes": [
@@ -124,18 +152,13 @@ export function ComboboxSizesExample() {
     },
     {
       "name": "surface",
-      "type": "flat | gradient | bare",
-      "description": "Selects the trigger surface treatment."
+      "type": "flat | gradient | glass | bare",
+      "description": "Selects the trigger surface treatment. Glass removes the trigger border and routes focus color into the liquid glass border and tint."
     },
     {
       "name": "size",
       "type": "default | sm | lg",
       "description": "Controls trigger height, padding and text scale using the same naming as Button."
-    },
-    {
-      "name": "borderAnimationColor",
-      "type": "primary | contrast",
-      "description": "Overrides focus highlight color for this combobox."
     },
     {
       "name": "onValueChange",
@@ -152,7 +175,10 @@ export function ComboboxSizesExample() {
   ],
   "tokens": [
     "--alka-border-animation-color",
-    "--alka-surface-gradient-color",
+    "--alka-border-animation-opacity",
+    "--alka-gradient-color",
+    "--alka-gradient-opacity",
+    "--alka-liquid-glass-bg",
     "--alka-panel-bg"
   ]
 };

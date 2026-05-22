@@ -1,16 +1,16 @@
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 const details: ComponentPageDetails = {
-  "summary": "Scroll Area is a interaction primitive in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
+  "summary": "Scroll Area is an overflow primitive with desktop overlay scrollbar behavior for Windows and Linux. It keeps tracks transparent and reveals the thumb while scrolling without changing layout.",
   "anatomy": [
-    "Import ScrollArea from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
+    "Import ScrollArea from @alkamanas/ui and place overflowing content inside the root.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "On Windows and Linux desktop pointers, the scrollbar uses Radix scroll mode with a 1000ms hide delay."
   ],
   "variants": [
     {
       "name": "default",
-      "description": "The standard Scroll Area treatment used in the component preview."
+      "description": "Transparent track with an overlay thumb that appears while scrolling for Windows and Linux desktop users."
     },
     {
       "name": "themed",
@@ -34,6 +34,16 @@ const details: ComponentPageDetails = {
       "description": "Merged onto the visible root when the primitive renders one."
     },
     {
+      "name": "type",
+      "type": "\"auto\" | \"always\" | \"scroll\" | \"hover\"",
+      "description": "Passed to Radix ScrollArea. Defaults to scroll on Windows and Linux desktop, otherwise Radix default behavior."
+    },
+    {
+      "name": "scrollHideDelay",
+      "type": "number",
+      "description": "Delay before the scrollbar hides. Defaults to 1000ms on Windows and Linux desktop overlay mode."
+    },
+    {
       "name": "children",
       "type": "ReactNode",
       "description": "Used for composition in compound primitives."
@@ -45,13 +55,15 @@ const details: ComponentPageDetails = {
     "Keyboard focus states should remain visible against both glass and solid surfaces."
   ],
   "motion": [
-    "Motion uses --alka-motion-* and --alka-ease-* tokens and should respect prefers-reduced-motion.",
-    "Open, close, hover and focus states avoid layout shift by keeping stable dimensions."
+    "Scrollbar visibility uses --alka-motion-* and --alka-ease-* tokens and respects prefers-reduced-motion.",
+    "The overlay scrollbar is absolutely positioned against the root so content width does not shift while scrolling."
   ],
   "tokens": [
     "--alka-ease-smooth",
+    "--alka-motion-panel",
     "--alka-radius-control",
-    "--alka-panel-bg"
+    "--alka-panel-bg",
+    "--foreground"
   ]
 };
 

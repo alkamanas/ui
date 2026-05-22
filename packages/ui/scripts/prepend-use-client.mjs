@@ -1,8 +1,14 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 
-const path = new URL("../dist/index.js", import.meta.url);
-const source = readFileSync(path, "utf8");
+const distDir = new URL("../dist/", import.meta.url);
 
-if (!source.startsWith("\"use client\";")) {
-  writeFileSync(path, `"use client";\n${source}`);
+for (const file of readdirSync(distDir)) {
+  if (!file.endsWith(".js")) continue;
+
+  const path = new URL(file, distDir);
+  const source = readFileSync(path, "utf8");
+
+  if (!source.startsWith("\"use client\";")) {
+    writeFileSync(path, `"use client";\n${source}`);
+  }
 }

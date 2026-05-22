@@ -2,6 +2,7 @@ import * as React from "react"
 import * as MenubarPrimitive from "@radix-ui/react-menubar"
 import { Check, ChevronRight, Circle } from "lucide-react"
 
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 function MenubarMenu({
@@ -36,17 +37,28 @@ function MenubarSub({
 
 const Menubar = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <MenubarPrimitive.Root
-    ref={ref}
-    className={cn(
-      "flex h-10 items-center space-x-1 rounded-full border border-border/80 bg-background/72 p-1 shadow-sm backdrop-blur-xl",
-      className
-    )}
-    {...props}
-  />
-))
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root> & {
+    surface?: "flat" | "glass"
+  }
+>(({ children, className, surface = "flat", ...props }, ref) => {
+  const isGlass = surface === "glass"
+
+  return (
+    <MenubarPrimitive.Root
+      ref={ref}
+      className={cn(
+        "alka-menubar inline-flex h-[3.125rem] items-center gap-1 rounded-full border border-border/70 p-1 text-muted-foreground",
+        isGlass && "alka-liquid-glass",
+        className
+      )}
+      data-surface={surface}
+      {...props}
+    >
+      {isGlass && <GlassElementLayers />}
+      {children}
+    </MenubarPrimitive.Root>
+  )
+})
 Menubar.displayName = MenubarPrimitive.Root.displayName
 
 const MenubarTrigger = React.forwardRef<
@@ -56,7 +68,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-full px-3 py-1 text-sm font-medium outline-none transition-[background-color,color] duration-500 ease-[var(--alka-ease-smooth)] focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      "alka-menubar-trigger relative z-10 inline-flex h-[2.625rem] cursor-pointer select-none items-center justify-center rounded-full border border-transparent bg-transparent px-4 py-0 text-sm font-medium leading-none outline-none transition-[background-color,border-color,color] duration-300 ease-[var(--alka-ease-smooth)] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=open]:border-primary/20 data-[state=open]:bg-primary/15 data-[state=open]:text-foreground",
       className
     )}
     {...props}
@@ -73,7 +85,7 @@ const MenubarSubTrigger = React.forwardRef<
   <MenubarPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      "alka-dropdown-option relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-12 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[state=open]:border-primary/20 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
       inset && "pl-8",
       className
     )}
@@ -94,11 +106,14 @@ const MenubarSubContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "z-50 min-w-[8rem] origin-[--radix-menubar-content-transform-origin] overflow-hidden rounded-2xl border border-white/[0.08] bg-zinc-900/70 p-1 text-zinc-100 shadow-[0_18px_48px_rgba(0,0,0,0.48)] backdrop-blur-xl transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+        "alka-dropdown-content alka-liquid-glass z-50 grid min-w-[12rem] origin-[--radix-menubar-content-transform-origin] gap-1 overflow-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
         className
       )}
       {...props}
-    />
+    >
+      <GlassElementLayers />
+      {props.children}
+    </MenubarPrimitive.SubContent>
   </MenubarPrimitive.Portal>
 ))
 MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName
@@ -108,7 +123,7 @@ const MenubarContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>
 >(
   (
-    { className, align = "start", alignOffset = -4, sideOffset = 8, ...props },
+    { children, className, align = "start", alignOffset = -4, sideOffset = 8, ...props },
     ref
   ) => (
     <MenubarPrimitive.Portal>
@@ -118,11 +133,14 @@ const MenubarContent = React.forwardRef<
         alignOffset={alignOffset}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 min-w-[12rem] origin-[--radix-menubar-content-transform-origin] overflow-hidden rounded-2xl border border-white/[0.08] bg-zinc-900/70 p-1 text-zinc-100 shadow-[0_18px_48px_rgba(0,0,0,0.48)] backdrop-blur-xl transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
+          "alka-dropdown-content alka-liquid-glass z-50 grid max-h-[var(--radix-menubar-content-available-height)] min-w-[12rem] origin-[--radix-menubar-content-transform-origin] gap-1 overflow-y-auto overflow-x-hidden rounded-3xl border border-border/70 p-2 text-popover-foreground shadow-[0_18px_54px_hsl(var(--alka-shadow-color)_/_0.28)] transition-[opacity,transform] duration-[520ms] ease-[var(--alka-ease-smooth)] data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100",
           className
         )}
         {...props}
-      />
+      >
+        <GlassElementLayers />
+        {children}
+      </MenubarPrimitive.Content>
     </MenubarPrimitive.Portal>
   )
 )
@@ -137,7 +155,7 @@ const MenubarItem = React.forwardRef<
   <MenubarPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "alka-dropdown-option relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-full border border-transparent bg-transparent py-2.5 pl-4 pr-12 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       inset && "pl-8",
       className
     )}
@@ -153,7 +171,7 @@ const MenubarCheckboxItem = React.forwardRef<
   <MenubarPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "alka-dropdown-option relative flex min-h-11 cursor-pointer select-none items-center rounded-full border border-transparent bg-transparent py-2.5 pl-10 pr-4 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       className
     )}
     checked={checked}
@@ -176,7 +194,7 @@ const MenubarRadioItem = React.forwardRef<
   <MenubarPrimitive.RadioItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "alka-dropdown-option relative flex min-h-11 cursor-pointer select-none items-center rounded-full border border-transparent bg-transparent py-2.5 pl-10 pr-4 text-sm font-medium outline-none transition-[background-color,border-color,box-shadow,color] duration-300 ease-[var(--alka-ease-smooth)] data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       className
     )}
     {...props}
@@ -200,7 +218,7 @@ const MenubarLabel = React.forwardRef<
   <MenubarPrimitive.Label
     ref={ref}
     className={cn(
-      "px-2 py-1.5 text-sm font-semibold",
+      "relative z-10 px-4 py-2 text-sm font-semibold text-muted-foreground",
       inset && "pl-8",
       className
     )}
@@ -215,7 +233,7 @@ const MenubarSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <MenubarPrimitive.Separator
     ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    className={cn("relative z-10 my-1 h-px bg-border/70", className)}
     {...props}
   />
 ))

@@ -104,7 +104,7 @@ export function SolidCardExample() {
   ],
   "tokens": [
     "--alka-ease-smooth",
-    "--alka-radius-control",
+    "--alka-radius-card",
     "--alka-panel-bg"
   ]
 };

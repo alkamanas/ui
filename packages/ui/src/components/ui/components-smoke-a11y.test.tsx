@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { FlipCard } from "@/components/display/flip-card";
 import { ImageCard } from "@/components/display/image-card";
-import { SectionAwareNavbar } from "@/components/navigation/section-aware-navbar";
+import { Navbar } from "@/components/navigation/section-aware-navbar";
 import {
   Accordion,
   AccordionContent,
@@ -35,6 +35,7 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonGroup,
+  Calendar,
   Card,
   CardContent,
   CardDescription,
@@ -69,6 +70,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DirectionProvider,
+  DatePicker,
   Drawer,
   DrawerContent,
   DrawerDescription,
@@ -210,6 +212,7 @@ const cases: Array<[string, React.ReactElement]> = [
   ],
   ["button", <Button>Continue</Button>],
   ["button-group", <ButtonGroup><Button>Day</Button><Button variant="secondary">Week</Button></ButtonGroup>],
+  ["calendar", <Calendar mode="single" selected={new Date(2026, 4, 20)} defaultMonth={new Date(2026, 4, 20)} />],
   [
     "card",
     <Card>
@@ -270,6 +273,7 @@ const cases: Array<[string, React.ReactElement]> = [
       </DialogContent>
     </Dialog>,
   ],
+  ["date-picker", <DatePicker defaultValue={new Date(2026, 4, 20)} />],
   ["direction", <DirectionProvider dir="rtl"><div>RTL content</div></DirectionProvider>],
   [
     "drawer",
@@ -350,7 +354,7 @@ const cases: Array<[string, React.ReactElement]> = [
   ],
   [
     "section-aware-navbar",
-    <SectionAwareNavbar
+    <Navbar
       brand={<span>Alkamanas</span>}
       links={[{ href: "#components", label: "Components" }]}
       syncThemeMeta={false}
@@ -478,6 +482,23 @@ describe("component smoke and a11y", () => {
     await userEvent.click(screen.getByRole("button", { name: "Open dialog" }));
 
     expect(screen.getByRole("dialog")).toBeTruthy();
+  });
+
+  it("applies explicit navbar logo widths to wide and compact variants", () => {
+    render(
+      <Navbar
+        logo={{
+          wide: { dark: <span>Wide logo</span> },
+          compact: { dark: <span>Compact logo</span> },
+        }}
+        logoWidths={{ wide: "10rem", compact: "2.25rem" }}
+        syncThemeMeta={false}
+        theme="dark"
+      />,
+    );
+
+    expect(screen.getByText("Wide logo").parentElement?.style.width).toBe("10rem");
+    expect(screen.getByText("Compact logo").parentElement?.style.width).toBe("2.25rem");
   });
 
   it("supports command palette opening in jsdom without axe violations", async () => {

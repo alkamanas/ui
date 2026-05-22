@@ -1,8 +1,14 @@
 .alka-button-control {
   --alka-button-angle: 360deg;
+  box-sizing: border-box;
+  appearance: none;
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  margin: 0;
+  border-style: solid;
+  font-family: inherit;
+  text-decoration: none;
   transform: translate3d(0, 0, 0);
   transition:
     transform 320ms cubic-bezier(0.4, 0, 0.6, 1),
@@ -14,8 +20,154 @@
     box-shadow 320ms cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-.alka-button-control::before,
-.alka-button-control::after {
+.alka-button-control[data-size="default"] {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.alka-button-control[data-size="sm"] {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.alka-button-control[data-size="lg"] {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.alka-button-control[data-size="icon"] {
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.alka-button-content {
+  min-width: 0;
+  pointer-events: none;
+}
+
+.alka-button-icon-content {
+  line-height: 1;
+}
+
+.alka-button-icon-content[data-text-icon="true"] {
+  font-size: 1rem;
+  line-height: 0;
+  letter-spacing: 0.02em;
+  transform: translateY(-0.08em);
+}
+
+.alka-button-group {
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.3);
+  --alka-liquid-glass-blur: 24px;
+  --alka-liquid-glass-lens-blur: 9px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-button-group-control-size: 2.75rem;
+  --alka-button-group-padding: 0.25rem;
+  --alka-button-group-icon-size: 1.45rem;
+  --alka-button-group-separator-height: 1.95rem;
+  box-sizing: border-box;
+  min-height: calc(var(--alka-button-group-control-size) + (var(--alka-button-group-padding) * 2));
+  gap: 0.1rem;
+  padding: var(--alka-button-group-padding);
+  box-shadow:
+    0 14px 34px hsl(var(--alka-shadow-color) / 0.14),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.055);
+}
+
+.alka-button-group[data-size="sm"] {
+  --alka-button-group-control-size: 2.5rem;
+  --alka-button-group-padding: 0.21875rem;
+  --alka-button-group-icon-size: 1.32rem;
+  --alka-button-group-separator-height: 1.7rem;
+}
+
+.alka-button-group[data-size="lg"] {
+  --alka-button-group-control-size: 3rem;
+  --alka-button-group-padding: 0.3125rem;
+  --alka-button-group-icon-size: 1.62rem;
+  --alka-button-group-separator-height: 2.15rem;
+}
+
+.alka-button-group > .alka-button-control {
+  min-width: var(--alka-button-group-control-size);
+  height: var(--alka-button-group-control-size);
+  padding-inline: 0.78rem;
+  border-color: transparent !important;
+  background: transparent !important;
+  color: hsl(var(--foreground) / 0.88);
+  box-shadow: none !important;
+  transition:
+    background-color 320ms var(--alka-ease-smooth),
+    color 320ms var(--alka-ease-smooth),
+    transform 320ms var(--alka-ease-smooth);
+}
+
+.alka-button-group > .alka-button-control::before,
+.alka-button-group > .alka-button-control::after {
+  content: none;
+}
+
+.alka-button-group > .alka-button-control:hover,
+.alka-button-group > .alka-button-control:focus-visible {
+  background: hsl(var(--foreground) / 0.08) !important;
+  color: hsl(var(--foreground));
+  transform: none;
+}
+
+.alka-button-group > .alka-button-control[data-size="icon"] {
+  width: var(--alka-button-group-control-size);
+  padding-inline: 0;
+}
+
+.alka-button-group > .alka-button-control svg {
+  width: var(--alka-button-group-icon-size);
+  height: var(--alka-button-group-icon-size);
+  stroke-width: 2.35;
+}
+
+.alka-button-group-separator {
+  align-self: center;
+  height: var(--alka-button-group-separator-height);
+  background: hsl(var(--border) / 0.78);
+}
+
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-button-group,
+.alka-theme-light .alka-button-group,
+.theme-light .alka-button-group,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-button-group {
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.42);
+  border-color: hsl(var(--foreground) / 0.12);
+  box-shadow:
+    0 5px 16px hsl(var(--alka-shadow-color) / 0.035),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.22),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.04);
+}
+
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-button-group > .alka-button-control:hover,
+:where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-button-group > .alka-button-control:focus-visible,
+.alka-theme-light .alka-button-group > .alka-button-control:hover,
+.alka-theme-light .alka-button-group > .alka-button-control:focus-visible,
+.theme-light .alka-button-group > .alka-button-control:hover,
+.theme-light .alka-button-group > .alka-button-control:focus-visible,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-button-group > .alka-button-control:hover,
+:is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-button-group > .alka-button-control:focus-visible {
+  background: hsl(var(--foreground) / 0.075) !important;
+}
+
+.alka-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  vertical-align: middle;
+  font-family: var(--alka-font-sans);
+}
+
+.alka-button-control:not(.alka-liquid-glass):not(.alka-combobox-trigger)::before,
+.alka-button-control:not(.alka-liquid-glass):not(.alka-combobox-trigger)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -24,17 +176,17 @@
   border-radius: inherit;
 }
 
-.alka-button-control::before {
+.alka-button-control:not(.alka-liquid-glass):not(.alka-combobox-trigger)::before {
   --alka-button-angle: 360deg;
   padding: 1.5px;
   opacity: 0;
   background: conic-gradient(
     from var(--alka-button-angle),
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08),
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.86) 0.08turn,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.34) 0.16turn,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 0.3turn,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08)
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)),
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.86)) 0.08turn,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.34)) 0.16turn,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)) 0.3turn,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08))
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -48,7 +200,7 @@
     opacity 320ms var(--alka-ease-smooth);
 }
 
-.alka-button-control::after {
+.alka-button-control:not(.alka-liquid-glass):not(.alka-combobox-trigger)::after {
   transform: none;
   transform-origin: top;
   opacity: 0;
@@ -63,7 +215,7 @@
 .alka-button-control[data-variant="default"],
 .alka-button-control[data-variant="solid"] {
   box-shadow:
-    0 14px 32px hsl(var(--alka-shadow-color) / 0.18),
+    0 8px 22px hsl(var(--alka-shadow-color) / 0.08),
     inset 0 1px 0 hsl(var(--primary-foreground) / 0.16);
 }
 
@@ -84,14 +236,14 @@
   opacity: 1;
 }
 
-.alka-button-control[data-variant="glass"],
-.alka-button-control[data-variant="outline"] {
+.alka-button-control:not(.alka-liquid-glass)[data-variant="outline"],
+.alka-button-control:not(.alka-liquid-glass)[data-variant="secondary"] {
   border-color: hsl(var(--foreground) / 0.1) !important;
   background:
     linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.028), transparent 58%),
     hsl(var(--background) / 0.28);
   box-shadow:
-    0 12px 30px hsl(var(--alka-shadow-color) / 0.14),
+    0 8px 22px hsl(var(--alka-shadow-color) / 0.06),
     inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.055),
     inset 0 -1px 0 hsl(var(--foreground) / 0.045);
   -webkit-backdrop-filter: blur(18px) saturate(1.14);
@@ -100,31 +252,57 @@
 
 .alka-button-control.alka-liquid-glass[data-variant="glass"],
 .alka-button-control.alka-liquid-glass[data-variant="glassPrimary"],
-.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"] {
-  --alka-glass-element-tint-opacity: 0.36;
-  --alka-glass-element-shine-opacity: 0.24;
-  --alka-glass-button-highlight: var(--primary);
-  --alka-liquid-glass-bg: hsl(var(--background) / 0.34);
+.alka-button-control.alka-liquid-glass[data-variant="glassSecondary"],
+.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"],
+.alka-button-control.alka-liquid-glass[data-variant="outline"] {
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.72);
+  --alka-liquid-glass-blur: 24px;
+  --alka-liquid-glass-lens-blur: 9px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  border-color: transparent !important;
   gap: 0;
+  overflow: visible;
+  box-shadow:
+    0 14px 34px hsl(var(--alka-shadow-color) / 0.14),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.055);
 }
 
-.alka-button-control.alka-liquid-glass > .alka-button-glass-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: hsl(var(--background) / 0.035);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  backdrop-filter: blur(24px) saturate(1.2);
+.alka-button-control.alka-liquid-glass[data-variant="glass"]::after,
+.alka-button-control.alka-liquid-glass[data-variant="glassPrimary"]::after,
+.alka-button-control.alka-liquid-glass[data-variant="glassSecondary"]::after,
+.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"]::after,
+.alka-button-control.alka-liquid-glass[data-variant="outline"]::after {
+  inset: -2px;
+  padding: calc(var(--alka-liquid-glass-border-width, 1px) + 1px);
 }
 
-[data-glass-effect="realistic"] .alka-button-control.alka-liquid-glass > .alka-button-glass-backdrop {
-  display: none;
+.alka-button-control.alka-liquid-glass[data-variant="glass"] > .alka-glass-element__backdrop,
+.alka-button-control.alka-liquid-glass[data-variant="glass"] > .alka-glass-element__tint,
+.alka-button-control.alka-liquid-glass[data-variant="glass"] > .alka-glass-element__shine,
+.alka-button-control.alka-liquid-glass[data-variant="glassPrimary"] > .alka-glass-element__backdrop,
+.alka-button-control.alka-liquid-glass[data-variant="glassPrimary"] > .alka-glass-element__tint,
+.alka-button-control.alka-liquid-glass[data-variant="glassPrimary"] > .alka-glass-element__shine,
+.alka-button-control.alka-liquid-glass[data-variant="glassSecondary"] > .alka-glass-element__backdrop,
+.alka-button-control.alka-liquid-glass[data-variant="glassSecondary"] > .alka-glass-element__tint,
+.alka-button-control.alka-liquid-glass[data-variant="glassSecondary"] > .alka-glass-element__shine,
+.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"] > .alka-glass-element__backdrop,
+.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"] > .alka-glass-element__tint,
+.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"] > .alka-glass-element__shine,
+.alka-button-control.alka-liquid-glass[data-variant="outline"] > .alka-glass-element__backdrop,
+.alka-button-control.alka-liquid-glass[data-variant="outline"] > .alka-glass-element__tint,
+.alka-button-control.alka-liquid-glass[data-variant="outline"] > .alka-glass-element__shine {
+  overflow: hidden;
 }
 
 .alka-button-control.alka-liquid-glass[data-variant="glassDestructive"] {
-  --alka-glass-button-highlight: var(--destructive);
+  --alka-liquid-glass-border-color: var(--destructive);
+  --alka-liquid-glass-border-baseline-color: var(--destructive);
+  --alka-liquid-glass-bg:
+    radial-gradient(circle at 18% 0%, hsl(var(--destructive) / 0.3), hsl(var(--destructive) / 0.1) 46%, hsl(var(--destructive) / 0.045) 100%),
+    linear-gradient(135deg, hsl(var(--destructive) / 0.18), hsl(var(--background) / 0.64) 54%, hsl(var(--destructive) / 0.12)),
+    hsl(var(--background) / 0.72);
 }
 
 .alka-button-control.alka-liquid-glass[data-size="default"] {
@@ -148,71 +326,50 @@
   padding: 0;
 }
 
-:root:not([data-glass-effect="realistic"]) .alka-button-control.alka-liquid-glass[data-variant="glass"]::before,
-:root:not([data-glass-effect="realistic"]) .alka-button-control.alka-liquid-glass[data-variant="glassPrimary"]::before,
-:root:not([data-glass-effect="realistic"]) .alka-button-control.alka-liquid-glass[data-variant="glassDestructive"]::before {
-  content: none;
+.alka-button-control[data-variant="glassPrimary"] {
+  color: hsl(var(--primary));
 }
 
-.alka-button-control[data-variant="glassPrimary"] {
-  border-color: hsl(var(--primary) / 0.34) !important;
-  background:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.28), transparent 46%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.22), hsl(var(--primary) / 0.12) 48%, hsl(var(--primary) / 0.17)),
-    hsl(var(--background) / 0.2);
-  color: hsl(var(--primary));
-  box-shadow:
-    0 14px 34px hsl(var(--alka-shadow-color) / 0.16),
-    0 0 32px hsl(var(--primary) / 0.14),
-    inset 0 1px 0 hsl(var(--primary) / 0.18),
-    inset 0 -1px 0 hsl(var(--primary) / 0.12);
-  -webkit-backdrop-filter: blur(20px) saturate(1.18);
-  backdrop-filter: blur(20px) saturate(1.18);
+.alka-button-control[data-variant="glassSecondary"] {
+  color: hsl(var(--muted-foreground));
 }
 
 .alka-button-control[data-variant="glassDestructive"] {
-  border-color: hsl(var(--destructive) / 0.24) !important;
-  background:
-    linear-gradient(180deg, hsl(var(--destructive) / 0.14), hsl(var(--destructive) / 0.075)),
-    hsl(var(--background) / 0.18);
   color: hsl(var(--destructive));
-  box-shadow:
-    0 14px 34px hsl(var(--alka-shadow-color) / 0.16),
-    0 0 24px hsl(var(--destructive) / 0.08),
-    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.055),
-    inset 0 -1px 0 hsl(var(--destructive) / 0.07);
-  -webkit-backdrop-filter: blur(20px) saturate(1.18);
-  backdrop-filter: blur(20px) saturate(1.18);
 }
 
-.alka-button-control[data-variant="glass"]::after,
-.alka-button-control[data-variant="outline"]::after {
+.alka-button-control:not(.alka-liquid-glass)[data-variant="outline"]::after,
+.alka-button-control:not(.alka-liquid-glass)[data-variant="secondary"]::after {
   opacity: 1;
   background:
     linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 58%);
 }
 
-.alka-button-control[data-variant="glassPrimary"]::after {
-  opacity: 1;
-  background:
-    linear-gradient(180deg, hsl(var(--primary) / 0.12), transparent 62%),
-    linear-gradient(90deg, hsl(var(--primary) / 0.08), transparent 46%, hsl(var(--primary) / 0.06));
+.alka-button-control.alka-liquid-glass[data-variant="glassPrimary"] {
+  --alka-liquid-glass-border-color: var(--primary);
+  --alka-liquid-glass-border-baseline-color: var(--primary);
+  --alka-liquid-glass-bg:
+    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.24), hsl(var(--primary) / 0.078) 46%, hsl(var(--primary) / 0.034) 100%),
+    linear-gradient(135deg, hsl(var(--primary) / 0.12), hsl(var(--background) / 0.74) 54%, hsl(var(--primary) / 0.082)),
+    hsl(var(--background) / 0.78);
+  box-shadow:
+    0 14px 34px hsl(var(--alka-shadow-color) / 0.115),
+    0 0 20px hsl(var(--primary) / 0.075),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1),
+    inset 0 -1px 0 hsl(var(--primary) / 0.085);
 }
 
-.alka-button-control[data-variant="glassDestructive"]::after {
-  opacity: 1;
-  background:
-    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.035), transparent 64%);
-}
-
-.alka-button-control[data-variant="glassPrimary"]::before,
-.alka-button-control[data-variant="glassDestructive"]::before {
-  opacity: 0;
-}
-
-.alka-button-control.alka-liquid-glass[data-variant="glassPrimary"]::before,
-.alka-button-control.alka-liquid-glass[data-variant="glassDestructive"]::before {
-  content: none;
+.alka-button-control.alka-liquid-glass[data-variant="glassSecondary"] {
+  --alka-liquid-glass-border-color: var(--muted-foreground);
+  --alka-liquid-glass-border-baseline-color: var(--muted-foreground);
+  --alka-liquid-glass-bg:
+    radial-gradient(circle at 18% 0%, hsl(var(--muted-foreground) / 0.28), hsl(var(--muted-foreground) / 0.12) 46%, hsl(var(--muted-foreground) / 0.068) 100%),
+    linear-gradient(135deg, hsl(var(--muted) / 0.58), hsl(var(--secondary) / 0.72) 54%, hsl(var(--muted-foreground) / 0.1)),
+    hsl(var(--secondary) / 0.78);
+  box-shadow:
+    0 14px 34px hsl(var(--alka-shadow-color) / 0.13),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08),
+    inset 0 -1px 0 hsl(var(--muted-foreground) / 0.09);
 }
 
 .alka-button-control:active:not(:disabled) {
@@ -228,63 +385,65 @@
 .alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):hover:not(:disabled),
 .alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus:not(:disabled),
 .alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-visible {
-  --alka-button-angle: 0deg;
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
   color: hsl(var(--foreground));
 }
 
 .alka-combobox-trigger {
+  --alka-border-rest-angle: 0deg;
+  --alka-border-open-duration: 520ms;
+  --alka-border-close-duration: 560ms;
+  --alka-border-close-ease: cubic-bezier(0.38, 0, 0.2, 1);
+  --alka-border-opacity-duration: 140ms;
   --alka-button-angle: 0deg;
   --alka-surface-focus-alpha: 0;
   border-color: hsl(var(--foreground) / 0.12) !important;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      transparent 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
     transparent !important;
-  box-shadow:
-    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1) !important;
+  box-shadow: none !important;
   transform: translate3d(0, 0, 0) scale(1);
   transition-property: --alka-button-angle, --alka-surface-focus-alpha, transform, color, border-color, box-shadow;
   transition-duration: 420ms;
   transition-timing-function: var(--alka-ease-smooth);
 }
 
-[data-border-animation-color="primary"] {
-  --alka-border-animation-color: var(--primary);
+.alka-combobox-trigger > .alka-button-content {
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
 }
 
-[data-border-animation-color="contrast"] {
-  --alka-border-animation-color: var(--foreground);
+.alka-combobox-trigger > .alka-button-content > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-[data-surface-gradient-color="primary"] {
-  --alka-surface-gradient-color: var(--primary);
-}
-
-[data-surface-gradient-color="contrast"] {
-  --alka-surface-gradient-color: var(--foreground);
+.alka-combobox-trigger > .alka-button-content > svg:last-child {
+  flex: 0 0 auto;
+  margin-left: 0.75rem;
 }
 
 .alka-combobox-trigger[data-surface="gradient"] {
   --alka-surface-focus-alpha: 1;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.065)), transparent 36%),
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.065)), transparent 36%),
     linear-gradient(
       135deg,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.032)),
-      hsl(var(--background) / 0.64) 48%,
-      hsl(var(--alka-surface-gradient-color, var(--primary)) / calc(var(--alka-surface-focus-alpha) * 0.024))
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.032)),
+      hsl(var(--background) / 0.34) 48%,
+      hsl(var(--alka-gradient-color, var(--alka-default-gradient-color)) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.024))
     ),
-    hsl(var(--background) / 0.58) !important;
-  box-shadow:
-    0 14px 32px hsl(var(--alka-shadow-color) / 0.1),
-    inset 0 1px 0 hsl(var(--alka-surface-gradient-color, var(--primary)) / 0.07),
-    inset 0 -1px 0 hsl(var(--foreground) / 0.04);
+    hsl(var(--background) / 0.34) !important;
+  box-shadow: none !important;
 }
 
 .alka-combobox-trigger[data-surface="bare"] {
@@ -315,9 +474,7 @@
 .alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus,
 .alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-visible,
 .alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-within {
-  box-shadow:
-    0 1px 3px hsl(var(--alka-shadow-color) / 0.1),
-    0 1px 2px -1px hsl(var(--alka-shadow-color) / 0.1) !important;
+  box-shadow: none !important;
 }
 
 .alka-combobox-trigger::before,
@@ -325,21 +482,44 @@
 .alka-input-group::before,
 .alka-textarea-field::before,
 .alka-input-otp-slot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  --alka-button-angle: 0deg;
+  opacity: 0;
   background: conic-gradient(
     from calc(var(--alka-button-angle) - 7deg),
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 0deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.92) 7deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.46) 14deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 24deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 180deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.92) 187deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.46) 194deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 204deg,
-    hsl(var(--alka-border-animation-color, var(--primary)) / 0.08) 360deg
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)) 0deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.92)) 7deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.46)) 14deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)) 24deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)) 180deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.92)) 187deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.46)) 194deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)) 204deg,
+    hsl(var(--alka-border-animation-color, var(--alka-default-border-animation-color)) / calc(var(--alka-border-animation-opacity, 1) * 0.08)) 360deg
   );
   transition:
-    --alka-button-angle 520ms var(--alka-ease-smooth),
-    opacity 140ms var(--alka-ease-smooth);
+    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    opacity var(--alka-border-opacity-duration, 260ms) var(--alka-ease-smooth);
+}
+
+.alka-combobox-trigger::before {
+  inset: 0;
+  border-radius: inherit;
+  clip-path: inset(0 round var(--alka-radius-pill));
+  padding: 1px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
 }
 
 .alka-combobox-trigger::after,
@@ -350,9 +530,7 @@
   opacity: 0 !important;
 }
 
-.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):hover:not(:disabled)::before,
-.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus:not(:disabled)::before,
-.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):focus-visible::before {
+.alka-combobox-trigger:not([data-state="open"]):not([aria-expanded="true"]):hover:not(:disabled):not(:focus):not(:focus-visible):not(:focus-within)::before {
   --alka-button-angle: 0deg !important;
   opacity: 0;
 }
@@ -375,12 +553,14 @@
 .alka-input-group[data-closing="true"]::before,
 .alka-textarea-field[data-closing="true"]::before,
 .alka-input-otp-slot[data-closing="true"]::before {
-  animation: alka-combobox-border-close 560ms cubic-bezier(0.38, 0, 0.2, 1) both;
+  animation: alka-combobox-border-close var(--alka-border-close-duration, 520ms) var(--alka-border-close-ease, var(--alka-ease-smooth)) both;
   transition: none;
 }
 
-.alka-combobox-trigger[data-state="open"]:not([data-closing="true"])::before,
-.alka-combobox-trigger[aria-expanded="true"]:not([data-closing="true"])::before,
+.alka-combobox-trigger[data-closing="true"]::before {
+  animation: alka-combobox-trigger-border-close 560ms cubic-bezier(0.38, 0, 0.2, 1) both;
+}
+
 .alka-input-field[data-variant="pill"][data-selected="true"]::before,
 .alka-input-field[data-variant="pill"]:focus-within::before,
 .alka-input-group[data-selected="true"]::before,
@@ -388,9 +568,17 @@
 .alka-textarea-field[data-selected="true"]::before,
 .alka-textarea-field:focus-within::before,
 .alka-input-otp-slot[data-selected="true"]::before,
-.alka-input-otp-slot:focus-within::before,
-.alka-input-otp-slot[data-filled="true"]::before {
-  --alka-button-angle: 88deg !important;
+.alka-input-otp-slot:focus-within::before {
+  --alka-button-angle: var(--alka-border-active-angle, 88deg) !important;
+  opacity: 1 !important;
+}
+
+.alka-combobox-trigger[data-state="open"]:not([data-closing="true"])::before,
+.alka-combobox-trigger[aria-expanded="true"]:not([data-closing="true"])::before,
+.alka-combobox-trigger:focus:not([data-closing="true"]):not(:disabled)::before,
+.alka-combobox-trigger:focus-visible:not([data-closing="true"]):not(:disabled)::before,
+.alka-combobox-trigger:focus-within:not([data-closing="true"]):not(:disabled)::before {
+  --alka-button-angle: var(--alka-border-active-angle, 88deg) !important;
   opacity: 1 !important;
 }
 
@@ -411,9 +599,8 @@
 .alka-textarea-field[data-selected="true"],
 .alka-textarea-field:focus-within,
 .alka-input-otp-slot[data-selected="true"],
-.alka-input-otp-slot:focus-within,
-.alka-input-otp-slot[data-filled="true"] {
-  --alka-button-angle: 88deg !important;
+.alka-input-otp-slot:focus-within {
+  --alka-button-angle: var(--alka-border-active-angle, 88deg) !important;
   border-color: transparent !important;
 }
 
@@ -422,17 +609,51 @@
   transform: translate3d(0, 0, 0) scale(0.992);
 }
 
+.alka-combobox-option,
+.alka-select-option,
+.alka-command-item,
+.alka-dropdown-option,
+.alka-context-menu-option {
+  --alka-option-state-color: var(--primary);
+  --alka-option-hover-alpha: 0.11;
+  --alka-option-hover-border-alpha: 0.2;
+  --alka-option-hover-spot-alpha: 0.16;
+  --alka-option-selected-alpha: 0.2;
+  --alka-option-selected-border-alpha: 0.34;
+  --alka-option-selected-spot-alpha: 0.3;
+  box-sizing: border-box;
+  min-width: 0;
+  color: hsl(var(--foreground));
+}
+
+.alka-combobox-option,
+.alka-select-option {
+  white-space: nowrap;
+  line-height: 1.15;
+}
+
 .alka-input-field[data-variant="pill"][data-closing="true"],
 .alka-input-group[data-closing="true"],
 .alka-textarea-field[data-closing="true"],
 .alka-input-otp-slot[data-closing="true"] {
-  --alka-button-angle: 0deg !important;
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg) !important;
   border-color: hsl(var(--foreground) / 0.12) !important;
 }
 
 @keyframes alka-combobox-border-close {
   0% {
-    --alka-button-angle: 88deg;
+    --alka-button-angle: var(--alka-border-active-angle, 88deg);
+    opacity: 1;
+  }
+  100% {
+    --alka-button-angle: var(--alka-border-rest-angle, 0deg);
+    opacity: 0;
+  }
+}
+
+@keyframes alka-combobox-trigger-border-close {
+  0% {
+    --alka-button-angle: var(--alka-border-active-angle, 88deg);
     opacity: 1;
   }
   52% {
@@ -444,76 +665,228 @@
   }
 }
 
+@keyframes alka-combobox-trigger-border-open {
+  0% {
+    --alka-button-angle: 0deg;
+    opacity: 0;
+  }
+  100% {
+    --alka-button-angle: var(--alka-border-active-angle, 88deg);
+    opacity: 1;
+  }
+}
+
+.alka-combobox-trigger[data-surface="glass"] {
+  --alka-combobox-glass-color: var(--alka-gradient-color, var(--alka-default-gradient-color));
+  --alka-combobox-glass-border-color: var(--alka-border-animation-color, var(--alka-default-border-animation-color));
+  --alka-liquid-glass-blur: 20px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  --alka-liquid-glass-border-color: var(--alka-highlight-color);
+  --alka-liquid-glass-border-opacity: 0.56;
+  border: 0;
+  background:
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-combobox-glass-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.09)), transparent 38%),
+    radial-gradient(circle at 86% 100%, hsl(var(--alka-combobox-glass-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-gradient-opacity, 1) * 0.06)), transparent 44%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.026), transparent 46%),
+    var(--alka-liquid-glass-bg) !important;
+  box-shadow:
+    0 12px 32px hsl(var(--alka-shadow-color) / 0.16),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.055),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.018) !important;
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.12);
+}
+
+.alka-combobox-trigger[data-surface="glass"]::before {
+  inset: 0;
+  z-index: 0;
+  padding: 0;
+  background:
+    linear-gradient(90deg, hsl(var(--alka-liquid-glass-border-color) / 0.09), hsl(var(--alka-liquid-glass-border-color) / 0.018) 84%, transparent 94%) 0 0 / 46% 2px no-repeat,
+    linear-gradient(180deg, hsl(var(--alka-liquid-glass-border-color) / 0.07), hsl(var(--alka-liquid-glass-border-color) / 0.014) 84%, transparent 94%) 0 0 / 2px 46% no-repeat,
+    linear-gradient(270deg, hsl(var(--alka-liquid-glass-border-color) / 0.09), hsl(var(--alka-liquid-glass-border-color) / 0.018) 84%, transparent 94%) 100% 100% / 46% 2px no-repeat,
+    linear-gradient(0deg, hsl(var(--alka-liquid-glass-border-color) / 0.07), hsl(var(--alka-liquid-glass-border-color) / 0.014) 84%, transparent 94%) 100% 100% / 2px 46% no-repeat,
+    linear-gradient(135deg, hsl(var(--alka-highlight-color) / 0.014), transparent 30% 66%, hsl(var(--alka-highlight-color) / 0.01)),
+    radial-gradient(circle at 84% 16%, hsl(var(--alka-highlight-color) / 0.018), transparent 32%),
+    hsl(var(--alka-highlight-color) / 0.006);
+  opacity: var(--alka-liquid-glass-lens-opacity) !important;
+  transform: none;
+  animation: none !important;
+  -webkit-mask: none;
+  mask: none;
+  -webkit-backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  backdrop-filter: url("#alka-liquid-glass-lens") blur(var(--alka-liquid-glass-lens-blur)) saturate(1.16);
+  filter: saturate(1.04);
+}
+
+.alka-combobox-trigger[data-surface="glass"]::after {
+  --alka-button-angle: var(--alka-border-rest-angle, 0deg);
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: var(--alka-liquid-glass-border-width, 1px);
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from calc(var(--alka-button-angle) - 7deg),
+      hsl(var(--alka-combobox-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.08)) 0deg,
+      hsl(var(--alka-combobox-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.92)) 7deg,
+      hsl(var(--alka-combobox-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.46)) 14deg,
+      transparent 24deg,
+      transparent 180deg,
+      hsl(var(--alka-combobox-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.92)) 187deg,
+      hsl(var(--alka-combobox-glass-border-color) / calc(var(--alka-surface-focus-alpha) * var(--alka-border-animation-opacity, 1) * 0.46)) 194deg,
+      transparent 204deg,
+      transparent 360deg
+    ),
+    radial-gradient(circle at 0 0, hsl(var(--alka-liquid-glass-border-color) / 0.24) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.1) 24px, transparent 38px),
+    radial-gradient(circle at 100% 100%, hsl(var(--alka-liquid-glass-border-color) / 0.28) 0 16px, hsl(var(--alka-liquid-glass-border-color) / 0.12) 24px, transparent 38px),
+    conic-gradient(
+      from 45deg,
+      hsl(var(--foreground) / 0.024) 0deg 20deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.052) 54deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.13) 90deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.076) 138deg,
+      hsl(var(--foreground) / 0.026) 176deg 188deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.06) 224deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.16) 270deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.08) 318deg,
+      hsl(var(--foreground) / 0.024) 350deg 360deg
+    );
+  opacity: var(--alka-liquid-glass-border-opacity, var(--alka-liquid-glass-sheen-opacity)) !important;
+  transform: none !important;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition:
+    --alka-button-angle var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    --alka-surface-focus-alpha var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth),
+    opacity 420ms var(--alka-ease-smooth),
+    background-color var(--alka-border-open-duration, 560ms) var(--alka-ease-smooth);
+}
+
+.alka-combobox-trigger[data-surface="glass"]:hover:not(:disabled):not([data-state="open"]):not([aria-expanded="true"]) {
+  --alka-liquid-glass-border-color: var(--alka-highlight-color);
+  --alka-liquid-glass-border-opacity: 0.68;
+  border-color: transparent !important;
+}
+
+.alka-combobox-trigger[data-surface="glass"]:hover:not(:disabled)::after {
+  opacity: var(--alka-liquid-glass-border-opacity, var(--alka-liquid-glass-sheen-opacity)) !important;
+  transform: none !important;
+}
+
+.alka-combobox-trigger[data-surface="glass"][data-state="open"]:not([data-closing="true"]),
+.alka-combobox-trigger[data-surface="glass"][aria-expanded="true"]:not([data-closing="true"]),
+.alka-combobox-trigger[data-surface="glass"]:focus:not([data-closing="true"]),
+.alka-combobox-trigger[data-surface="glass"]:focus-visible:not([data-closing="true"]),
+.alka-combobox-trigger[data-surface="glass"]:focus-within:not([data-closing="true"]) {
+  --alka-liquid-glass-border-color: var(--alka-combobox-glass-border-color);
+  --alka-liquid-glass-border-opacity: 0.82;
+  border-color: transparent !important;
+  box-shadow:
+    0 14px 38px hsl(var(--alka-shadow-color) / 0.18),
+    0 0 0 1px hsl(var(--alka-combobox-glass-border-color) / 0.08),
+    inset 0 1px 0 hsl(var(--alka-combobox-glass-color) / 0.12),
+    inset 0 -1px 0 hsl(var(--alka-highlight-color) / 0.018) !important;
+}
+
+.alka-combobox-trigger[data-surface="glass"][data-state="open"]:not([data-closing="true"])::after,
+.alka-combobox-trigger[data-surface="glass"][aria-expanded="true"]:not([data-closing="true"])::after,
+.alka-combobox-trigger[data-surface="glass"]:focus:not([data-closing="true"])::after,
+.alka-combobox-trigger[data-surface="glass"]:focus-visible:not([data-closing="true"])::after,
+.alka-combobox-trigger[data-surface="glass"]:focus-within:not([data-closing="true"])::after {
+  --alka-button-angle: var(--alka-border-active-angle, 88deg);
+}
+
+.alka-combobox-trigger[data-surface="glass"][data-closing="true"]::before {
+  animation: none !important;
+  opacity: var(--alka-liquid-glass-lens-opacity) !important;
+}
+
+.alka-combobox-trigger[data-surface="glass"][data-closing="true"]::after {
+  animation: alka-combobox-border-close var(--alka-border-close-duration, 520ms) var(--alka-border-close-ease, var(--alka-ease-smooth)) both;
+  transition: none;
+}
+
 .alka-combobox-option.alka-combobox-option:hover:not([data-current="true"]),
+.alka-combobox-option.alka-combobox-option[data-selected="true"]:not([data-current="true"]),
 .alka-select-option.alka-select-option:hover:not([data-state="checked"]),
-.alka-select-option.alka-select-option[data-highlighted]:not([data-state="checked"]) {
-  border-color: hsl(var(--primary) / 0.16) !important;
-  background-color: hsl(var(--primary) / 0.09) !important;
+.alka-select-option.alka-select-option[data-highlighted]:not([data-state="checked"]),
+.alka-command-item.alka-command-item:hover:not([data-current="true"]),
+.alka-command-item.alka-command-item[data-selected="true"]:not([data-current="true"]),
+.alka-dropdown-option.alka-dropdown-option:hover:not([data-state="checked"]):not([aria-checked="true"]),
+.alka-dropdown-option.alka-dropdown-option:focus:not([data-state="checked"]):not([aria-checked="true"]),
+.alka-dropdown-option.alka-dropdown-option[data-highlighted]:not([data-state="checked"]):not([aria-checked="true"]),
+.alka-context-menu-option.alka-context-menu-option:hover:not([data-state="checked"]):not([aria-checked="true"]),
+.alka-context-menu-option.alka-context-menu-option:focus:not([data-state="checked"]):not([aria-checked="true"]),
+.alka-context-menu-option.alka-context-menu-option[data-highlighted]:not([data-state="checked"]):not([aria-checked="true"]) {
+  border-color: hsl(var(--alka-option-state-color) / var(--alka-option-hover-border-alpha)) !important;
+  background-color: hsl(var(--alka-option-state-color) / var(--alka-option-hover-alpha)) !important;
   background-image:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.14), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.06)) !important;
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-option-state-color) / var(--alka-option-hover-spot-alpha)), transparent 42%),
+    linear-gradient(135deg, hsl(var(--alka-option-state-color) / var(--alka-option-hover-alpha)), hsl(var(--alka-option-state-color) / calc(var(--alka-option-hover-alpha) * 0.66))) !important;
   color: hsl(var(--foreground)) !important;
   box-shadow: none !important;
 }
 
 .alka-combobox-option.alka-combobox-option[data-current="true"],
-.alka-select-option.alka-select-option[data-state="checked"] {
-  border-color: hsl(var(--primary) / 0.3) !important;
-  background-color: hsl(var(--primary) / 0.2) !important;
-  background-image:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.28), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.24), hsl(var(--primary) / 0.15)) !important;
-  color: hsl(var(--foreground)) !important;
-  box-shadow: none !important;
-}
-
-.alka-command-item.alka-command-item:hover,
-.alka-command-item.alka-command-item[data-selected="true"] {
-  border-color: hsl(var(--primary) / 0.22) !important;
-  background-color: hsl(var(--primary) / 0.16) !important;
-  background-image:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.22), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--primary) / 0.12)) !important;
-  color: hsl(var(--foreground)) !important;
-  box-shadow: none !important;
-}
-
-.alka-command-item.alka-combobox-option.alka-combobox-option:hover:not([data-current="true"]),
-.alka-command-item.alka-combobox-option.alka-combobox-option[data-selected="true"]:not([data-current="true"]) {
-  border-color: hsl(var(--primary) / 0.16) !important;
-  background-color: hsl(var(--primary) / 0.09) !important;
-  background-image:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.14), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.06)) !important;
-  color: hsl(var(--foreground)) !important;
-  box-shadow: none !important;
-}
-
-.alka-command-item.alka-combobox-option.alka-combobox-option[data-current="true"] {
-  border-color: hsl(var(--primary) / 0.3) !important;
-  background-color: hsl(var(--primary) / 0.2) !important;
-  background-image:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.28), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.24), hsl(var(--primary) / 0.15)) !important;
-  color: hsl(var(--foreground)) !important;
-  box-shadow: none !important;
-}
-
-.alka-dropdown-option.alka-dropdown-option:hover,
-.alka-dropdown-option.alka-dropdown-option:focus,
-.alka-dropdown-option.alka-dropdown-option[data-highlighted],
+.alka-select-option.alka-select-option[data-state="checked"],
 .alka-dropdown-option.alka-dropdown-option[data-state="open"],
 .alka-dropdown-option.alka-dropdown-option[data-state="checked"],
-.alka-context-menu-option.alka-context-menu-option:hover,
-.alka-context-menu-option.alka-context-menu-option:focus,
-.alka-context-menu-option.alka-context-menu-option[data-highlighted],
+.alka-dropdown-option.alka-dropdown-option[aria-checked="true"],
 .alka-context-menu-option.alka-context-menu-option[data-state="open"],
-.alka-context-menu-option.alka-context-menu-option[data-state="checked"] {
-  border-color: hsl(var(--primary) / 0.22) !important;
-  background-color: hsl(var(--primary) / 0.16) !important;
+.alka-context-menu-option.alka-context-menu-option[data-state="checked"],
+.alka-context-menu-option.alka-context-menu-option[aria-checked="true"] {
+  border-color: hsl(var(--alka-option-state-color) / var(--alka-option-selected-border-alpha)) !important;
+  background-color: hsl(var(--alka-option-state-color) / var(--alka-option-selected-alpha)) !important;
   background-image:
-    radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.22), transparent 42%),
-    linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--primary) / 0.12)) !important;
+    radial-gradient(circle at 18% 0%, hsl(var(--alka-option-state-color) / var(--alka-option-selected-spot-alpha)), transparent 42%),
+    linear-gradient(135deg, hsl(var(--alka-option-state-color) / var(--alka-option-selected-alpha)), hsl(var(--alka-option-state-color) / calc(var(--alka-option-selected-alpha) * 0.72))) !important;
   color: hsl(var(--foreground)) !important;
+  box-shadow: none !important;
+}
+
+.alka-combobox-option[data-current="true"] svg,
+.alka-select-option[data-state="checked"] svg,
+.alka-dropdown-option[data-state="checked"] svg,
+.alka-dropdown-option[aria-checked="true"] svg,
+.alka-context-menu-option[data-state="checked"] svg,
+.alka-context-menu-option[aria-checked="true"] svg {
+  color: hsl(var(--alka-option-state-color)) !important;
+}
+
+.alka-command [cmdk-input-wrapper] {
+  box-sizing: border-box;
+}
+
+.alka-command-input {
+  box-sizing: border-box;
+  appearance: none;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: hsl(var(--foreground));
+  font-family: var(--alka-font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.alka-command-input:focus,
+.alka-command-input:focus-visible {
+  border: 0 !important;
+  outline: none !important;
   box-shadow: none !important;
 }

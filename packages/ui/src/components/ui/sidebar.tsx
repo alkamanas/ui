@@ -373,17 +373,30 @@ SidebarInput.displayName = "SidebarInput";
 const SidebarHeader = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
->(({ className, ...props }, ref) => {
+>(({ children, className, ...props }, ref) => {
+  const childArray = React.Children.toArray(children);
+  const shouldUseBrandLayout = childArray.length > 1 && !className;
+
   return (
     <div
       ref={ref}
       data-sidebar="header"
+      data-layout={shouldUseBrandLayout ? "brand" : undefined}
       className={cn(
         "flex flex-col gap-2 p-2 transition-[height,min-height,max-height,padding,gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3",
         className
       )}
       {...props}
-    />
+    >
+      {shouldUseBrandLayout ? (
+        <>
+          <div data-sidebar="header-mark">{childArray[0]}</div>
+          <div data-sidebar="header-body">{childArray.slice(1)}</div>
+        </>
+      ) : (
+        children
+      )}
+    </div>
   );
 });
 SidebarHeader.displayName = "SidebarHeader";
@@ -522,7 +535,7 @@ const SidebarMenu = React.forwardRef<
     ref={ref}
     data-sidebar="menu"
     className={cn(
-      "flex w-full min-w-0 flex-col gap-1 transition-[gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
+      "m-0 flex w-full min-w-0 list-none flex-col gap-1 p-0 transition-[gap] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)]",
       className
     )}
     {...props}
@@ -537,7 +550,7 @@ const SidebarMenuItem = React.forwardRef<
   <li
     ref={ref}
     data-sidebar="menu-item"
-    className={cn("group/menu-item relative", className)}
+    className={cn("group/menu-item relative list-none", className)}
     {...props}
   />
 ));

@@ -52,7 +52,7 @@ function DetailList({ items }: { items?: string[] }) {
   return (
     <ul className="grid gap-2 text-sm leading-6 text-muted-foreground">
       {items.map((item) => (
-        <li key={item} className="rounded-2xl border border-white/[0.08] bg-white/[0.025] px-4 py-3">
+        <li key={item} className="rounded-2xl border border-border/70 bg-background/30 px-4 py-3">
           {item}
         </li>
       ))}
@@ -70,13 +70,13 @@ function DetailTable({
   if (!rows?.length) return null;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.08]">
-      <div className="grid grid-cols-[12rem_minmax(0,1fr)] border-b border-white/[0.08] bg-white/[0.035] px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+    <div className="overflow-hidden rounded-2xl border border-border/70">
+      <div className="grid grid-cols-[12rem_minmax(0,1fr)] border-b border-border/70 bg-background/35 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
         <span>{columns[0]}</span>
         <span>{columns[1]}</span>
       </div>
       {rows.map((row) => (
-        <div key={row.name} className="grid grid-cols-[12rem_minmax(0,1fr)] border-b border-white/[0.06] px-4 py-3 text-sm last:border-b-0">
+        <div key={row.name} className="grid grid-cols-[12rem_minmax(0,1fr)] border-b border-border/60 px-4 py-3 text-sm last:border-b-0">
           <code className="font-mono text-xs text-foreground">{row.name}</code>
           <span className="leading-6 text-muted-foreground">{row.description}</span>
         </div>
@@ -89,14 +89,14 @@ function PropsTable({ rows }: { rows?: ComponentPageDetails["props"] }) {
   if (!rows?.length) return null;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.08]">
-      <div className="grid grid-cols-[11rem_12rem_minmax(0,1fr)] border-b border-white/[0.08] bg-white/[0.035] px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+    <div className="overflow-hidden rounded-2xl border border-border/70">
+      <div className="grid grid-cols-[11rem_12rem_minmax(0,1fr)] border-b border-border/70 bg-background/35 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
         <span>Prop</span>
         <span>Type</span>
         <span>Notes</span>
       </div>
       {rows.map((row) => (
-        <div key={row.name} className="grid grid-cols-[11rem_12rem_minmax(0,1fr)] border-b border-white/[0.06] px-4 py-3 text-sm last:border-b-0">
+        <div key={row.name} className="grid grid-cols-[11rem_12rem_minmax(0,1fr)] border-b border-border/60 px-4 py-3 text-sm last:border-b-0">
           <code className="font-mono text-xs text-foreground">{row.name}</code>
           <code className="font-mono text-xs text-muted-foreground">{row.type}</code>
           <span className="leading-6 text-muted-foreground">{row.description}</span>
@@ -110,7 +110,7 @@ function getPreviewCode(doc: DocItem) {
   const demoName = `${doc.title.replace(/[^a-zA-Z0-9]+/g, "")}Demo`;
   const importLine = doc.importCode ?? `import { ${doc.title.replace(/\s+/g, "")} } from "@alkamanas/ui";`;
   const componentName =
-    doc.id === "navbar" ? "SectionAwareNavbar" : doc.title.replace(/\s+/g, "");
+    doc.id === "navbar" ? "Navbar" : doc.title.replace(/\s+/g, "");
   const registryCommand = doc.command ? `\n\n// ${doc.command}` : "";
 
   if (previewCodeById[doc.id]) {
@@ -131,14 +131,16 @@ export function ${demoName}() {
 export function ComponentExample({
   command,
   example,
+  tocId,
 }: {
   command?: string;
   example: ComponentExampleSpec;
+  tocId?: string;
 }) {
   const [fullscreenOpen, setFullscreenOpen] = React.useState(false);
 
   return (
-    <article className="grid gap-4">
+    <article id={tocId ?? example.id} data-docs-toc={example.title} className="scroll-mt-32 grid gap-4">
       <div className="max-w-2xl">
         <h2 className="text-2xl font-semibold tracking-normal">{example.title}</h2>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">{example.description}</p>
@@ -155,13 +157,13 @@ export function ComponentExample({
             size="icon"
             aria-label={`Open ${example.title} preview in full screen`}
             onClick={() => setFullscreenOpen(true)}
-            className="h-10 w-10 border border-white/[0.1] bg-black/35 text-white/80 shadow-[0_16px_34px_rgba(0,0,0,0.28)] backdrop-blur-xl hover:bg-white/[0.08] hover:text-white"
+            className="h-10 w-10 border border-border/70 bg-background/55 text-foreground/75 shadow-none backdrop-blur-xl hover:bg-muted/60 hover:text-foreground"
           >
             <Maximize2 className="h-4 w-4" />
           </Button>
         </div>
         <TabsContent value="preview" className="mt-0">
-          <div className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-transparent">
+          <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-transparent">
             <div className={`relative flex min-h-[18rem] items-center justify-center p-6 sm:p-10 ${example.previewClassName ?? ""}`}>
               {example.preview}
             </div>
@@ -178,7 +180,7 @@ export function ComponentExample({
           className="h-[calc(100dvh-1.25rem)] max-h-[calc(100dvh-1.25rem)] max-w-[calc(100vw-1.25rem)] gap-0 overflow-hidden rounded-[2rem] p-0 sm:h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-2rem)] sm:max-w-[calc(100vw-2rem)]"
         >
           <div className="relative flex h-full min-h-0 flex-col">
-            <div className="flex items-center justify-between gap-4 border-b border-white/[0.08] px-4 py-3 sm:px-5">
+            <div className="flex items-center justify-between gap-4 border-b border-border/70 px-4 py-3 sm:px-5">
               <div className="min-w-0">
                 <DialogTitle className="truncate text-sm font-semibold tracking-normal sm:text-base">
                   {example.title}
@@ -193,14 +195,14 @@ export function ComponentExample({
                   variant="secondary"
                   size="icon"
                   aria-label="Close full screen preview"
-                  className="h-10 w-10 shrink-0 border border-white/[0.1] bg-white/[0.055] text-white/78 backdrop-blur-xl hover:bg-white/[0.09] hover:text-white"
+                  className="h-10 w-10 shrink-0 border border-border/70 bg-background/55 text-foreground/75 backdrop-blur-xl hover:bg-muted/60 hover:text-foreground"
                 >
                   <Minimize2 className="h-4 w-4" />
                 </Button>
               </DialogClose>
             </div>
             <div className="min-h-0 flex-1 overflow-auto p-4 sm:p-6">
-              <div className="relative flex min-h-full items-center justify-center rounded-[1.5rem] border border-white/[0.08] bg-transparent p-6 sm:p-10">
+              <div className="relative flex min-h-full items-center justify-center rounded-[1.5rem] border border-border/70 bg-transparent p-6 sm:p-10">
                 {example.preview}
               </div>
             </div>
@@ -214,6 +216,7 @@ export function ComponentExample({
 function ComponentPreviewShell({ doc }: { doc: DocItem }) {
   return (
     <ComponentExample
+      tocId="preview-card"
       example={{
         id: doc.id,
         title: `${doc.title} preview`,
@@ -229,7 +232,7 @@ function ComponentPreviewShell({ doc }: { doc: DocItem }) {
 export function ComponentPageTemplate({ doc, details }: ComponentPageProps & { details?: ComponentPageDetails }) {
   return (
     <div className="docs-component-page">
-      <section id="overview" className="max-w-3xl">
+      <section id="overview" data-docs-toc="Overview" className="max-w-3xl scroll-mt-32">
         <Badge variant="secondary" className="rounded-full">{doc.group}</Badge>
         <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal sm:text-5xl">{doc.title}</h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">{doc.description}</p>
@@ -244,50 +247,50 @@ export function ComponentPageTemplate({ doc, details }: ComponentPageProps & { d
           <ComponentPreviewShell doc={doc} />
         )}
       </section>
-      <section id="usage" className="mt-10 grid gap-4">
+      <section id="usage" data-docs-toc="Usage" className="mt-10 grid scroll-mt-32 gap-4">
         {doc.importCode ? <><h2 className="text-2xl font-semibold">Import</h2><CodeBlock>{doc.importCode}</CodeBlock></> : null}
         {doc.command ? <><h2 className="text-2xl font-semibold">Registry</h2><CodeBlock>{doc.command}</CodeBlock></> : null}
       </section>
       {details ? (
         <section className="mt-10 grid gap-6">
           {details.anatomy?.length ? (
-            <div className="grid gap-3">
+            <div id="anatomy" data-docs-toc="Anatomy" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Anatomy</h2>
               <DetailList items={details.anatomy} />
             </div>
           ) : null}
           {details.variants?.length ? (
-            <div className="grid gap-3">
+            <div id="variants" data-docs-toc="Variants" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Variants</h2>
               <DetailTable columns={["Variant", "Behavior"]} rows={details.variants} />
             </div>
           ) : null}
           {details.sizes?.length ? (
-            <div className="grid gap-3">
+            <div id="sizes" data-docs-toc="Sizes" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Sizes</h2>
               <DetailTable columns={["Size", "Use case"]} rows={details.sizes} />
             </div>
           ) : null}
           {details.props?.length ? (
-            <div className="grid gap-3">
+            <div id="props" data-docs-toc="Props" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Props</h2>
               <PropsTable rows={details.props} />
             </div>
           ) : null}
           {details.accessibility?.length ? (
-            <div className="grid gap-3">
+            <div id="accessibility" data-docs-toc="Accessibility" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Accessibility</h2>
               <DetailList items={details.accessibility} />
             </div>
           ) : null}
           {details.motion?.length ? (
-            <div className="grid gap-3">
+            <div id="motion" data-docs-toc="Motion" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Motion</h2>
               <DetailList items={details.motion} />
             </div>
           ) : null}
           {details.tokens?.length ? (
-            <div className="grid gap-3">
+            <div id="tokens" data-docs-toc="Tokens" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Tokens</h2>
               <div className="flex flex-wrap gap-2">
                 {details.tokens.map((token) => (

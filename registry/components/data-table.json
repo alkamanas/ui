@@ -1,0 +1,8 @@
+{
+  "name": "data-table",
+  "packageImport": "import { DataTable } from \"@alkamanas/ui/data-table\";",
+  "registryCommand": "npx alka add data-table",
+  "useWhen": ["Sortable tabular data", "Filtered admin lists", "Selectable operational rows"],
+  "avoidWhen": ["Static marketing comparison grids", "Simple two-column definition lists"],
+  "source": "packages/ui/src/components/ui/data-table.tsx"
+}

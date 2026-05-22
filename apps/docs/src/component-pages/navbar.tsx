@@ -3,7 +3,7 @@ import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPagePro
 const details: ComponentPageDetails = {
   "summary": "Navbar is a navigation primitive in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
   "anatomy": [
-    "Import SectionAwareNavbar from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
+    "Import Navbar from @alkamanas/ui/navbar and pair it with @alkamanas/ui/navbar.css for focused consumer installs.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
     "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
   ],
@@ -34,9 +34,34 @@ const details: ComponentPageDetails = {
       "description": "Merged onto the visible root when the primitive renders one."
     },
     {
-      "name": "children",
+      "name": "logo",
+      "type": "ReactNode | NavbarLogoConfig",
+      "description": "Accepts wide and compact logo variants, each with optional dark and light alternatives."
+    },
+    {
+      "name": "logoWidths",
+      "type": "{ wide?: CSSProperties['width']; compact?: CSSProperties['width'] }",
+      "description": "Sets explicit wrapper widths for wide and compact logo variants. Logo config also accepts widths, wideWidth and compactWidth."
+    },
+    {
+      "name": "NavbarCTA",
+      "type": "component",
+      "description": "Standalone CTA component for desktop slots, mobile footer slots or custom navbar layouts."
+    },
+    {
+      "name": "NavbarMenuItem",
+      "type": "component",
+      "description": "Reusable menu item renderer shared by the built-in desktop menu and custom menu compositions."
+    },
+    {
+      "name": "rightSlot",
       "type": "ReactNode",
-      "description": "Used for composition in compound primitives."
+      "description": "Renders custom desktop actions, such as locale or account controls, beside the CTA."
+    },
+    {
+      "name": "mobileFooterSlot",
+      "type": "ReactNode",
+      "description": "Renders custom controls in the mobile menu footer beside or instead of the CTA."
     }
   ],
   "accessibility": [

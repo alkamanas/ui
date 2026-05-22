@@ -144,7 +144,7 @@ export function CompactImageCardExample() {
     "--alka-panel-border",
     "--alka-shadow-panel",
     "--alka-ease-smooth",
-    "--alka-primary",
+    "--primary",
   ],
 };
 

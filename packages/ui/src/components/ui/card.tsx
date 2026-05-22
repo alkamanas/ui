@@ -5,7 +5,7 @@ import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
-  "relative overflow-hidden rounded-[var(--alka-radius-panel-lg)] border text-card-foreground transition-shadow duration-300 alka-glass-highlight",
+  "relative overflow-hidden rounded-[var(--alka-radius-card)] border text-card-foreground transition-shadow duration-300 alka-glass-highlight",
   {
     variants: {
       variant: {
@@ -54,7 +54,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("alka-card-header flex flex-col p-7", className)}
     {...props}
   />
 ))
@@ -66,7 +66,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
+    className={cn("alka-card-title text-2xl font-semibold", className)}
     {...props}
   />
 ))
@@ -78,7 +78,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("alka-card-description text-sm text-muted-foreground", className)}
     {...props}
   />
 ))
@@ -88,7 +88,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div ref={ref} className={cn("alka-card-content p-7 pt-0", className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
@@ -98,7 +98,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
+    className={cn("flex items-center p-7 pt-0", className)}
     {...props}
   />
 ))

@@ -59,84 +59,113 @@
 
 :root,
 .alka-theme-light,
-.theme-light {
+.theme-light,
+[data-theme="light"],
+[data-section-theme="light"],
+[data-navbar-theme="light"] {
   color-scheme: light;
-  --alka-background: 0 0% 96%;
-  --alka-foreground: 35 9% 8%;
-  --alka-card: 0 0% 100%;
-  --alka-card-foreground: 35 9% 8%;
-  --alka-popover: 0 0% 100%;
-  --alka-popover-foreground: 35 9% 8%;
-  --alka-primary: 0 0% 0%;
-  --alka-primary-foreground: 0 0% 100%;
-  --alka-secondary: 38 22% 92%;
-  --alka-secondary-foreground: 35 9% 12%;
-  --alka-muted: 38 18% 91%;
-  --alka-muted-foreground: 31 8% 42%;
-  --alka-accent: 0 0% 0%;
-  --alka-accent-foreground: 0 0% 100%;
-  --alka-destructive: 0 72% 51%;
-  --alka-destructive-foreground: 0 0% 98%;
-  --alka-success: 142 71% 36%;
-  --alka-success-foreground: 0 0% 100%;
-  --alka-warning: 38 92% 46%;
-  --alka-warning-foreground: 35 9% 8%;
-  --alka-info: 199 89% 42%;
-  --alka-info-foreground: 0 0% 100%;
-  --alka-chart-1: 199 89% 48%;
-  --alka-chart-2: 142 71% 45%;
-  --alka-chart-3: 38 92% 50%;
-  --alka-chart-4: 258 90% 66%;
-  --alka-chart-5: 0 84% 60%;
-  --alka-border: 36 22% 82%;
-  --alka-input: 36 22% 82%;
-  --alka-ring: 0 0% 0%;
-  --alka-panel-bg: 0 0% 100% / 0.46;
-  --alka-panel-solid-bg: 0 0% 100%;
-  --alka-panel-border: 35 16% 20% / 0.1;
-  --alka-panel-shadow: 35 24% 20% / 0.1;
+  --background: 0 0% 92%;
+  --foreground: 0 0% 8%;
+  --card: 0 0% 95%;
+  --card-foreground: 0 0% 8%;
+  --popover: 0 0% 95%;
+  --popover-foreground: 0 0% 8%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 91%;
+  --secondary-foreground: 0 0% 12%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 42%;
+  --accent: 0 0% 0%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 71% 36%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 46%;
+  --warning-foreground: 0 0% 8%;
+  --info: 199 89% 42%;
+  --info-foreground: 0 0% 100%;
+  --chart-1: 199 89% 48%;
+  --chart-2: 142 71% 45%;
+  --chart-3: 38 92% 50%;
+  --chart-4: 258 90% 66%;
+  --chart-5: 0 84% 60%;
+  --border: 0 0% 82%;
+  --input: 0 0% 82%;
+  --ring: 0 0% 0%;
+  --sidebar-background: var(--card);
+  --sidebar-foreground: var(--card-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--muted);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --alka-panel-bg: 0 0% 100% / 0.34;
+  --alka-panel-solid-bg: 0 0% 95%;
+  --alka-panel-border: 0 0% 0% / 0.12;
+  --alka-panel-shadow: 0 0% 0% / 0.055;
   --alka-highlight-color: 0 0% 100%;
-  --alka-shadow-color: 35 24% 20%;
+  --alka-shadow-color: 0 0% 0%;
   --alka-navbar-bg: var(--alka-panel-bg);
   --alka-navbar-border: var(--alka-panel-border);
-  --alka-navbar-text: 35 9% 8%;
-  --alka-navbar-muted: 31 8% 42%;
-  --alka-theme-color: #f5f5f7;
+  --alka-navbar-text: 0 0% 8%;
+  --alka-navbar-muted: 0 0% 42%;
+  --alka-theme-color: #ebebed;
+  --alka-default-gradient-color: 0 0% 100%;
+  --alka-default-border-animation-color: 0 0% 100%;
+  --alka-gradient-color: var(--alka-default-gradient-color);
+  --alka-gradient-opacity: 1;
+  --alka-border-animation-color: var(--alka-default-border-animation-color);
+  --alka-border-animation-opacity: 1;
+  --alka-surface-gradient-color: var(--alka-gradient-color);
 }
 
 .alka-theme-dark,
-.theme-dark {
+.theme-dark,
+[data-theme="dark"],
+[data-section-theme="dark"],
+[data-navbar-theme="dark"] {
   color-scheme: dark;
-  --alka-background: 0 0% 2%;
-  --alka-foreground: 36 31% 93%;
-  --alka-card: 0 0% 7%;
-  --alka-card-foreground: 36 31% 93%;
-  --alka-popover: 0 0% 7%;
-  --alka-popover-foreground: 36 31% 93%;
-  --alka-primary: 0 0% 100%;
-  --alka-primary-foreground: 0 0% 2%;
-  --alka-secondary: 0 0% 10%;
-  --alka-secondary-foreground: 36 31% 93%;
-  --alka-muted: 0 0% 13%;
-  --alka-muted-foreground: 32 9% 66%;
-  --alka-accent: 0 0% 100%;
-  --alka-accent-foreground: 0 0% 2%;
-  --alka-destructive: 0 63% 46%;
-  --alka-destructive-foreground: 0 0% 98%;
-  --alka-success: 142 70% 48%;
-  --alka-success-foreground: 0 0% 2%;
-  --alka-warning: 38 95% 56%;
-  --alka-warning-foreground: 0 0% 2%;
-  --alka-info: 199 90% 58%;
-  --alka-info-foreground: 0 0% 2%;
-  --alka-chart-1: 199 90% 58%;
-  --alka-chart-2: 142 70% 48%;
-  --alka-chart-3: 38 95% 56%;
-  --alka-chart-4: 258 90% 70%;
-  --alka-chart-5: 0 84% 64%;
-  --alka-border: 0 0% 18%;
-  --alka-input: 0 0% 18%;
-  --alka-ring: 0 0% 100%;
+  --background: 0 0% 2%;
+  --foreground: 36 31% 93%;
+  --card: 0 0% 7%;
+  --card-foreground: 36 31% 93%;
+  --popover: 0 0% 7%;
+  --popover-foreground: 36 31% 93%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 2%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 36 31% 93%;
+  --muted: 0 0% 13%;
+  --muted-foreground: 32 9% 66%;
+  --accent: 0 0% 100%;
+  --accent-foreground: 0 0% 2%;
+  --destructive: 0 63% 46%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 70% 48%;
+  --success-foreground: 0 0% 2%;
+  --warning: 38 95% 56%;
+  --warning-foreground: 0 0% 2%;
+  --info: 199 90% 58%;
+  --info-foreground: 0 0% 2%;
+  --chart-1: 199 90% 58%;
+  --chart-2: 142 70% 48%;
+  --chart-3: 38 95% 56%;
+  --chart-4: 258 90% 70%;
+  --chart-5: 0 84% 64%;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
+  --ring: 0 0% 100%;
+  --sidebar-background: var(--card);
+  --sidebar-foreground: var(--card-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--muted);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
   --alka-panel-bg: 0 0% 5% / 0.42;
   --alka-panel-solid-bg: 0 0% 7%;
   --alka-panel-border: 0 0% 100% / 0.1;
@@ -148,57 +177,40 @@
   --alka-navbar-text: 0 0% 100%;
   --alka-navbar-muted: 0 0% 100% / 0.68;
   --alka-theme-color: #050505;
+  --alka-default-gradient-color: var(--foreground);
+  --alka-default-border-animation-color: var(--foreground);
+  --alka-gradient-color: var(--alka-default-gradient-color);
+  --alka-gradient-opacity: 1;
+  --alka-border-animation-color: var(--alka-default-border-animation-color);
+  --alka-border-animation-opacity: 1;
+  --alka-surface-gradient-color: var(--alka-gradient-color);
 }
 
 :root {
-  --background: var(--alka-background);
-  --foreground: var(--alka-foreground);
-  --card: var(--alka-card);
-  --card-foreground: var(--alka-card-foreground);
-  --popover: var(--alka-popover);
-  --popover-foreground: var(--alka-popover-foreground);
-  --primary: var(--alka-primary);
-  --primary-foreground: var(--alka-primary-foreground);
-  --alka-border-animation-color: var(--primary);
-  --alka-surface-gradient-color: var(--primary);
-  --secondary: var(--alka-secondary);
-  --secondary-foreground: var(--alka-secondary-foreground);
-  --muted: var(--alka-muted);
-  --muted-foreground: var(--alka-muted-foreground);
-  --accent: var(--alka-accent);
-  --accent-foreground: var(--alka-accent-foreground);
-  --destructive: var(--alka-destructive);
-  --destructive-foreground: var(--alka-destructive-foreground);
-  --success: var(--alka-success);
-  --success-foreground: var(--alka-success-foreground);
-  --warning: var(--alka-warning);
-  --warning-foreground: var(--alka-warning-foreground);
-  --info: var(--alka-info);
-  --info-foreground: var(--alka-info-foreground);
-  --chart-1: var(--alka-chart-1);
-  --chart-2: var(--alka-chart-2);
-  --chart-3: var(--alka-chart-3);
-  --chart-4: var(--alka-chart-4);
-  --chart-5: var(--alka-chart-5);
-  --border: var(--alka-border);
-  --input: var(--alka-input);
-  --ring: var(--alka-ring);
+  --alka-border-rest-angle: 76deg;
+  --alka-border-active-angle: 88deg;
+  --alka-border-open-duration: 560ms;
+  --alka-border-close-duration: 520ms;
+  --alka-border-close-ease: var(--alka-ease-smooth);
+  --alka-border-opacity-duration: 260ms;
   --radius: var(--alka-radius-control);
   --alka-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --alka-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-family: var(--alka-font-sans);
   --alka-radius-xs: 8px;
   --alka-radius-control: 12px;
   --alka-radius-panel: 16px;
+  --alka-radius-card: 32px;
   --alka-radius-panel-lg: 24px;
   --alka-radius-modal: 28px;
   --alka-radius-pill: 999px;
   --alka-blur-soft: 12px;
   --alka-blur-panel: 18px;
   --alka-blur-strong: 24px;
-  --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.08);
-  --alka-shadow-panel: 0 16px 44px hsl(var(--alka-shadow-color) / 0.18);
-  --alka-shadow-floating: 0 18px 54px hsl(var(--alka-shadow-color) / 0.24);
-  --alka-shadow-modal: 0 28px 76px hsl(var(--alka-shadow-color) / 0.32), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08);
+  --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.035);
+  --alka-shadow-panel: 0 4px 12px hsl(var(--alka-shadow-color) / 0.022);
+  --alka-shadow-floating: 0 6px 16px hsl(var(--alka-shadow-color) / 0.03);
+  --alka-shadow-modal: 0 10px 24px hsl(var(--alka-shadow-color) / 0.045), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1);
   --alka-motion-instant: 100ms;
   --alka-motion-fast: 160ms;
   --alka-motion-normal: 240ms;
@@ -208,50 +220,90 @@
   --alka-ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
   --alka-ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
   --alka-motion-smooth: 520ms;
-  --sidebar-background: var(--alka-card);
-  --sidebar-foreground: var(--alka-card-foreground);
-  --sidebar-primary: var(--alka-primary);
-  --sidebar-primary-foreground: var(--alka-primary-foreground);
-  --sidebar-accent: var(--alka-muted);
-  --sidebar-accent-foreground: var(--alka-foreground);
-  --sidebar-border: var(--alka-border);
-  --sidebar-ring: var(--alka-ring);
 }
 
 .alka-theme-light,
 .theme-light,
 .alka-theme-dark,
-.theme-dark {
-  --background: var(--alka-background);
-  --foreground: var(--alka-foreground);
-  --card: var(--alka-card);
-  --card-foreground: var(--alka-card-foreground);
-  --popover: var(--alka-popover);
-  --popover-foreground: var(--alka-popover-foreground);
-  --primary: var(--alka-primary);
-  --primary-foreground: var(--alka-primary-foreground);
+.theme-dark,
+[data-theme="light"],
+[data-section-theme="light"],
+[data-navbar-theme="light"],
+[data-theme="dark"],
+[data-section-theme="dark"],
+[data-navbar-theme="dark"] {
+  font-family: var(--alka-font-sans);
+  --alka-border-rest-angle: 76deg;
+  --alka-border-active-angle: 88deg;
+  --alka-border-open-duration: 560ms;
+  --alka-border-close-duration: 520ms;
+  --alka-border-close-ease: var(--alka-ease-smooth);
+  --alka-border-opacity-duration: 260ms;
+  --radius: var(--alka-radius-control);
+}
+
+.gradient-primary {
+  --alka-gradient-color: var(--primary);
+  --alka-gradient-opacity: 1;
+  --alka-surface-gradient-color: var(--alka-gradient-color);
+}
+
+.border-animation-primary {
   --alka-border-animation-color: var(--primary);
-  --alka-surface-gradient-color: var(--primary);
-  --secondary: var(--alka-secondary);
-  --secondary-foreground: var(--alka-secondary-foreground);
-  --muted: var(--alka-muted);
-  --muted-foreground: var(--alka-muted-foreground);
-  --accent: var(--alka-accent);
-  --accent-foreground: var(--alka-accent-foreground);
-  --destructive: var(--alka-destructive);
-  --destructive-foreground: var(--alka-destructive-foreground);
-  --success: var(--alka-success);
-  --success-foreground: var(--alka-success-foreground);
-  --warning: var(--alka-warning);
-  --warning-foreground: var(--alka-warning-foreground);
-  --info: var(--alka-info);
-  --info-foreground: var(--alka-info-foreground);
-  --chart-1: var(--alka-chart-1);
-  --chart-2: var(--alka-chart-2);
-  --chart-3: var(--alka-chart-3);
-  --chart-4: var(--alka-chart-4);
-  --chart-5: var(--alka-chart-5);
-  --border: var(--alka-border);
-  --input: var(--alka-input);
-  --ring: var(--alka-ring);
+  --alka-border-animation-opacity: 1;
+}
+
+.gradient-white {
+  --alka-gradient-color: 0 0% 100%;
+  --alka-gradient-opacity: 1;
+  --alka-surface-gradient-color: var(--alka-gradient-color);
+}
+
+.border-animation-white {
+  --alka-border-animation-color: 0 0% 100%;
+  --alka-border-animation-opacity: 1;
+}
+
+.gradient-foreground {
+  --alka-gradient-color: var(--foreground);
+  --alka-gradient-opacity: 1;
+  --alka-surface-gradient-color: var(--alka-gradient-color);
+}
+
+.border-animation-foreground {
+  --alka-border-animation-color: var(--foreground);
+  --alka-border-animation-opacity: 1;
+}
+
+.gradient-primary\/10 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.1; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/20 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.2; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/30 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.3; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/40 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.4; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/50 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.5; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/60 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.6; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/70 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.7; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/80 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.8; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/90 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 0.9; --alka-surface-gradient-color: var(--alka-gradient-color); }
+.gradient-primary\/100 { --alka-gradient-color: var(--primary); --alka-gradient-opacity: 1; --alka-surface-gradient-color: var(--alka-gradient-color); }
+
+.border-animation-primary\/10 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.1; }
+.border-animation-primary\/20 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.2; }
+.border-animation-primary\/30 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.3; }
+.border-animation-primary\/40 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.4; }
+.border-animation-primary\/50 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.5; }
+.border-animation-primary\/60 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.6; }
+.border-animation-primary\/70 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.7; }
+.border-animation-primary\/80 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.8; }
+.border-animation-primary\/90 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 0.9; }
+.border-animation-primary\/100 { --alka-border-animation-color: var(--primary); --alka-border-animation-opacity: 1; }
+
+.alka-theme-dark,
+.theme-dark,
+[data-theme="dark"],
+[data-section-theme="dark"],
+[data-navbar-theme="dark"] {
+  --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.08);
+  --alka-shadow-panel: 0 16px 44px hsl(var(--alka-shadow-color) / 0.18);
+  --alka-shadow-floating: 0 18px 54px hsl(var(--alka-shadow-color) / 0.24);
+  --alka-shadow-modal: 0 28px 76px hsl(var(--alka-shadow-color) / 0.32), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08);
 }

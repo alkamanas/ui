@@ -165,6 +165,7 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, CarouselNavButtonPr
         ref={ref}
         type="button"
         aria-label="Previous slide"
+        data-glass-effect="blurry"
         className={cn("alka-carousel-nav alka-liquid-glass alka-glass-element-host left-3", className)}
         onClick={(event) => {
           onClick?.(event)
@@ -172,7 +173,7 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, CarouselNavButtonPr
         }}
         {...props}
       >
-        <GlassElementLayers blur={2.2} depth={7} strength={68} chromaticAberration={7} />
+        <GlassElementLayers effect="blurry" blur={2.2} depth={7} strength={68} chromaticAberration={7} />
         <ChevronLeft className="size-4" />
         <span className="sr-only">Previous slide</span>
       </button>
@@ -189,6 +190,7 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, CarouselNavButtonProps>
         ref={ref}
         type="button"
         aria-label="Next slide"
+        data-glass-effect="blurry"
         className={cn("alka-carousel-nav alka-liquid-glass alka-glass-element-host right-3", className)}
         onClick={(event) => {
           onClick?.(event)
@@ -196,7 +198,7 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, CarouselNavButtonProps>
         }}
         {...props}
       >
-        <GlassElementLayers blur={2.2} depth={7} strength={68} chromaticAberration={7} />
+        <GlassElementLayers effect="blurry" blur={2.2} depth={7} strength={68} chromaticAberration={7} />
         <ChevronRight className="size-4" />
         <span className="sr-only">Next slide</span>
       </button>
@@ -244,8 +246,8 @@ function CarouselDots({ className, style, ...props }: React.HTMLAttributes<HTMLD
       style={style}
       {...props}
     >
-      <div className="alka-carousel-dots alka-pill-surface alka-liquid-glass alka-glass-element-host" data-direction={direction}>
-        <GlassElementLayers blur={2} depth={7} strength={64} chromaticAberration={7} />
+      <div className="alka-carousel-dots alka-pill-surface alka-liquid-glass alka-glass-element-host" data-direction={direction} data-glass-effect="blurry">
+        <GlassElementLayers effect="blurry" blur={2} depth={7} strength={64} chromaticAberration={7} />
         {Array.from({ length: itemCount }).map((_, index) => (
           <button
             key={index}
@@ -261,10 +263,11 @@ function CarouselDots({ className, style, ...props }: React.HTMLAttributes<HTMLD
         type="button"
         aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
         data-playing={isPlaying}
+        data-glass-effect="blurry"
         className="alka-carousel-play alka-pill-surface alka-liquid-glass alka-glass-element-host"
         onClick={() => setIsPlaying((playing) => !playing)}
       >
-        <GlassElementLayers blur={2} depth={7} strength={64} chromaticAberration={7} />
+        <GlassElementLayers effect="blurry" blur={2} depth={7} strength={64} chromaticAberration={7} />
         {isPlaying ? <Pause className="size-4" /> : <Play className="size-4 fill-current" />}
       </button>
     </div>

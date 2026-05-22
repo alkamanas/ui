@@ -3,17 +3,124 @@
 @import "../../../packages/ui/src/styles/globals.css";
 
 html {
-  background: #050505;
+  background: hsl(var(--background));
   scroll-behavior: smooth;
+}
+
+html[data-docs-page-overlay-scrollbar="true"] {
+  scrollbar-width: none;
+}
+
+html[data-docs-page-overlay-scrollbar="true"]::-webkit-scrollbar,
+html[data-docs-page-overlay-scrollbar="true"] body::-webkit-scrollbar {
+  display: none;
+}
+
+html[data-docs-page-overlay-scrollbar="true"]::-webkit-scrollbar-button,
+html[data-docs-page-overlay-scrollbar="true"] body::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Keep docs-level theme tuning outside Tailwind layers so it wins over package CSS. */
+body.theme-light,
+.theme-light.docs-shell {
+  --alka-panel-bg: 0 0% 100% / 0.34;
+  --alka-navbar-bg: 0 0% 100% / 0.38;
+  --alka-panel-border: 0 0% 0% / 0.12;
+  --alka-navbar-border: 0 0% 0% / 0.12;
+  --alka-panel-shadow: 0 0% 0% / 0.055;
+  --alka-highlight-color: 0 0% 100%;
+  --alka-shadow-color: 0 0% 0%;
+  --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.035);
+  --alka-shadow-panel: 0 8px 22px hsl(var(--alka-shadow-color) / 0.045);
+  --alka-shadow-floating: 0 12px 30px hsl(var(--alka-shadow-color) / 0.06);
+  --alka-shadow-modal: 0 16px 40px hsl(var(--alka-shadow-color) / 0.075), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.2);
+}
+
+body.theme-light .alka-liquid-glass,
+.theme-light.docs-shell .alka-liquid-glass {
+  --alka-liquid-glass-blur: 26px;
+  --alka-liquid-glass-lens-blur: 12px;
+  --alka-liquid-glass-base-lens-opacity: 0.6;
+  --alka-liquid-glass-base-sheen-opacity: 0.22;
+  --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+  --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+  --alka-glass-element-tint-opacity: 0.3;
+  --alka-glass-element-shine-opacity: 0.22;
+  background:
+    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.24), transparent 50%),
+    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.035), transparent 58%),
+    linear-gradient(145deg, hsl(0 0% 100% / 0.14), hsl(0 0% 100% / 0.1) 48%, hsl(0 0% 100% / 0.12)),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.14), transparent 48%),
+    var(--alka-liquid-glass-bg);
+  border-color: transparent;
+  box-shadow:
+    0 8px 22px hsl(var(--alka-shadow-color) / 0.045),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.36),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.034);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+}
+
+body.theme-light .alka-card-surface.alka-liquid-glass,
+body.theme-light .alka-item-surface[data-surface="glass"],
+body.theme-light .alka-dropdown-content.alka-liquid-glass,
+body.theme-light .alka-context-menu-content.alka-liquid-glass,
+body.theme-light .alka-select-content.alka-liquid-glass,
+body.theme-light .alka-command.alka-liquid-glass,
+body.theme-light .alka-popover-content.alka-liquid-glass,
+body.theme-light .alka-tooltip-content.alka-liquid-glass,
+body.theme-light .alka-dialog-content.alka-liquid-glass,
+body.theme-light .alka-alert-dialog-content.alka-liquid-glass,
+body.theme-light .alka-sheet-content.alka-liquid-glass,
+body.theme-light .alka-toast.alka-liquid-glass,
+.theme-light.docs-shell .alka-card-surface.alka-liquid-glass,
+.theme-light.docs-shell .alka-item-surface[data-surface="glass"] {
+  box-shadow:
+    0 8px 22px hsl(var(--alka-shadow-color) / 0.045),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.36),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.034);
+}
+
+body.theme-light .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+.theme-light.docs-shell .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+.theme-light.docs-shell .navbar-panel.alka-liquid-glass:not([data-quiet="true"]) {
+  --alka-glass-element-tint-opacity: 0.3;
+  --alka-glass-element-shine-opacity: 0.22;
+  background:
+    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.24), transparent 50%),
+    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.035), transparent 58%),
+    linear-gradient(145deg, hsl(0 0% 100% / 0.14), hsl(0 0% 100% / 0.1) 48%, hsl(0 0% 100% / 0.12)),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.14), transparent 48%),
+    var(--alka-liquid-glass-bg);
+  border-color: transparent;
+  box-shadow:
+    0 10px 26px hsl(var(--alka-shadow-color) / 0.055),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.38),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.036);
+}
+
+body.theme-light .alka-item-surface,
+body.theme-light .alka-accordion-item,
+body.theme-light .alka-accordion-item[data-state="open"],
+.theme-light.docs-shell .alka-item-surface,
+.theme-light.docs-shell .alka-accordion-item,
+.theme-light.docs-shell .alka-accordion-item[data-state="open"] {
+  box-shadow: none !important;
 }
 
 body {
   margin: 0;
-  background: #050505;
+  background: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--alka-font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 420ms var(--alka-ease-smooth),
+    color 420ms var(--alka-ease-smooth);
 }
 
 ::selection {
@@ -33,7 +140,10 @@ body {
     position: relative;
     min-height: 100dvh;
     overflow-x: clip;
-    background: #050505;
+    background: hsl(var(--background));
+    transition:
+      background-color 420ms var(--alka-ease-smooth),
+      color 420ms var(--alka-ease-smooth);
   }
 
   .docs-shell::before {
@@ -57,6 +167,215 @@ body {
       linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 28%),
       linear-gradient(90deg, rgba(255, 255, 255, 0.025), transparent 34%, rgba(255, 255, 255, 0.018)),
       linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.42));
+  }
+
+  .theme-light.docs-shell::after {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.03), transparent 24%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.025), transparent 34%, rgba(0, 0, 0, 0.018)),
+      linear-gradient(180deg, transparent, rgba(238, 238, 238, 0.48));
+  }
+
+  .theme-light.docs-shell::before {
+    opacity: 0.1;
+  }
+
+  .theme-light.docs-shell {
+    --alka-panel-bg: 0 0% 100% / 0.34;
+    --alka-navbar-bg: 0 0% 100% / 0.38;
+    --alka-panel-border: 0 0% 0% / 0.12;
+    --alka-navbar-border: 0 0% 0% / 0.12;
+    --alka-panel-shadow: 0 0% 0% / 0.055;
+    --alka-highlight-color: 0 0% 100%;
+    --alka-shadow-color: 0 0% 0%;
+    --alka-shadow-control: 0 1px 2px hsl(var(--alka-shadow-color) / 0.035);
+    --alka-shadow-panel: 0 8px 22px hsl(var(--alka-shadow-color) / 0.045);
+    --alka-shadow-floating: 0 12px 30px hsl(var(--alka-shadow-color) / 0.06);
+    --alka-shadow-modal: 0 16px 40px hsl(var(--alka-shadow-color) / 0.075), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.2);
+  }
+
+  .docs-code-block {
+    color: #d4d4d4;
+    tab-size: 2;
+  }
+
+  .docs-code-block code {
+    font-family: var(--alka-font-mono);
+    white-space: pre;
+  }
+
+  .docs-code-token {
+    font: inherit;
+  }
+
+  .docs-code-keyword {
+    color: #c586c0;
+  }
+
+  .docs-code-string {
+    color: #ce9178;
+  }
+
+  .docs-code-comment {
+    color: #6a9955;
+  }
+
+  .docs-code-number,
+  .docs-code-literal {
+    color: #b5cea8;
+  }
+
+  .docs-code-function {
+    color: #dcdcaa;
+  }
+
+  .docs-code-type,
+  .docs-code-tag {
+    color: #4ec9b0;
+  }
+
+  .docs-code-attr {
+    color: #9cdcfe;
+  }
+
+  .docs-code-expression {
+    color: #d7ba7d;
+  }
+
+  .docs-code-punctuation {
+    color: #808080;
+  }
+
+  .docs-page-scrollbar {
+    position: fixed;
+    inset-block: 0;
+    right: 0;
+    z-index: 80;
+    width: 0.875rem;
+    padding-block: 0.35rem;
+    padding-inline: 0.1875rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: none;
+    transform-origin: center right;
+    transition: opacity 360ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity;
+  }
+
+  .docs-page-scrollbar[data-visible="true"] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .docs-page-scrollbar-thumb {
+    width: 100%;
+    min-height: 2.625rem;
+    cursor: grab;
+    border-radius: var(--alka-radius-pill);
+    background:
+      linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.18), transparent),
+      hsl(var(--foreground) / 0.32);
+    box-shadow:
+      0 6px 18px hsl(var(--alka-shadow-color) / 0.18),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.18);
+    opacity: 0.88;
+    transform-origin: center right;
+    transition:
+      background-color 240ms var(--alka-ease-smooth),
+      box-shadow 240ms var(--alka-ease-smooth),
+      opacity 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .docs-page-scrollbar-thumb:hover,
+  .docs-page-scrollbar-thumb:active {
+    background:
+      linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.22), transparent),
+      hsl(var(--foreground) / 0.44);
+    opacity: 1;
+  }
+
+  .docs-page-scrollbar-thumb:active {
+    cursor: grabbing;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .docs-page-scrollbar,
+    .docs-page-scrollbar-thumb {
+      transition-duration: var(--alka-motion-instant);
+    }
+  }
+
+  body.theme-light .alka-liquid-glass,
+  .theme-light.docs-shell .alka-liquid-glass {
+    --alka-liquid-glass-blur: 26px;
+    --alka-liquid-glass-lens-blur: 12px;
+    --alka-liquid-glass-base-lens-opacity: 0.6;
+    --alka-liquid-glass-base-sheen-opacity: 0.22;
+    --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
+    --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
+    --alka-glass-element-tint-opacity: 0.3;
+    --alka-glass-element-shine-opacity: 0.22;
+    background:
+      radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.24), transparent 50%),
+      radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.035), transparent 58%),
+      linear-gradient(145deg, hsl(0 0% 100% / 0.14), hsl(0 0% 100% / 0.1) 48%, hsl(0 0% 100% / 0.12)),
+      linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.14), transparent 48%),
+      var(--alka-liquid-glass-bg);
+    border-color: transparent;
+    box-shadow:
+      0 8px 22px hsl(var(--alka-shadow-color) / 0.045),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.36),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.034);
+    -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+    backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
+  }
+
+  body.theme-light .alka-card-surface.alka-liquid-glass,
+  body.theme-light .alka-item-surface[data-surface="glass"],
+  body.theme-light .alka-dropdown-content.alka-liquid-glass,
+  body.theme-light .alka-context-menu-content.alka-liquid-glass,
+  body.theme-light .alka-select-content.alka-liquid-glass,
+  body.theme-light .alka-command.alka-liquid-glass,
+  body.theme-light .alka-popover-content.alka-liquid-glass,
+  body.theme-light .alka-tooltip-content.alka-liquid-glass,
+  body.theme-light .alka-dialog-content.alka-liquid-glass,
+  body.theme-light .alka-alert-dialog-content.alka-liquid-glass,
+  body.theme-light .alka-sheet-content.alka-liquid-glass,
+  body.theme-light .alka-toast.alka-liquid-glass,
+  .theme-light.docs-shell .alka-card-surface.alka-liquid-glass,
+  .theme-light.docs-shell .alka-item-surface[data-surface="glass"] {
+    box-shadow:
+      0 8px 22px hsl(var(--alka-shadow-color) / 0.045),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.36),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.034);
+  }
+
+  body.theme-light .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+  .theme-light.docs-shell .alka-navbar-panel.alka-liquid-glass:not([data-quiet="true"]),
+  .theme-light.docs-shell .navbar-panel.alka-liquid-glass:not([data-quiet="true"]) {
+    --alka-glass-element-tint-opacity: 0.3;
+    --alka-glass-element-shine-opacity: 0.22;
+    background:
+      radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.24), transparent 50%),
+      radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.035), transparent 58%),
+      linear-gradient(145deg, hsl(0 0% 100% / 0.14), hsl(0 0% 100% / 0.1) 48%, hsl(0 0% 100% / 0.12)),
+      linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.14), transparent 48%),
+      var(--alka-liquid-glass-bg);
+    border-color: transparent;
+    box-shadow:
+      0 10px 26px hsl(var(--alka-shadow-color) / 0.055),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.38),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.036);
+  }
+
+  body.theme-light .alka-item-surface,
+  body.theme-light .alka-accordion-item,
+  body.theme-light .alka-accordion-item[data-state="open"],
+  .theme-light.docs-shell .alka-item-surface,
+  .theme-light.docs-shell .alka-accordion-item,
+  .theme-light.docs-shell .alka-accordion-item[data-state="open"] {
+    box-shadow: none !important;
   }
 
   .docs-apple-motion-page {
@@ -213,6 +532,149 @@ body {
     transform: rotate(-90deg);
   }
 
+  .docs-mobile-topbar {
+    isolation: isolate;
+  }
+
+  .docs-mobile-topbar-panel {
+    --alka-liquid-glass-bg: hsl(var(--background) / 0.5);
+    box-shadow:
+      0 16px 44px hsl(var(--alka-shadow-color) / 0.2),
+      inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1);
+    transition:
+      border-color 360ms var(--alka-ease-smooth),
+      border-radius 420ms var(--alka-ease-smooth),
+      box-shadow 420ms var(--alka-ease-smooth),
+      background-color 420ms var(--alka-ease-smooth);
+  }
+
+  .docs-mobile-topbar[data-open="true"] .docs-mobile-topbar-panel {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .docs-mobile-menu-trigger {
+    position: relative;
+    color: hsl(var(--foreground));
+  }
+
+  .docs-mobile-menu-icon {
+    opacity: 0;
+  }
+
+  .docs-mobile-menu-lines {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  .docs-mobile-menu-lines span {
+    position: absolute;
+    width: 1.125rem;
+    height: 1px;
+    border-radius: 9999px;
+    background: currentColor;
+    transition:
+      transform 360ms var(--alka-ease-smooth),
+      opacity 280ms var(--alka-ease-smooth);
+  }
+
+  .docs-mobile-menu-lines span:first-child {
+    transform: translateY(-3px);
+  }
+
+  .docs-mobile-menu-lines span:last-child {
+    transform: translateY(3px);
+  }
+
+  .docs-mobile-topbar[data-open="true"] .docs-mobile-menu-lines span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .docs-mobile-topbar[data-open="true"] .docs-mobile-menu-lines span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .docs-mobile-menu {
+    pointer-events: none;
+    visibility: hidden;
+    color: hsl(var(--foreground));
+    opacity: 0;
+    transition:
+      opacity 240ms var(--alka-ease-smooth),
+      visibility 1ms linear 430ms;
+  }
+
+  .docs-mobile-topbar[data-open="true"] .docs-mobile-menu {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition:
+      opacity 260ms var(--alka-ease-smooth),
+      visibility 1ms linear;
+  }
+
+  .docs-mobile-menu-bg {
+    transform: scaleY(0);
+    transform-origin: top;
+    background:
+      radial-gradient(120% 70% at 50% 0%, hsl(var(--foreground) / 0.055), transparent 52%),
+      hsl(var(--background) / 0.985);
+    box-shadow: 0 24px 64px hsl(var(--alka-shadow-color) / 0.24);
+    transition: transform 430ms var(--alka-ease-smooth);
+  }
+
+  .docs-mobile-topbar[data-open="true"] .docs-mobile-menu-bg {
+    transform: scaleY(1);
+  }
+
+  .docs-mobile-menu-content {
+    opacity: 0;
+    transform: translate3d(0, -0.75rem, 0);
+    filter: blur(6px);
+    transition:
+      opacity 260ms var(--alka-ease-smooth),
+      transform 430ms var(--alka-ease-smooth),
+      filter 430ms var(--alka-ease-smooth);
+  }
+
+  .docs-mobile-topbar[data-open="true"] .docs-mobile-menu-content {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    transition-delay: 120ms;
+  }
+
+  .docs-mobile-menu-link {
+    display: flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    padding: 0.7rem 1rem;
+    color: hsl(var(--foreground));
+    font-size: clamp(1.25rem, 5vw, 1.7rem);
+    font-weight: 650;
+    line-height: 1.1;
+    text-decoration: none;
+    transition:
+      background-color 300ms var(--alka-ease-smooth),
+      border-color 300ms var(--alka-ease-smooth),
+      color 300ms var(--alka-ease-smooth);
+  }
+
+  .docs-mobile-menu-link:hover,
+  .docs-mobile-menu-link[data-active="true"] {
+    border-color: hsl(var(--primary) / 0.24);
+    background:
+      radial-gradient(circle at 18% 0%, hsl(var(--primary) / 0.2), transparent 42%),
+      hsl(var(--primary) / 0.14);
+  }
+
   .docs-sidebar-link {
     position: relative;
     display: flex;
@@ -314,6 +776,43 @@ body {
       filter: none !important;
       transform: none !important;
     }
+
+    .docs-mobile-topbar-panel,
+    .docs-mobile-menu,
+    .docs-mobile-menu-bg,
+    .docs-mobile-menu-content,
+    .docs-mobile-menu-lines span,
+    .docs-mobile-menu-link {
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+      filter: none !important;
+    }
   }
 
+}
+
+.docs-logo-for-dark,
+.alka-theme-dark .docs-logo-for-dark,
+.theme-dark .docs-logo-for-dark,
+[data-theme="dark"] .docs-logo-for-dark {
+  display: block;
+}
+
+.docs-logo-for-light,
+.alka-theme-dark .docs-logo-for-light,
+.theme-dark .docs-logo-for-light,
+[data-theme="dark"] .docs-logo-for-light {
+  display: none;
+}
+
+.alka-theme-light .docs-logo-for-dark,
+.theme-light .docs-logo-for-dark,
+[data-theme="light"] .docs-logo-for-dark {
+  display: none;
+}
+
+.alka-theme-light .docs-logo-for-light,
+.theme-light .docs-logo-for-light,
+[data-theme="light"] .docs-logo-for-light {
+  display: block;
 }

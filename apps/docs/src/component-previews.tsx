@@ -4,6 +4,7 @@ import {
   Bell,
   Boxes,
   Check,
+  ChevronLeft,
   ChevronRight,
   FileJson,
   MoreHorizontal,
@@ -31,6 +32,8 @@ import {
   AlertDialogTrigger,
   Avatar,
   AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
   AvatarImage,
   Badge,
   Breadcrumb,
@@ -41,6 +44,8 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonGroup,
+  ButtonGroupSeparator,
+  Calendar,
   Card,
   CardContent,
   CardDescription,
@@ -64,8 +69,17 @@ import {
   CommandItem,
   CommandList,
   ContextMenu,
+  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
   Dialog,
   DialogContent,
@@ -75,6 +89,8 @@ import {
   DialogTrigger,
   DirectionProvider,
   Drawer,
+  DatePicker,
+  DataTable,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
@@ -83,6 +99,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   FlipCard,
   ImageCard,
@@ -119,7 +137,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SectionAwareNavbar,
+  Navbar,
   Separator,
   Sheet,
   SheetContent,
@@ -158,18 +176,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@alkamanas/ui";
+import type { DataTableColumnDef } from "@alkamanas/ui";
 
 import { componentNames } from "./docs-data";
+import { DocsLogoMark, DocsThemeAwareWordmark, docsNavbarLogo } from "./brand-logo";
+import { getDocHref } from "./docs-routes";
 
-function SidebarBrandRow({ label }: { label: string }) {
+function SidebarBrandRow() {
   return (
     <div className="flex h-12 w-full min-w-0 items-center gap-2 overflow-hidden rounded-3xl px-2 text-sm font-semibold transition-[height,padding,gap,border-radius,justify-content] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:px-0">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-primary/10 transition-[width,height,border-radius] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:rounded-[24px]">
-        <span className="h-3 w-3 rounded-full bg-primary transition-[width,height] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
-      </span>
-      <span className="alka-sidebar-brand-label min-w-0 truncate">
-        {label}
-      </span>
+      <DocsThemeAwareWordmark className="block h-7 w-44 shrink-0 group-data-[collapsible=icon]:hidden" />
+      <DocsLogoMark className="hidden h-9 w-12 shrink-0 object-contain group-data-[collapsible=icon]:block" />
     </div>
   );
 }
@@ -185,7 +202,7 @@ function AppleAccordionPreview() {
   return (
     <div className="grid w-full max-w-5xl gap-5 lg:grid-cols-2">
       <div className="grid gap-3">
-        <Badge variant="secondary" className="inline-flex h-8 w-fit items-center whitespace-nowrap rounded-full border-white/[0.08] bg-white/[0.04] px-3 font-mono text-[0.68rem] uppercase leading-none tracking-[0.18em] text-muted-foreground">Border gradient / primary</Badge>
+        <Badge variant="secondary" className="inline-flex h-8 w-fit items-center whitespace-nowrap rounded-full border-white/[0.08] bg-white/[0.04] px-3 font-mono text-[0.68rem] uppercase leading-none tracking-[0.18em] text-muted-foreground">Border gradient / utility</Badge>
         <Accordion defaultValue="colors">
           {items.map(([value, title, body]) => (
             <AccordionItem key={value} value={value}>
@@ -205,8 +222,8 @@ function AppleAccordionPreview() {
         </Accordion>
       </div>
       <div className="grid gap-3">
-        <Badge variant="secondary" className="inline-flex h-8 w-fit items-center whitespace-nowrap rounded-full border-white/[0.08] bg-white/[0.04] px-3 font-mono text-[0.68rem] uppercase leading-none tracking-[0.18em] text-muted-foreground">Border gradient / contrast</Badge>
-        <Accordion borderGradientColor="contrast" defaultValue="colors">
+        <Badge variant="secondary" className="inline-flex h-8 w-fit items-center whitespace-nowrap rounded-full border-white/[0.08] bg-white/[0.04] px-3 font-mono text-[0.68rem] uppercase leading-none tracking-[0.18em] text-muted-foreground">Border gradient / utility</Badge>
+        <Accordion className="border-animation-primary" defaultValue="colors">
           {items.map(([value, title, body]) => (
             <AccordionItem key={value} value={value}>
               <AccordionTrigger>{title}</AccordionTrigger>
@@ -220,6 +237,145 @@ function AppleAccordionPreview() {
     </div>
   );
 }
+
+function ContextMenuPreview() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="flex h-40 w-full max-w-md items-center justify-center rounded-2xl border border-dashed border-white/[0.14] text-sm text-muted-foreground">
+        Right click the workspace surface
+      </ContextMenuTrigger>
+      <ContextMenuContent className="w-64">
+        <ContextMenuLabel>Navigation</ContextMenuLabel>
+        <ContextMenuItem>
+          Back
+          <ContextMenuShortcut>Alt Left</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem disabled>
+          Forward
+          <ContextMenuShortcut>Alt Right</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem>
+          Reload
+          <ContextMenuShortcut>Ctrl R</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>More Tools</ContextMenuSubTrigger>
+          <ContextMenuSubContent className="w-52">
+            <ContextMenuItem>Command palette</ContextMenuItem>
+            <ContextMenuItem>Developer tools</ContextMenuItem>
+            <ContextMenuItem>Export diagnostics</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        <ContextMenuSeparator />
+        <ContextMenuLabel>Visibility</ContextMenuLabel>
+        <ContextMenuCheckboxItem checked>Show Bookmarks</ContextMenuCheckboxItem>
+        <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <ContextMenuLabel>People</ContextMenuLabel>
+        <ContextMenuRadioGroup value="utku">
+          <ContextMenuRadioItem value="utku">Utku Gökcan</ContextMenuRadioItem>
+          <ContextMenuRadioItem value="berkay">Berkay İnci</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+
+type PreviewPayment = {
+  id: string;
+  amount: number;
+  status: "pending" | "processing" | "success" | "failed";
+  email: string;
+};
+
+const previewPayments: PreviewPayment[] = [
+  { id: "728ed52f", amount: 316, status: "success", email: "utku@example.com" },
+  { id: "489e1d42", amount: 242, status: "processing", email: "berkay@example.com" },
+  { id: "95a8f4d1", amount: 837, status: "success", email: "studio@example.com" },
+  { id: "7f2d9a6c", amount: 874, status: "success", email: "product@example.com" },
+  { id: "20c7f3ba", amount: 721, status: "failed", email: "billing@example.com" },
+];
+
+const previewPaymentColumns: DataTableColumnDef<PreviewPayment>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        aria-label="Select all rows"
+        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(Boolean(value))}
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        aria-label="Select row"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(Boolean(value))}
+      />
+    ),
+    enableHiding: false,
+    enableSorting: false,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.getValue("status") as PreviewPayment["status"];
+      const variant = status === "failed" ? "warning" : status === "success" ? "success" : "secondary";
+
+      return <Badge variant={variant}>{status}</Badge>;
+    },
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <Button
+        size="sm"
+        type="button"
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Email
+        <span aria-hidden="true">{column.getIsSorted() === "asc" ? "Asc" : column.getIsSorted() === "desc" ? "Desc" : "Sort"}</span>
+      </Button>
+    ),
+  },
+  {
+    accessorKey: "amount",
+    header: () => <div className="text-right">Amount</div>,
+    cell: ({ row }) => {
+      const amount = Number(row.getValue("amount"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => (
+      <div className="flex justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button aria-label={`Open actions for ${row.original.email}`} size="sm" variant="ghost">
+              Actions
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>Copy payment ID</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    ),
+  },
+];
 
 function AppleCarouselPreview() {
   return (
@@ -243,7 +399,7 @@ function AppleCarouselPreview() {
 function AppleTabsPreview() {
   return (
     <Tabs defaultValue="200" className="max-w-2xl">
-      <TabsList>
+      <TabsList surface="flat">
         {["200", "100", "48", "35", "28", "24", "13"].map((mm) => (
           <TabsTrigger key={mm} value={mm} className="rounded-full px-4">{mm} mm</TabsTrigger>
         ))}
@@ -269,16 +425,16 @@ function NavbarPreview() {
         </p>
         <div className="h-16 rounded-2xl border border-white/[0.06] bg-white/[0.025]" />
       </div>
-      <SectionAwareNavbar
-        brand={<span className="text-sm font-semibold text-white">Alkamanas</span>}
+      <Navbar
+        logo={docsNavbarLogo}
         theme="dark"
         syncThemeMeta={false}
         links={[
-          { href: "#button", label: "Components" },
-          { href: "#sidebar", label: "Shell" },
-          { href: "#theming", label: "Theme" },
+          { href: getDocHref("button"), label: "Components" },
+          { href: getDocHref("sidebar"), label: "Shell" },
+          { href: getDocHref("theming"), label: "Theme" },
         ]}
-        cta={{ href: "#installation", label: "Install" }}
+        cta={{ href: getDocHref("installation"), label: "Install" }}
         className="!absolute !inset-x-4 !top-4 !z-10"
       />
     </div>
@@ -293,9 +449,9 @@ function SidebarPreview() {
         className="relative h-full !min-h-0 overflow-hidden rounded-[1.35rem]"
         style={{ "--sidebar-width": "15rem", "--sidebar-width-icon": "4.25rem" } as React.CSSProperties}
       >
-        <Sidebar position="relative" collapsible="icon" variant="floating">
-          <SidebarHeader>
-            <SidebarBrandRow label="Alkamanas" />
+          <Sidebar position="relative" collapsible="icon" variant="floating">
+            <SidebarHeader>
+            <SidebarBrandRow />
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
@@ -442,7 +598,7 @@ export function ComponentPreview({ id }: { id: string }) {
       <div className="grid w-full max-w-3xl gap-4">
         <div className="rounded-[1.75rem] border border-white/[0.1] p-4 sm:p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <Badge variant="secondary" className="rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Solid</Badge>
+            <Badge variant="secondary" className="rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat</Badge>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button>Primary</Button>
@@ -457,6 +613,7 @@ export function ComponentPreview({ id }: { id: string }) {
           </div>
           <div className="flex flex-wrap gap-3">
             <Button variant="glassPrimary">Primary glass</Button>
+            <Button variant="glassSecondary">Secondary glass</Button>
             <Button variant="glassDestructive">Destructive glass</Button>
             <Button variant="outline">Outline glass</Button>
           </div>
@@ -465,34 +622,52 @@ export function ComponentPreview({ id }: { id: string }) {
     );
   }
   if (id === "button-group") {
-    return <ButtonGroup><Button variant="ghost">Day</Button><Button variant="secondary">Week</Button><Button variant="ghost">Month</Button></ButtonGroup>;
+    return (
+      <ButtonGroup aria-label="Carousel navigation">
+        <Button variant="ghost" size="icon" aria-label="Previous">
+          <ChevronLeft />
+        </Button>
+        <ButtonGroupSeparator />
+        <Button variant="ghost" size="icon" aria-label="Next">
+          <ChevronRight />
+        </Button>
+      </ButtonGroup>
+    );
   }
   if (id === "input") {
     return (
       <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2">
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Underline / primary</Badge>
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Underline / default</Badge>
           <Input placeholder="workspace-name" />
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Underline / contrast</Badge>
-          <Input borderAnimationColor="contrast" placeholder="workspace-name" />
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Underline / utility</Badge>
+          <Input wrapperClassName="border-animation-primary" placeholder="workspace-name" />
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill flat / primary</Badge>
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill flat / default</Badge>
           <Input variant="pill" surface="flat" placeholder="studio.visetra.app" />
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill flat / contrast</Badge>
-          <Input borderAnimationColor="contrast" variant="pill" surface="flat" placeholder="studio.visetra.app" />
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill flat / utility</Badge>
+          <Input wrapperClassName="border-animation-primary" variant="pill" surface="flat" placeholder="studio.visetra.app" />
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill gradient / primary</Badge>
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill gradient / default</Badge>
           <Input variant="pill" surface="gradient" placeholder="studio.visetra.app" />
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill gradient color / contrast</Badge>
-          <Input surfaceGradientColor="contrast" variant="pill" surface="gradient" placeholder="studio.visetra.app" />
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill gradient / utility</Badge>
+          <Input wrapperClassName="gradient-primary/50" variant="pill" surface="gradient" placeholder="studio.visetra.app" />
+        </div>
+        <div className="grid gap-2">
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill glass / default</Badge>
+          <Input variant="pill" surface="glass" placeholder="studio.visetra.app" />
+        </div>
+        <div className="grid gap-2">
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Pill glass / utility</Badge>
+          <Input wrapperClassName="gradient-primary/50 border-animation-primary" variant="pill" surface="glass" placeholder="studio.visetra.app" />
         </div>
       </div>
     );
@@ -501,7 +676,7 @@ export function ComponentPreview({ id }: { id: string }) {
     return (
       <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2">
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / primary</Badge>
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / default</Badge>
           <InputGroup surface="flat">
             <InputGroupAddon>https://</InputGroupAddon>
             <InputGroupInput placeholder="studio.visetra.app" />
@@ -509,15 +684,15 @@ export function ComponentPreview({ id }: { id: string }) {
           </InputGroup>
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / contrast</Badge>
-          <InputGroup borderAnimationColor="contrast" surface="flat">
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / utility</Badge>
+          <InputGroup className="border-animation-primary" surface="flat">
             <InputGroupAddon>https://</InputGroupAddon>
             <InputGroupInput placeholder="studio.visetra.app" />
             <InputGroupAddon>.com</InputGroupAddon>
           </InputGroup>
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / primary</Badge>
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / default</Badge>
           <InputGroup surface="gradient">
             <InputGroupAddon>https://</InputGroupAddon>
             <InputGroupInput placeholder="studio.visetra.app" />
@@ -525,8 +700,24 @@ export function ComponentPreview({ id }: { id: string }) {
           </InputGroup>
         </div>
         <div className="grid gap-2">
-          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient color / contrast</Badge>
-          <InputGroup surfaceGradientColor="contrast" surface="gradient">
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / utility</Badge>
+          <InputGroup className="gradient-primary/50" surface="gradient">
+            <InputGroupAddon>https://</InputGroupAddon>
+            <InputGroupInput placeholder="studio.visetra.app" />
+            <InputGroupAddon>.com</InputGroupAddon>
+          </InputGroup>
+        </div>
+        <div className="grid gap-2">
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Glass / default</Badge>
+          <InputGroup surface="glass">
+            <InputGroupAddon>https://</InputGroupAddon>
+            <InputGroupInput placeholder="studio.visetra.app" />
+            <InputGroupAddon>.com</InputGroupAddon>
+          </InputGroup>
+        </div>
+        <div className="grid gap-2">
+          <Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Glass / utility</Badge>
+          <InputGroup className="gradient-primary/50 border-animation-primary" surface="glass">
             <InputGroupAddon>https://</InputGroupAddon>
             <InputGroupInput placeholder="studio.visetra.app" />
             <InputGroupAddon>.com</InputGroupAddon>
@@ -536,27 +727,30 @@ export function ComponentPreview({ id }: { id: string }) {
     );
   }
   if (id === "input-otp") {
-    return <div className="grid w-full max-w-3xl gap-5"><div className="grid gap-2 overflow-x-auto pb-1"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Primary</Badge><InputOTP maxLength={6}><InputOTPGroup>{[0, 1, 2].map((i) => <InputOTPSlot key={i} index={i} />)}<InputOTPSeparator />{[3, 4, 5].map((i) => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup></InputOTP></div><div className="grid gap-2 overflow-x-auto pb-1"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Border / contrast</Badge><InputOTP borderAnimationColor="contrast" maxLength={6}><InputOTPGroup>{[0, 1, 2].map((i) => <InputOTPSlot key={i} index={i} />)}<InputOTPSeparator />{[3, 4, 5].map((i) => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup></InputOTP></div><div className="grid gap-2 overflow-x-auto pb-1"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / contrast</Badge><InputOTP surfaceGradientColor="contrast" maxLength={6}><InputOTPGroup>{[0, 1, 2].map((i) => <InputOTPSlot key={i} index={i} />)}<InputOTPSeparator />{[3, 4, 5].map((i) => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup></InputOTP></div></div>;
+    return <div className="grid w-full max-w-3xl gap-5"><div className="grid gap-2 overflow-x-auto pb-1"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Primary</Badge><InputOTP maxLength={6}><InputOTPGroup>{[0, 1, 2].map((i) => <InputOTPSlot key={i} index={i} />)}<InputOTPSeparator />{[3, 4, 5].map((i) => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup></InputOTP></div><div className="grid gap-2 overflow-x-auto pb-1"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Border / utility</Badge><InputOTP className="border-animation-primary" maxLength={6}><InputOTPGroup>{[0, 1, 2].map((i) => <InputOTPSlot key={i} index={i} />)}<InputOTPSeparator />{[3, 4, 5].map((i) => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup></InputOTP></div><div className="grid gap-2 overflow-x-auto pb-1"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / utility</Badge><InputOTP className="gradient-primary/50" maxLength={6}><InputOTPGroup>{[0, 1, 2].map((i) => <InputOTPSlot key={i} index={i} />)}<InputOTPSeparator />{[3, 4, 5].map((i) => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup></InputOTP></div></div>;
   }
+  if (id === "calendar") return <div className="grid gap-6 lg:grid-cols-2"><Calendar mode="single" selected={new Date(2026, 4, 20)} defaultMonth={new Date(2026, 4, 20)} /><Calendar mode="range" selected={{ from: new Date(2026, 4, 12), to: new Date(2026, 4, 18) }} defaultMonth={new Date(2026, 4, 12)} /></div>;
   if (id === "card") {
     return <div className="grid gap-4 md:grid-cols-2"><Card><CardHeader><CardTitle>Glass default</CardTitle><CardDescription>Floating, blurred, token-driven surface.</CardDescription></CardHeader></Card><Card variant="solid"><CardHeader><CardTitle>Solid</CardTitle><CardDescription>Use inside dense content areas.</CardDescription></CardHeader></Card></div>;
   }
   if (id === "alert-dialog") {
     return <AlertDialog><AlertDialogTrigger asChild><Button variant="destructive">Delete project</Button></AlertDialogTrigger><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Delete project?</AlertDialogTitle><AlertDialogDescription>This action keeps the soft dialog motion but requires explicit confirmation.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction>Continue</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>;
   }
-  if (id === "avatar") return <Avatar><AvatarImage src="/assets/sectors/automotive-light.webp" /><AvatarFallback>VS</AvatarFallback></Avatar>;
-  if (id === "badge") return <div className="flex flex-wrap gap-2"><Badge>Default</Badge><Badge variant="secondary">Secondary</Badge><Badge variant="success">Success</Badge><Badge variant="warning">Warning</Badge><Badge variant="info">Info</Badge></div>;
-  if (id === "breadcrumb") return <Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href="#components">Components</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Breadcrumb</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>;
+  if (id === "avatar") return <div className="grid w-full max-w-md gap-5"><Avatar><AvatarImage src="/assets/sectors/automotive-light.webp" alt="Workspace avatar" /><AvatarFallback>VS</AvatarFallback></Avatar><AvatarGroup><Avatar><AvatarFallback>CN</AvatarFallback></Avatar><Avatar><AvatarFallback>LR</AvatarFallback></Avatar><Avatar><AvatarFallback>ER</AvatarFallback></Avatar><AvatarGroupCount>+3</AvatarGroupCount></AvatarGroup></div>;
+  if (id === "badge") return <div className="grid gap-4"><div className="flex flex-wrap gap-2"><Badge>Default</Badge><Badge variant="secondary">Secondary</Badge><Badge variant="success">Success</Badge><Badge variant="warning">Warning</Badge><Badge variant="info">Info</Badge></div><div className="flex flex-wrap items-center gap-2"><Badge size="sm" variant="outline">Small</Badge><Badge size="md" variant="outline">Medium</Badge><Badge size="lg" variant="outline">Large</Badge></div></div>;
+  if (id === "breadcrumb") return <Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href={getDocHref("components")}>Components</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Breadcrumb</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>;
   if (id === "checkbox") return <div className="flex items-center gap-3"><Checkbox id="preview-checkbox" defaultChecked /><Label htmlFor="preview-checkbox">Enable smooth motion</Label></div>;
   if (id === "collapsible") return <Collapsible><CollapsibleTrigger asChild><Button variant="outline">Toggle details</Button></CollapsibleTrigger><CollapsibleContent className="mt-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 text-sm text-muted-foreground">A compact disclosure region.</CollapsibleContent></Collapsible>;
-  if (id === "combobox") return <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2"><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / primary</Badge><Combobox surface="flat" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / contrast</Badge><Combobox borderAnimationColor="contrast" surface="flat" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / primary</Badge><Combobox surface="gradient" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient color / contrast</Badge><Combobox surfaceGradientColor="contrast" surface="gradient" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div></div>;
+  if (id === "combobox") return <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2"><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / default</Badge><Combobox surface="flat" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / utility</Badge><Combobox className="border-animation-primary" surface="flat" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / default</Badge><Combobox surface="gradient" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / utility</Badge><Combobox className="gradient-primary/50" surface="gradient" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Glass / default</Badge><Combobox surface="glass" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Glass / utility</Badge><Combobox className="gradient-primary/50 border-animation-primary" surface="glass" options={[{ value: "studio", label: "Visetra Studio" }, { value: "web", label: "Visetra Web" }, { value: "ui", label: "Alkamanas UI" }]} /></div></div>;
   if (id === "command") return <Command className="max-w-xl"><CommandInput placeholder="Search components..." /><CommandList><CommandEmpty>No results.</CommandEmpty><CommandGroup heading="Components"><CommandItem><Type className="h-4 w-4" />Input</CommandItem><CommandItem><PanelsTopLeft className="h-4 w-4" />Dialog</CommandItem></CommandGroup></CommandList></Command>;
-  if (id === "context-menu") return <ContextMenu><ContextMenuTrigger className="flex h-32 items-center justify-center rounded-2xl border border-dashed border-white/[0.14] text-sm text-muted-foreground">Right click</ContextMenuTrigger><ContextMenuContent><ContextMenuItem>Open</ContextMenuItem><ContextMenuItem>Duplicate</ContextMenuItem></ContextMenuContent></ContextMenu>;
+  if (id === "context-menu") return <ContextMenuPreview />;
+  if (id === "data-table") return <DataTable columns={previewPaymentColumns} data={previewPayments} filterColumn="email" filterPlaceholder="Filter emails..." pageSize={5} />;
+  if (id === "date-picker") return <div className="grid gap-4"><DatePicker defaultValue={new Date(2026, 4, 20)} /><DatePicker placeholder="Select launch date" calendarProps={{ defaultMonth: new Date(2026, 4, 1) }} /></div>;
   if (id === "dialog") return <Dialog><DialogTrigger asChild><Button>Open dialog</Button></DialogTrigger><DialogContent><DialogHeader><DialogTitle>Dialog</DialogTitle><DialogDescription>Focused content with soft overlay motion.</DialogDescription></DialogHeader></DialogContent></Dialog>;
   if (id === "direction") return <DirectionProvider dir="rtl" className="max-w-md rounded-2xl border border-white/[0.08] p-4"><p className="text-sm">RTL scoped content</p></DirectionProvider>;
   if (id === "drawer") return <Drawer><DrawerTrigger asChild><Button>Open drawer</Button></DrawerTrigger><DrawerContent><DrawerHeader><DrawerTitle>Drawer</DrawerTitle><DrawerDescription>Bottom sheet motion.</DrawerDescription></DrawerHeader></DrawerContent></Drawer>;
   if (id === "dropdown-menu") return <DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline">Open menu</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>Profile</DropdownMenuItem><DropdownMenuItem>Settings</DropdownMenuItem></DropdownMenuContent></DropdownMenu>;
-  if (id === "item") return <div className="grid w-full max-w-xl gap-3"><Item surface="solid"><ItemMedia><User className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Default item</ItemTitle><ItemDescription>Default item keeps hover calm without border animation.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Active</Badge></ItemActions></Item><Item surface="glass" borderAnimation><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Primary border animation</ItemTitle><ItemDescription>borderAnimation uses primary by default.</ItemDescription></ItemContent><ItemActions><Badge>Live</Badge></ItemActions></Item><Item surface="glass" borderAnimation borderAnimationColor="contrast"><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Contrast border animation</ItemTitle><ItemDescription>Set borderAnimationColor to contrast.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Contrast</Badge></ItemActions></Item></div>;
+  if (id === "item") return <div className="grid w-full max-w-xl gap-3"><Item><ItemMedia><User className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Flat item</ItemTitle><ItemDescription>Default item keeps hover calm without border animation.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Active</Badge></ItemActions></Item><Item surface="glass"><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Glass item</ItemTitle><ItemDescription>Glass keeps the same calm hover behavior.</ItemDescription></ItemContent><ItemActions><Badge>Live</Badge></ItemActions></Item><Item surface="glass"><ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia><ItemContent><ItemTitle>Themed glass item</ItemTitle><ItemDescription>Surface, border and shadow tokens follow theme.</ItemDescription></ItemContent><ItemActions><Badge variant="secondary">Theme</Badge></ItemActions></Item></div>;
   if (id === "kbd") return <div className="flex gap-2"><Kbd>⌘</Kbd><Kbd>K</Kbd></div>;
   if (id === "label") return <div className="grid w-full max-w-sm gap-2"><Label htmlFor="label-preview">Workspace</Label><Input id="label-preview" variant="pill" floatingLabel={false} placeholder="visetra" /></div>;
   if (id === "menubar") return <Menubar><MenubarMenu><MenubarTrigger>File</MenubarTrigger><MenubarContent><MenubarItem>New</MenubarItem><MenubarItem>Save</MenubarItem></MenubarContent></MenubarMenu></Menubar>;
@@ -564,14 +758,23 @@ export function ComponentPreview({ id }: { id: string }) {
   if (id === "progress") return <Progress value={62} className="max-w-xl" />;
   if (id === "radio-group") return <RadioGroup defaultValue="studio" className="grid gap-3"><div className="flex items-center gap-3"><RadioGroupItem value="studio" id="studio" /><Label htmlFor="studio">Studio</Label></div><div className="flex items-center gap-3"><RadioGroupItem value="web" id="web" /><Label htmlFor="web">Web</Label></div></RadioGroup>;
   if (id === "scroll-area") return <ScrollArea className="h-36 max-w-xl rounded-2xl border border-white/[0.08] p-4"><div className="space-y-3">{componentNames.slice(0, 12).map(([, title]) => <p key={title} className="text-sm text-muted-foreground">{title}</p>)}</div></ScrollArea>;
-  if (id === "select") return <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2"><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / primary</Badge><Select><SelectTrigger surface="flat"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / contrast</Badge><Select><SelectTrigger borderAnimationColor="contrast" surface="flat"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / primary</Badge><Select><SelectTrigger surface="gradient"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient color / contrast</Badge><Select><SelectTrigger surfaceGradientColor="contrast" surface="gradient"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div></div>;
+  if (id === "select") return <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2"><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / default</Badge><Select><SelectTrigger surface="flat"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / utility</Badge><Select><SelectTrigger className="border-animation-primary" surface="flat"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / default</Badge><Select><SelectTrigger surface="gradient"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / utility</Badge><Select><SelectTrigger className="gradient-primary/50" surface="gradient"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Glass / default</Badge><Select><SelectTrigger surface="glass"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Glass / utility</Badge><Select><SelectTrigger className="gradient-primary/50 border-animation-primary" surface="glass"><SelectValue placeholder="Select product" /></SelectTrigger><SelectContent><SelectItem value="studio">Visetra Studio</SelectItem><SelectItem value="web">Visetra Web</SelectItem></SelectContent></Select></div></div>;
   if (id === "separator") return <div className="max-w-xl"><p>Before</p><Separator className="my-4" /><p>After</p></div>;
   if (id === "sheet") return <Sheet><SheetTrigger asChild><Button>Immerse yourself</Button></SheetTrigger><SheetContent size="lg"><SheetHeader><SheetTitle className="text-3xl sm:text-5xl">Ultra Retina XDR.</SheetTitle><SheetDescription>The centered sheet opens as a focused detail surface with a detached close control, inspired by Apple product deep dives.</SheetDescription></SheetHeader><div className="mt-6 grid gap-4 md:grid-cols-3"><Card className="bg-white/[0.035]"><CardHeader><CardTitle>sm</CardTitle><CardDescription>Compact detail surface.</CardDescription></CardHeader></Card><Card className="bg-white/[0.035]"><CardHeader><CardTitle>md</CardTitle><CardDescription>Default documentation size.</CardDescription></CardHeader></Card><Card className="bg-white/[0.035]"><CardHeader><CardTitle>lg / xl</CardTitle><CardDescription>Immersive product content.</CardDescription></CardHeader></Card></div><SheetFooter className="mt-8"><Button variant="secondary">Compare sizes</Button><Button>Continue</Button></SheetFooter></SheetContent></Sheet>;
   if (id === "sidebar") return <SidebarPreview />;
-  if (id === "slider") return <Slider defaultValue={[42]} max={100} step={1} className="max-w-xl" />;
+  if (id === "slider") return (
+    <div className="grid w-full max-w-xl gap-8">
+      <Slider defaultValue={[42]} max={100} step={1} aria-label="Progress" />
+      <Slider variant="range" defaultValue={[24, 76]} max={100} step={1} aria-label="Budget range" />
+      <div className="flex h-64 items-center justify-center gap-8">
+        <Slider orientation="vertical" defaultValue={[62]} max={100} step={1} aria-label="Level" />
+        <Slider orientation="vertical" variant="range" defaultValue={[18, 82]} max={100} step={1} aria-label="Vertical range" />
+      </div>
+    </div>
+  );
   if (id === "spinner") return <Spinner size="lg" />;
   if (id === "switch") return <div className="flex items-center gap-3"><Switch id="switch-preview" defaultChecked /><Label htmlFor="switch-preview">Live preview</Label></div>;
-  if (id === "textarea") return <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2"><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / primary</Badge><Textarea surface="flat" placeholder="Write a note..." /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / contrast</Badge><Textarea borderAnimationColor="contrast" surface="flat" placeholder="Write a note..." /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / primary</Badge><Textarea surface="gradient" placeholder="Write a note..." /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient color / contrast</Badge><Textarea surfaceGradientColor="contrast" surface="gradient" placeholder="Write a note..." /></div></div>;
+  if (id === "textarea") return <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2"><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / default</Badge><Textarea surface="flat" placeholder="Write a note..." /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Flat / utility</Badge><Textarea wrapperClassName="border-animation-primary" surface="flat" placeholder="Write a note..." /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / default</Badge><Textarea surface="gradient" placeholder="Write a note..." /></div><div className="grid gap-2"><Badge variant="secondary" className="w-fit rounded-full border-white/[0.08] bg-white/[0.04] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">Gradient / utility</Badge><Textarea wrapperClassName="gradient-primary/50" surface="gradient" placeholder="Write a note..." /></div></div>;
   if (id === "toast") return <Button onClick={() => toast("Component saved", { description: "Toast uses the shared dark surface." })}>Show toast</Button>;
   if (id === "toggle") return <Toggle variant="outline" aria-label="Toggle bold"><AlignJustify className="h-4 w-4" /></Toggle>;
   if (id === "toggle-group") return <ToggleGroup defaultValue="center"><ToggleGroupItem value="left">Left</ToggleGroupItem><ToggleGroupItem value="center">Center</ToggleGroupItem><ToggleGroupItem value="right">Right</ToggleGroupItem></ToggleGroup>;

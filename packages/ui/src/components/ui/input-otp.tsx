@@ -2,12 +2,9 @@
 
 import * as React from "react"
 
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 type InputOTPContextValue = {
-  borderAnimationColor?: BorderAnimationColor
-  surfaceGradientColor?: SurfaceGradientColor
   value: string[]
   maxLength: number
   setSlotValue: (index: number, value: string) => void
@@ -16,8 +13,6 @@ type InputOTPContextValue = {
 const InputOTPContext = React.createContext<InputOTPContextValue | null>(null)
 
 export type InputOTPProps = React.HTMLAttributes<HTMLDivElement> & {
-  borderAnimationColor?: BorderAnimationColor
-  surfaceGradientColor?: SurfaceGradientColor
   maxLength?: number
   value?: string
   defaultValue?: string
@@ -25,7 +20,7 @@ export type InputOTPProps = React.HTMLAttributes<HTMLDivElement> & {
 }
 
 const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
-  ({ className, borderAnimationColor, surfaceGradientColor, maxLength = 6, value, defaultValue = "", onValueChange, ...props }, ref) => {
+  ({ className, maxLength = 6, value, defaultValue = "", onValueChange, ...props }, ref) => {
     const [internalValue, setInternalValue] = React.useState(defaultValue)
     const currentValue = value ?? internalValue
     const slots = Array.from({ length: maxLength }, (_, index) => currentValue[index] ?? "")
@@ -39,12 +34,10 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
     }
 
     return (
-      <InputOTPContext.Provider value={{ borderAnimationColor, surfaceGradientColor, value: slots, maxLength, setSlotValue }}>
+      <InputOTPContext.Provider value={{ value: slots, maxLength, setSlotValue }}>
         <div
           ref={ref}
           className={cn("alka-input-otp flex items-center", className)}
-          data-border-animation-color={borderAnimationColor}
-          data-surface-gradient-color={surfaceGradientColor}
           {...props}
         />
       </InputOTPContext.Provider>
@@ -61,13 +54,11 @@ const InputOTPGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
 InputOTPGroup.displayName = "InputOTPGroup"
 
 export type InputOTPSlotProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> & {
-  borderAnimationColor?: BorderAnimationColor
-  surfaceGradientColor?: SurfaceGradientColor
   index: number
 }
 
 const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
-  ({ className, borderAnimationColor, surfaceGradientColor, index, onBlur, onFocus, onKeyDown, ...props }, ref) => {
+  ({ className, index, onBlur, onFocus, onKeyDown, ...props }, ref) => {
     const context = React.useContext(InputOTPContext)
     if (!context) throw new Error("InputOTPSlot must be used inside <InputOTP />")
     const [focused, setFocused] = React.useState(false)
@@ -99,8 +90,6 @@ const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
           "alka-input-otp-slot",
           className,
         )}
-        data-border-animation-color={borderAnimationColor ?? context.borderAnimationColor}
-        data-surface-gradient-color={surfaceGradientColor ?? context.surfaceGradientColor}
         data-closing={closing ? "true" : undefined}
         data-filled={context.value[index] ? "true" : undefined}
         data-selected={focused ? "true" : undefined}

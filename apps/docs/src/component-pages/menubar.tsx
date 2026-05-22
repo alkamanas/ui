@@ -5,12 +5,17 @@ const details: ComponentPageDetails = {
   "anatomy": [
     "Import Menubar from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
+    "The root uses a flat surface by default and can opt into the shared liquid-glass layer with surface=\"glass\".",
     "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
-      "name": "default",
-      "description": "The standard Menubar treatment used in the component preview."
+      "name": "flat",
+      "description": "The default Menubar treatment used in the component preview."
+    },
+    {
+      "name": "glass",
+      "description": "Opt-in liquid-glass shell for richer navigation surfaces."
     },
     {
       "name": "themed",
@@ -29,6 +34,11 @@ const details: ComponentPageDetails = {
   ],
   "props": [
     {
+      "name": "surface",
+      "type": "flat | glass",
+      "description": "Controls the Menubar root surface. Defaults to flat."
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Merged onto the visible root when the primitive renders one."
@@ -42,7 +52,7 @@ const details: ComponentPageDetails = {
   "accessibility": [
     "Preserve the underlying Radix or native semantics when composing custom children.",
     "Keep interactive labels visible, or provide aria-label for icon-only controls.",
-    "Keyboard focus states should remain visible against both glass and solid surfaces."
+    "Keyboard focus states should remain visible against both flat and glass surfaces."
   ],
   "motion": [
     "Motion uses --alka-motion-* and --alka-ease-* tokens and should respect prefers-reduced-motion.",
