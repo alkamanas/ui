@@ -4,24 +4,51 @@ import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import type { BorderAnimationColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
-export type ItemProps = React.HTMLAttributes<HTMLDivElement> & {
+export type ItemProps = React.HTMLAttributes<HTMLElement> & {
+  asChild?: boolean
   surface?: "flat" | "glass" | "solid"
   borderAnimation?: boolean
   borderAnimationColor?: BorderAnimationColor
 }
 
-const Item = React.forwardRef<HTMLDivElement, ItemProps>(
-  ({ children, className, surface = "flat", borderAnimation: _borderAnimation, borderAnimationColor: _borderAnimationColor, ...props }, ref) => {
+const Item = React.forwardRef<HTMLElement, ItemProps>(
+  ({ children, className, asChild = false, surface = "flat", borderAnimation: _borderAnimation, borderAnimationColor: _borderAnimationColor, ...props }, ref) => {
     const resolvedSurface = surface === "solid" ? "flat" : surface
+    const itemClassName = cn(
+      "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-5 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
+      resolvedSurface === "glass" ? "alka-liquid-glass" : "bg-card/72",
+      className,
+    )
+
+    if (asChild && React.isValidElement(children)) {
+      const child = children as React.ReactElement<
+        React.HTMLAttributes<HTMLElement> & {
+          className?: string
+          children?: React.ReactNode
+        }
+      >
+
+      const childProps = {
+        ...props,
+        ...({ ref } as React.RefAttributes<HTMLElement>),
+        className: cn(itemClassName, child.props.className),
+        "data-surface": resolvedSurface,
+      } as Partial<typeof child.props> & React.Attributes
+
+      return React.cloneElement(
+        child,
+        childProps,
+        <>
+          {resolvedSurface === "glass" && <GlassElementLayers />}
+          {child.props.children}
+        </>,
+      )
+    }
 
     return (
       <div
-        ref={ref}
-        className={cn(
-          "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-5 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
-          resolvedSurface === "glass" ? "alka-liquid-glass" : "bg-card/72",
-          className,
-        )}
+        ref={ref as React.Ref<HTMLDivElement>}
+        className={itemClassName}
         data-surface={resolvedSurface}
         {...props}
       >

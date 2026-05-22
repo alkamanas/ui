@@ -19,6 +19,59 @@ body {
   background: #050505;
 }
 
+:root.alka-theme-dark,
+body.examples-portal-theme,
+.examples-app,
+.examples-app .alka-theme-dark,
+.examples-app [data-theme="dark"],
+.examples-app [data-section-theme="dark"],
+.examples-app [data-navbar-theme="dark"],
+.examples-app .alka-navbar-root,
+.examples-portal-theme {
+  --examples-primary-gold: 41 39% 59%;
+  --examples-primary-gold-foreground: 0 0% 2%;
+  --alka-primary: var(--examples-primary-gold);
+  --alka-primary-foreground: var(--examples-primary-gold-foreground);
+  --alka-accent: 42 70% 54%;
+  --alka-accent-foreground: var(--examples-primary-gold-foreground);
+  --alka-ring: var(--examples-primary-gold);
+  --primary: var(--alka-primary);
+  --primary-foreground: var(--alka-primary-foreground);
+  --accent: var(--alka-accent);
+  --accent-foreground: var(--alka-accent-foreground);
+  --ring: var(--alka-ring);
+  --alka-border-animation-color: var(--primary);
+  --alka-surface-gradient-color: var(--primary);
+}
+
+.examples-app .alka-button-control[data-variant="flat"],
+.examples-app .alka-button-control[data-variant="default"],
+.examples-app .alka-button-control[data-variant="solid"] {
+  border-color: hsl(var(--examples-primary-gold) / 0.42) !important;
+  background: hsl(var(--examples-primary-gold)) !important;
+  color: hsl(var(--examples-primary-gold-foreground)) !important;
+  box-shadow:
+    0 10px 24px hsl(var(--examples-primary-gold) / 0.16),
+    inset 0 1px 0 hsl(0 0% 100% / 0.22) !important;
+}
+
+.examples-app .alka-navbar-panel .alka-button-control {
+  border-color: hsl(var(--examples-primary-gold) / 0.42) !important;
+  background: hsl(var(--examples-primary-gold)) !important;
+  color: hsl(var(--examples-primary-gold-foreground)) !important;
+}
+
+.examples-app .alka-button-control[data-variant="flat"]:hover,
+.examples-app .alka-button-control[data-variant="default"]:hover,
+.examples-app .alka-button-control[data-variant="solid"]:hover {
+  background: hsl(var(--examples-primary-gold) / 0.9) !important;
+}
+
+.examples-app .alka-switch-track[data-state="checked"],
+.examples-app .alka-slider-range {
+  background: hsl(var(--examples-primary-gold)) !important;
+}
+
 button,
 input {
   font: inherit;
@@ -38,29 +91,85 @@ input {
 
 .examples-shell,
 .landing-shell {
-  width: min(1180px, calc(100% - 48px));
+  width: min(1220px, calc(100% - 48px));
   margin: 0 auto;
 }
 
-.examples-home {
+.examples-app .alka-navbar-panel {
+  border-color: hsl(var(--border) / 0.58);
+  background: hsl(var(--background) / 0.76);
+}
+
+.examples-app .alka-navbar-brand,
+.examples-app .alka-navbar-panel a {
+  color: hsl(var(--foreground));
+}
+
+.examples-app .alka-navbar-panel .alka-button-control {
+  color: hsl(var(--examples-primary-gold-foreground));
+}
+
+.examples-app .alka-navbar-panel .alka-button-control[data-variant="flat"] {
+  border-color: hsl(var(--primary) / 0.45);
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.examples-app .alka-navbar-panel .alka-button-control[data-variant="flat"]:hover {
+  background: hsl(var(--primary) / 0.88);
+}
+
+.examples-home,
+.example-detail {
   min-height: 100vh;
-  padding: 92px 0;
 }
 
 .examples-hero {
-  max-width: 820px;
-  margin-bottom: 42px;
+  padding: 126px 0 56px;
 }
 
-.examples-hero h1,
+.detail-hero,
+.detail-layout,
+.components-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.76fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.hero-grid {
+  display: block;
+}
+
+.hero-copy {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-copy,
+.landing-copy {
+  min-width: 0;
+}
+
+.hero-copy h1,
+.detail-hero h1,
 .landing-copy h1 {
+  max-width: 780px;
   margin: 18px 0 0;
-  font-size: clamp(48px, 8vw, 104px);
-  line-height: 0.92;
+  font-size: clamp(44px, 6.2vw, 76px);
+  line-height: 1;
   letter-spacing: 0;
 }
 
-.examples-hero p,
+.hero-copy h1,
+.hero-copy p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-copy p,
+.detail-hero p,
 .landing-copy p,
 .feature-copy p,
 .section-heading p {
@@ -71,14 +180,258 @@ input {
   line-height: 1.7;
 }
 
-.examples-grid {
+.hero-copy p span {
+  color: hsl(var(--foreground));
+}
+
+.hero-actions,
+.landing-actions,
+.landing-proof,
+.dashboard-card-header,
+.cta-form,
+.cta-shortcuts,
+.request-form,
+.card-row,
+.category-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-actions {
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.hero-outline-button {
+  border-color: hsl(var(--primary) / 0.42) !important;
+  background: hsl(var(--background) / 0.18) !important;
+  color: hsl(var(--foreground)) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.hero-outline-button:hover {
+  border-color: hsl(var(--primary) / 0.68) !important;
+  background: hsl(var(--primary) / 0.1) !important;
+}
+
+.hero-category-strip {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.hero-category-strip a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid hsl(var(--border) / 0.58);
+  border-radius: 999px;
+  padding: 0 10px 0 14px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background) / 0.26);
+  text-decoration: none;
+}
+
+.hero-category-strip svg {
+  width: 16px;
+  height: 16px;
+  color: hsl(var(--muted-foreground));
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 3px;
+  flex-shrink: 0;
+}
+
+.navbar-actions .alka-button-control {
+  flex-shrink: 0;
+}
+
+.navbar-search {
+  display: flex;
+  width: min(20vw, 236px);
+  min-width: 188px;
+  align-items: center;
+}
+
+.navbar-search .navbar-search-control {
+  height: 2.5rem;
+  min-height: 2.5rem;
+  flex: 1 1 auto;
+}
+
+.navbar-search .alka-input-group-input {
+  font-size: 0.9375rem;
+}
+
+.navbar-search .alka-input-group-input::placeholder {
+  color: hsl(var(--muted-foreground) / 0.72);
+  opacity: 1;
+}
+
+.navbar-search .alka-input-group-addon:first-child {
+  color: hsl(var(--primary));
+  padding-inline: 0.875rem 0.5rem;
+}
+
+.navbar-search .alka-input-group-addon:first-child svg {
+  width: 18px;
+  height: 18px;
+}
+
+.navbar-search .navbar-search-shortcut {
+  padding-inline: 0.375rem 0.625rem;
+}
+
+.navbar-search .navbar-search-kbd {
+  width: 38px;
+  min-width: 38px;
+  height: 28px;
+  min-height: 28px;
+  padding-inline: 0.45rem;
+  border-color: hsl(var(--border) / 0.78);
+  border-radius: var(--alka-radius-pill);
+  background: hsl(var(--muted) / 0.68);
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+  gap: 0.12rem;
+  line-height: 1;
+  box-shadow: inset 0 -1px 0 hsl(var(--border) / 0.8);
+  white-space: nowrap;
+}
+
+.navbar-search .navbar-command-icon {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.4;
+}
+
+
+.map-stack,
+.mini-list,
+.feature-list,
+.category-links {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 18px;
+  gap: 12px;
+}
+
+.card-row {
+  justify-content: space-between;
+}
+
+.examples-section {
+  padding: 46px 0;
+}
+
+.section-heading {
+  max-width: 820px;
+  margin-bottom: 28px;
+}
+
+.section-heading h2,
+.feature-copy h2 {
+  max-width: 760px;
+  margin: 18px 0 0;
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.example-card-grid,
+.site-map-grid,
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.example-card-grid.featured {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.example-card-grid.compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .example-card {
-  min-height: 520px;
+  min-height: 352px;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 260ms var(--alka-ease-smooth),
+    transform 260ms var(--alka-ease-smooth),
+    box-shadow 260ms var(--alka-ease-smooth);
+}
+
+.example-card[data-compact="true"] {
+  min-height: 352px;
+}
+
+.example-card:hover,
+.example-card:focus-visible {
+  border-color: hsl(var(--primary) / 0.34);
+  box-shadow:
+    0 22px 54px hsl(var(--alka-shadow-color) / 0.32),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.1);
+  transform: translateY(-2px);
+}
+
+.example-card:focus-visible {
+  box-shadow:
+    0 0 0 2px hsl(var(--background)),
+    0 0 0 4px hsl(var(--primary) / 0.66),
+    0 22px 54px hsl(var(--alka-shadow-color) / 0.32);
+}
+
+.example-card .alka-card-header {
+  padding: 0;
+}
+
+.example-card .example-card-content {
+  display: flex;
+  min-height: inherit;
+  flex-direction: column;
+  padding: 0;
+}
+
+.example-card-body {
+  display: grid;
+  gap: 12px;
+  padding: 20px 24px 24px;
+}
+
+.example-card-title-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.example-card-title-row .alka-card-title {
+  min-width: 0;
+  font-size: 22px;
+  line-height: 1.16;
+}
+
+.example-card-body .alka-card-description {
+  display: -webkit-box;
+  min-height: 48px;
+  overflow: hidden;
+  color: hsl(var(--muted-foreground));
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .example-card-topline {
@@ -90,75 +443,2879 @@ input {
   font-size: 13px;
 }
 
-.example-preview {
-  min-height: 230px;
-  border: 1px solid hsl(var(--border) / 0.72);
-  border-radius: 28px;
+.example-card-visual {
+  position: relative;
+  min-height: 210px;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 0;
+  padding: 18px 22px;
+  background: hsl(var(--muted) / 0.12);
+}
+
+.example-card-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(hsl(var(--foreground) / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--foreground) / 0.035) 1px, transparent 1px);
+  background-size: 28px 28px, 28px 28px;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.example-card-visual::after {
+  display: none;
+}
+
+.example-card-visual > * {
+  position: relative;
+  z-index: 1;
+}
+
+.visual-dashboard,
+.visual-settings,
+.visual-pricing,
+.visual-media,
+.visual-kanban,
+.visual-bento,
+.visual-default {
+  height: 100%;
+  min-height: 162px;
+}
+
+.visual-dashboard,
+.visual-settings,
+.visual-media,
+.visual-default {
+  display: grid;
+  align-content: space-between;
+  gap: 12px;
+}
+
+.visual-stat-row,
+.visual-pricing,
+.visual-kanban {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.visual-stat-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.visual-bento {
+  display: grid;
+  grid-template-columns: 1fr 0.58fr;
+  gap: 10px;
+}
+
+.visual-bento-hero {
+  display: grid;
+  align-content: space-between;
+  min-height: 162px;
+  border: 1px solid hsl(var(--primary) / 0.3);
+  border-radius: 20px;
   padding: 16px;
   background:
-    linear-gradient(hsl(var(--foreground) / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--foreground) / 0.04) 1px, transparent 1px);
-  background-size: 24px 24px;
+    radial-gradient(circle at 55% 95%, hsl(24 88% 62% / 0.38), transparent 4.8rem),
+    radial-gradient(circle at 78% 72%, hsl(269 92% 68% / 0.44), transparent 5.6rem),
+    linear-gradient(145deg, hsl(262 84% 58% / 0.84), hsl(252 72% 46% / 0.68));
+  color: white;
 }
 
-.preview-nav,
-.preview-cards {
-  display: flex;
-  gap: 8px;
+.visual-bento-hero strong {
+  max-width: 210px;
+  font-size: 25px;
+  line-height: 0.98;
 }
 
-.preview-nav span,
-.preview-cards span,
-.preview-hero span,
-.preview-hero strong,
-.preview-hero em {
-  display: block;
-  border-radius: 999px;
-  background: hsl(var(--foreground) / 0.18);
-}
-
-.preview-nav span {
-  width: 54px;
-  height: 20px;
-}
-
-.preview-hero {
+.visual-bento-grid {
   display: grid;
-  gap: 12px;
-  margin: 42px 0 34px;
+  grid-template-rows: 0.8fr 1fr;
+  gap: 10px;
 }
 
-.preview-hero span {
-  width: 80px;
-  height: 18px;
-  background: hsl(var(--primary) / 0.5);
+.visual-bento-grid span {
+  border: 1px solid hsl(var(--border) / 0.52);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 70% 20%, hsl(24 88% 62% / 0.22), transparent 3.8rem),
+    hsl(var(--background) / 0.34);
 }
 
-.preview-hero strong {
-  width: min(360px, 86%);
-  height: 44px;
+.example-card-visual .alka-card-header {
+  padding: 12px;
 }
 
-.preview-hero em {
-  width: min(260px, 64%);
-  height: 18px;
+.example-card-visual .alka-card-content {
+  padding: 0 12px 12px;
 }
 
-.preview-cards span {
-  flex: 1;
-  height: 62px;
-  border-radius: 20px;
+.example-card-visual .alka-card-title {
+  font-size: 18px;
 }
 
-.example-tags {
+.example-card-visual .alka-card-description {
+  min-height: 0;
+}
+
+.example-card-visual .alka-item-surface {
+  padding: 12px;
+  border-radius: 16px;
+  background: hsl(var(--background) / 0.32);
+}
+
+.example-card-visual .alka-item-media {
+  width: 34px;
+  height: 34px;
+}
+
+.visual-media-list,
+.visual-pill-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 18px 0;
 }
 
-.example-open {
+.example-preview {
+  min-height: 220px;
+  border: 1px solid hsl(var(--border) / 0.72);
+  border-radius: 24px;
+  padding: 16px;
+  background:
+    radial-gradient(circle at 18% 10%, hsl(var(--primary) / 0.08), transparent 12rem),
+    hsl(var(--background) / 0.28);
+}
+
+.example-preview .alka-item-surface {
+  gap: 10px;
+  border-radius: 16px;
+  padding: 11px;
+}
+
+.example-preview .alka-item-media {
+  width: 32px;
+  height: 32px;
+  border-radius: 14px;
+}
+
+.example-preview .alka-item-title {
+  font-size: 13px;
+}
+
+.example-preview .alka-item-description {
+  font-size: 12px;
+}
+
+.example-preview .alka-button-control[data-size="sm"] {
+  height: 34px;
+  padding-inline: 14px;
+}
+
+.example-preview .alka-badge {
+  min-height: 24px;
+  padding-inline: 10px;
+}
+
+.example-preview .alka-tabs-list {
+  height: 40px;
+  padding: 4px;
+}
+
+.example-preview .alka-tabs-trigger {
+  height: 32px;
+  padding-inline: 12px;
+  font-size: 12px;
+}
+
+.example-preview .alka-input-group,
+.example-preview .alka-input-control,
+.example-preview .alka-input-group-input {
+  min-height: 40px;
+}
+
+.example-preview .alka-progress {
+  height: 12px;
+}
+
+.preview-landing,
+.preview-pricing,
+.preview-storefront,
+.preview-checkout,
+.preview-kanban,
+.preview-document,
+.preview-portfolio,
+.preview-calendar,
+.preview-bento,
+.preview-dashboard,
+.preview-settings {
+  min-height: 188px;
+}
+
+.preview-landing,
+.preview-pricing,
+.preview-storefront,
+.preview-checkout,
+.preview-kanban,
+.preview-document,
+.preview-portfolio,
+.preview-calendar,
+.preview-bento,
+.preview-settings {
+  display: grid;
+  gap: 12px;
+}
+
+.preview-landing {
+  align-content: space-between;
+}
+
+.preview-copy-stack {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.preview-hero-cards {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.preview-dashboard {
+  display: block;
+}
+
+.preview-order-card,
+.preview-kanban-column,
+.preview-doc-meta,
+.preview-document article,
+.preview-agenda {
+  border: 1px solid hsl(var(--border) / 0.54);
+  border-radius: 18px;
+  background: hsl(var(--card) / 0.3);
+}
+
+.preview-dashboard-stack,
+.preview-agenda-list {
+  display: grid;
+  gap: 10px;
+}
+
+.preview-tabs .alka-tabs-list {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.preview-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.preview-kpi-row .alka-item-surface {
+  min-width: 0;
+  padding: 10px;
+}
+
+.preview-avatar-row,
+.preview-store-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.preview-control-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 16px;
+  background: hsl(var(--card) / 0.24);
+}
+
+.preview-table-component {
+  font-size: 12px;
+}
+
+.preview-plan-featured {
+  border-color: hsl(var(--primary) / 0.64);
+}
+
+.preview-product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.preview-checkout {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 12px;
+}
+
+.preview-form-lines {
+  display: grid;
+  align-content: center;
+  gap: 12px;
+}
+
+.preview-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: hsl(var(--muted-foreground));
+  font-size: 13px;
+}
+
+.preview-order-card {
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.preview-kanban {
+  display: flex;
+  align-items: stretch;
+}
+
+.preview-kanban-column {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 12px;
+}
+
+.preview-document {
+  display: grid;
+  grid-template-columns: 0.36fr 1fr;
+  gap: 12px;
+}
+
+.preview-doc-meta,
+.preview-document article {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 14px;
+}
+
+.preview-portfolio {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  gap: 12px;
+}
+
+.preview-image-card {
+  min-height: 188px;
+  max-height: 188px;
+  --alka-image-tile-radius: 18px;
+}
+
+.preview-image-card .alka-image-tile-content {
+  padding: 14px;
+}
+
+.preview-image-card .alka-image-tile-subtitle {
+  font-size: 10px;
+}
+
+.preview-image-card .alka-image-tile-title {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.preview-project-list {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.preview-calendar {
+  display: flex;
+  align-items: stretch;
+}
+
+.preview-calendar .preview-tabs {
+  flex: 1;
+  min-width: 0;
+}
+
+.preview-agenda {
+  width: 34%;
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  padding: 14px;
+}
+
+.preview-bento {
+  grid-template-columns: 1fr 0.5fr;
+}
+
+.preview-bento-main {
+  position: relative;
+  display: grid;
+  min-height: 188px;
+  align-content: start;
+  gap: 12px;
+  overflow: hidden;
+  border: 1px solid hsl(269 92% 72% / 0.38);
+  border-radius: 20px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 64% 100%, hsl(24 88% 62% / 0.48), transparent 5.8rem),
+    radial-gradient(circle at 74% 78%, hsl(190 90% 58% / 0.24), transparent 4.5rem),
+    linear-gradient(145deg, hsl(265 83% 58% / 0.9), hsl(248 70% 44% / 0.76));
+  color: white;
+}
+
+.preview-bento-main strong {
+  max-width: 240px;
+  font-size: 30px;
+  line-height: 0.95;
+}
+
+.preview-bento-orb {
+  position: absolute;
+  right: 24px;
+  bottom: -30px;
+  width: 112px;
+  height: 112px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 32%, white, transparent 9%),
+    radial-gradient(circle at 36% 28%, hsl(190 100% 68% / 0.85), transparent 18%),
+    radial-gradient(circle at 70% 72%, hsl(24 96% 64%), transparent 24%),
+    radial-gradient(circle at 48% 45%, hsl(287 100% 66%), hsl(234 88% 18%) 58%, hsl(251 78% 9%));
+  box-shadow:
+    0 0 0 10px hsl(0 0% 100% / 0.08),
+    0 0 44px hsl(269 92% 72% / 0.6);
+}
+
+.preview-bento > .alka-item-surface {
+  align-content: center;
+}
+
+.example-tags,
+.component-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.example-tags {
+  margin: 16px 0;
+}
+
+.category-icon,
+.capability-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border: 1px solid hsl(var(--border) / 0.64);
+  border-radius: 18px;
+  background: hsl(var(--primary) / 0.12);
+}
+
+.category-icon svg,
+.capability-icon svg,
+.dashboard-stat svg {
+  width: 20px;
+  height: 20px;
+  color: hsl(var(--primary));
+}
+
+.category-link {
+  display: flex;
   width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid hsl(var(--border) / 0.58);
+  border-radius: 999px;
+  padding: 0 14px 0 16px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background) / 0.24);
+  cursor: pointer;
+}
+
+.category-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.gallery-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.gallery-toolbar .section-heading {
+  margin-bottom: 0;
+}
+
+.category-filter {
+  justify-content: flex-end;
+}
+
+.component-cloud {
+  padding-top: 28px;
+}
+
+.request-card {
+  padding: 10px;
+}
+
+.request-form,
+.cta-form {
+  align-items: stretch;
+}
+
+.request-form > *,
+.cta-form > * {
+  flex: 1 1 220px;
+}
+
+.request-form > button,
+.cta-form > button {
+  flex: 0 0 auto;
+}
+
+.examples-footer {
+  padding: 56px 0 72px;
+  border-top: 1px solid hsl(var(--border) / 0.46);
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.footer-grid p,
+.footer-links a {
+  color: hsl(var(--muted-foreground));
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.footer-links a {
+  text-decoration: none;
+}
+
+.example-detail {
+  padding: 132px 0 80px;
+}
+
+.example-page {
+  min-height: 100vh;
+  padding: 120px 0 88px;
+}
+
+.showcase-heading {
+  max-width: 880px;
+  margin-top: 30px;
+}
+
+.showcase-heading h1 {
+  margin: 18px 0 0;
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.showcase-heading p {
+  max-width: 780px;
+  margin: 20px 0 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.showcase-workspace {
+  margin-top: 34px;
+}
+
+.showcase-toolbar,
+.showcase-actions,
+.showcase-toolbar-left,
+.showcase-device-group,
+.showcase-panel-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.showcase-toolbar {
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.showcase-toolbar-left {
+  gap: 10px;
+}
+
+.showcase-device-group {
+  gap: 8px;
+}
+
+.showcase-device-group .alka-button-control[data-size="icon"] {
+  width: 42px;
+  height: 42px;
+}
+
+.showcase-device-group .alka-button-control[data-active="true"] {
+  border-color: hsl(var(--primary) / 0.72);
+  background: hsl(var(--foreground) / 0.12);
+}
+
+.showcase-cli-menu {
+  width: min(460px, calc(100vw - 32px));
+}
+
+body.examples-portal-theme .alka-dropdown-content.alka-liquid-glass,
+body.examples-portal-theme .alka-select-content.alka-liquid-glass {
+  --alka-liquid-glass-bg: rgb(12 12 12 / 0.94);
+  --alka-liquid-glass-border: rgb(255 255 255 / 0.16);
+  --alka-liquid-glass-tint: rgb(12 12 12 / 0.72);
+  --alka-liquid-glass-shine: rgb(255 255 255 / 0.08);
+  border-color: rgb(255 255 255 / 0.16) !important;
+  background: rgb(12 12 12 / 0.94) !important;
+  color: rgb(255 255 255 / 0.92) !important;
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.55) !important;
+}
+
+body.examples-portal-theme .alka-dropdown-content.alka-liquid-glass::before,
+body.examples-portal-theme .alka-dropdown-content.alka-liquid-glass::after,
+body.examples-portal-theme .alka-select-content.alka-liquid-glass::before,
+body.examples-portal-theme .alka-select-content.alka-liquid-glass::after {
+  opacity: 0.25 !important;
+}
+
+body.examples-portal-theme .alka-dropdown-option,
+body.examples-portal-theme .alka-select-option {
+  color: rgb(255 255 255 / 0.86) !important;
+}
+
+body.examples-portal-theme .alka-dropdown-option:hover,
+body.examples-portal-theme .alka-dropdown-option[data-highlighted],
+body.examples-portal-theme .alka-select-option[data-highlighted],
+body.examples-portal-theme .alka-select-option[data-state="checked"] {
+  border-color: rgb(255 255 255 / 0.16) !important;
+  background: rgb(255 255 255 / 0.08) !important;
+  color: rgb(255 255 255 / 0.96) !important;
+}
+
+.showcase-cli-menu .alka-dropdown-option,
+.showcase-cli-menu [role="menuitem"] {
+  gap: 12px;
+  align-items: center;
+}
+
+.cli-manager {
+  width: 52px;
+  color: rgb(255 255 255 / 0.56);
+  font-weight: 700;
+}
+
+.showcase-cli-menu code {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.showcase-preview-frame {
+  min-height: 680px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] {
+  display: grid;
+  min-height: 773px;
+  align-items: start;
+  justify-items: center;
+  padding: 20px 32px;
+}
+
+.showcase-preview-frame .alka-card-content {
+  padding: 18px;
+  display: grid;
+  justify-items: center;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .alka-card-content {
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .alka-card-content::before {
+  content: none;
+}
+
+.showcase-mobile-device {
+  position: relative;
+  width: 338px;
+  height: 733px;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  border: 7px solid rgb(8 8 8);
+  border-radius: 45px;
+  background: #050505;
+  box-shadow:
+    0 0 0 1px hsl(var(--border) / 0.72),
+    0 0 0 2px rgb(255 255 255 / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 28px 80px rgb(0 0 0 / 0.48);
+}
+
+.showcase-mobile-device::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  width: 96px;
+  height: 24px;
+  border-radius: 0 0 16px 16px;
+  background: rgb(8 8 8);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.showcase-mobile-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 38px;
+  overscroll-behavior: contain;
+  background: #050505;
+}
+
+.showcase-preview-frame[data-viewport="mobile"]:fullscreen .showcase-mobile-device {
+  transform: scale(min(1.12, calc((100vh - 72px) / 733)));
+  transform-origin: top center;
+}
+
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen > .alka-card-content {
+  min-height: 100vh;
+  align-content: center;
+  padding-inline: clamp(24px, 4vw, 48px);
+}
+
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen .dashboard-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen .checkout-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen .settings-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen .bento-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen .generic-showcase-preview {
+  width: min(1480px, 100%);
+}
+
+.showcase-preview-frame[data-viewport="desktop"] .dashboard-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"] .checkout-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"] .settings-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"] .bento-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"] .generic-showcase-preview {
+  width: 100%;
+}
+
+.showcase-preview-frame[data-viewport="desktop"] .checkout-showcase-preview.payment-method-showcase {
+  width: min(1480px, 100%);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .dashboard-showcase-preview,
+.showcase-preview-frame[data-viewport="mobile"] .checkout-showcase-preview,
+.showcase-preview-frame[data-viewport="mobile"] .settings-showcase-preview,
+.showcase-preview-frame[data-viewport="mobile"] .bento-showcase-preview,
+.showcase-preview-frame[data-viewport="mobile"] .generic-showcase-preview {
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .dashboard-showcase-sidebar,
+.showcase-preview-frame[data-viewport="mobile"] .settings-showcase-preview .settings-nav {
+  display: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .dashboard-showcase-stats {
+  grid-template-columns: 1fr;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-showcase-preview {
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  grid-template-areas: none;
+  grid-template-rows: none;
+  padding: 12px;
+  background: transparent;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-showcase-preview::before {
+  content: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-globe {
+  display: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-hero-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-intro-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-template-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-feature-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-control-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-users-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-metric-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-action-card {
+  grid-area: auto;
+  grid-column: auto;
+  grid-row: auto;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-hero-card,
+.showcase-preview-frame[data-viewport="mobile"] .bento-feature-left,
+.showcase-preview-frame[data-viewport="mobile"] .bento-feature-right {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-hero-card {
+  min-height: 300px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-hero-card .alka-card-title {
+  font-size: 42px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-orbit {
+  height: 164px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .bento-orb {
+  width: 150px;
+  height: 150px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-step-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-step-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  min-height: 64px;
+  gap: 6px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-step-card .alka-card-title {
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-step-card .alka-card-description {
+  display: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-step-number {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-card .alka-card-header {
+  padding: 26px 26px 16px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-card > .alka-card-content {
+  padding: 0 26px 26px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-list {
+  gap: 24px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-section {
+  gap: 12px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 0;
+  padding: 16px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-media {
+  width: 42px;
+  height: 42px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .checkout-card-brand {
+  width: 54px;
+  font-size: 12px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-content {
+  min-width: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-actions {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-button-control {
+  min-height: 36px;
+  width: auto;
+  padding-inline: 14px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-title,
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-description {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-title {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .checkout-review-item .alka-item-description {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-form-grid {
+  grid-template-columns: 1fr;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-card-preview,
+.showcase-preview-frame[data-viewport="mobile"] .payment-card-preview-inner,
+.showcase-preview-frame[data-viewport="mobile"] .payment-card-preview-face {
+  min-height: 236px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-card-preview-face {
+  padding: 22px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-card-number {
+  font-size: 19px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase {
+  border-radius: 22px;
+  min-height: auto;
+  border: 0;
+  padding: 12px;
+  row-gap: 18px;
+  background: transparent;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .checkout-flow-main {
+  display: grid;
+  gap: 18px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-method-header {
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-method-header h2 {
+  font-size: 40px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-method-card .alka-card-header {
+  width: auto;
+  margin-inline: 0;
+  padding: 20px 14px 14px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-method-card {
+  background: linear-gradient(145deg, hsl(var(--card) / 0.78), hsl(var(--background) / 0.58)) !important;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-method-card > .alka-card-content {
+  padding: 0 14px 18px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .checkout-review-list {
+  grid-template-columns: 1fr;
+  grid-template-rows: none;
+  align-content: start;
+  gap: 16px;
+  justify-items: stretch;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-form-grid {
+  gap: 10px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1.586 / 1;
+  justify-self: center;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview,
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview-inner,
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview-face {
+  min-height: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview-inner,
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview-face {
+  height: 100%;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-fields {
+  margin-top: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-preview-face {
+  padding: clamp(16px, 5vw, 22px);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-label,
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-bottom span span {
+  font-size: 10px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-number {
+  margin-top: 8px;
+  font-size: 20px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-chip {
+  width: 40px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-brand-logo-preview {
+  width: 72px;
+  height: 48px;
+  flex-basis: 72px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-brand-logo-preview img[data-logo-brand="amex"] {
+  width: 54px;
+  height: 54px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-brand-logo-preview img[data-logo-brand="visa"] {
+  width: 68px;
+  height: 22px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-brand-logo-preview img[data-logo-brand="mastercard"] {
+  width: 64px;
+  height: 40px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-bottom strong {
+  font-size: 14px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-card-fields {
+  max-width: none;
+  justify-self: stretch;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-billing-section {
+  margin-top: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-billing-section .payment-form-grid {
+  grid-template-columns: 1fr;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-billing-section .payment-form-field-wide,
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-billing-section .payment-default-row,
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .payment-billing-section .payment-save-button {
+  grid-column: 1;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .checkout-summary > .alka-card-surface {
+  height: auto;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .checkout-summary {
+  display: grid;
+  grid-column: 1;
+  width: 100%;
+  gap: 14px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .payment-method-showcase .checkout-trust-list {
+  grid-column: 1;
+  gap: 8px;
+}
+
+.generic-showcase-preview {
+  min-height: 640px;
+  display: grid;
+  place-items: center;
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 28px;
+  padding: 22px;
+  background: hsl(var(--background) / 0.32);
+}
+
+.generic-showcase-preview .example-preview {
+  width: min(620px, 100%);
+}
+
+.showcase-code-panel {
+  min-height: 640px;
+  width: 100%;
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 28px;
+  padding: 24px;
+  background: hsl(var(--background) / 0.32);
+}
+
+.showcase-code-panel pre {
+  margin: 14px 0 0;
+  overflow-x: auto;
+  border: 1px solid hsl(var(--border) / 0.54);
+  border-radius: 18px;
+  padding: 18px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--card) / 0.44);
+  font: 600 14px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.showcase-code-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.dashboard-showcase-preview,
+.checkout-showcase-preview,
+.settings-showcase-preview,
+.bento-showcase-preview {
+  min-height: 640px;
+  display: grid;
+  gap: 18px;
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 28px;
+  padding: 18px;
+  background: hsl(var(--background) / 0.32);
+}
+
+.dashboard-showcase-preview {
+  grid-template-columns: 270px minmax(0, 1fr);
+}
+
+.checkout-showcase-preview {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.42fr);
+  gap: 26px;
+  padding: 24px;
+}
+
+.bento-showcase-preview {
+  position: relative;
+  isolation: isolate;
+  --bento-globe-size: clamp(150px, 13vw, 178px);
+  --bento-grid-gap: 18px;
+  --bento-cut-radius: clamp(88px, 8vw, 108px);
+  --bento-cut-stroke: hsl(255 42% 76% / 0.2);
+  --bento-icon-title-gap: 16px;
+  --bento-globe-x: 50%;
+  --bento-globe-y: 389px;
+  grid-template-areas:
+    "intro hero hero control"
+    "intro hero hero metric"
+    "users feature-left feature-right template"
+    "users feature-left feature-right template"
+    "action feature-left feature-right template";
+  grid-template-columns: 0.96fr 1fr 1fr 0.96fr;
+  grid-template-rows: 150px 190px 96px 96px 160px;
+  gap: var(--bento-grid-gap);
+  padding: 22px;
+  background:
+    radial-gradient(circle at 51% 70%, hsl(269 92% 68% / 0.2), transparent 24rem),
+    radial-gradient(circle at 74% 74%, hsl(24 88% 62% / 0.14), transparent 18rem),
+    hsl(232 48% 8% / 0.8);
+}
+
+.bento-showcase-preview::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: var(--bento-globe-y);
+  width: calc(var(--bento-globe-size) * 2.4);
+  height: calc(var(--bento-globe-size) * 2.4);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 50%, hsl(269 92% 68% / 0.18), transparent 44%),
+    radial-gradient(circle at 54% 62%, hsl(24 96% 64% / 0.1), transparent 46%);
+  filter: blur(22px);
+  opacity: 0.62;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.bento-showcase-preview::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  left: var(--bento-globe-x);
+  top: var(--bento-globe-y);
+  width: calc(var(--bento-cut-radius) * 2);
+  height: calc(var(--bento-cut-radius) * 2);
+  border-radius: 999px;
+  background: conic-gradient(
+    from -90deg,
+    transparent 0deg 9deg,
+    var(--bento-cut-stroke) 9deg 171deg,
+    transparent 171deg 189deg,
+    var(--bento-cut-stroke) 189deg 261deg,
+    transparent 261deg 279deg,
+    var(--bento-cut-stroke) 279deg 351deg,
+    transparent 351deg 360deg
+  );
+  -webkit-mask: radial-gradient(
+    circle,
+    transparent calc(var(--bento-cut-radius) - 1.5px),
+    #000 calc(var(--bento-cut-radius) - 0.5px) calc(var(--bento-cut-radius) + 0.8px),
+    transparent calc(var(--bento-cut-radius) + 1.8px)
+  );
+  mask: radial-gradient(
+    circle,
+    transparent calc(var(--bento-cut-radius) - 1.5px),
+    #000 calc(var(--bento-cut-radius) - 0.5px) calc(var(--bento-cut-radius) + 0.8px),
+    transparent calc(var(--bento-cut-radius) + 1.8px)
+  );
+  filter: drop-shadow(0 0 10px hsl(269 92% 72% / 0.16));
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.bento-globe {
+  position: absolute;
+  z-index: 2;
+  left: var(--bento-globe-x);
+  top: var(--bento-globe-y);
+  width: var(--bento-globe-size);
+  height: var(--bento-globe-size);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.bento-globe-ring,
+.bento-globe-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+}
+
+.bento-globe-ring {
+  display: none;
+}
+
+.bento-globe-core {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 34% 32%, white 0 4%, transparent 5%),
+    radial-gradient(circle at 30% 34%, hsl(190 100% 72% / 0.95), transparent 20%),
+    radial-gradient(circle at 72% 74%, hsl(24 96% 64%), transparent 26%),
+    radial-gradient(circle at 42% 72%, hsl(319 100% 64%), transparent 30%),
+    radial-gradient(circle at 54% 46%, hsl(259 96% 34%), hsl(242 88% 12%) 58%, hsl(248 88% 4%));
+  box-shadow:
+    inset 0 1px 18px hsl(0 0% 100% / 0.5),
+    inset -26px -32px 54px rgb(0 0 0 / 0.58),
+    0 0 54px hsl(269 92% 72% / 0.54);
+}
+
+.bento-globe-core::before,
+.bento-globe-core::after {
+  content: "";
+  position: absolute;
+  inset: 16% 8%;
+  border-radius: 50%;
+  border: 2px solid hsl(0 0% 100% / 0.16);
+  filter: blur(0.5px);
+  transform: rotate(-17deg);
+}
+
+.bento-globe-core::after {
+  inset: 24% 4%;
+  border-color: hsl(24 96% 64% / 0.38);
+  transform: rotate(24deg);
+}
+
+.bento-tile {
+  z-index: 3;
+  min-width: 0;
+  border-color: hsl(234 42% 72% / 0.14);
+  background:
+    linear-gradient(145deg, hsl(237 32% 21% / 0.84), hsl(240 42% 14% / 0.86)) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.1),
+    0 20px 56px rgb(0 0 0 / 0.3);
+}
+
+.bento-tile .alka-card-header {
+  padding: 22px;
+}
+
+.bento-tile > .alka-card-content {
+  padding: 0 22px 22px;
+}
+
+.bento-intro-card {
+  --bento-card-pad: 24px;
+  grid-area: intro;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.bento-intro-card .alka-card-header {
+  align-items: flex-start;
+  gap: var(--bento-icon-title-gap);
+  padding: 24px var(--bento-card-pad) 0;
+}
+
+.bento-intro-card > .alka-card-content {
+  display: grid;
+  align-items: end;
+  justify-items: start;
+  padding: 0 var(--bento-card-pad) 34px;
+}
+
+.bento-intro-card .alka-card-title {
+  width: 100%;
+  max-width: 260px;
+  margin-top: 0;
+  font-size: 34px;
+  line-height: 0.98;
+}
+
+.bento-intro-card .alka-card-description {
+  display: grid;
+  width: 100%;
+  gap: 4px;
+  justify-items: start;
+  margin: 0;
+  color: hsl(0 0% 100% / 0.9);
+  font-size: 15px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.bento-intro-card .alka-card-description span {
+  color: hsl(0 0% 100% / 0.52);
+}
+
+.bento-brand-mark,
+.bento-feature-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 34% 30%, white 0 9%, transparent 11%),
+    linear-gradient(145deg, hsl(24 88% 62%), hsl(269 92% 66%));
+  color: white;
+  box-shadow: 0 16px 34px hsl(269 92% 46% / 0.28);
+}
+
+.bento-brand-mark svg,
+.bento-feature-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.bento-hero-card {
+  z-index: 4;
+  grid-area: hero;
+  overflow: visible;
+  -webkit-mask-image: radial-gradient(
+    circle var(--bento-cut-radius) at 50% calc(100% + (var(--bento-grid-gap) / 2)),
+    transparent calc(var(--bento-cut-radius) - 1px),
+    #000 var(--bento-cut-radius)
+  );
+  mask-image: radial-gradient(
+    circle var(--bento-cut-radius) at 50% calc(100% + (var(--bento-grid-gap) / 2)),
+    transparent calc(var(--bento-cut-radius) - 1px),
+    #000 var(--bento-cut-radius)
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  background:
+    radial-gradient(circle at 50% 118%, hsl(24 88% 62% / 0.44), transparent 10rem),
+    radial-gradient(circle at 50% 100%, hsl(190 90% 58% / 0.2), transparent 9rem),
+    linear-gradient(145deg, hsl(265 88% 62%), hsl(254 78% 48%)) !important;
+}
+
+.bento-hero-card .alka-card-header {
+  align-items: center;
+  padding: 30px 30px 0;
+  text-align: center;
+}
+
+.bento-hero-card .alka-card-title {
+  max-width: 590px;
+  margin-top: 12px;
+  color: white;
+  font-size: clamp(52px, 5.1vw, 64px);
+  line-height: 0.98;
+}
+
+.bento-hero-card .alka-badge {
+  gap: 7px;
+  border-color: hsl(0 0% 100% / 0.3);
+  color: white;
+  background: hsl(0 0% 100% / 0.08);
+}
+
+.bento-control-card {
+  grid-area: control;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, hsl(48 92% 62% / 0.14), transparent 6rem),
+    radial-gradient(circle at 66% 50%, hsl(24 88% 62% / 0.14), transparent 8rem),
+    linear-gradient(145deg, hsl(237 32% 21% / 0.84), hsl(240 42% 14% / 0.86)) !important;
+}
+
+.bento-users-card {
+  grid-area: users;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 26px 18px 28px;
+  text-align: center;
+}
+
+.bento-metric-card {
+  grid-area: metric;
+}
+
+.bento-action-card {
+  grid-area: action;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, hsl(48 88% 68% / 0.16), transparent 7rem),
+    linear-gradient(145deg, hsl(237 32% 21% / 0.84), hsl(240 42% 14% / 0.86)) !important;
+}
+
+.bento-users-card .alka-card-header {
+  align-items: center;
+  gap: 0;
+  padding: 0;
+}
+
+.bento-users-card .alka-card-header > .alka-card-title + .alka-card-description {
+  margin-top: 8px;
+}
+
+.bento-users-card > .alka-card-content {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 0;
+}
+
+.bento-control-card .alka-card-content,
+.bento-action-card .alka-card-content {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  padding: 22px;
+}
+
+.bento-control-card .alka-card-content {
+  align-items: center;
+}
+
+.bento-control-card .alka-switch-track {
+  border-color: hsl(0 0% 100% / 0.16);
+  background:
+    radial-gradient(circle at 78% 48%, hsl(269 92% 72% / 0.18), transparent 2.7rem),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.16), hsl(0 0% 100% / 0.055)),
+    hsl(232 42% 10% / 0.62);
+  box-shadow:
+    0 18px 34px rgb(0 0 0 / 0.24),
+    inset 0 1px 0 hsl(0 0% 100% / 0.16),
+    inset 0 -1px 0 hsl(0 0% 100% / 0.07);
+  transform: scale(1.36);
+  transform-origin: center;
+  -webkit-backdrop-filter: blur(18px) saturate(1.16);
+  backdrop-filter: blur(18px) saturate(1.16);
+}
+
+.bento-control-card .alka-switch-track[data-state="checked"] {
+  border-color: hsl(269 92% 72% / 0.28);
+  background:
+    radial-gradient(circle at 74% 46%, hsl(269 92% 72% / 0.34), transparent 2.8rem),
+    linear-gradient(135deg, hsl(269 92% 72% / 0.22), hsl(0 0% 100% / 0.06)),
+    hsl(232 42% 10% / 0.68);
+}
+
+.bento-control-card .alka-switch-thumb.alka-liquid-glass {
+  --alka-liquid-glass-bg: hsl(0 0% 100% / 0.2);
+}
+
+.bento-users-card .alka-card-title,
+.bento-metric-card .alka-card-title {
+  font-size: 58px;
+  line-height: 0.92;
+}
+
+.bento-users-card .alka-card-description {
+  margin: 0;
+  color: hsl(0 0% 100% / 0.66);
+  font-size: 17px;
+  font-weight: 560;
+  line-height: 1.05;
+}
+
+.bento-users-card .alka-card-title {
+  padding-block: 0;
+  color: hsl(24 88% 66%);
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.bento-metric-card {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 46%, hsl(269 92% 72% / 0.16), transparent 7.5rem),
+    linear-gradient(145deg, hsl(237 32% 21% / 0.84), hsl(240 42% 14% / 0.86)) !important;
+}
+
+.bento-metric-card .alka-card-header {
+  width: 100%;
+  align-items: center;
+  gap: 0;
+  padding: 0 28px;
+  text-align: center;
+}
+
+.bento-metric-card .alka-card-title {
+  padding-block: 0;
+  color: transparent;
+  background: linear-gradient(135deg, hsl(218 94% 72%) 8%, hsl(269 92% 72%) 52%, hsl(286 92% 72%) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 0.94;
+  filter: drop-shadow(0 0 24px hsl(269 92% 72% / 0.16));
+}
+
+.bento-metric-card .alka-card-header > .alka-card-title + .alka-card-description {
+  margin-top: 12px;
+}
+
+.bento-metric-card .alka-card-description {
+  margin-bottom: 0;
+  color: hsl(0 0% 100% / 0.68);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.bento-metric-card .bento-theme-progress {
+  width: min(144px, 68%);
+  height: 4px;
+  margin-top: 14px;
+  background: hsl(0 0% 100% / 0.09);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06);
+}
+
+.bento-metric-card .bento-theme-progress-indicator {
+  background: linear-gradient(90deg, hsl(269 92% 72%), hsl(24 88% 66%));
+}
+
+.bento-action-card .alka-card-content {
+  align-content: center;
+}
+
+.bento-action-card .alka-button {
+  min-width: 154px;
+  height: 50px;
+  color: hsl(0 0% 100% / 0.9);
+  font-weight: 700;
+}
+
+.bento-avatar-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin-top: 0;
+  overflow: visible;
+}
+
+.bento-avatar {
+  width: 52px;
+  height: 52px;
+  margin-left: -10px;
+  border: 2px solid hsl(236 46% 13%);
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.28);
+}
+
+.bento-avatar:first-child {
+  margin-left: 0;
+}
+
+.bento-avatar[data-tone="1"] {
+  background:
+    radial-gradient(circle at 62% 34%, hsl(0 0% 100% / 0.9) 0 13%, transparent 14%),
+    linear-gradient(145deg, hsl(22 88% 64%), hsl(16 72% 42%));
+}
+
+.bento-avatar[data-tone="2"] {
+  background:
+    radial-gradient(circle at 50% 50%, hsl(0 0% 100%) 0 17%, transparent 18%),
+    linear-gradient(145deg, hsl(42 92% 82%), hsl(28 84% 64%));
+  color: hsl(232 50% 9%);
+}
+
+.bento-avatar[data-tone="3"] {
+  background:
+    radial-gradient(circle at 38% 32%, hsl(0 0% 100% / 0.9) 0 12%, transparent 13%),
+    linear-gradient(145deg, hsl(269 92% 68%), hsl(243 74% 46%));
+}
+
+.bento-avatar svg {
+  width: 21px;
+  height: 21px;
+}
+
+.bento-feature-card {
+  z-index: 4;
+  display: grid;
+  align-content: end;
+  min-height: 0;
+}
+
+.bento-feature-card .alka-card-header {
+  gap: var(--bento-icon-title-gap);
+  padding: 0 22px 34px;
+}
+
+.bento-feature-left {
+  grid-area: feature-left;
+  -webkit-mask-image: radial-gradient(
+    circle var(--bento-cut-radius) at calc(100% + (var(--bento-grid-gap) / 2)) calc(var(--bento-grid-gap) / -2),
+    transparent calc(var(--bento-cut-radius) - 1px),
+    #000 var(--bento-cut-radius)
+  );
+  mask-image: radial-gradient(
+    circle var(--bento-cut-radius) at calc(100% + (var(--bento-grid-gap) / 2)) calc(var(--bento-grid-gap) / -2),
+    transparent calc(var(--bento-cut-radius) - 1px),
+    #000 var(--bento-cut-radius)
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.bento-feature-right {
+  grid-area: feature-right;
+  -webkit-mask-image: radial-gradient(
+    circle var(--bento-cut-radius) at calc(var(--bento-grid-gap) / -2) calc(var(--bento-grid-gap) / -2),
+    transparent calc(var(--bento-cut-radius) - 1px),
+    #000 var(--bento-cut-radius)
+  );
+  mask-image: radial-gradient(
+    circle var(--bento-cut-radius) at calc(var(--bento-grid-gap) / -2) calc(var(--bento-grid-gap) / -2),
+    transparent calc(var(--bento-cut-radius) - 1px),
+    #000 var(--bento-cut-radius)
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.bento-feature-card .alka-card-title {
+  font-size: 20px;
+}
+
+.bento-feature-card .alka-card-description,
+.bento-template-card .alka-card-description {
+  color: hsl(0 0% 100% / 0.62);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.bento-feature-right .bento-feature-icon {
+  background:
+    radial-gradient(circle at 34% 30%, white 0 9%, transparent 11%),
+    linear-gradient(145deg, hsl(269 92% 66%), hsl(190 90% 58%));
+}
+
+.bento-template-card {
+  grid-area: template;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.bento-template-card .alka-card-title {
+  font-size: 20px;
+}
+
+.bento-template-card .alka-card-header {
+  padding: 34px 22px 8px;
+}
+
+.bento-template-card > .alka-card-content {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 18px 28px;
+}
+
+.bento-template-stack {
+  position: relative;
+  display: grid;
+  max-height: none;
+  align-content: end;
+  justify-items: stretch;
+  gap: 0;
+  min-height: 220px;
+  padding: 4px 4px 4px 28px;
+}
+
+.bento-template-stack .alka-badge {
+  z-index: 5;
+  justify-self: end;
+  margin: 0 18px 7px 0;
+  justify-self: end;
+  rotate: -12deg;
+  border-color: hsl(24 88% 62% / 0.72);
+  font-size: 9px;
+  background: hsl(232 40% 8% / 0.74);
+  box-shadow: 0 10px 22px rgb(0 0 0 / 0.28);
+}
+
+.bento-template-stack .alka-item-surface {
+  width: min(172px, 100%);
+  min-height: 58px;
+  gap: 10px;
+  border-color: hsl(0 0% 100% / 0.09) !important;
+  border-radius: 22px;
+  padding: 10px 14px;
+  background:
+    radial-gradient(circle at 88% 18%, hsl(269 92% 68% / 0.13), transparent 44%),
+    hsl(0 0% 100% / 0.055) !important;
+  box-shadow:
+    0 20px 44px rgb(0 0 0 / 0.3),
+    inset 0 1px 0 hsl(0 0% 100% / 0.09) !important;
+  transform-origin: center;
+}
+
+.bento-template-item-theme {
+  z-index: 3;
+  justify-self: end;
+  rotate: -9deg;
+}
+
+.bento-template-stack .alka-item-surface + .alka-item-surface {
+  margin-top: -8px;
+}
+
+.bento-template-item-ship {
+  z-index: 2;
+  justify-self: center;
+  rotate: 7deg;
+  background:
+    radial-gradient(circle at 90% 22%, hsl(24 88% 62% / 0.12), transparent 44%),
+    hsl(0 0% 100% / 0.052) !important;
+}
+
+.bento-template-item-docs {
+  z-index: 1;
+  justify-self: end;
+  margin-right: 16px;
+  rotate: -5deg;
+  opacity: 0.82;
+  background: hsl(0 0% 100% / 0.04) !important;
+}
+
+.bento-template-stack .alka-item-media {
+  width: 38px;
+  height: 38px;
+}
+
+.bento-template-stack .alka-item-title {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.dashboard-showcase-sidebar,
+.dashboard-showcase-main,
+.checkout-flow-main,
+.checkout-summary,
+.settings-showcase-preview .settings-nav,
+.settings-showcase-preview .settings-panels {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.dashboard-showcase-sidebar,
+.settings-showcase-preview .settings-nav {
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 24px;
+  padding: 16px;
+  background: hsl(var(--card) / 0.3);
+}
+
+.settings-showcase-preview .settings-nav {
+  position: static;
+}
+
+.settings-nav-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 18px;
+  padding: 14px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background) / 0.18);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.settings-nav-button[data-active="true"] {
+  border-color: hsl(var(--primary) / 0.72);
+  background: hsl(var(--primary) / 0.14);
+}
+
+.settings-nav-button .alka-item-media {
+  width: 38px;
+  height: 38px;
+}
+
+.dashboard-showcase-main,
+.checkout-flow-main,
+.settings-showcase-preview .settings-panels {
+  min-width: 0;
+}
+
+.checkout-flow-main {
+  gap: 22px;
+}
+
+.showcase-panel-header {
+  justify-content: space-between;
+}
+
+.showcase-panel-header h2 {
+  margin: 12px 0 0;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+}
+
+.checkout-showcase-preview .showcase-panel-header h2 {
+  font-size: clamp(36px, 4.6vw, 58px);
+}
+
+.dashboard-showcase-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.checkout-step-row,
+.checkout-review-list,
+.checkout-cart-list,
+.checkout-summary-stack,
+.checkout-trust-list {
+  display: grid;
+  gap: 14px;
+}
+
+.checkout-step-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.checkout-step-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 78px;
+  gap: 14px;
+  padding: 18px;
+}
+
+.checkout-step-row [data-state="complete"] {
+  border-color: hsl(var(--border) / 0.32);
+  background: hsl(var(--muted) / 0.08);
+  opacity: 0.54;
+}
+
+.checkout-step-row [data-state="complete"] .alka-card-title,
+.checkout-step-row [data-state="complete"] .alka-card-description {
+  color: hsl(var(--muted-foreground));
+}
+
+.checkout-step-row [data-state="active"] {
+  border-color: hsl(var(--primary) / 0.5);
+  opacity: 1;
+}
+
+.checkout-step-row [data-state="idle"] {
+  border-color: hsl(var(--border) / 0.42);
+  background: hsl(var(--background) / 0.16);
+}
+
+.checkout-step-card .alka-card-title {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.checkout-step-card .alka-card-description {
+  margin-top: 3px;
+  font-size: 12px;
+}
+
+.checkout-step-number {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid hsl(var(--primary) / 0.42);
+  border-radius: var(--alka-radius-pill);
+  color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.12);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.checkout-step-row [data-state="complete"] .checkout-step-number {
+  border-color: hsl(var(--border) / 0.72);
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--muted) / 0.34);
+}
+
+.checkout-review-card .alka-card-header {
+  padding: 30px 32px 18px;
+}
+
+.checkout-review-card > .alka-card-content {
+  padding: 0 32px 32px;
+}
+
+.checkout-review-list,
+.checkout-review-section {
+  display: grid;
+  width: 100%;
+}
+
+.checkout-review-list {
+  gap: 24px;
+}
+
+.checkout-review-section {
+  box-sizing: border-box;
+  width: 100%;
+  gap: 10px;
+  padding: 0;
+}
+
+.checkout-review-section-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.checkout-review-section-header h3 {
+  margin: 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.checkout-review-item {
+  width: 100%;
+  min-height: 98px;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.checkout-review-item .alka-item-media {
+  width: 44px;
+  height: 44px;
+}
+
+.checkout-review-item .checkout-card-brand {
+  width: 58px;
+  color: hsl(var(--primary));
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.checkout-review-item .alka-item-title {
+  font-size: 16px;
+}
+
+.checkout-review-item .alka-item-description {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.payment-card-preview {
+  width: min(520px, 100%);
+  min-height: 300px;
+  justify-self: center;
+  border-radius: 32px;
+  perspective: 1400px;
+}
+
+.payment-card-preview-inner {
+  position: relative;
+  min-height: 300px;
+  border-radius: inherit;
+  transition: transform var(--alka-motion-slow, 680ms) var(--alka-ease-smooth);
+  transform-style: preserve-3d;
+}
+
+.payment-card-preview[data-side="back"] .payment-card-preview-inner {
+  transform: rotateY(180deg);
+}
+
+.payment-card-preview-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: inherit;
+  padding: 30px;
+  color: white;
+  backface-visibility: hidden;
+  box-shadow:
+    0 28px 70px rgb(0 0 0 / 0.42),
+    inset 0 1px 0 rgb(255 255 255 / 0.22);
+}
+
+.payment-card-preview-front {
+  background:
+    radial-gradient(circle at 84% 18%, hsl(var(--primary) / 0.24), transparent 34%),
+    radial-gradient(circle at 12% 100%, rgb(120 92 34 / 0.2), transparent 36%),
+    linear-gradient(135deg, rgb(19 19 18), rgb(45 40 30) 52%, rgb(8 8 8));
+}
+
+.payment-card-preview-back {
+  background:
+    radial-gradient(circle at 86% 76%, hsl(var(--primary) / 0.2), transparent 30%),
+    linear-gradient(135deg, rgb(9 9 9), rgb(34 31 25));
+  transform: rotateY(180deg);
+}
+
+.payment-card-topline,
+.payment-card-bottom,
+.payment-card-signature,
+.payment-default-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.payment-card-chip {
+  width: 42px;
+  height: 32px;
+  border: 1px solid rgb(255 255 255 / 0.26);
+  border-radius: 10px;
+  background:
+    linear-gradient(90deg, transparent 46%, rgb(0 0 0 / 0.2) 46% 54%, transparent 54%),
+    linear-gradient(180deg, hsl(var(--primary) / 0.9), hsl(var(--primary) / 0.38));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4);
+}
+
+.payment-card-label,
+.payment-card-bottom span span {
+  display: block;
+  color: rgb(255 255 255 / 0.58);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.payment-card-number {
+  display: block;
+  margin-top: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(22px, 2.7vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.payment-card-number[data-empty="true"] {
+  color: rgb(255 255 255 / 0.32);
+}
+
+.payment-card-bottom {
+  align-items: end;
+}
+
+.payment-card-bottom strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.payment-card-strip {
+  height: 52px;
+  margin: 8px -30px 0;
+  background: rgb(255 255 255 / 0.16);
+}
+
+.payment-card-back-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px;
+  gap: 12px;
+  align-items: center;
+}
+
+.payment-card-signature-line {
+  border-radius: 14px;
+  padding: 14px;
+  color: rgb(255 255 255 / 0.68);
+  background: rgb(255 255 255 / 0.12);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.payment-card-back-row strong {
+  display: grid;
+  min-height: 48px;
+  place-items: center;
+  border-radius: 14px;
+  color: white;
+  background: rgb(255 255 255 / 0.16);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.payment-card-back-footer {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  color: rgb(255 255 255 / 0.58);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.payment-card-brand-logo {
+  position: relative;
+  display: inline-flex;
+  width: 80px;
+  height: 56px;
+  flex: 0 0 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-card-brand-logo img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: block;
+  max-width: 76px;
+  max-height: 44px;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity var(--alka-motion-fast, 160ms) var(--alka-ease-smooth);
+}
+
+.payment-card-brand-logo img[data-active="true"] {
+  opacity: 1;
+}
+
+.payment-card-brand-logo-preview img {
+  transition: none;
+}
+
+.payment-card-brand-logo[data-brand="amex"] {
+  border-radius: 3px;
+}
+
+.payment-card-brand-logo img[data-logo-brand="amex"] {
+  width: 72px;
+  height: 72px;
+  max-width: none;
+  max-height: none;
+}
+
+.payment-card-brand-logo img[data-logo-brand="visa"] {
+  width: 76px;
+  height: 25px;
+  max-width: none;
+  max-height: none;
+}
+
+.payment-card-brand-logo img[data-logo-brand="mastercard"] {
+  width: 86px;
+  height: 52px;
+  max-width: none;
+  max-height: none;
+}
+
+.payment-method-card .alka-card-header {
+  padding-bottom: 12px;
+}
+
+.payment-method-showcase {
+  width: min(100%, 1480px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  align-items: stretch;
+  justify-self: center;
+  row-gap: 34px;
+}
+
+.payment-method-showcase .checkout-flow-main {
+  display: contents;
+  gap: 16px;
+}
+
+.payment-method-showcase .payment-method-header {
+  grid-column: 1 / -1;
+}
+
+.payment-method-showcase .showcase-panel-header h2 {
+  max-width: 620px;
+  font-size: clamp(32px, 4vw, 46px);
+}
+
+.payment-method-showcase .payment-method-card .alka-card-header {
+  width: min(804px, calc(100% - 68px));
+  margin-inline: auto;
+  padding: 26px 0 26px;
+}
+
+.payment-method-showcase .payment-method-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-method-showcase .payment-method-card > .alka-card-content {
+  display: grid;
+  flex: 1;
+  padding: 0 34px 34px;
+}
+
+.payment-method-showcase .checkout-review-list {
+  grid-template-columns: minmax(360px, 410px) minmax(280px, 360px);
+  grid-template-rows: auto auto 1fr;
+  align-items: start;
+  align-content: start;
+  gap: 28px 34px;
+  justify-content: center;
+}
+
+.payment-method-showcase .payment-card-preview {
+  width: min(410px, 100%);
+  min-height: 0;
+  aspect-ratio: 1.586 / 1;
+  align-self: center;
+  margin-top: 0;
+}
+
+.payment-method-showcase .payment-card-fields {
+  align-self: center;
+  max-width: 360px;
+  justify-self: stretch;
+}
+
+.payment-method-showcase .payment-billing-section {
+  grid-column: 1 / -1;
+  max-width: none;
+  justify-self: stretch;
+  margin-top: 2px;
+  padding-top: 20px;
+  border-top: 1px solid hsl(var(--border) / 0.42);
+}
+
+.payment-method-showcase .payment-billing-section .checkout-review-section-header {
+  grid-column: 1 / -1;
+  margin-bottom: 2px;
+}
+
+.payment-method-showcase .payment-billing-section .checkout-review-section-header h3 {
+  color: hsl(var(--foreground));
+  font-size: 14px;
+}
+
+.payment-method-showcase .payment-billing-section .payment-form-grid {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(170px, 0.74fr) minmax(170px, 0.74fr) minmax(140px, 0.46fr);
+}
+
+.payment-method-showcase .payment-billing-section .payment-form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.payment-method-showcase .payment-card-preview-inner,
+.payment-method-showcase .payment-card-preview-face {
+  height: 100%;
+  min-height: 0;
+}
+
+.payment-method-showcase .payment-card-preview-face {
+  padding: 26px;
+}
+
+.payment-method-showcase .payment-card-number {
+  font-size: clamp(20px, 2.1vw, 25px);
+}
+
+.payment-method-showcase .checkout-summary {
+  display: grid;
+  grid-column: 2;
+  align-self: start;
+  align-content: start;
+  gap: 18px;
+  min-width: 0;
+}
+
+.payment-method-showcase .checkout-summary > .alka-card-surface {
+  height: auto;
+  align-self: start;
+  overflow: visible;
+}
+
+.payment-method-showcase .checkout-summary > .alka-card-surface > .alka-card-header {
+  padding-bottom: 8px;
+}
+
+.payment-method-showcase .payment-method-card {
+  height: auto;
+  align-self: start;
+}
+
+.payment-method-showcase .checkout-trust-list {
+  grid-column: auto;
+  align-self: start;
+}
+
+.payment-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(126px, 0.42fr);
+  gap: 12px 14px;
+}
+
+.payment-form-field-wide {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.payment-form-field svg {
+  width: 18px;
+  height: 18px;
+  color: hsl(var(--primary));
+}
+
+.payment-method-showcase .payment-form-grid .alka-input-control,
+.payment-method-showcase .payment-form-grid .alka-input-group,
+.payment-method-showcase .payment-form-grid .alka-select-trigger {
+  width: 100%;
+}
+
+.payment-method-showcase .payment-form-grid .alka-input-field[data-variant="pill"][data-has-label="false"] .alka-input-control {
+  height: 3.125rem;
+  padding: 0 1.25rem;
+  line-height: normal;
+}
+
+.payment-method-showcase .payment-form-grid .alka-input-field[data-variant="pill"] .alka-input-label {
+  line-height: 1.35;
+}
+
+.payment-default-row {
+  justify-content: start;
+  border: 1px solid hsl(var(--border) / 0.48);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: hsl(var(--background) / 0.22);
+  cursor: pointer;
+}
+
+.payment-default-row > span {
+  display: grid;
+  gap: 3px;
+}
+
+.payment-default-row strong {
+  color: hsl(var(--foreground));
+  font-size: 14px;
+}
+
+.payment-default-row span span {
+  color: hsl(var(--muted-foreground));
+  font-size: 13px;
+}
+
+.payment-billing-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  border: 1px solid hsl(var(--border) / 0.48);
+  border-radius: 22px;
+  padding: 12px 14px 12px 16px;
+  background: hsl(var(--background) / 0.2);
+}
+
+.payment-billing-actions .payment-default-row {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.payment-save-button {
+  min-height: 48px;
+  width: min(200px, 38%);
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.payment-method-tabs {
+  display: grid;
+  gap: 12px;
+}
+
+.payment-method-tabs .alka-tabs-list {
+  width: 100%;
+}
+
+.payment-method-tabs .alka-tabs-trigger {
+  flex: 1;
+}
+
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 70px;
+  overflow: hidden;
+  gap: 16px;
+  justify-content: space-between;
+  appearance: none;
+  border: 1px solid hsl(var(--examples-primary-gold) / 0.34);
+  border-radius: 24px;
+  border-color: hsl(var(--examples-primary-gold) / 0.34) !important;
+  padding-inline: 22px !important;
+  color: hsl(var(--foreground));
+  font: inherit;
+  text-align: left;
+  background:
+    radial-gradient(circle at 92% 32%, hsl(var(--examples-primary-gold) / 0.14), transparent 34%),
+    hsl(var(--card) / 0.46) !important;
+  box-shadow:
+    0 18px 38px hsl(var(--examples-primary-gold) / 0.08),
+    inset 0 1px 0 hsl(0 0% 100% / 0.12) !important;
+  cursor: pointer;
+  transition:
+    border-color 260ms var(--alka-ease-smooth),
+    box-shadow 260ms var(--alka-ease-smooth),
+    transform 260ms var(--alka-ease-smooth);
+}
+
+.payment-method-option:hover,
+.payment-method-option:focus-visible {
+  border-color: hsl(var(--examples-primary-gold) / 0.48) !important;
+  box-shadow:
+    0 20px 42px hsl(var(--examples-primary-gold) / 0.11),
+    inset 0 1px 0 hsl(0 0% 100% / 0.14) !important;
+}
+
+.payment-method-option:focus-visible {
+  outline: 2px solid hsl(var(--examples-primary-gold) / 0.5);
+  outline-offset: 3px;
+}
+
+.payment-method-option:active {
+  transform: scale(0.99);
+}
+
+.payment-method-option .alka-item-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.payment-method-option .payment-add-card-action {
+  display: grid !important;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 999px;
+  margin-left: auto;
+  color: hsl(var(--foreground) / 0.88);
+  background: rgb(255 255 255 / 0.08);
+  box-shadow:
+    0 0 18px hsl(var(--examples-primary-gold) / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.16);
+}
+
+.payment-method-option .payment-add-card-action svg {
+  width: 21px;
+  height: 21px;
+}
+
+.checkout-cart-list .alka-item-surface {
+  border-radius: 18px;
+  background: hsl(var(--card) / 0.42) !important;
+  box-shadow: none !important;
+  overflow: visible;
+}
+
+.checkout-cart-list .alka-item-surface::before,
+.checkout-cart-list .alka-item-surface::after {
+  content: none !important;
+}
+
+.checkout-cart-item {
+  position: relative;
+  min-height: 82px;
+  align-items: center;
+  gap: 12px;
+  padding: 16px !important;
+}
+
+.checkout-cart-item .alka-item-title,
+.checkout-cart-item .alka-item-description,
+.payment-method-option .alka-item-title,
+.payment-method-option .alka-item-description {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.checkout-cart-list .alka-item-actions {
+  align-items: end;
+  gap: 8px;
+}
+
+.payment-wallet-default-action {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  margin: 0 !important;
+}
+
+.payment-wallet-default-badge {
+  border-color: rgb(255 255 255 / 0.32) !important;
+  background: linear-gradient(135deg, rgb(255 255 255 / 0.24), rgb(255 255 255 / 0.08)) !important;
+  color: rgb(255 255 255 / 0.94) !important;
+  box-shadow:
+    0 10px 28px rgb(0 0 0 / 0.32),
+    inset 0 1px 0 rgb(255 255 255 / 0.28);
+  backdrop-filter: blur(14px) saturate(1.25);
+}
+
+.payment-wallet-logo-media {
+  width: 56px !important;
+  height: 38px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.payment-card-brand-logo-wallet {
+  width: 48px;
+  height: 30px;
+  flex: 0 0 48px;
+}
+
+.payment-card-brand-logo-wallet img[data-logo-brand="amex"] {
+  width: 28px;
+  height: 28px;
+}
+
+.payment-card-brand-logo-wallet img[data-logo-brand="visa"] {
+  width: 34px;
+  height: 12px;
+}
+
+.payment-card-brand-logo-wallet img[data-logo-brand="mastercard"] {
+  width: 44px;
+  height: 28px;
+}
+
+.checkout-summary {
+  align-content: start;
+}
+
+.checkout-summary-stack,
+.checkout-cart-list,
+.checkout-total-list {
+  width: 100%;
+  justify-items: stretch;
+}
+
+.checkout-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+  color: hsl(var(--muted-foreground));
+  font-size: 14px;
+  text-align: left;
+}
+
+.checkout-total-list {
+  display: grid;
+  gap: 12px;
+}
+
+.checkout-summary-row span {
+  min-width: 0;
+  text-align: left;
+}
+
+.checkout-summary-row strong {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+  text-align: right;
+}
+
+.checkout-summary-row.total {
+  color: hsl(var(--foreground));
+  font-size: 16px;
+}
+
+.checkout-summary-stack .alka-button-control {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.checkout-trust-list {
+  gap: 6px;
+  border-top: 1px solid hsl(var(--border) / 0.46);
+  padding-top: 12px;
+}
+
+.checkout-trust-item {
+  gap: 10px;
+  border: 0 !important;
+  border-radius: 0;
+  padding: 8px 2px;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.checkout-trust-item::before,
+.checkout-trust-item::after {
+  content: none !important;
+}
+
+.checkout-trust-item .alka-item-media {
+  width: 30px;
+  height: 30px;
+  border-radius: 12px;
+}
+
+.checkout-trust-item .alka-item-title {
+  font-size: 13px;
+}
+
+.checkout-trust-item .alka-item-description {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.settings-showcase-preview {
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.showcase-meta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.showcase-file-list {
+  display: grid;
+  gap: 12px;
+}
+
+.showcase-access-card {
+  margin-top: 24px;
+}
+
+.detail-hero {
+  align-items: start;
+  margin-top: 26px;
+}
+
+.detail-layout {
+  align-items: stretch;
+  margin-top: 24px;
+}
+
+.pricing-example-hero,
+.settings-example-layout {
+  display: grid;
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.pricing-example-hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.pricing-example-hero h1,
+.settings-panels h1 {
+  max-width: 860px;
+  margin: 18px 0 0;
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.pricing-example-hero p,
+.settings-panels p {
+  max-width: 700px;
+  margin: 20px 0 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.pricing-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 34px;
+}
+
+.pricing-plan {
+  min-height: 520px;
+}
+
+.pricing-plan.is-featured {
+  border-color: hsl(var(--primary) / 0.55);
+}
+
+.pricing-plan .alka-card-title {
+  font-size: 46px;
+  line-height: 1;
+}
+
+.pricing-plan-button {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.pricing-compare {
+  margin-top: 24px;
+}
+
+.settings-example-layout {
+  grid-template-columns: 300px minmax(0, 1fr);
+  align-items: start;
+}
+
+.settings-nav,
+.settings-panels,
+.settings-form-grid,
+.settings-appearance {
+  display: grid;
+  gap: 14px;
+}
+
+.settings-nav {
+  position: sticky;
+  top: 112px;
+}
+
+.settings-form-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.45fr);
+}
+
+.settings-form-grid > button {
+  justify-self: start;
 }
 
 .landing-page {
@@ -179,21 +3336,6 @@ input {
   grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.85fr);
   gap: 32px;
   align-items: center;
-}
-
-.landing-copy {
-  min-width: 0;
-}
-
-.landing-actions,
-.landing-proof,
-.dashboard-card-header,
-.cta-form,
-.cta-shortcuts {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
 }
 
 .landing-actions {
@@ -231,13 +3373,6 @@ input {
   background: hsl(var(--background) / 0.22);
 }
 
-.dashboard-stat svg,
-.capability-icon svg {
-  width: 20px;
-  height: 20px;
-  color: hsl(var(--primary));
-}
-
 .dashboard-stat span {
   color: hsl(var(--muted-foreground));
   font-size: 13px;
@@ -245,12 +3380,6 @@ input {
 
 .dashboard-stat strong {
   font-size: 28px;
-}
-
-.mini-list,
-.feature-list {
-  display: grid;
-  gap: 12px;
 }
 
 .landing-band,
@@ -270,55 +3399,12 @@ input {
   aspect-ratio: 0.78;
 }
 
-.feature-copy h2,
-.section-heading h2 {
-  max-width: 720px;
-  margin: 18px 0 0;
-  font-size: clamp(36px, 5vw, 68px);
-  line-height: 1;
-  letter-spacing: 0;
-}
-
 .feature-list {
   margin-top: 28px;
 }
 
-.section-heading {
-  max-width: 820px;
-  margin-bottom: 28px;
-}
-
-.capability-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.capability-icon {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 18px;
-  border: 1px solid hsl(var(--border) / 0.64);
-  border-radius: 18px;
-  background: hsl(var(--primary) / 0.12);
-}
-
 .cta-card {
   padding: 10px;
-}
-
-.cta-form {
-  align-items: stretch;
-}
-
-.cta-form > * {
-  flex: 1 1 220px;
-}
-
-.cta-form > button {
-  flex: 0 0 auto;
 }
 
 .cta-shortcuts {
@@ -333,6 +3419,7 @@ input {
   gap: 8px;
 }
 
+.examples-brand,
 .landing-brand {
   display: inline-flex;
   align-items: center;
@@ -340,6 +3427,7 @@ input {
   font-weight: 700;
 }
 
+.examples-brand-mark,
 .landing-brand-mark {
   width: 28px;
   height: 28px;
@@ -361,36 +3449,369 @@ button svg,
   height: 16px;
 }
 
+@media (max-width: 1120px) {
+  .example-card-grid,
+  .example-card-grid.compact,
+  .site-map-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .payment-method-showcase .checkout-review-list {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-method-showcase .payment-card-preview {
+    grid-row: auto;
+    justify-self: center;
+  }
+
+  .payment-method-showcase .payment-card-fields {
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .payment-method-showcase .payment-billing-section {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-method-showcase .payment-billing-section .payment-form-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.42fr);
+  }
+
+  .payment-method-showcase .payment-billing-section .payment-form-field-wide,
+  .payment-method-showcase .payment-billing-section .payment-default-row,
+  .payment-method-showcase .payment-billing-section .payment-save-button {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 960px) {
   .examples-shell,
   .landing-shell {
     width: min(100% - 28px, 720px);
   }
 
+  .hero-grid,
+  .detail-hero,
+  .detail-layout,
+  .dashboard-showcase-preview,
+  .checkout-showcase-preview,
+  .settings-showcase-preview,
+  .bento-showcase-preview,
+  .dashboard-showcase-stats,
+  .payment-form-grid,
+  .showcase-meta-grid,
+  .pricing-example-hero,
+  .pricing-plan-grid,
+  .settings-example-layout,
+  .settings-form-grid,
+  .components-grid,
   .landing-hero-grid,
   .feature-grid,
   .capability-grid,
-  .dashboard-preview-grid {
+  .dashboard-preview-grid,
+  .gallery-toolbar {
     grid-template-columns: 1fr;
   }
 
+  .gallery-toolbar {
+    display: grid;
+    align-items: start;
+  }
+
+  .payment-method-showcase {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+    padding: 16px;
+  }
+
+  .payment-method-showcase .checkout-flow-main {
+    display: grid;
+    grid-column: 1;
+    gap: 18px;
+    min-width: 0;
+  }
+
+  .payment-method-showcase .payment-method-header {
+    grid-column: 1;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+
+  .payment-method-showcase .payment-method-header h2 {
+    margin-top: 14px;
+    font-size: clamp(30px, 8vw, 40px);
+  }
+
+  .payment-method-showcase .payment-method-card .alka-card-header {
+    width: auto;
+    margin-inline: 0;
+    padding: 24px 22px 18px;
+  }
+
+  .payment-method-showcase .payment-method-card {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .payment-method-showcase .payment-method-card > .alka-card-content {
+    padding: 0 22px 22px;
+  }
+
+  .payment-method-showcase .checkout-review-list {
+    gap: 22px;
+  }
+
+  .payment-method-showcase .payment-card-preview {
+    width: min(100%, 360px);
+  }
+
+  .payment-method-showcase .payment-billing-section {
+    margin-top: 0;
+  }
+
+  .payment-method-showcase .checkout-summary > .alka-card-surface {
+    height: auto;
+  }
+
+  .payment-method-showcase .checkout-summary {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .payment-method-showcase .checkout-trust-list {
+    grid-column: 1;
+  }
+
+  .category-filter {
+    justify-content: flex-start;
+  }
+
   .landing-dashboard-card,
-  .landing-image-card {
+  .landing-image-card,
+  .hero-map-card,
+  .showcase-preview-frame {
     min-height: 460px;
+  }
+
+  .footer-grid {
+    display: grid;
+  }
+
+  .settings-nav {
+    position: static;
   }
 }
 
-@media (max-width: 640px) {
-  .examples-home {
-    padding: 60px 0;
+@media (max-width: 680px) {
+  .examples-hero,
+  .example-detail,
+  .example-page {
+    padding-top: 112px;
   }
 
-  .landing-hero {
-    padding-top: 110px;
+  .examples-section {
+    padding: 38px 0;
   }
 
-  .examples-hero h1,
+  .example-card-grid,
+  .example-card-grid.compact,
+  .example-card-grid.featured,
+  .site-map-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy h1,
+  .detail-hero h1,
   .landing-copy h1 {
-    font-size: 46px;
+    font-size: 44px;
+  }
+
+  .section-heading h2,
+  .feature-copy h2 {
+    font-size: 36px;
+  }
+
+  .pricing-example-hero h1,
+  .settings-panels h1 {
+    font-size: 42px;
+  }
+
+  .preview-dashboard,
+  .preview-storefront,
+  .preview-checkout,
+  .preview-document,
+  .preview-portfolio,
+  .preview-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-calendar,
+  .preview-kanban,
+  .preview-hero-cards {
+    flex-direction: column;
+  }
+
+  .preview-hero-cards {
+    display: flex;
+  }
+
+  .preview-agenda {
+    width: 100%;
+  }
+
+  .request-form > button,
+  .cta-form > button {
+    width: 100%;
+  }
+
+  .payment-billing-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .payment-save-button {
+    width: 100%;
+  }
+
+  .payment-method-showcase {
+    border-radius: 22px;
+    padding: 12px;
+  }
+
+  .payment-method-showcase .payment-method-header {
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+
+  .payment-method-showcase .payment-method-header > .alka-badge:last-child {
+    align-self: flex-start;
+  }
+
+  .payment-method-showcase .payment-method-card .alka-card-header {
+    padding: 22px 18px 16px;
+  }
+
+  .payment-method-showcase .payment-method-card > .alka-card-content {
+    padding: 0 18px 18px;
+  }
+
+  .payment-method-showcase .payment-card-preview {
+    width: min(100%, 280px);
+    min-height: 0;
+    aspect-ratio: 1.586 / 1;
+    border-radius: 22px;
+    justify-self: center;
+  }
+
+  .payment-method-showcase .payment-card-preview-inner,
+  .payment-method-showcase .payment-card-preview-face {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .payment-method-showcase .payment-card-preview-face {
+    padding: 16px;
+  }
+
+  .payment-method-showcase .payment-card-chip {
+    width: 36px;
+    height: 28px;
+    border-radius: 8px;
+  }
+
+  .payment-method-showcase .payment-card-number {
+    margin-top: 7px;
+    font-size: 15px;
+  }
+
+  .payment-method-showcase .payment-card-label,
+  .payment-method-showcase .payment-card-bottom span span {
+    font-size: 9px;
+  }
+
+  .payment-method-showcase .payment-card-bottom strong {
+    font-size: 12px;
+  }
+
+  .payment-method-showcase .payment-card-strip {
+    height: 18px;
+    margin: 2px -16px 0;
+  }
+
+  .payment-method-showcase .payment-card-back-row {
+    grid-template-columns: minmax(0, 1fr) 58px;
+    gap: 8px;
+  }
+
+  .payment-method-showcase .payment-card-signature-line {
+    min-height: 34px;
+    border-radius: 10px;
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .payment-method-showcase .payment-card-back-row strong {
+    min-height: 34px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .payment-method-showcase .payment-card-back-footer {
+    align-items: end;
+    gap: 8px;
+    font-size: 9px;
+  }
+
+  .payment-method-showcase .payment-card-brand-logo-preview {
+    width: 56px;
+    height: 38px;
+    flex-basis: 56px;
+  }
+
+  .payment-method-showcase .payment-card-brand-logo-preview img[data-logo-brand="amex"] {
+    width: 42px;
+    height: 42px;
+  }
+
+  .payment-method-showcase .payment-card-brand-logo-preview img[data-logo-brand="visa"] {
+    width: 52px;
+    height: 17px;
+  }
+
+  .payment-method-showcase .payment-card-brand-logo-preview img[data-logo-brand="mastercard"] {
+    width: 50px;
+    height: 31px;
+  }
+
+  .payment-method-showcase .payment-billing-section .payment-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-method-showcase .payment-billing-section .payment-form-field-wide,
+  .payment-method-showcase .payment-billing-section .payment-default-row,
+  .payment-method-showcase .payment-billing-section .payment-save-button {
+    grid-column: 1;
+  }
+
+  .payment-method-showcase .checkout-cart-item {
+    grid-template-columns: 44px minmax(0, 1fr);
+    min-height: 76px;
+    padding: 14px !important;
+  }
+
+  .payment-method-showcase .payment-wallet-logo-media {
+    width: 44px !important;
+  }
+
+  .payment-method-showcase .payment-card-brand-logo-wallet {
+    width: 42px;
+  }
+
+  .payment-method-showcase .checkout-trust-list {
+    gap: 8px;
   }
 }
