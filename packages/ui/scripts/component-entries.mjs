@@ -79,6 +79,21 @@ export function getComponentEntries() {
       ],
     }),
   );
+  entries.set(
+    "data-table",
+    normalizeEntry({
+      name: "data-table",
+      entry: "src/components/ui/data-table.tsx",
+      cssSources: [
+        "src/components/ui/data-table.tsx",
+        "src/components/ui/button.tsx",
+        "src/components/ui/checkbox.tsx",
+        "src/components/ui/dropdown-menu.tsx",
+        "src/components/ui/input.tsx",
+        "src/components/ui/table.tsx",
+      ],
+    }),
+  );
 
   for (const entry of extraEntries) {
     entries.set(entry.name, normalizeEntry(entry));

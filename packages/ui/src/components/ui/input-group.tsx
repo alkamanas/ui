@@ -2,17 +2,15 @@
 
 import * as React from "react"
 
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
+import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
-  borderAnimationColor?: BorderAnimationColor
-  surface?: "flat" | "gradient"
-  surfaceGradientColor?: SurfaceGradientColor
+  surface?: "flat" | "gradient" | "glass"
 }
 
 const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
-  ({ className, borderAnimationColor, onBlurCapture, onFocusCapture, surface = "flat", surfaceGradientColor, ...props }, ref) => {
+  ({ children, className, onBlurCapture, onFocusCapture, surface = "flat", ...props }, ref) => {
     const [isSelected, setIsSelected] = React.useState(false)
     const [isClosing, setIsClosing] = React.useState(false)
     const closeTimeoutRef = React.useRef<number | undefined>(undefined)
@@ -26,12 +24,10 @@ const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
     return (
       <div
         ref={ref}
-        className={cn("alka-input-group", className)}
-        data-border-animation-color={borderAnimationColor}
+        className={cn("alka-input-group", surface === "glass" && "alka-liquid-glass", className)}
         data-closing={isClosing ? "true" : undefined}
         data-selected={isSelected ? "true" : undefined}
         data-surface={surface}
-        data-surface-gradient-color={surfaceGradientColor}
         onBlurCapture={(event) => {
           onBlurCapture?.(event)
           if (event.currentTarget.contains(event.relatedTarget as Node | null)) return
@@ -48,7 +44,10 @@ const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
           setIsClosing(false)
         }}
         {...props}
-      />
+      >
+        {surface === "glass" ? <GlassElementLayers /> : null}
+        {children}
+      </div>
     )
   },
 )

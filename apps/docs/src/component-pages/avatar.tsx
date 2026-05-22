@@ -1,11 +1,66 @@
+import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@alkamanas/ui";
+
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 const details: ComponentPageDetails = {
   "summary": "Avatar is a display primitive in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
+  "examples": [
+    {
+      "id": "avatar-basic",
+      "title": "Basic avatar",
+      "description": "Avatar wraps a Radix image and fallback for representing a user or workspace.",
+      "preview": (
+        <Avatar>
+          <AvatarImage src="/assets/sectors/automotive-light.webp" alt="Workspace avatar" />
+          <AvatarFallback>VS</AvatarFallback>
+        </Avatar>
+      ),
+      "code": `import { Avatar, AvatarFallback, AvatarImage } from "@alkamanas/ui";
+
+export function BasicAvatarExample() {
+  return (
+    <Avatar>
+      <AvatarImage src="/assets/sectors/automotive-light.webp" alt="Workspace avatar" />
+      <AvatarFallback>VS</AvatarFallback>
+    </Avatar>
+  );
+}`
+    },
+    {
+      "id": "avatar-group",
+      "title": "Avatar group",
+      "description": "AvatarGroup overlaps avatars and AvatarGroupCount summarizes additional members.",
+      "preview": (
+        <AvatarGroup>
+          <Avatar><AvatarFallback>CN</AvatarFallback></Avatar>
+          <Avatar><AvatarFallback>LR</AvatarFallback></Avatar>
+          <Avatar><AvatarFallback>ER</AvatarFallback></Avatar>
+          <AvatarGroupCount>+3</AvatarGroupCount>
+        </AvatarGroup>
+      ),
+      "code": `import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+} from "@alkamanas/ui";
+
+export function AvatarGroupExample() {
+  return (
+    <AvatarGroup>
+      <Avatar><AvatarFallback>CN</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>LR</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>ER</AvatarFallback></Avatar>
+      <AvatarGroupCount>+3</AvatarGroupCount>
+    </AvatarGroup>
+  );
+}`
+    }
+  ],
   "anatomy": [
-    "Import Avatar from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
+    "Import Avatar, AvatarImage, AvatarFallback, AvatarGroup and AvatarGroupCount from @alkamanas/ui.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "AvatarGroup applies overlap and ring separation to child avatars while AvatarGroupCount behaves like an avatar-sized summary item."
   ],
   "variants": [
     {
@@ -37,6 +92,16 @@ const details: ComponentPageDetails = {
       "name": "children",
       "type": "ReactNode",
       "description": "Used for composition in compound primitives."
+    },
+    {
+      "name": "AvatarGroup className",
+      "type": "string",
+      "description": "Merged onto the overlapping group root."
+    },
+    {
+      "name": "AvatarGroupCount className",
+      "type": "string",
+      "description": "Merged onto the count item shown inside an avatar group."
     }
   ],
   "accessibility": [
@@ -50,8 +115,8 @@ const details: ComponentPageDetails = {
   ],
   "tokens": [
     "--alka-ease-smooth",
-    "--alka-radius-control",
-    "--alka-panel-bg"
+    "--background",
+    "--muted"
   ]
 };
 

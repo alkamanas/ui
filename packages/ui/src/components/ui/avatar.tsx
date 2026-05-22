@@ -10,7 +10,7 @@ const Avatar = React.forwardRef<
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      "alka-avatar relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
       className
     )}
     {...props}
@@ -45,4 +45,41 @@ const AvatarFallback = React.forwardRef<
 ))
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
-export { Avatar, AvatarImage, AvatarFallback }
+const AvatarGroup = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("isolate flex items-center -space-x-3 [&_.alka-avatar]:ring-2 [&_.alka-avatar]:ring-background", className)}
+    {...props}
+  >
+    {React.Children.map(children, (child, index) => {
+      if (!React.isValidElement<{ style?: React.CSSProperties }>(child)) {
+        return child
+      }
+
+      return React.cloneElement(child, {
+        style: { zIndex: index + 1, ...child.props.style },
+      })
+    })}
+  </div>
+))
+AvatarGroup.displayName = "AvatarGroup"
+
+const AvatarGroupCount = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "alka-avatar relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-muted text-sm font-semibold leading-none text-muted-foreground tabular-nums ring-2 ring-background",
+      className
+    )}
+    {...props}
+  />
+))
+AvatarGroupCount.displayName = "AvatarGroupCount"
+
+export { Avatar, AvatarImage, AvatarFallback, AvatarGroup, AvatarGroupCount }

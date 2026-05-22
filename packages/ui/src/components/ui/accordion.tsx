@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Plus } from "lucide-react"
 
-import type { BorderAnimationColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 type AccordionContextValue = {
@@ -16,7 +15,6 @@ type AccordionContextValue = {
 const AccordionContext = React.createContext<AccordionContextValue | null>(null)
 
 export type AccordionProps = React.HTMLAttributes<HTMLDivElement> & {
-  borderGradientColor?: BorderAnimationColor
   type?: "single" | "multiple"
   value?: string | string[]
   defaultValue?: string | string[]
@@ -33,7 +31,6 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
   (
     {
       className,
-      borderGradientColor,
       type = "single",
       value,
       defaultValue,
@@ -74,7 +71,6 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
         <div
           ref={ref}
           className={cn("alka-accordion-controls w-full", className)}
-          data-border-animation-color={borderGradientColor}
           {...props}
         />
       </AccordionContext.Provider>
@@ -91,12 +87,11 @@ type AccordionItemContextValue = {
 const AccordionItemContext = React.createContext<AccordionItemContextValue | null>(null)
 
 export type AccordionItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  borderGradientColor?: BorderAnimationColor
   value: string
 }
 
 const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
-  ({ borderGradientColor, className, value, ...props }, ref) => {
+  ({ className, value, ...props }, ref) => {
     const accordion = React.useContext(AccordionContext)
     const open = accordion?.value.includes(value) ?? false
 
@@ -104,7 +99,6 @@ const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
       <AccordionItemContext.Provider value={{ value, open }}>
         <div
           ref={ref}
-          data-border-animation-color={borderGradientColor}
           data-state={open ? "open" : "closed"}
           className={cn(
             "alka-accordion-item group/accordion-item",

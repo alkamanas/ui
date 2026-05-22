@@ -13,7 +13,6 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export type ComboboxOption = {
@@ -31,10 +30,8 @@ export type ComboboxProps = {
   placeholder?: string
   searchPlaceholder?: string
   emptyText?: string
-  surface?: "flat" | "gradient" | "bare"
+  surface?: "flat" | "gradient" | "glass" | "bare"
   size?: ComboboxSize
-  borderAnimationColor?: BorderAnimationColor
-  surfaceGradientColor?: SurfaceGradientColor
   className?: string
   onValueChange?: (value: string) => void
 }
@@ -56,8 +53,6 @@ function Combobox({
   emptyText = "No results found.",
   surface = "flat",
   size = "default",
-  borderAnimationColor,
-  surfaceGradientColor,
   className,
   onValueChange,
 }: ComboboxProps) {
@@ -114,12 +109,10 @@ function Combobox({
           role="combobox"
           aria-label={selectedOption?.label ?? placeholder}
           aria-expanded={popoverOpen}
-          data-border-animation-color={borderAnimationColor}
           data-closing={closing ? "true" : undefined}
           data-size={size}
           data-state={popoverOpen ? "open" : "closed"}
           data-surface={surface}
-          data-surface-gradient-color={surfaceGradientColor}
           data-variant="outline"
           onClick={(event) => {
             if (!open && !closing) return
@@ -129,10 +122,12 @@ function Combobox({
           }}
           className={cn(
             "alka-button-control alka-combobox-trigger flex w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-full border border-input bg-transparent py-0 font-medium text-foreground shadow-sm ring-offset-background transition-[border-color,box-shadow,color] duration-500 ease-[var(--alka-ease-smooth)] hover:text-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+            surface === "glass" && "alka-liquid-glass",
             comboboxSizeClasses[size],
             className
           )}
         >
+          {surface === "glass" ? <GlassElementLayers /> : null}
           <span className={cn("min-w-0 truncate whitespace-nowrap", !selectedOption && "text-muted-foreground")}>
             {selectedOption?.label ?? placeholder}
           </span>

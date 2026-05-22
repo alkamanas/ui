@@ -35,6 +35,7 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonGroup,
+  Calendar,
   Card,
   CardContent,
   CardDescription,
@@ -69,6 +70,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DirectionProvider,
+  DatePicker,
   Drawer,
   DrawerContent,
   DrawerDescription,
@@ -210,6 +212,7 @@ const cases: Array<[string, React.ReactElement]> = [
   ],
   ["button", <Button>Continue</Button>],
   ["button-group", <ButtonGroup><Button>Day</Button><Button variant="secondary">Week</Button></ButtonGroup>],
+  ["calendar", <Calendar mode="single" selected={new Date(2026, 4, 20)} defaultMonth={new Date(2026, 4, 20)} />],
   [
     "card",
     <Card>
@@ -270,6 +273,7 @@ const cases: Array<[string, React.ReactElement]> = [
       </DialogContent>
     </Dialog>,
   ],
+  ["date-picker", <DatePicker defaultValue={new Date(2026, 4, 20)} />],
   ["direction", <DirectionProvider dir="rtl"><div>RTL content</div></DirectionProvider>],
   [
     "drawer",

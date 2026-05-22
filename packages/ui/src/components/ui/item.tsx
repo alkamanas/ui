@@ -1,17 +1,14 @@
 import * as React from "react"
 
 import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
-import type { BorderAnimationColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export type ItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  surface?: "flat" | "glass" | "solid"
-  borderAnimation?: boolean
-  borderAnimationColor?: BorderAnimationColor
+  surface?: "flat" | "glass" | "solid" | "bare"
 }
 
 const Item = React.forwardRef<HTMLDivElement, ItemProps>(
-  ({ children, className, surface = "flat", borderAnimation: _borderAnimation, borderAnimationColor: _borderAnimationColor, ...props }, ref) => {
+  ({ children, className, surface = "flat", ...props }, ref) => {
     const resolvedSurface = surface === "solid" ? "flat" : surface
 
     return (
@@ -19,7 +16,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
         ref={ref}
         className={cn(
           "alka-item-surface group/item flex items-center gap-4 rounded-3xl border border-border/70 p-5 text-card-foreground shadow-[var(--alka-shadow-control)] transition-[border-color,background-color,box-shadow,transform] duration-500 ease-[var(--alka-ease-smooth)]",
-          resolvedSurface === "glass" ? "alka-liquid-glass" : "bg-card/72",
+          resolvedSurface === "glass" ? "alka-liquid-glass" : resolvedSurface === "bare" ? "bg-transparent shadow-none" : "bg-card/72",
           className,
         )}
         data-surface={resolvedSurface}

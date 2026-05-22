@@ -12,7 +12,7 @@ export default defineConfig({
   clean: true,
   splitting: false,
   treeshake: true,
-  external: ["react", "react-dom", "lucide-react", "react-hook-form"],
+  external: ["react", "react-dom", "lucide-react", "react-hook-form", "@tanstack/react-table"],
   esbuildOptions(options) {
     options.banner = {
       js: "\"use client\";",

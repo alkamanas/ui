@@ -10,7 +10,8 @@ Prefer:
 - Namespaced section-level theme scopes (`.alka-theme-light`, `.alka-theme-dark`) instead of global-only theme assumptions.
 - Token-driven primary, border animation and gradient colors instead of fixed white/blue/gold values.
 - The shared `alka-liquid-glass` surface for glass components; switch between `data-glass-effect="blurry"` and `data-glass-effect="realistic"` rather than creating separate glass systems.
-- Component props for local visual overrides: `borderAnimationColor`, `surfaceGradientColor`, `surface="flat" | "gradient" | "bare"` where supported.
+- Non-glass child surfaces inside glass panels; rows such as `Item` should use `surface="bare"` or another flat treatment instead of nested `surface="glass"`.
+- Component visual overrides are token/class driven: use utilities such as `gradient-primary`, `gradient-primary/50`, `border-animation-primary`, `border-animation-primary/50` plus `surface="flat" | "gradient" | "bare"` where supported. Do not reintroduce `primary|contrast` border or gradient props.
 
 Avoid:
 
@@ -31,5 +32,5 @@ Recent implementation notes:
 - Inputs, input groups, textareas, selects and comboboxes share the bordered pill animation language. Flat and gradient examples should both remain documented.
 - Select, combobox, command and sidebar menu items use medium primary-aware hover/selected backgrounds.
 - Carousel paging follows the Apple-style compact control: selected dot stretches, play/pause and prev/next controls use the shared glass surface.
-- Accordion follows the Apple-style disclosure stack with full-width items, quick width/height motion and optional `borderGradientColor`.
+- Accordion follows the Apple-style disclosure stack with full-width items and quick width/height motion.
 - Slider fill must meet the center of the thumb; do not make the track full width unless the thumb math is updated.

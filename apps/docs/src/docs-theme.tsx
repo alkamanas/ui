@@ -5,8 +5,6 @@ import { GlassElementLayers, Label, Separator, Switch } from "@alkamanas/ui";
 export type DocsThemeModeId = "dark" | "light";
 export type PrimaryThemeId = "white" | "visetra" | "red" | "blue" | "turquoise" | "green" | "purple";
 export type GlassEffectId = "blurry" | "realistic";
-export type BorderAnimationColorId = "primary" | "contrast";
-export type SurfaceGradientColorId = "primary" | "contrast";
 
 const primaryThemeOptions: Record<PrimaryThemeId, {
   label: string;
@@ -21,7 +19,7 @@ const primaryThemeOptions: Record<PrimaryThemeId, {
     swatch: "#ffffff",
   },
   visetra: {
-    label: "Visetra Gold",
+    label: "Gold",
     primary: "41 39% 59%",
     primaryForeground: "0 0% 2%",
     swatch: "#c0a46d",
@@ -78,15 +76,10 @@ export function getPrimaryThemeStyle(theme: PrimaryThemeId, themeMode: DocsTheme
   const resolvedOption = resolvePrimaryThemeOption(theme, themeMode);
 
   return {
-    "--alka-primary": resolvedOption.primary,
-    "--alka-primary-foreground": resolvedOption.primaryForeground,
     "--primary": resolvedOption.primary,
     "--primary-foreground": resolvedOption.primaryForeground,
-    "--alka-accent": resolvedOption.primary,
-    "--alka-accent-foreground": resolvedOption.primaryForeground,
     "--accent": resolvedOption.primary,
     "--accent-foreground": resolvedOption.primaryForeground,
-    "--alka-ring": resolvedOption.primary,
     "--ring": resolvedOption.primary,
     "--sidebar-primary": resolvedOption.primary,
     "--sidebar-primary-foreground": resolvedOption.primaryForeground,
@@ -99,10 +92,6 @@ export function PrimaryColorSwitcher({
   onChange,
   themeMode,
   onThemeModeChange,
-  borderAnimationColor,
-  onBorderAnimationColorChange,
-  surfaceGradientColor,
-  onSurfaceGradientColorChange,
   glassEffect,
   onGlassEffectChange,
 }: {
@@ -111,10 +100,6 @@ export function PrimaryColorSwitcher({
   onChange: (value: PrimaryThemeId) => void;
   themeMode: DocsThemeModeId;
   onThemeModeChange: (value: DocsThemeModeId) => void;
-  borderAnimationColor: BorderAnimationColorId;
-  onBorderAnimationColorChange: (value: BorderAnimationColorId) => void;
-  surfaceGradientColor: SurfaceGradientColorId;
-  onSurfaceGradientColorChange: (value: SurfaceGradientColorId) => void;
   glassEffect: GlassEffectId;
   onGlassEffectChange: (value: GlassEffectId) => void;
 }) {
@@ -203,65 +188,6 @@ export function PrimaryColorSwitcher({
             </button>
           );
         })}
-      </div>
-      <Separator className="my-3 bg-white/[0.08]" />
-      <div className="grid gap-3">
-        <p className="px-2 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-muted-foreground/70">
-          Border
-        </p>
-        <div className="grid grid-cols-2 gap-2">
-          {([
-            ["primary", "Primary"],
-            ["contrast", "Contrast"],
-          ] as const).map(([key, label]) => {
-            const isActive = borderAnimationColor === key;
-
-            return (
-              <button
-                key={key}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => onBorderAnimationColorChange(key)}
-                className={[
-                  "flex min-h-10 cursor-pointer items-center justify-center rounded-full border px-3 text-xs font-semibold transition-[background-color,border-color,color] duration-300 ease-[var(--alka-ease-smooth)]",
-                  isActive
-                    ? "border-primary/30 bg-primary/[0.16] text-foreground"
-                    : "border-white/[0.08] bg-white/[0.03] text-muted-foreground hover:border-primary/20 hover:bg-primary/10 hover:text-foreground"
-                ].join(" ")}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
-        <p className="px-2 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-muted-foreground/70">
-          Gradient
-        </p>
-        <div className="grid grid-cols-2 gap-2">
-          {([
-            ["primary", "Primary"],
-            ["contrast", "Contrast"],
-          ] as const).map(([key, label]) => {
-            const isActive = surfaceGradientColor === key;
-
-            return (
-              <button
-                key={key}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => onSurfaceGradientColorChange(key)}
-                className={[
-                  "flex min-h-10 cursor-pointer items-center justify-center rounded-full border px-3 text-xs font-semibold transition-[background-color,border-color,color] duration-300 ease-[var(--alka-ease-smooth)]",
-                  isActive
-                    ? "border-primary/30 bg-primary/[0.16] text-foreground"
-                    : "border-white/[0.08] bg-white/[0.03] text-muted-foreground hover:border-primary/20 hover:bg-primary/10 hover:text-foreground"
-                ].join(" ")}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
       </div>
       <Separator className="my-3 bg-white/[0.08]" />
       <div className="flex items-center justify-between gap-4 rounded-[1.35rem] px-2 py-1.5">

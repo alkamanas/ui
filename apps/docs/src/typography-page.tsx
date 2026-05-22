@@ -146,7 +146,7 @@ function DenseTypographyExample() {
 export function TypographyPage({ doc }: { doc: DocItem }) {
   return (
     <div className="docs-component-page">
-      <section id="overview" className="max-w-3xl">
+      <section id="overview" data-docs-toc="Overview" className="max-w-3xl scroll-mt-32">
         <Badge variant="secondary" className="rounded-full">{doc.group}</Badge>
         <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal sm:text-5xl">{doc.title}</h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">{doc.description}</p>
@@ -156,7 +156,7 @@ export function TypographyPage({ doc }: { doc: DocItem }) {
       </section>
 
       <section id="preview" className="mt-10 grid gap-8">
-        <div className="grid gap-4">
+        <div id="type-scale" data-docs-toc="Type scale" className="grid scroll-mt-32 gap-4">
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-normal">Type scale</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -170,7 +170,7 @@ export function TypographyPage({ doc }: { doc: DocItem }) {
           </div>
         </div>
 
-        <div className="grid gap-4">
+        <div id="component-text" data-docs-toc="Component text" className="grid scroll-mt-32 gap-4">
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-normal">Component text</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -180,7 +180,7 @@ export function TypographyPage({ doc }: { doc: DocItem }) {
           <ComponentTypographyExample />
         </div>
 
-        <div className="grid gap-4">
+        <div id="dense-ui-labels" data-docs-toc="Dense UI labels" className="grid scroll-mt-32 gap-4">
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-normal">Dense UI labels</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -191,7 +191,7 @@ export function TypographyPage({ doc }: { doc: DocItem }) {
         </div>
       </section>
 
-      <section id="usage" className="mt-10 grid gap-5">
+      <section id="usage" data-docs-toc="Usage" className="mt-10 grid scroll-mt-32 gap-5">
         <h2 className="text-2xl font-semibold tracking-normal">Usage</h2>
         <div className="grid gap-4">
           <CodeBlock>{codeExamples.scale}</CodeBlock>

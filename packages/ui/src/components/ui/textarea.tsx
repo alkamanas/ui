@@ -2,15 +2,12 @@
 
 import * as React from "react"
 
-import type { BorderAnimationColor, SurfaceGradientColor } from "@/lib/border-animation"
 import { cn } from "@/lib/utils"
 
 export interface TextareaProps extends React.ComponentProps<"textarea"> {
-  borderAnimationColor?: BorderAnimationColor
   floatingLabel?: boolean
   label?: React.ReactNode
   surface?: "flat" | "gradient"
-  surfaceGradientColor?: SurfaceGradientColor
   wrapperClassName?: string
 }
 
@@ -23,7 +20,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
       className,
-      borderAnimationColor,
       defaultValue,
       disabled,
       floatingLabel = true,
@@ -34,7 +30,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       onFocus,
       placeholder,
       surface = "flat",
-      surfaceGradientColor,
       value,
       wrapperClassName,
       ...props
@@ -68,14 +63,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <span
         className={cn("alka-textarea-field", wrapperClassName)}
-        data-border-animation-color={borderAnimationColor}
         data-closing={isClosing ? "true" : undefined}
         data-disabled={disabled ? "true" : undefined}
         data-filled={hasValue ? "true" : undefined}
         data-has-label={hasLabel ? "true" : "false"}
         data-selected={isSelected ? "true" : undefined}
         data-surface={surface}
-        data-surface-gradient-color={surfaceGradientColor}
         onBlurCapture={(event) => {
           if (event.currentTarget.contains(event.relatedTarget as Node | null)) return
 

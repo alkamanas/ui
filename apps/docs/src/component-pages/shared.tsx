@@ -131,14 +131,16 @@ export function ${demoName}() {
 export function ComponentExample({
   command,
   example,
+  tocId,
 }: {
   command?: string;
   example: ComponentExampleSpec;
+  tocId?: string;
 }) {
   const [fullscreenOpen, setFullscreenOpen] = React.useState(false);
 
   return (
-    <article className="grid gap-4">
+    <article id={tocId ?? example.id} data-docs-toc={example.title} className="scroll-mt-32 grid gap-4">
       <div className="max-w-2xl">
         <h2 className="text-2xl font-semibold tracking-normal">{example.title}</h2>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">{example.description}</p>
@@ -214,6 +216,7 @@ export function ComponentExample({
 function ComponentPreviewShell({ doc }: { doc: DocItem }) {
   return (
     <ComponentExample
+      tocId="preview-card"
       example={{
         id: doc.id,
         title: `${doc.title} preview`,
@@ -229,7 +232,7 @@ function ComponentPreviewShell({ doc }: { doc: DocItem }) {
 export function ComponentPageTemplate({ doc, details }: ComponentPageProps & { details?: ComponentPageDetails }) {
   return (
     <div className="docs-component-page">
-      <section id="overview" className="max-w-3xl">
+      <section id="overview" data-docs-toc="Overview" className="max-w-3xl scroll-mt-32">
         <Badge variant="secondary" className="rounded-full">{doc.group}</Badge>
         <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal sm:text-5xl">{doc.title}</h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">{doc.description}</p>
@@ -244,50 +247,50 @@ export function ComponentPageTemplate({ doc, details }: ComponentPageProps & { d
           <ComponentPreviewShell doc={doc} />
         )}
       </section>
-      <section id="usage" className="mt-10 grid gap-4">
+      <section id="usage" data-docs-toc="Usage" className="mt-10 grid scroll-mt-32 gap-4">
         {doc.importCode ? <><h2 className="text-2xl font-semibold">Import</h2><CodeBlock>{doc.importCode}</CodeBlock></> : null}
         {doc.command ? <><h2 className="text-2xl font-semibold">Registry</h2><CodeBlock>{doc.command}</CodeBlock></> : null}
       </section>
       {details ? (
         <section className="mt-10 grid gap-6">
           {details.anatomy?.length ? (
-            <div className="grid gap-3">
+            <div id="anatomy" data-docs-toc="Anatomy" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Anatomy</h2>
               <DetailList items={details.anatomy} />
             </div>
           ) : null}
           {details.variants?.length ? (
-            <div className="grid gap-3">
+            <div id="variants" data-docs-toc="Variants" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Variants</h2>
               <DetailTable columns={["Variant", "Behavior"]} rows={details.variants} />
             </div>
           ) : null}
           {details.sizes?.length ? (
-            <div className="grid gap-3">
+            <div id="sizes" data-docs-toc="Sizes" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Sizes</h2>
               <DetailTable columns={["Size", "Use case"]} rows={details.sizes} />
             </div>
           ) : null}
           {details.props?.length ? (
-            <div className="grid gap-3">
+            <div id="props" data-docs-toc="Props" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Props</h2>
               <PropsTable rows={details.props} />
             </div>
           ) : null}
           {details.accessibility?.length ? (
-            <div className="grid gap-3">
+            <div id="accessibility" data-docs-toc="Accessibility" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Accessibility</h2>
               <DetailList items={details.accessibility} />
             </div>
           ) : null}
           {details.motion?.length ? (
-            <div className="grid gap-3">
+            <div id="motion" data-docs-toc="Motion" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Motion</h2>
               <DetailList items={details.motion} />
             </div>
           ) : null}
           {details.tokens?.length ? (
-            <div className="grid gap-3">
+            <div id="tokens" data-docs-toc="Tokens" className="grid scroll-mt-32 gap-3">
               <h2 className="text-2xl font-semibold">Tokens</h2>
               <div className="flex flex-wrap gap-2">
                 {details.tokens.map((token) => (

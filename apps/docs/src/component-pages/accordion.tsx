@@ -39,9 +39,9 @@ const details: ComponentPageDetails = {
       "description": "Allows the active item to be closed."
     },
     {
-      "name": "borderAnimationColor",
-      "type": "primary | contrast",
-      "description": "Controls the border gradient accent on supported triggers."
+      "name": "className",
+      "type": "string",
+      "description": "Merged onto the visible root. Use border-animation-primary or an arbitrary CSS variable utility to assign the border accent."
     }
   ],
   "accessibility": [
@@ -55,7 +55,9 @@ const details: ComponentPageDetails = {
   "tokens": [
     "--alka-accordion-radius",
     "--alka-accordion-ease",
-    "--alka-accordion-gradient-color"
+    "--alka-accordion-gradient-color",
+    "--alka-border-animation-color",
+    "--alka-border-animation-opacity"
   ]
 };
 
