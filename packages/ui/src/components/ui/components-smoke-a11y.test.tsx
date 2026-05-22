@@ -63,6 +63,8 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
+  DataTable,
+  type DataTableColumnDef,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -156,6 +158,27 @@ afterEach(() => cleanup());
 const options = [
   { value: "studio", label: "Visetra Studio" },
   { value: "web", label: "Visetra Web" },
+];
+
+type DataTableSmokeRow = {
+  status: string;
+  task: string;
+};
+
+const dataTableColumns: DataTableColumnDef<DataTableSmokeRow>[] = [
+  {
+    accessorKey: "task",
+    header: "Task",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+];
+
+const dataTableRows: DataTableSmokeRow[] = [
+  { task: "Publish package", status: "Ready" },
+  { task: "Review docs", status: "In progress" },
 ];
 
 function CommandPaletteTrigger() {
@@ -260,6 +283,16 @@ const cases: Array<[string, React.ReactElement]> = [
       <ContextMenuTrigger>Right click</ContextMenuTrigger>
       <ContextMenuContent><ContextMenuItem>Open</ContextMenuItem></ContextMenuContent>
     </ContextMenu>,
+  ],
+  [
+    "data-table",
+    <DataTable
+      columns={dataTableColumns}
+      data={dataTableRows}
+      enableColumnVisibility={false}
+      enablePagination={false}
+      enableRowSelection={false}
+    />,
   ],
   [
     "dialog",
