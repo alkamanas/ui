@@ -503,7 +503,7 @@ export function BlocksPage({
   return (
     <div id="blocks" className={`theme-${themeMode} alka-theme-${themeMode} docs-shell min-h-dvh text-foreground`} data-glass-effect={glassEffect} style={getPrimaryThemeStyle(primaryTheme, themeMode)}>
       <LiquidGlassFilter />
-      <DocsMarketingNavbar themeMode={themeMode} />
+      <DocsMarketingNavbar themeMode={themeMode} primaryTheme={primaryTheme} />
       <PrimaryColorSwitcher
         value={primaryTheme}
         onChange={onPrimaryThemeChange}

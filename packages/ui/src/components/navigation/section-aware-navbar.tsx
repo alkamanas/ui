@@ -96,6 +96,7 @@ export type NavbarProps = {
   rightSlot?: React.ReactNode;
   mobileFooterSlot?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   panelClassName?: string;
   linkComponent?: React.ComponentType<NavbarLinkRendererProps>;
   theme?: NavbarTheme | "auto";
@@ -180,11 +181,11 @@ export function NavbarLogo({ logo, brand, widths, theme = "light", className }: 
   const resolvedWidths = resolveLogoWidths(logo, widths);
 
   return (
-    <span className={cn("alka-navbar-logo flex min-w-0 items-center", className)}>
-      <span className="hidden min-w-0 shrink-0 items-center [&>*]:max-w-full md:flex" style={logoWidthStyle(resolvedWidths.wide)}>
+    <span className={cn("alka-navbar-logo flex min-w-0 items-center justify-start text-left", className)}>
+      <span className="hidden min-w-0 shrink-0 items-center justify-start [&>img]:object-left [&>*]:max-w-full md:flex" style={logoWidthStyle(resolvedWidths.wide)}>
         {wideLogo}
       </span>
-      <span className="flex min-w-0 shrink-0 items-center [&>*]:max-w-full md:hidden" style={logoWidthStyle(resolvedWidths.compact)}>
+      <span className="flex min-w-0 shrink-0 items-center justify-start [&>img]:object-left [&>*]:max-w-full md:hidden" style={logoWidthStyle(resolvedWidths.compact)}>
         {compactLogo}
       </span>
     </span>
@@ -208,7 +209,7 @@ export function NavbarLink({
         onSelect?.();
       }}
       className={cn(
-        "rounded-full px-4 py-2 text-sm font-medium no-underline transition-all duration-300",
+        "rounded-full px-4 py-2 text-sm font-normal no-underline transition-all duration-300",
         className,
       )}
     >
@@ -345,7 +346,9 @@ export function useActiveNavbarTheme({
   probeY?: number;
   syncThemeMeta?: boolean;
 }) {
-  const [isAtTop, setIsAtTop] = React.useState(true);
+  const [isAtTop, setIsAtTop] = React.useState(() =>
+    typeof window === "undefined" ? true : window.scrollY < 64,
+  );
   const [activeTheme, setActiveTheme] = React.useState<NavbarTheme>(defaultTheme);
 
   React.useEffect(() => {
@@ -430,6 +433,7 @@ export function Navbar({
   rightSlot,
   mobileFooterSlot,
   className,
+  style,
   panelClassName,
   linkComponent: LinkComponent = DefaultLink,
   theme = "auto",
@@ -522,17 +526,18 @@ export function Navbar({
         useDarkTheme ? "alka-theme-dark" : "alka-theme-light",
         className,
       )}
+      style={style}
     >
       <LiquidGlassFilter />
       <div
         data-panel-visible={showPanelGlass ? "true" : "false"}
-        className="alka-navbar-shell relative z-20 mx-auto px-4 pt-0 sm:px-6 lg:px-8"
+        className="alka-navbar-shell relative z-20 mx-auto pt-0"
         onMouseLeave={() => setDesktopMenuOpen(false)}
       >
         <div
           data-quiet={showPanelGlass ? undefined : "true"}
           className={cn(
-            "alka-navbar-panel alka-liquid-glass flex h-16 items-center justify-between rounded-full border px-5 transition-all duration-300 sm:px-7",
+            "alka-navbar-panel alka-liquid-glass flex h-16 items-center justify-between gap-5 rounded-full border px-5 transition-[background-color,border-color,box-shadow,backdrop-filter,-webkit-backdrop-filter] duration-300 sm:gap-7 sm:px-8",
             mobileOpen
               ? "border-transparent bg-transparent shadow-none backdrop-blur-none"
               : showPanel
@@ -541,7 +546,7 @@ export function Navbar({
             panelClassName,
           )}
         >
-          {showPanelGlass ? <GlassElementLayers {...navbarGlassOptions} /> : null}
+          <GlassElementLayers {...navbarGlassOptions} />
           <LinkComponent href="/" className="alka-navbar-brand flex min-w-0 items-center no-underline">
             <NavbarLogo logo={logo} brand={brand} widths={logoWidths} theme={resolvedTheme} />
           </LinkComponent>

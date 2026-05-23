@@ -40,20 +40,20 @@ export function DocsWordmark({
 export function DocsThemeAwareWordmark({ alt = "Alkamanas UI", className }: LogoImageProps) {
   return (
     <span className={`relative overflow-hidden ${className ?? ""}`}>
-      <DocsWordmark tone="dark" alt={alt} className="docs-logo-for-dark block h-full w-full object-contain" />
-      <DocsWordmark tone="light" alt={alt} className="docs-logo-for-light hidden h-full w-full object-contain" />
+      <DocsWordmark tone="dark" alt={alt} className="docs-logo-for-dark block h-full w-full object-contain object-left" />
+      <DocsWordmark tone="light" alt={alt} className="docs-logo-for-light hidden h-full w-full object-contain object-left" />
     </span>
   );
 }
 
 export const docsNavbarLogo = {
   wide: {
-    dark: <DocsWordmark tone="dark" className="h-7 w-full object-contain" />,
-    light: <DocsWordmark tone="light" className="h-7 w-full object-contain" />,
+    dark: <DocsWordmark tone="dark" className="h-7 w-full object-contain object-left" />,
+    light: <DocsWordmark tone="light" className="h-7 w-full object-contain object-left" />,
   },
   compact: {
-    dark: <DocsLogoMark alt="Alkamanas UI" className="h-7 w-full object-contain" />,
-    light: <DocsLogoMark alt="Alkamanas UI" className="h-7 w-full object-contain" />,
+    dark: <DocsLogoMark alt="Alkamanas UI" className="h-7 w-full object-contain object-left" />,
+    light: <DocsLogoMark alt="Alkamanas UI" className="h-7 w-full object-contain object-left" />,
   },
   widths: {
     wide: "13.5rem",

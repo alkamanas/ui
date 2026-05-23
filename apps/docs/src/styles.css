@@ -194,6 +194,12 @@ body {
     --alka-shadow-modal: 0 16px 40px hsl(var(--alka-shadow-color) / 0.075), inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.2);
   }
 
+  .docs-home-navbar {
+    --alka-navbar-panel-width: 76rem;
+    --alka-navbar-compact-width: 76rem;
+    --alka-navbar-wide-width: calc(var(--alka-navbar-compact-width) + var(--alka-navbar-panel-inline-padding-total, 4rem));
+  }
+
   .docs-code-block {
     color: #d4d4d4;
     tab-size: 2;

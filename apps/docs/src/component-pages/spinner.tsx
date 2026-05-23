@@ -3,28 +3,32 @@ import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPagePro
 const details: ComponentPageDetails = {
   "summary": "Spinner is a display primitive in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
   "anatomy": [
-    "Import Spinner from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
-    "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "Import Spinner from @alkamanas/ui for loading states that need a compact visual indicator.",
+    "The visible root is an SVG that accepts className so product teams can size or recolor it without forking the primitive.",
+    "The component inherits currentColor and defaults to the nearest primary token."
   ],
   "variants": [
     {
       "name": "default",
-      "description": "The standard Spinner treatment used in the component preview."
+      "description": "A single stroked circle with a smooth rotating dash."
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to primary color and dark/light section changes from the docs selector."
     }
   ],
   "sizes": [
     {
-      "name": "content",
-      "description": "Uses intrinsic sizing unless a fixed control size is documented for this component."
+      "name": "sm",
+      "description": "Compact inline loading states."
     },
     {
-      "name": "responsive",
-      "description": "Keeps text and controls within their parent bounds on mobile and desktop layouts."
+      "name": "md",
+      "description": "Default control and menu loading state."
+    },
+    {
+      "name": "lg",
+      "description": "Large empty or centered loading state."
     }
   ],
   "props": [
@@ -34,9 +38,9 @@ const details: ComponentPageDetails = {
       "description": "Merged onto the visible root when the primitive renders one."
     },
     {
-      "name": "children",
-      "type": "ReactNode",
-      "description": "Used for composition in compound primitives."
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\"",
+      "description": "Controls the rendered SVG size."
     }
   ],
   "accessibility": [
@@ -45,13 +49,13 @@ const details: ComponentPageDetails = {
     "Keyboard focus states should remain visible against both glass and solid surfaces."
   ],
   "motion": [
-    "Motion uses --alka-motion-* and --alka-ease-* tokens and should respect prefers-reduced-motion.",
-    "Open, close, hover and focus states avoid layout shift by keeping stable dimensions."
+    "The SVG rotates linearly while the circle stroke breathes through dasharray and dashoffset keyframes.",
+    "The animation respects prefers-reduced-motion by holding a static segmented mark."
   ],
   "tokens": [
     "--alka-ease-smooth",
-    "--alka-radius-control",
-    "--alka-panel-bg"
+    "--primary",
+    "--foreground"
   ]
 };
 

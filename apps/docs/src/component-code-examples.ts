@@ -511,7 +511,9 @@ export function DatePickerDemo() {
   return (
     <div className="grid gap-4">
       <DatePicker defaultValue={new Date(2026, 4, 20)} />
+      <DatePicker surface="glass" placeholder="Glass date field" />
       <DatePicker
+        size="sm"
         placeholder="Select launch date"
         calendarProps={{
           disabled: { before: new Date(2026, 4, 1) },

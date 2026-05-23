@@ -169,7 +169,7 @@ export function HomePage({
       style={getPrimaryThemeStyle(primaryTheme, themeMode)}
     >
       <LiquidGlassFilter />
-      <DocsMarketingNavbar themeMode={themeMode} />
+      <DocsMarketingNavbar themeMode={themeMode} primaryTheme={primaryTheme} />
       <main className="relative z-10 mx-auto flex min-h-dvh max-w-[1280px] flex-col px-4 pb-16 pt-28 sm:px-6 lg:px-8">
         <section className="mx-auto max-w-4xl text-center">
           <Badge variant="secondary" className="rounded-full">

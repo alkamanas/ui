@@ -106,6 +106,8 @@ import {
   TooltipTrigger,
 } from "@alkamanas/ui";
 
+import { PageScrollbar } from "./page-scrollbar";
+
 const brandmarkUrl = new URL("../../../public/assets/logo/brandmarksvg.svg", import.meta.url).href;
 const wordmarkForDarkUrl = new URL("../../../public/assets/logo/wordmark-horizontal-for-dark.svg", import.meta.url).href;
 
@@ -513,6 +515,7 @@ export function ExamplesApp() {
     <GlassProvider effect="blurry" realisticStrategy="auto">
       <TooltipProvider>
         <div className="examples-app alka-theme-dark" data-theme="dark">
+          <PageScrollbar />
           {selectedExample ? (
             <ExampleDetail example={selectedExample} onBack={openHome} />
           ) : (

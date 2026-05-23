@@ -199,9 +199,9 @@
   font-family: var(--alka-font-sans);
   --alka-radius-xs: 8px;
   --alka-radius-control: 12px;
-  --alka-radius-panel: 16px;
+  --alka-radius-panel: 24px;
   --alka-radius-card: 32px;
-  --alka-radius-panel-lg: 24px;
+  --alka-radius-panel-lg: 32px;
   --alka-radius-modal: 28px;
   --alka-radius-pill: 999px;
   --alka-blur-soft: 12px;

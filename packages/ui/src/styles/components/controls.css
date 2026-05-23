@@ -196,6 +196,10 @@
   color: hsl(var(--foreground));
 }
 
+.alka-calendar .alka-calendar-day-button:not(:disabled) {
+  cursor: pointer;
+}
+
 .alka-calendar .alka-calendar-day-button:hover {
   background: hsl(var(--muted) / 0.76);
 }
@@ -220,34 +224,81 @@
     linear-gradient(145deg, hsl(var(--primary) / 0.98), hsl(var(--primary) / 0.76)),
     hsl(var(--primary));
   color: hsl(var(--primary-foreground));
-  box-shadow:
-    0 10px 26px hsl(var(--primary) / 0.18),
-    inset 0 1px 0 hsl(var(--primary-foreground) / 0.18);
+  box-shadow: inset 0 1px 0 hsl(var(--primary-foreground) / 0.18);
 }
 
 .alka-calendar .alka-calendar-day-range-middle {
-  background: hsl(var(--primary) / 0.12);
+  border-radius: var(--alka-radius-pill);
+  background: hsl(var(--primary) / 0.32);
+  box-shadow: none;
 }
 
 .alka-calendar .alka-calendar-day-range-middle .alka-calendar-day-button {
-  border-radius: 0;
+  border-radius: var(--alka-radius-pill);
   background: transparent;
   color: hsl(var(--foreground));
 }
 
 .alka-calendar .alka-calendar-day-range-start {
-  border-radius: var(--alka-radius-pill) 0 0 var(--alka-radius-pill);
-  background: linear-gradient(90deg, transparent 0 50%, hsl(var(--primary) / 0.12) 50% 100%);
+  border-radius: var(--alka-radius-pill);
+  background: linear-gradient(90deg, transparent 0 50%, hsl(var(--primary) / 0.32) 50% 100%);
 }
 
 .alka-calendar .alka-calendar-day-range-end {
-  border-radius: 0 var(--alka-radius-pill) var(--alka-radius-pill) 0;
-  background: linear-gradient(90deg, hsl(var(--primary) / 0.12) 0 50%, transparent 50% 100%);
+  border-radius: var(--alka-radius-pill);
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.32) 0 50%, transparent 50% 100%);
 }
 
 .alka-calendar .alka-calendar-day-range-start.alka-calendar-day-range-end,
-.alka-calendar .alka-calendar-day-selected:not(.alka-calendar-day-range-middle) {
+.alka-calendar
+  .alka-calendar-day-selected:not(.alka-calendar-day-range-middle):not(.alka-calendar-day-range-start):not(
+    .alka-calendar-day-range-end
+  ) {
   background: transparent;
+}
+
+.alka-spinner {
+  display: inline-block;
+  overflow: visible;
+  transform-origin: center;
+  will-change: transform;
+  animation: alka-spinner-rotate 2.35s linear infinite;
+}
+
+.alka-spinner-circle {
+  stroke: currentColor;
+  stroke-linecap: round;
+  animation: alka-spinner-dash 1.75s ease-in-out infinite;
+}
+
+@keyframes alka-spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes alka-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+
+  100% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: -125;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alka-spinner,
+  .alka-spinner-circle {
+    animation: none;
+  }
 }
 
 .alka-switch-track {

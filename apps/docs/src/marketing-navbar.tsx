@@ -3,7 +3,7 @@ import { Button, Kbd, Navbar, NavbarCTA, useCommandPalette } from "@alkamanas/ui
 
 import { docsNavbarLogo } from "./brand-logo";
 import { getDocHref } from "./docs-routes";
-import type { DocsThemeModeId } from "./docs-theme";
+import { getPrimaryThemeStyle, type DocsThemeModeId, type PrimaryThemeId } from "./docs-theme";
 
 function DocsMarketingSearchButton() {
   const command = useCommandPalette();
@@ -17,12 +17,19 @@ function DocsMarketingSearchButton() {
   );
 }
 
-export function DocsMarketingNavbar({ themeMode }: { themeMode: DocsThemeModeId }) {
+export function DocsMarketingNavbar({
+  themeMode,
+  primaryTheme,
+}: {
+  themeMode: DocsThemeModeId;
+  primaryTheme: PrimaryThemeId;
+}) {
   return (
     <Navbar
       logo={docsNavbarLogo}
       theme={themeMode}
       syncThemeMeta={false}
+      style={getPrimaryThemeStyle(primaryTheme, themeMode)}
       links={[
         { href: getDocHref("introduction"), label: "Docs" },
         { href: getDocHref("components"), label: "Components" },

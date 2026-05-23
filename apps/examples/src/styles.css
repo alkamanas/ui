@@ -13,6 +13,22 @@ html {
   scroll-behavior: smooth;
 }
 
+html[data-examples-page-overlay-scrollbar="true"] {
+  scrollbar-width: none;
+}
+
+html[data-examples-page-overlay-scrollbar="true"]::-webkit-scrollbar,
+html[data-examples-page-overlay-scrollbar="true"] body::-webkit-scrollbar {
+  display: none;
+}
+
+html[data-examples-page-overlay-scrollbar="true"]::-webkit-scrollbar-button,
+html[data-examples-page-overlay-scrollbar="true"] body::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -78,6 +94,9 @@ input {
 }
 
 .examples-app {
+  --alka-navbar-panel-width: 76.25rem;
+  --alka-navbar-compact-width: 76.25rem;
+  --alka-navbar-wide-width: calc(var(--alka-navbar-compact-width) + var(--alka-navbar-panel-inline-padding-total, 4rem));
   min-height: 100vh;
   color: hsl(var(--foreground));
   background:
@@ -113,6 +132,65 @@ input {
   border-color: hsl(var(--primary) / 0.45);
   background: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
+}
+
+.examples-page-scrollbar {
+  position: fixed;
+  inset-block: 0;
+  right: 0;
+  z-index: 1400;
+  width: 0.875rem;
+  padding-block: 0.35rem;
+  padding-inline: 0.1875rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: none;
+  transform-origin: center right;
+  transition: opacity 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.examples-page-scrollbar[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.examples-page-scrollbar-thumb {
+  width: 100%;
+  min-height: 2.625rem;
+  cursor: grab;
+  border-radius: var(--alka-radius-pill);
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.18), transparent),
+    hsl(var(--foreground) / 0.32);
+  box-shadow:
+    0 6px 18px hsl(var(--alka-shadow-color) / 0.18),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.18);
+  opacity: 0.88;
+  transform-origin: center right;
+  transition:
+    background-color 240ms var(--alka-ease-smooth),
+    box-shadow 240ms var(--alka-ease-smooth),
+    opacity 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.examples-page-scrollbar-thumb:hover,
+.examples-page-scrollbar-thumb:active {
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.22), transparent),
+    hsl(var(--foreground) / 0.44);
+  opacity: 1;
+}
+
+.examples-page-scrollbar-thumb:active {
+  cursor: grabbing;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .examples-page-scrollbar,
+  .examples-page-scrollbar-thumb {
+    transition-duration: var(--alka-motion-instant);
+  }
 }
 
 .examples-app .alka-navbar-panel .alka-button-control[data-variant="flat"]:hover {
@@ -268,6 +346,18 @@ input {
   height: 2.5rem;
   min-height: 2.5rem;
   flex: 1 1 auto;
+  border-color: hsl(var(--border) / 0.72);
+  background: transparent;
+}
+
+.navbar-search .navbar-search-control:focus-within {
+  border-color: hsl(var(--border) / 0.84);
+  box-shadow: none;
+}
+
+.navbar-search .navbar-search-control::before,
+.navbar-search .navbar-search-control::after {
+  opacity: 0;
 }
 
 .navbar-search .alka-input-group-input {
@@ -280,7 +370,7 @@ input {
 }
 
 .navbar-search .alka-input-group-addon:first-child {
-  color: hsl(var(--primary));
+  color: hsl(var(--muted-foreground) / 0.82);
   padding-inline: 0.875rem 0.5rem;
 }
 

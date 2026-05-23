@@ -23,7 +23,7 @@ export { type DataTableColumnDef, type DataTableInstance, type DataTableProps, t
 export { DirectionProvider, useDirection, type Direction } from "./components/ui/direction";
 export { Dialog, DialogPortal, DialogOverlay, DialogTrigger, DialogClose, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "./components/ui/dialog";
 export { default as DraggableNumberInput } from "./components/ui/draggable-number-input";
-export { DatePicker, type DatePickerProps } from "./components/ui/date-picker";
+export { DatePicker, type DatePickerProps, type DatePickerSize, type DatePickerSurface } from "./components/ui/date-picker";
 export { Drawer, DrawerTrigger, DrawerClose, DrawerPortal, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "./components/ui/drawer";
 export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup } from "./components/ui/dropdown-menu";
 export { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "./components/ui/empty";

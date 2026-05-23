@@ -58,10 +58,10 @@ export function PageScrollbar() {
   React.useEffect(() => {
     const isEnabled = prefersDesktopPageScrollbar();
     setEnabled(isEnabled);
-    document.documentElement.dataset.docsPageOverlayScrollbar = isEnabled ? "true" : "false";
+    document.documentElement.dataset.examplesPageOverlayScrollbar = isEnabled ? "true" : "false";
 
     return () => {
-      delete document.documentElement.dataset.docsPageOverlayScrollbar;
+      delete document.documentElement.dataset.examplesPageOverlayScrollbar;
     };
   }, []);
 
@@ -145,12 +145,12 @@ export function PageScrollbar() {
   return (
     <div
       aria-hidden="true"
-      className="docs-page-scrollbar"
+      className="examples-page-scrollbar"
       data-visible={visible ? "true" : undefined}
       style={trackStyle}
     >
       <div
-        className="docs-page-scrollbar-thumb"
+        className="examples-page-scrollbar-thumb"
         style={{
           height: `${thumbHeight}px`,
           width: "100%",

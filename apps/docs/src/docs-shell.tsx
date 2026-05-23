@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Command as CommandIcon, Menu, Search } from "lucide-react";
-import { Button, GlassElementLayers, LiquidGlassFilter, ScrollArea, useCommandPalette } from "@alkamanas/ui";
+import { Button, GlassElementLayers, Kbd, LiquidGlassFilter, ScrollArea, useCommandPalette } from "@alkamanas/ui";
 
 import { DocsLogoMark, DocsThemeAwareWordmark } from "./brand-logo";
 import { componentIds, groupedDocs, type DocItem } from "./docs-data";
@@ -22,6 +22,23 @@ function CommandButton() {
     <Button variant="outline" size="sm" onClick={command.open} className="border-white/10 bg-white/[0.03]">
       <CommandIcon className="h-4 w-4" />
       Search
+    </Button>
+  );
+}
+
+function SidebarCommandButton() {
+  const command = useCommandPalette();
+
+  return (
+    <Button
+      variant="outlineFlat"
+      size="sm"
+      onClick={command.open}
+      className="mx-1 h-10 w-[calc(100%-0.5rem)] justify-start gap-2 px-3 text-muted-foreground"
+    >
+      <Search className="h-4 w-4" />
+      <span className="min-w-0 flex-1 truncate text-left">Search documentation...</span>
+      <Kbd>Ctrl K</Kbd>
     </Button>
   );
 }
@@ -75,15 +92,12 @@ function SidebarNav({ activeId }: { activeId: string }) {
   return (
     <aside className="alka-liquid-glass fixed bottom-4 left-4 top-4 z-30 hidden w-[264px] overflow-hidden rounded-3xl border lg:flex lg:flex-col">
       <GlassElementLayers />
-      <div className="border-b border-white/[0.06] px-3 py-3">
+      <div className="flex justify-center border-b border-white/[0.06] px-5 py-4">
         <Brand />
       </div>
       <ScrollArea className="flex-1">
         <div className="px-2 py-3">
-          <div className="mx-1 flex h-10 items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.035] px-3 text-sm text-muted-foreground">
-            <Search className="h-4 w-4" />
-            Search documentation...
-          </div>
+          <SidebarCommandButton />
           <nav className="mt-5 space-y-5">
             {Object.entries(groupedDocs).map(([group, items]) =>
               items.length ? (
@@ -407,9 +421,20 @@ export function PageChrome({
 
     updateToc();
     const frame = window.requestAnimationFrame(updateToc);
+    const article = articleRef.current;
+    const observer = article ? new MutationObserver(updateToc) : null;
+    if (article && observer) {
+      observer.observe(article, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+        attributeFilter: ["data-docs-toc", "id"],
+      });
+    }
 
     return () => {
       window.cancelAnimationFrame(frame);
+      observer?.disconnect();
     };
   }, [activeDoc.id, routeKey, children]);
 

@@ -847,7 +847,6 @@ body[data-alka-select-open="true"] {
   border-color: transparent;
   background: transparent;
   box-shadow: none;
-  padding-inline: 0;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
