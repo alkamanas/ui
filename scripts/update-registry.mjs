@@ -10,11 +10,16 @@ const globalsPath = join(repoRoot, "packages/ui/src/styles/globals.css");
 const checkOnly = process.argv.includes("--check");
 
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+
+function normalizeLineEndings(content) {
+  return content.replace(/\r\n?/g, "\n");
+}
+
 function readCssGraph(path, seen = new Set()) {
   if (seen.has(path)) return "";
   seen.add(path);
 
-  const source = readFileSync(path, "utf8");
+  const source = normalizeLineEndings(readFileSync(path, "utf8"));
   return source.replace(/@import\s+["'](.+)["'];/g, (_match, importPath) => {
     return readCssGraph(join(dirname(path), importPath), seen);
   });
@@ -67,7 +72,7 @@ const nextItems = manifest.items.map((item) => {
     throw new Error(`Registry source does not exist: ${item.source}`);
   }
 
-  const sourceContent = readFileSync(sourcePath, "utf8");
+  const sourceContent = normalizeLineEndings(readFileSync(sourcePath, "utf8"));
   const hash = `sha256-${createHash("sha256").update(sourceContent).digest("base64")}`;
   const tokens = extractTokens(`${sourceContent}\n${getRelevantStyleContent(item, sourceContent)}`);
   if (item.hash !== hash) {
