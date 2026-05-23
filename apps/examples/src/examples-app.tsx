@@ -109,6 +109,7 @@ import {
 type CategoryId = "marketing" | "dashboard" | "commerce" | "productivity" | "legal";
 type ExampleId =
   | "basic-landing"
+  | "glass-command-center"
   | "saas-dashboard"
   | "pricing-page"
   | "settings-page"
@@ -153,6 +154,7 @@ type Example = {
     | "portfolio"
     | "calendar"
     | "bento"
+    | "command"
     | "settings";
 };
 
@@ -214,6 +216,19 @@ const examples: Example[] = [
     featured: true,
     icon: CircleDollarSign,
     preview: "pricing",
+  },
+  {
+    id: "glass-command-center",
+    category: "marketing",
+    title: "Fintech glass landing",
+    eyebrow: "Landing",
+    description: "A centered fintech landing page with glass cards, wallet surfaces and payment controls.",
+    tags: ["Glass", "Navbar", "Wallet", "Cards"],
+    complexity: "Advanced",
+    featured: true,
+    recent: true,
+    icon: WalletCards,
+    preview: "command",
   },
   {
     id: "settings-page",
@@ -957,6 +972,23 @@ function ExampleCardVisualContent({ example }: { example: Example }) {
           </div>
         </div>
       );
+    case "command":
+      return (
+        <div className="visual-command">
+          <div className="visual-command-hero">
+            <Badge variant="outline">
+              <WalletCards />
+              Fintech landing
+            </Badge>
+            <strong>Finance Hero</strong>
+          </div>
+          <div className="visual-command-panel">
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      );
     default:
       return (
         <div className="visual-default">
@@ -1276,6 +1308,38 @@ function renderPreviewContent(example: Example) {
           </Item>
         </div>
       );
+    case "command":
+      return (
+        <div className="preview-command">
+          <div className="preview-command-copy">
+            <Badge variant="outline">
+              <Sparkles />
+              Fintech glass
+            </Badge>
+            <strong>Streamline finance</strong>
+            <Button size="sm" variant="glassPrimary">
+              Open wallet
+            </Button>
+          </div>
+          <Card className="preview-command-panel">
+            <CardHeader>
+              <CardTitle>7.95k</CardTitle>
+              <CardDescription>Campaign performance</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Item surface="glass">
+                <ItemMedia>
+                  <CreditCard />
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle>Virtual card</ItemTitle>
+                  <ItemDescription>Approved</ItemDescription>
+                </ItemContent>
+              </Item>
+            </CardContent>
+          </Card>
+        </div>
+      );
     case "landing":
     default:
       return (
@@ -1321,6 +1385,10 @@ function ExampleDetail({ example, onBack }: { example: Example; onBack: () => vo
 
   if (example.id === "bento-grid") {
     return <BentoGridExample example={example} onBack={onBack} />;
+  }
+
+  if (example.id === "glass-command-center") {
+    return <GlassCommandCenterExample example={example} onBack={onBack} />;
   }
 
   return <GenericShowcaseExample example={example} onBack={onBack} />;
@@ -1766,6 +1834,221 @@ function BentoGridExample({ example, onBack }: { example: Example; onBack: () =>
   );
 }
 
+function GlassCommandCenterExample({ example, onBack }: { example: Example; onBack: () => void }) {
+  return (
+    <ExampleShowcasePage
+      access="Free"
+      description="A centered fintech landing page that combines Alkamanas navbar, glass cards, wallet items, payment controls and metrics."
+      example={example}
+      files={[
+        "components/fintech-glass-landing.tsx",
+        "components/wallet-hero-card.tsx",
+        "components/payment-feature-card.tsx",
+        "page.tsx",
+      ]}
+      onBack={onBack}
+      title="Fintech Glass Landing"
+    >
+      <section className="command-showcase-preview" aria-label="Fintech glass landing preview">
+        <div className="command-navbar-frame">
+          <Navbar
+            brand={
+              <span className="command-brand">
+                <span className="command-brand-mark">
+                  <WalletCards />
+                </span>
+                FlowPay
+              </span>
+            }
+            className="command-navbar"
+            actions={
+              <>
+                <NavbarCTA className="command-navbar-login" href="#command-login" label="Login" />
+                <NavbarCTA className="command-navbar-signup" href="#command-signup" label="Sign up" />
+              </>
+            }
+            defaultTheme="dark"
+            links={[
+              { href: "#command-product", label: "Home" },
+              { href: "#command-glass", label: "Features" },
+              { href: "#command-demo", label: "How it works" },
+              { href: "#command-pricing", label: "Pricing" },
+            ]}
+            mobileMenuLabel="Open navigation"
+            mobileMenuCloseLabel="Close navigation"
+            panelClassName="command-navbar-panel"
+            panelVisible={false}
+            syncThemeMeta={false}
+            theme="dark"
+          />
+        </div>
+
+        <div className="command-hero">
+          <div className="command-copy">
+            <h2>Streamline Your <span>Finance</span></h2>
+            <p>Automate payments, spending and growth from one secure finance hub.</p>
+          </div>
+
+          <div className="command-proof">
+            <div className="command-proof-copy">
+              <div className="command-proof-actions" aria-label="Finance platform actions">
+                <Button className="command-proof-glass-button" size="sm" variant="glassPrimary">
+                  <WalletCards />
+                  Start managing
+                </Button>
+                <Button className="command-proof-outline-button" size="sm" variant="ghost">
+                  Learn more
+                  <ArrowRight />
+                </Button>
+              </div>
+            </div>
+          </div>
+          <span className="fintech-floating-dot fintech-floating-dot-mastercard" aria-hidden="true">
+            <PaymentBrandLogo brand="mastercard" size="preview" />
+          </span>
+          <span className="fintech-floating-dot fintech-floating-dot-user" aria-hidden="true">
+            <ShieldCheck />
+          </span>
+          <span className="fintech-floating-dot fintech-floating-dot-check" aria-hidden="true">
+            <TrendingUp />
+          </span>
+          <span className="fintech-floating-dot fintech-floating-dot-small" aria-hidden="true">
+            <WalletCards />
+          </span>
+          <span className="fintech-floating-dot fintech-floating-dot-arrow" aria-hidden="true">
+            <CreditCard />
+          </span>
+
+          <div className="command-visual-stage">
+            <div className="fintech-orb" aria-hidden="true" />
+            <div className="fintech-orbit-line" aria-hidden="true" />
+            <div className="fintech-mobile-balance-card" aria-hidden="true">
+              <div className="fintech-mobile-balance-card-topline">
+                <div className="fintech-mobile-balance-card-meta">
+                  <span>Total Balance</span>
+                  <strong>$24,890</strong>
+                </div>
+                <span className="fintech-mobile-balance-card-wallet">
+                  <WalletCards />
+                </span>
+              </div>
+              <div className="fintech-mobile-balance-card-trend-row">
+                <div className="fintech-mobile-balance-card-trend">
+                  <TrendingUp />
+                  <span>+12.4%</span>
+                </div>
+                <span>vs last 30 days</span>
+              </div>
+              <div className="fintech-mobile-balance-card-chart">
+                <svg viewBox="0 0 190 64" role="presentation" focusable="false">
+                  <path d="M6 48 C18 34 26 40 38 30 S62 42 76 30 S102 32 114 22 S136 24 148 16 S172 18 184 6" />
+                </svg>
+                <span />
+              </div>
+            </div>
+            <div className="fintech-mobile-feature-row" aria-hidden="true">
+              <div className="fintech-mobile-feature-item">
+                <span><CreditCard /></span>
+                <strong>Payments</strong>
+                <small>Automated</small>
+              </div>
+              <div className="fintech-mobile-feature-item">
+                <span><BarChart3 /></span>
+                <strong>Spending</strong>
+                <small>Tracked</small>
+              </div>
+              <div className="fintech-mobile-feature-item">
+                <span><TrendingUp /></span>
+                <strong>Growth</strong>
+                <small>Accelerated</small>
+              </div>
+            </div>
+            <div className="fintech-card-layout">
+              <div className="fintech-left-stack">
+                <Card className="fintech-card-preview">
+                  <CardHeader>
+                    <div className="fintech-card-preview-meta">
+                      <CardDescription>June 2026</CardDescription>
+                      <Badge variant="outline">Live</Badge>
+                    </div>
+                    <CardTitle>78.39k</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="fintech-card-preview-users">
+                      {[
+                        ["28.45k", "Active buyers"],
+                        ["19.32k", "Repeat orders"],
+                      ].map(([value, label], index) => (
+                        <div className="fintech-card-preview-user" key={label}>
+                          <span data-tone={index === 0 ? "purple" : "blue"} />
+                          <div>
+                            <strong>{value}</strong>
+                            <small>{label}</small>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="fintech-chart-lines" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="fintech-center-stack">
+                <Card className="command-console-card fintech-wallet-panel">
+                  <CardHeader>
+                    <div className="fintech-console-topline">
+                      <Badge variant="outline">May</Badge>
+                      <Badge variant="outline">Last 28 days</Badge>
+                    </div>
+                    <div className="fintech-console-heading">
+                      <CardDescription>Marketing campaign</CardDescription>
+                      <CardTitle>7.95k</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Progress value={74} />
+                    <div className="fintech-mini-bars" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="fintech-right-stack">
+                <Card className="fintech-expense-back-card fintech-expense-back-card-far" aria-hidden="true" />
+                <Card className="fintech-expense-back-card fintech-expense-back-card-near" aria-hidden="true" />
+                <Card className="command-floating-card command-floating-card-top">
+                  <CardHeader>
+                    <CardDescription>Total expenses</CardDescription>
+                    <CardTitle>$6,240</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="fintech-expense-line" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ExampleShowcasePage>
+  );
+}
+
 const mobilePreviewRuntimeStyles = `
   html,
   body,
@@ -1773,11 +2056,12 @@ const mobilePreviewRuntimeStyles = `
     min-height: 100%;
   }
 
-  #mobile-preview-root.showcase-preview-frame {
+  #mobile-preview-root {
     display: block;
     min-height: 100%;
     padding: 0;
-   }
+    background: #050505;
+  }
 
   body {
     margin: 0;
@@ -1791,12 +2075,16 @@ const mobilePreviewRuntimeStyles = `
     scrollbar-width: none;
   }
 
-  #mobile-preview-root .checkout-showcase-preview.payment-method-showcase {
+  #mobile-preview-root > .dashboard-showcase-preview,
+  #mobile-preview-root > .checkout-showcase-preview,
+  #mobile-preview-root > .settings-showcase-preview,
+  #mobile-preview-root > .bento-showcase-preview,
+  #mobile-preview-root > .command-showcase-preview,
+  #mobile-preview-root > .generic-showcase-preview {
     min-height: 100vh;
     border: 0;
     border-radius: 0;
     padding-top: 52px;
-    background: transparent;
   }
 
   body::-webkit-scrollbar {
@@ -1815,7 +2103,7 @@ function MobilePreviewFrame({ children }: { children: ReactNode }) {
 
     iframeDocument.open();
     iframeDocument.write(
-      '<!doctype html><html><head><base target="_parent" /><meta name="viewport" content="width=device-width, initial-scale=1" /></head><body><div id="mobile-preview-root" class="showcase-preview-frame" data-viewport="mobile"></div></body></html>',
+      '<!doctype html><html><head><base target="_parent" /><meta name="viewport" content="width=device-width, initial-scale=1" /></head><body><div id="mobile-preview-root" class="examples-app alka-theme-dark" data-theme="dark"></div></body></html>',
     );
     iframeDocument.close();
 

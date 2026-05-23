@@ -119,6 +119,54 @@ input {
   background: hsl(var(--primary) / 0.88);
 }
 
+.examples-app .alka-navbar-mobile-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  min-height: 100dvh !important;
+  padding: 112px 36px 36px !important;
+  background: transparent !important;
+  color: white !important;
+}
+
+.examples-app .alka-navbar-mobile-background {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  background:
+    radial-gradient(circle at 14% 20%, hsl(var(--primary) / 0.18), transparent 14rem),
+    hsl(240 34% 5% / 0.98) !important;
+  background:
+    radial-gradient(circle at 14% 20%, hsl(var(--primary) / 0.18), transparent 14rem),
+    hsl(from hsl(var(--primary)) h 28% 4.6% / 0.98) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  backdrop-filter: blur(18px) saturate(1.1);
+}
+
+.examples-app .alka-navbar-mobile-list {
+  max-width: none !important;
+  margin-inline: 0 !important;
+}
+
+.examples-app .alka-navbar-mobile-overlay a,
+.examples-app .alka-navbar-mobile-overlay button {
+  color: white !important;
+}
+
+.examples-app .alka-navbar-panel > button {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.examples-app .alka-navbar-panel > button:hover,
+.examples-app .alka-navbar-panel > button:focus-visible {
+  background: transparent !important;
+}
+
 .examples-home,
 .example-detail {
   min-height: 100vh;
@@ -548,6 +596,49 @@ input {
     hsl(var(--background) / 0.34);
 }
 
+.visual-command {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 12px;
+}
+
+.visual-command-hero,
+.visual-command-panel {
+  min-height: 162px;
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 30% 20%, hsl(218 94% 72% / 0.24), transparent 5rem),
+    radial-gradient(circle at 78% 78%, hsl(269 92% 72% / 0.28), transparent 5rem),
+    hsl(var(--background) / 0.34);
+}
+
+.visual-command-hero {
+  display: grid;
+  align-content: space-between;
+  padding: 16px;
+}
+
+.visual-command-hero strong {
+  max-width: 190px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.visual-command-panel {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 14px;
+}
+
+.visual-command-panel span {
+  height: 34px;
+  border: 1px solid hsl(var(--border) / 0.42);
+  border-radius: 999px;
+  background: hsl(var(--card) / 0.34);
+}
+
 .example-card-visual .alka-card-header {
   padding: 12px;
 }
@@ -652,6 +743,7 @@ input {
 .preview-portfolio,
 .preview-calendar,
 .preview-bento,
+.preview-command,
 .preview-dashboard,
 .preview-settings {
   min-height: 188px;
@@ -666,6 +758,7 @@ input {
 .preview-portfolio,
 .preview-calendar,
 .preview-bento,
+.preview-command,
 .preview-settings {
   display: grid;
   gap: 12px;
@@ -673,6 +766,31 @@ input {
 
 .preview-landing {
   align-content: space-between;
+}
+
+.preview-command {
+  grid-template-columns: 0.82fr 1fr;
+  align-items: stretch;
+}
+
+.preview-command-copy {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 12px;
+}
+
+.preview-command-copy strong {
+  font-size: 22px;
+  line-height: 1.02;
+}
+
+.preview-command-panel .alka-card-header {
+  padding: 14px 14px 8px;
+}
+
+.preview-command-panel .alka-card-content {
+  padding: 0 14px 14px;
 }
 
 .preview-copy-stack {
@@ -1232,6 +1350,7 @@ body.examples-portal-theme .alka-select-option[data-state="checked"] {
 .showcase-preview-frame[data-viewport="desktop"]:fullscreen .checkout-showcase-preview,
 .showcase-preview-frame[data-viewport="desktop"]:fullscreen .settings-showcase-preview,
 .showcase-preview-frame[data-viewport="desktop"]:fullscreen .bento-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"]:fullscreen .command-showcase-preview,
 .showcase-preview-frame[data-viewport="desktop"]:fullscreen .generic-showcase-preview {
   width: min(1480px, 100%);
 }
@@ -1240,6 +1359,7 @@ body.examples-portal-theme .alka-select-option[data-state="checked"] {
 .showcase-preview-frame[data-viewport="desktop"] .checkout-showcase-preview,
 .showcase-preview-frame[data-viewport="desktop"] .settings-showcase-preview,
 .showcase-preview-frame[data-viewport="desktop"] .bento-showcase-preview,
+.showcase-preview-frame[data-viewport="desktop"] .command-showcase-preview,
 .showcase-preview-frame[data-viewport="desktop"] .generic-showcase-preview {
   width: 100%;
 }
@@ -1252,6 +1372,7 @@ body.examples-portal-theme .alka-select-option[data-state="checked"] {
 .showcase-preview-frame[data-viewport="mobile"] .checkout-showcase-preview,
 .showcase-preview-frame[data-viewport="mobile"] .settings-showcase-preview,
 .showcase-preview-frame[data-viewport="mobile"] .bento-showcase-preview,
+.showcase-preview-frame[data-viewport="mobile"] .command-showcase-preview,
 .showcase-preview-frame[data-viewport="mobile"] .generic-showcase-preview {
   width: 100%;
   grid-template-columns: 1fr;
@@ -1306,6 +1427,465 @@ body.examples-portal-theme .alka-select-option[data-state="checked"] {
 
 .showcase-preview-frame[data-viewport="mobile"] .bento-hero-card {
   min-height: 300px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-showcase-preview {
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  grid-template-rows: auto;
+  padding: 12px;
+  background: transparent;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-navbar-frame {
+  min-height: 56px;
+  overflow: visible;
+  contain: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-showcase-preview {
+  background:
+    linear-gradient(180deg, hsl(240 88% 2% / 0.98) 0%, hsl(240 88% 3% / 0.78) 34%, transparent 66%),
+    linear-gradient(hsl(225 84% 86% / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(225 84% 86% / 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 50% 92%, hsl(224 98% 57% / 0.54), transparent 23rem),
+    radial-gradient(circle at 6% 76%, hsl(302 92% 62% / 0.28), transparent 13rem),
+    linear-gradient(180deg, hsl(240 88% 6% / 0.98), hsl(235 92% 4% / 0.99));
+  background-size: auto, 84px 84px, 84px 84px, auto, auto, auto;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-showcase-preview::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -74px;
+  left: -92px;
+  width: 320px;
+  height: 320px;
+  border-radius: 999px;
+  background: radial-gradient(circle, hsl(224 96% 64% / 0.24), hsl(224 96% 58% / 0.1) 42%, transparent 72%);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "copy"
+    "proof"
+    "visual";
+  gap: 18px;
+  margin-top: -72px;
+  min-height: auto;
+  padding: 18px 0 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-copy h2 {
+  font-size: 42px;
+  line-height: 0.98;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-copy {
+  position: relative;
+  z-index: 6;
+  gap: 10px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-copy p {
+  max-width: 300px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .examples-app .command-showcase-preview .command-proof-actions .alka-button-control,
+.showcase-preview-frame[data-viewport="mobile"] .command-proof-actions .alka-button-control {
+  height: 40px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-proof-actions {
+  flex-wrap: nowrap;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .examples-app .command-showcase-preview .command-proof-glass-button,
+.showcase-preview-frame[data-viewport="mobile"] .command-proof-glass-button {
+  border-color: hsl(214 100% 78% / 0.38) !important;
+  background:
+    linear-gradient(135deg, hsl(214 100% 68% / 0.34), hsl(252 100% 70% / 0.2)),
+    hsl(227 58% 22% / 0.82) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.22),
+    0 18px 38px hsl(224 96% 46% / 0.34) !important;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .examples-app .command-showcase-preview .command-proof-outline-button,
+.showcase-preview-frame[data-viewport="mobile"] .command-proof-outline-button {
+  border-color: hsl(0 0% 100% / 0.13) !important;
+  background: hsl(0 0% 100% / 0.018) !important;
+  color: hsl(0 0% 100% / 0.62) !important;
+  padding-inline: 13px !important;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-copy,
+.showcase-preview-frame[data-viewport="mobile"] .command-proof {
+  padding-inline: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot {
+  z-index: 5;
+  display: grid;
+  opacity: 0.86;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot-user,
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot-arrow {
+  display: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot-check {
+  left: calc(50% - 118px);
+  top: 376px;
+  width: 36px;
+  height: 36px;
+  opacity: 0.62;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot-mastercard {
+  left: calc(50% - 24px);
+  top: 342px;
+  width: 48px;
+  height: 48px;
+  opacity: 0.78;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot-small {
+  left: calc(50% + 102px);
+  right: auto;
+  top: 366px;
+  width: 44px;
+  height: 44px;
+  opacity: 0.7;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-floating-dot-mastercard .payment-card-brand-logo {
+  width: 32px;
+  height: 20px;
+  flex-basis: 32px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-floating-dot-mastercard .payment-card-brand-logo img[data-logo-brand="mastercard"] {
+  width: 31px;
+  height: 20px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-visual-stage {
+  min-height: 302px;
+  margin-top: -10px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-visual-stage::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: -118px;
+  width: 214px;
+  height: 358px;
+  border: 1px solid hsl(224 96% 78% / 0.26);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -12px 44px hsl(224 96% 62% / 0.12);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-card-layout {
+  display: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 34px;
+  display: grid;
+  width: 188px;
+  min-height: 112px;
+  gap: 10px;
+  padding: 15px 16px 14px;
+  border: 1px solid hsl(0 0% 100% / 0.16);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 20% 0%, hsl(0 0% 100% / 0.18), transparent 4.6rem),
+    linear-gradient(145deg, hsl(232 38% 25% / 0.58), hsl(236 56% 10% / 0.48));
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.14),
+    0 24px 56px rgb(0 0 0 / 0.28),
+    0 -10px 34px hsl(224 96% 62% / 0.24);
+  transform: translateX(-50%);
+  -webkit-backdrop-filter: blur(20px) saturate(1.16);
+  backdrop-filter: blur(20px) saturate(1.16);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-meta span,
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-trend {
+  color: hsl(0 0% 100% / 0.62);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-meta strong {
+  color: white;
+  font-size: 24px;
+  font-weight: 540;
+  line-height: 0.96;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart {
+  display: flex;
+  align-items: end;
+  gap: 6px;
+  height: 30px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span {
+  width: 12px;
+  border-radius: 999px 999px 4px 4px;
+  background: hsl(0 0% 100% / 0.34);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span:nth-child(1) { height: 15px; }
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span:nth-child(2) { height: 23px; }
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span:nth-child(3) { height: 18px; background: hsl(224 96% 68% / 0.78); }
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span:nth-child(4) { height: 28px; }
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span:nth-child(5) { height: 20px; }
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: max-content;
+  color: hsl(142 88% 72% / 0.88);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-trend svg {
+  width: 13px;
+  height: 13px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-hero > .fintech-floating-dot {
+  display: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-visual-stage {
+  min-height: 302px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card {
+  bottom: 118px;
+  width: 212px;
+  min-height: 170px;
+  gap: 9px;
+  padding: 17px 18px 16px;
+  border-radius: 24px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-topline {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-wallet {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  place-items: center;
+  border: 1px solid hsl(224 96% 78% / 0.18);
+  border-radius: 11px;
+  background: hsl(230 52% 18% / 0.72);
+  color: hsl(219 96% 88%);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.1);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-wallet svg {
+  width: 16px;
+  height: 16px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-meta strong {
+  font-size: 31px;
+  letter-spacing: 0;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-trend-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-trend-row > span {
+  color: hsl(0 0% 100% / 0.48);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-trend {
+  min-height: 24px;
+  padding-inline: 8px;
+  border-radius: 999px;
+  background: hsl(142 88% 52% / 0.12);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart {
+  position: relative;
+  height: 62px;
+  margin-top: 2px;
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    linear-gradient(90deg, hsl(0 0% 100% / 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, transparent, hsl(224 96% 58% / 0.12));
+  background-size: 32px 100%, auto;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart svg {
+  position: absolute;
+  inset: 8px 0 0;
+  width: 100%;
+  height: 54px;
+  overflow: visible;
+  fill: none;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart path {
+  stroke: hsl(224 96% 72%);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px hsl(224 96% 64% / 0.52));
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-balance-card-chart span {
+  position: absolute;
+  right: 0;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: hsl(224 96% 72%);
+  box-shadow: 0 0 14px hsl(224 96% 66% / 0.92);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-row {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 24px;
+  display: grid;
+  width: min(260px, calc(100% - 28px));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  transform: translateX(-50%);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-width: 0;
+  color: white;
+  text-align: center;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item span {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid hsl(0 0% 100% / 0.13);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 20%, hsl(0 0% 100% / 0.2), transparent 36%),
+    hsl(233 38% 13% / 0.7);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.1),
+    0 16px 34px rgb(0 0 0 / 0.3);
+  color: hsl(219 96% 88%);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item:nth-child(2) span {
+  width: 38px;
+  height: 38px;
+  background:
+    radial-gradient(circle at 32% 20%, hsl(0 0% 100% / 0.22), transparent 36%),
+    linear-gradient(135deg, hsl(224 96% 64% / 0.28), hsl(252 92% 62% / 0.2)),
+    hsl(233 38% 13% / 0.76);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item svg {
+  width: 17px;
+  height: 17px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item strong,
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item small {
+  display: block;
+  line-height: 1.05;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item strong {
+  margin-top: 2px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-mobile-feature-item small {
+  color: hsl(0 0% 100% / 0.58);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-orb {
+  bottom: -306px;
+  width: 700px;
+  height: 438px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-orb::before {
+  height: 112px;
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-orbit-line {
+  bottom: -186px;
+  width: 580px;
+  height: 284px;
+  border-color: hsl(224 96% 76% / 0.42);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-console-card {
+  left: 50%;
+  bottom: 126px;
+  width: min(270px, calc(100% - 28px));
+  min-height: auto;
+  transform: translateX(-50%);
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .fintech-card-preview {
+  left: 18px;
+  bottom: 20px;
+  width: min(240px, calc(100% - 36px));
+}
+
+.showcase-preview-frame[data-viewport="mobile"] .command-floating-card {
+  display: none;
 }
 
 .showcase-preview-frame[data-viewport="mobile"] .bento-hero-card .alka-card-title {
@@ -1636,7 +2216,8 @@ body.examples-portal-theme .alka-select-option[data-state="checked"] {
 .dashboard-showcase-preview,
 .checkout-showcase-preview,
 .settings-showcase-preview,
-.bento-showcase-preview {
+.bento-showcase-preview,
+.command-showcase-preview {
   min-height: 640px;
   display: grid;
   gap: 18px;
@@ -1654,6 +2235,943 @@ body.examples-portal-theme .alka-select-option[data-state="checked"] {
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.42fr);
   gap: 26px;
   padding: 24px;
+}
+
+.command-showcase-preview {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --examples-primary-gold: 226 96% 66%;
+  --examples-primary-gold-foreground: 0 0% 100%;
+  --alka-primary: 226 96% 66%;
+  --alka-primary-foreground: 0 0% 100%;
+  --primary: var(--alka-primary);
+  --primary-foreground: var(--alka-primary-foreground);
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 780px;
+  padding: 32px 66px 0;
+  background:
+    linear-gradient(180deg, hsl(240 88% 2% / 0.98) 0%, hsl(240 88% 3% / 0.76) 32%, transparent 62%),
+    linear-gradient(hsl(225 84% 86% / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(225 84% 86% / 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 50% 88%, hsl(224 98% 57% / 0.52), transparent 31rem),
+    radial-gradient(circle at 12% 60%, hsl(294 92% 62% / 0.26), transparent 22rem),
+    linear-gradient(180deg, hsl(240 88% 6% / 0.98), hsl(235 92% 4% / 0.99));
+  background-size: auto, 84px 84px, 84px 84px, auto, auto, auto;
+}
+
+.command-showcase-preview .alka-navbar-root {
+  --examples-primary-gold: 226 96% 66%;
+  --examples-primary-gold-foreground: 0 0% 100%;
+  --alka-primary: 226 96% 66%;
+  --alka-primary-foreground: 0 0% 100%;
+  --primary: var(--alka-primary);
+  --primary-foreground: var(--alka-primary-foreground);
+}
+
+.command-showcase-preview > * {
+  position: relative;
+  z-index: 1;
+}
+
+.command-navbar-frame {
+  position: relative;
+  z-index: 12;
+  min-height: 56px;
+  overflow: hidden;
+  border-radius: 22px;
+  contain: layout paint;
+}
+
+.command-showcase-preview .command-navbar {
+  position: static;
+  inset: auto;
+  transform: none !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+.command-showcase-preview .alka-navbar-shell {
+  max-width: none;
+  padding: 0;
+}
+
+.command-showcase-preview .command-navbar-panel,
+.command-showcase-preview .command-navbar-panel[data-quiet="true"] {
+  height: 56px !important;
+  width: 100%;
+  overflow: hidden !important;
+  border-radius: 18px !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  transition: none !important;
+}
+
+.command-showcase-preview .command-navbar-panel {
+  padding-inline: 24px !important;
+}
+
+.command-showcase-preview .command-navbar-panel > button {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.command-showcase-preview .command-navbar-panel > button:hover,
+.command-showcase-preview .command-navbar-panel > button:focus-visible {
+  background: transparent !important;
+}
+
+.command-showcase-preview .command-navbar a {
+  color: white !important;
+}
+
+.command-showcase-preview .command-navbar-panel > .alka-glass-element__backdrop,
+.command-showcase-preview .command-navbar-panel > .alka-glass-element__tint,
+.command-showcase-preview .command-navbar-panel > .alka-glass-element__shine,
+.command-showcase-preview .command-navbar-panel > .alka-glass-element__border {
+  opacity: 0 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.command-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: 800;
+}
+
+.command-brand-mark {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 9px;
+  background: linear-gradient(145deg, hsl(224 96% 62%), hsl(252 96% 64%));
+  color: white;
+  box-shadow: 0 18px 36px hsl(224 96% 52% / 0.28);
+}
+
+.command-brand-mark svg {
+  width: 16px;
+  height: 16px;
+}
+
+.command-showcase-preview .alka-navbar-panel > .hidden.items-center.gap-2 {
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid hsl(0 0% 100% / 0.11);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.025)),
+    hsl(235 52% 9% / 0.7);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.1),
+    0 14px 34px rgb(0 0 0 / 0.22);
+}
+
+.command-showcase-preview .alka-navbar-panel > .hidden.items-center.gap-2 a {
+  padding: 7px 13px;
+  border-radius: 999px;
+  color: hsl(0 0% 100% / 0.78);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.command-showcase-preview .alka-navbar-panel > .hidden.items-center.gap-2 a:hover {
+  background: hsl(0 0% 100% / 0.08);
+  color: white;
+}
+
+.examples-app .command-showcase-preview .alka-navbar-panel .command-navbar-login,
+.examples-app .command-showcase-preview .alka-navbar-panel .command-navbar-signup {
+  height: 38px;
+  padding-inline: 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.examples-app .command-showcase-preview .alka-navbar-panel .command-navbar-login {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: hsl(0 0% 100% / 0.82) !important;
+  box-shadow: none !important;
+}
+
+.examples-app .command-showcase-preview .alka-navbar-panel .command-navbar-login:hover {
+  background: hsl(0 0% 100% / 0.06) !important;
+  color: white !important;
+}
+
+.examples-app .command-showcase-preview .alka-navbar-panel .command-navbar-signup {
+  border-color: hsl(224 96% 74% / 0.24) !important;
+  background:
+    linear-gradient(135deg, hsl(224 96% 70% / 0.22), hsl(255 96% 68% / 0.14)),
+    hsl(235 50% 14% / 0.86) !important;
+  color: white !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.18),
+    0 16px 34px hsl(224 96% 46% / 0.18) !important;
+}
+
+.examples-app .command-showcase-preview .alka-navbar-panel .command-navbar-signup:hover {
+  background:
+    linear-gradient(135deg, hsl(224 96% 72% / 0.3), hsl(255 96% 70% / 0.2)),
+    hsl(235 50% 16% / 0.9) !important;
+}
+
+.command-showcase-preview .alka-progress {
+  height: 6px;
+  background: hsl(225 80% 72% / 0.16);
+}
+
+.command-showcase-preview .alka-progress > div {
+  background: linear-gradient(90deg, hsl(196 98% 66%), hsl(226 96% 66%), hsl(274 92% 68%));
+}
+
+.command-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "copy"
+    "proof"
+    "visual";
+  align-items: start;
+  gap: 24px;
+  min-height: 684px;
+  padding: 62px 10px 0;
+}
+
+.command-copy {
+  display: grid;
+  grid-area: copy;
+  max-width: 760px;
+  justify-self: center;
+  gap: 18px;
+  justify-items: center;
+  padding-left: 0;
+  text-align: center;
+}
+
+.command-copy h2 {
+  max-width: 610px;
+  margin: 0;
+  color: white;
+  font-size: clamp(74px, 6.9vw, 102px);
+  font-weight: 330;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.command-copy h2 span {
+  background: linear-gradient(90deg, hsl(0 0% 100%), hsl(214 100% 78%) 46%, hsl(252 96% 76%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.command-copy p {
+  max-width: 520px;
+  margin: 0;
+  color: hsl(0 0% 100% / 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.command-proof {
+  grid-area: proof;
+  display: grid;
+  gap: 0;
+  justify-self: center;
+  padding-top: 0;
+  padding-right: 0;
+}
+
+.command-proof-copy {
+  display: grid;
+  max-width: 500px;
+  gap: 0;
+  justify-items: center;
+  text-align: center;
+}
+
+.command-proof-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.examples-app .command-showcase-preview .command-proof-actions .alka-button-control {
+  height: 44px;
+  padding-inline: 20px;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.examples-app .command-showcase-preview .command-proof-actions .alka-button-content {
+  gap: 9px;
+}
+
+.examples-app .command-showcase-preview .command-proof-actions .alka-button-control svg {
+  width: 17px;
+  height: 17px;
+}
+
+.examples-app .command-showcase-preview .command-proof-glass-button {
+  --alka-highlight-color: 214 100% 72%;
+  --alka-glass-element-tint-opacity: 0.56;
+  --alka-glass-element-shine-opacity: 0.34;
+  border-color: hsl(214 100% 76% / 0.24) !important;
+  color: white !important;
+  background:
+    linear-gradient(135deg, hsl(214 100% 66% / 0.2), hsl(252 100% 70% / 0.12)),
+    hsl(227 58% 18% / 0.64) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.16),
+    0 14px 30px hsl(224 96% 44% / 0.2) !important;
+}
+
+.examples-app .command-showcase-preview .command-proof-outline-button {
+  border: 1px solid hsl(0 0% 100% / 0.2) !important;
+  background: hsl(0 0% 100% / 0.035) !important;
+  color: hsl(0 0% 100% / 0.84) !important;
+  box-shadow: none !important;
+}
+
+.examples-app .command-showcase-preview .command-proof-outline-button:hover {
+  border-color: hsl(0 0% 100% / 0.34) !important;
+  background: hsl(0 0% 100% / 0.07) !important;
+  color: white !important;
+}
+
+.command-visual-stage {
+  grid-area: visual;
+  position: relative;
+  width: 100%;
+  min-height: 386px;
+  margin-top: 18px;
+  --fintech-stage-width: 980px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.fintech-orb {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: -318px;
+  width: min(1240px, 102%);
+  height: 596px;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background:
+    radial-gradient(ellipse at 50% 2%, hsl(224 96% 73% / 0.34), transparent 33%),
+    radial-gradient(ellipse at 50% 24%, hsl(224 96% 55% / 0.26), transparent 54%),
+    linear-gradient(180deg, hsl(227 96% 58% / 0.24), hsl(236 84% 8% / 0.96));
+  box-shadow:
+    inset 0 2px 0 hsl(224 96% 78% / 0.86),
+    0 -34px 110px hsl(224 96% 58% / 0.55),
+    0 -8px 42px hsl(202 98% 68% / 0.28);
+  transform: translateX(-50%);
+}
+
+.fintech-orb::before {
+  content: "";
+  position: absolute;
+  inset: 22px 0 auto;
+  height: 150px;
+  border-radius: 50%;
+  background:
+    linear-gradient(105deg, transparent 0 8%, hsl(294 95% 58% / 0.52) 18%, transparent 34%),
+    linear-gradient(18deg, hsl(196 98% 62% / 0.34), transparent 42%, hsl(224 98% 70% / 0.42) 70%, transparent);
+  filter: blur(8px);
+  opacity: 0.9;
+}
+
+.fintech-orbit-line {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: -142px;
+  width: min(900px, 82%);
+  height: 390px;
+  border: 1px solid hsl(224 96% 76% / 0.5);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -16px 54px hsl(224 96% 62% / 0.22);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.fintech-mobile-balance-card {
+  display: none;
+}
+
+.fintech-mobile-feature-row {
+  display: none;
+}
+
+.fintech-card-preview,
+.command-console-card,
+.command-floating-card {
+  border-color: hsl(0 0% 100% / 0.15);
+  background:
+    radial-gradient(circle at 20% 12%, hsl(224 96% 72% / 0.17), transparent 11rem),
+    linear-gradient(135deg, hsl(234 34% 22% / 0.78), hsl(239 48% 10% / 0.76)) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.12),
+    0 28px 70px rgb(0 0 0 / 0.36);
+  -webkit-backdrop-filter: blur(22px) saturate(1.18);
+  backdrop-filter: blur(22px) saturate(1.18);
+}
+
+.fintech-card-preview {
+  position: absolute;
+  z-index: 3;
+  left: calc(50% - 500px);
+  bottom: 16px;
+  width: 292px;
+  height: 224px;
+  rotate: -1deg;
+}
+
+.fintech-card-preview .alka-card-header {
+  gap: 14px;
+  padding: 26px 30px 6px;
+}
+
+.fintech-card-preview .alka-card-title {
+  color: white;
+  font-size: 36px;
+  font-weight: 430;
+  line-height: 0.95;
+}
+
+.fintech-card-preview > .alka-card-content {
+  display: grid;
+  align-content: end;
+  min-height: 78px;
+  padding: 4px 30px 28px;
+}
+
+.fintech-card-preview-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fintech-console-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fintech-card-preview-meta .alka-badge,
+.fintech-console-topline .alka-badge {
+  height: 18px;
+  padding-inline: 7px;
+  border-color: hsl(224 96% 76% / 0.28);
+  color: hsl(219 96% 88%);
+  font-size: 9px;
+}
+
+.fintech-card-preview-meta .alka-badge {
+  height: 22px;
+  padding-inline: 9px;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.fintech-console-topline .alka-badge {
+  height: 22px;
+  padding-inline: 8px;
+  font-size: 10px;
+}
+
+.fintech-card-preview .alka-card-description,
+.command-console-card .alka-card-description,
+.command-floating-card-top .alka-card-description {
+  color: hsl(0 0% 100% / 0.68);
+}
+
+.command-console-card .alka-card-description {
+  max-width: 150px;
+  color: hsl(0 0% 100% / 0.66);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.fintech-card-preview-users {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 12px;
+}
+
+.fintech-card-preview-user {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.fintech-card-preview-user > span {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  box-shadow: 0 0 24px hsl(224 96% 62% / 0.42);
+}
+
+.fintech-card-preview-user > span[data-tone="purple"] {
+  background: linear-gradient(135deg, hsl(218 96% 74%), hsl(274 92% 66%));
+}
+
+.fintech-card-preview-user > span[data-tone="blue"] {
+  background: linear-gradient(135deg, hsl(196 98% 66%), hsl(226 96% 64%));
+}
+
+.fintech-card-preview-user strong,
+.fintech-card-preview-user small {
+  display: block;
+  line-height: 1.05;
+}
+
+.fintech-card-preview-user strong {
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.fintech-card-preview-user small {
+  color: hsl(0 0% 100% / 0.74);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.fintech-floating-dot {
+  position: absolute;
+  z-index: 6;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid hsl(0 0% 100% / 0.14);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 20%, hsl(0 0% 100% / 0.2), transparent 36%),
+    hsl(233 38% 13% / 0.68);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.1),
+    0 18px 38px rgb(0 0 0 / 0.32);
+  color: white;
+  -webkit-backdrop-filter: blur(18px) saturate(1.14);
+  backdrop-filter: blur(18px) saturate(1.14);
+}
+
+.fintech-floating-dot-check {
+  left: calc(50% - 252px);
+  top: 258px;
+  border-color: hsl(224 96% 78% / 0.24);
+  background:
+    radial-gradient(circle at 30% 18%, hsl(0 0% 100% / 0.24), transparent 34%),
+    linear-gradient(135deg, hsl(218 96% 64% / 0.28), hsl(252 92% 62% / 0.18)),
+    hsl(229 42% 18% / 0.62);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.14),
+    0 20px 44px hsl(226 96% 44% / 0.32);
+}
+
+.fintech-floating-dot-mastercard {
+  left: calc(50% - 226px);
+  top: 132px;
+}
+
+.fintech-floating-dot-user {
+  left: calc(50% - 176px);
+  top: 142px;
+}
+
+.fintech-floating-dot-arrow {
+  left: calc(50% + 304px);
+  top: 232px;
+  background:
+    radial-gradient(circle at 34% 22%, hsl(0 0% 100% / 0.18), transparent 36%),
+    hsl(224 22% 28% / 0.62);
+}
+
+.fintech-floating-dot-small {
+  left: calc(50% + 156px);
+  top: 124px;
+  width: 44px;
+  height: 44px;
+  background:
+    radial-gradient(circle at 34% 22%, hsl(0 0% 100% / 0.2), transparent 36%),
+    linear-gradient(135deg, hsl(196 98% 64% / 0.38), hsl(252 92% 64% / 0.3)),
+    hsl(229 42% 18% / 0.58);
+}
+
+.fintech-floating-dot svg {
+  width: 18px;
+  height: 18px;
+}
+
+.fintech-floating-dot-user svg,
+.fintech-floating-dot-check svg {
+  width: 23px;
+  height: 23px;
+}
+
+.fintech-floating-dot-small svg,
+.fintech-floating-dot-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.fintech-floating-dot-mastercard .payment-card-brand-logo {
+  width: 34px;
+  height: 22px;
+  flex-basis: 34px;
+}
+
+.fintech-floating-dot-mastercard .payment-card-brand-logo img[data-logo-brand="mastercard"] {
+  width: 37px;
+  height: 23px;
+}
+
+.fintech-chart-lines {
+  position: relative;
+  display: grid;
+  gap: 9px;
+  padding-top: 10px;
+}
+
+.fintech-chart-lines span {
+  display: block;
+  height: 1px;
+  border-radius: 999px;
+  background: hsl(225 96% 76% / 0.18);
+}
+
+.fintech-chart-lines::after {
+  content: "";
+  position: absolute;
+  inset: 18px 0 12px;
+  background:
+    linear-gradient(135deg, transparent 0 18%, hsl(225 96% 78% / 0.9) 19% 20%, transparent 21% 42%, hsl(225 96% 78% / 0.9) 43% 44%, transparent 45%),
+    linear-gradient(25deg, transparent 0 30%, hsl(0 0% 100% / 0.62) 31% 32%, transparent 33%);
+}
+
+.command-console-card {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 150px;
+  width: 318px;
+  min-height: 222px;
+  transform: translateX(-50%);
+}
+
+.command-console-card .alka-card-header {
+  display: grid;
+  gap: 12px;
+  padding: 24px 22px 14px;
+}
+
+.fintech-console-heading {
+  display: grid;
+  justify-items: start;
+  gap: 7px;
+}
+
+.command-console-card .alka-card-title {
+  color: white;
+  font-size: 34px;
+  font-weight: 430;
+  line-height: 0.9;
+}
+
+.command-console-card > .alka-card-content {
+  display: grid;
+  gap: 16px;
+  padding: 0 22px 22px;
+}
+
+.fintech-mini-bars {
+  display: flex;
+  align-items: end;
+  gap: 9px;
+  height: 66px;
+}
+
+.fintech-mini-bars span {
+  width: 14px;
+  border-radius: 999px 999px 4px 4px;
+  background: hsl(0 0% 100% / 0.54);
+}
+
+.fintech-mini-bars span:nth-child(1) { height: 28px; }
+.fintech-mini-bars span:nth-child(2) { height: 44px; }
+.fintech-mini-bars span:nth-child(3) { height: 34px; background: hsl(224 96% 64%); }
+.fintech-mini-bars span:nth-child(4) { height: 58px; }
+.fintech-mini-bars span:nth-child(5) { height: 24px; }
+
+.command-floating-card {
+  position: absolute;
+  z-index: 5;
+  width: 280px;
+}
+
+.command-floating-card .alka-card-header {
+  gap: 6px;
+  padding: 17px 18px 8px;
+}
+
+.command-floating-card .alka-card-title {
+  color: white;
+  font-size: 34px;
+  font-weight: 430;
+  line-height: 0.96;
+}
+
+.command-floating-card-top {
+  left: calc(50% + 190px);
+  bottom: 12px;
+  width: 326px;
+  min-height: 166px;
+}
+
+.fintech-expense-back-card {
+  position: absolute;
+  z-index: 4;
+  left: calc(50% + 214px);
+  width: 292px;
+  height: 74px;
+  border-color: hsl(0 0% 100% / 0.11);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 18% 18%, hsl(0 0% 100% / 0.2), transparent 3.4rem),
+    radial-gradient(circle at 74% 0%, hsl(224 96% 72% / 0.12), transparent 8rem),
+    linear-gradient(135deg, hsl(232 30% 28% / 0.55), hsl(238 42% 13% / 0.42)) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.1),
+    0 22px 58px rgb(0 0 0 / 0.28);
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
+  backdrop-filter: blur(20px) saturate(1.12);
+  pointer-events: none;
+}
+
+.fintech-expense-back-card::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: -8px;
+  width: 34px;
+  height: 14px;
+  border-radius: 999px;
+  background: hsl(0 0% 100% / 0.72);
+  filter: blur(10px);
+}
+
+.fintech-expense-back-card-near {
+  bottom: 142px;
+  opacity: 0.78;
+}
+
+.fintech-expense-back-card-far {
+  left: calc(50% + 238px);
+  bottom: 164px;
+  width: 268px;
+  opacity: 0.5;
+}
+
+.command-floating-card-top > .alka-card-content {
+  padding: 0 18px 18px;
+}
+
+.fintech-expense-line {
+  position: relative;
+  width: 122px;
+  height: 48px;
+  margin-top: 4px;
+}
+
+.fintech-expense-line::before {
+  content: "";
+  position: absolute;
+  inset: 3px 0 4px;
+  background:
+    url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%20122%2048%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cpath%20d%3D%27M3%2038%20C10%2016%2015%2010%2022%2028%20S35%2044%2042%2022%20S55%208%2061%2024%20S73%2036%2080%2018%20S95%2012%20105%2024%20S115%2031%20120%2017%27%20fill%3D%27none%27%20stroke%3D%27%23a7ff38%27%20stroke-width%3D%273%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  filter: drop-shadow(0 0 10px hsl(82 92% 58% / 0.36));
+}
+
+.fintech-expense-line::after {
+  content: "";
+  position: absolute;
+  right: -54px;
+  top: 4px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid hsl(0 0% 100% / 0.14);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, hsl(0 0% 100% / 0.18), hsl(0 0% 100% / 0.05)),
+    hsl(230 34% 24% / 0.74);
+}
+
+.fintech-card-layout {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 18px;
+  display: grid;
+  width: min(1034px, 100%);
+  grid-template-columns: 326px 326px 326px;
+  grid-template-rows: 224px 166px;
+  align-items: center;
+  justify-content: center;
+  column-gap: 38px;
+  transform: translateX(-50%);
+}
+
+.fintech-left-stack,
+.fintech-center-stack,
+.fintech-right-stack {
+  position: relative;
+  min-width: 0;
+}
+
+.fintech-left-stack {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+  justify-self: end;
+  margin: 0;
+  transform: translateY(-84px);
+}
+
+.fintech-center-stack {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  align-self: center;
+  justify-self: center;
+  justify-items: center;
+  gap: 22px;
+  margin: 0;
+  transform: translateY(-24px);
+}
+
+.fintech-right-stack {
+  grid-column: 3;
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
+  margin: 0;
+  padding-top: 58px;
+  transform: translateY(-88px);
+}
+
+.fintech-card-layout .fintech-card-preview,
+.fintech-card-layout .command-console-card,
+.fintech-card-layout .command-floating-card,
+.fintech-card-layout .fintech-expense-back-card {
+  position: relative;
+  inset: auto;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+  transform: none;
+}
+
+.fintech-card-layout .fintech-card-preview {
+  width: 292px;
+}
+
+.fintech-card-layout .command-console-card {
+  width: 318px;
+}
+
+.fintech-card-layout .command-floating-card-top {
+  width: 326px;
+}
+
+.fintech-card-layout .fintech-expense-back-card {
+  position: absolute;
+  width: 292px;
+}
+
+.fintech-card-layout .fintech-expense-back-card-near {
+  left: 16px;
+  top: 30px;
+}
+
+.fintech-card-layout .fintech-expense-back-card-far {
+  left: 32px;
+  top: 14px;
+  width: 268px;
+}
+
+.fintech-card-layout .command-floating-card-top {
+  position: relative;
+  z-index: 5;
+}
+
+.command-hero > .fintech-floating-dot {
+  position: absolute;
+  z-index: 4;
+}
+
+.command-hero > .fintech-floating-dot-mastercard {
+  left: calc(50% - 472px);
+  top: 236px;
+  width: 48px;
+  height: 48px;
+}
+
+.command-hero > .fintech-floating-dot-user {
+  left: calc(50% + 350px);
+  top: 94px;
+  width: 54px;
+  height: 54px;
+}
+
+.command-hero > .fintech-floating-dot-check {
+  left: calc(50% - 408px);
+  top: 74px;
+  width: 66px;
+  height: 66px;
+}
+
+.command-hero > .fintech-floating-dot-small {
+  left: calc(50% + 464px);
+  top: 204px;
+  width: 54px;
+  height: 54px;
+}
+
+.command-hero > .fintech-floating-dot-arrow {
+  left: calc(50% + 304px);
+  top: 316px;
+  width: 56px;
+  height: 56px;
 }
 
 .bento-showcase-preview {
@@ -3679,6 +5197,439 @@ button svg,
   .payment-method-showcase {
     border-radius: 22px;
     padding: 12px;
+  }
+
+  .command-showcase-preview {
+    min-height: 620px;
+    padding: 20px 18px 0;
+    background:
+      linear-gradient(180deg, hsl(240 88% 2% / 0.98) 0%, hsl(240 88% 3% / 0.78) 34%, transparent 66%),
+      linear-gradient(hsl(225 84% 86% / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(225 84% 86% / 0.045) 1px, transparent 1px),
+      radial-gradient(circle at 50% 92%, hsl(224 98% 57% / 0.54), transparent 23rem),
+      radial-gradient(circle at 6% 76%, hsl(302 92% 62% / 0.28), transparent 13rem),
+      linear-gradient(180deg, hsl(240 88% 6% / 0.98), hsl(235 92% 4% / 0.99));
+    background-size: auto, 84px 84px, 84px 84px, auto, auto, auto;
+  }
+
+  .command-showcase-preview::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: -74px;
+    left: -92px;
+    width: 320px;
+    height: 320px;
+    border-radius: 999px;
+    background: radial-gradient(circle, hsl(224 96% 64% / 0.24), hsl(224 96% 58% / 0.1) 42%, transparent 72%);
+    filter: blur(16px);
+    pointer-events: none;
+  }
+
+  .command-navbar-frame {
+    min-height: 56px;
+    overflow: visible;
+    contain: none;
+  }
+
+  .command-showcase-preview .command-navbar {
+    position: fixed;
+    top: 20px;
+    right: 18px;
+    left: 18px;
+    z-index: 40;
+    padding-inline: 0;
+    transform: none !important;
+  }
+
+  .command-hero {
+    gap: 18px;
+    min-height: auto;
+    padding: 14px 0 0;
+  }
+
+  .command-copy {
+    position: relative;
+    z-index: 6;
+    gap: 10px;
+  }
+
+  .command-copy h2 {
+    max-width: 340px;
+    font-size: 46px;
+    line-height: 0.98;
+  }
+
+  .command-copy p {
+    max-width: 310px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .command-proof-actions {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .examples-app .command-showcase-preview .command-proof-actions .alka-button-control {
+    height: 40px;
+    padding-inline: 16px;
+  }
+
+  .examples-app .command-showcase-preview .command-proof-glass-button {
+    border-color: hsl(214 100% 78% / 0.38) !important;
+    background:
+      linear-gradient(135deg, hsl(214 100% 68% / 0.34), hsl(252 100% 70% / 0.2)),
+      hsl(227 58% 22% / 0.82) !important;
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.22),
+      0 18px 38px hsl(224 96% 46% / 0.34) !important;
+  }
+
+  .examples-app .command-showcase-preview .command-proof-outline-button {
+    border-color: hsl(0 0% 100% / 0.13) !important;
+    background: hsl(0 0% 100% / 0.018) !important;
+    color: hsl(0 0% 100% / 0.62) !important;
+    padding-inline: 13px !important;
+  }
+
+  .fintech-card-layout {
+    display: none;
+  }
+
+  .command-hero > .fintech-floating-dot {
+    z-index: 5;
+    display: grid;
+    opacity: 0.86;
+  }
+
+  .command-hero > .fintech-floating-dot-user,
+  .command-hero > .fintech-floating-dot-arrow {
+    display: none;
+  }
+
+  .command-hero > .fintech-floating-dot-check {
+    left: calc(50% - 118px);
+    top: 376px;
+    width: 36px;
+    height: 36px;
+    opacity: 0.62;
+  }
+
+  .command-hero > .fintech-floating-dot-mastercard {
+    left: calc(50% - 24px);
+    top: 342px;
+    width: 48px;
+    height: 48px;
+    opacity: 0.78;
+  }
+
+  .command-hero > .fintech-floating-dot-small {
+    left: calc(50% + 102px);
+    right: auto;
+    top: 366px;
+    width: 44px;
+    height: 44px;
+    opacity: 0.7;
+  }
+
+  .fintech-floating-dot-mastercard .payment-card-brand-logo {
+    width: 32px;
+    height: 20px;
+    flex-basis: 32px;
+  }
+
+  .fintech-floating-dot-mastercard .payment-card-brand-logo img[data-logo-brand="mastercard"] {
+    width: 31px;
+    height: 20px;
+  }
+
+  .command-visual-stage {
+    min-height: 302px;
+    margin-top: -10px;
+  }
+
+  .command-visual-stage::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: -118px;
+    width: 214px;
+    height: 358px;
+    border: 1px solid hsl(224 96% 78% / 0.26);
+    border-bottom: 0;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    box-shadow: 0 -12px 44px hsl(224 96% 62% / 0.12);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .fintech-orb {
+    bottom: -306px;
+    width: 700px;
+    height: 438px;
+  }
+
+  .fintech-orb::before {
+    height: 112px;
+  }
+
+  .fintech-orbit-line {
+    bottom: -186px;
+    width: 580px;
+    height: 284px;
+    border-color: hsl(224 96% 76% / 0.42);
+  }
+
+  .fintech-mobile-balance-card {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    bottom: 34px;
+    display: grid;
+    width: 188px;
+    min-height: 112px;
+    gap: 10px;
+    padding: 15px 16px 14px;
+    border: 1px solid hsl(0 0% 100% / 0.16);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 20% 0%, hsl(0 0% 100% / 0.18), transparent 4.6rem),
+      linear-gradient(145deg, hsl(232 38% 25% / 0.58), hsl(236 56% 10% / 0.48));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.14),
+      0 24px 56px rgb(0 0 0 / 0.28),
+      0 -10px 34px hsl(224 96% 62% / 0.24);
+    transform: translateX(-50%);
+    -webkit-backdrop-filter: blur(20px) saturate(1.16);
+    backdrop-filter: blur(20px) saturate(1.16);
+  }
+
+  .fintech-mobile-balance-card-meta {
+    display: grid;
+    gap: 4px;
+  }
+
+  .fintech-mobile-balance-card-meta span,
+  .fintech-mobile-balance-card-trend {
+    color: hsl(0 0% 100% / 0.62);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .fintech-mobile-balance-card-meta strong {
+    color: white;
+    font-size: 24px;
+    font-weight: 540;
+    line-height: 0.96;
+  }
+
+  .fintech-mobile-balance-card-chart {
+    display: flex;
+    align-items: end;
+    gap: 6px;
+    height: 30px;
+  }
+
+  .fintech-mobile-balance-card-chart span {
+    width: 12px;
+    border-radius: 999px 999px 4px 4px;
+    background: hsl(0 0% 100% / 0.34);
+  }
+
+  .fintech-mobile-balance-card-chart span:nth-child(1) { height: 15px; }
+  .fintech-mobile-balance-card-chart span:nth-child(2) { height: 23px; }
+  .fintech-mobile-balance-card-chart span:nth-child(3) { height: 18px; background: hsl(224 96% 68% / 0.78); }
+  .fintech-mobile-balance-card-chart span:nth-child(4) { height: 28px; }
+  .fintech-mobile-balance-card-chart span:nth-child(5) { height: 20px; }
+
+  .fintech-mobile-balance-card-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    width: max-content;
+    color: hsl(142 88% 72% / 0.88);
+  }
+
+  .fintech-mobile-balance-card-trend svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .command-hero > .fintech-floating-dot {
+    display: none;
+  }
+
+  .command-visual-stage {
+    min-height: 302px;
+  }
+
+  .fintech-mobile-balance-card {
+    bottom: 118px;
+    width: 212px;
+    min-height: 170px;
+    gap: 9px;
+    padding: 17px 18px 16px;
+    border-radius: 24px;
+  }
+
+  .fintech-mobile-balance-card-topline {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .fintech-mobile-balance-card-wallet {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    place-items: center;
+    border: 1px solid hsl(224 96% 78% / 0.18);
+    border-radius: 11px;
+    background: hsl(230 52% 18% / 0.72);
+    color: hsl(219 96% 88%);
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.1);
+  }
+
+  .fintech-mobile-balance-card-wallet svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .fintech-mobile-balance-card-meta strong {
+    font-size: 31px;
+    letter-spacing: 0;
+  }
+
+  .fintech-mobile-balance-card-trend-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .fintech-mobile-balance-card-trend-row > span {
+    color: hsl(0 0% 100% / 0.48);
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .fintech-mobile-balance-card-trend {
+    min-height: 24px;
+    padding-inline: 8px;
+    border-radius: 999px;
+    background: hsl(142 88% 52% / 0.12);
+  }
+
+  .fintech-mobile-balance-card-chart {
+    position: relative;
+    height: 62px;
+    margin-top: 2px;
+    overflow: hidden;
+    border-radius: 14px;
+    background:
+      linear-gradient(90deg, hsl(0 0% 100% / 0.08) 1px, transparent 1px),
+      linear-gradient(180deg, transparent, hsl(224 96% 58% / 0.12));
+    background-size: 32px 100%, auto;
+  }
+
+  .fintech-mobile-balance-card-chart svg {
+    position: absolute;
+    inset: 8px 0 0;
+    width: 100%;
+    height: 54px;
+    overflow: visible;
+    fill: none;
+  }
+
+  .fintech-mobile-balance-card-chart path {
+    stroke: hsl(224 96% 72%);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 8px hsl(224 96% 64% / 0.52));
+  }
+
+  .fintech-mobile-balance-card-chart span {
+    position: absolute;
+    right: 0;
+    top: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: hsl(224 96% 72%);
+    box-shadow: 0 0 14px hsl(224 96% 66% / 0.92);
+  }
+
+  .fintech-mobile-feature-row {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    bottom: 24px;
+    display: grid;
+    width: min(260px, calc(100% - 28px));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    transform: translateX(-50%);
+  }
+
+  .fintech-mobile-feature-item {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    min-width: 0;
+    color: white;
+    text-align: center;
+  }
+
+  .fintech-mobile-feature-item span {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid hsl(0 0% 100% / 0.13);
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 32% 20%, hsl(0 0% 100% / 0.2), transparent 36%),
+      hsl(233 38% 13% / 0.7);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.1),
+      0 16px 34px rgb(0 0 0 / 0.3);
+    color: hsl(219 96% 88%);
+  }
+
+  .fintech-mobile-feature-item:nth-child(2) span {
+    width: 38px;
+    height: 38px;
+    background:
+      radial-gradient(circle at 32% 20%, hsl(0 0% 100% / 0.22), transparent 36%),
+      linear-gradient(135deg, hsl(224 96% 64% / 0.28), hsl(252 92% 62% / 0.2)),
+      hsl(233 38% 13% / 0.76);
+  }
+
+  .fintech-mobile-feature-item svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .fintech-mobile-feature-item strong,
+  .fintech-mobile-feature-item small {
+    display: block;
+    line-height: 1.05;
+  }
+
+  .fintech-mobile-feature-item strong {
+    margin-top: 2px;
+    font-size: 9px;
+    font-weight: 800;
+  }
+
+  .fintech-mobile-feature-item small {
+    color: hsl(0 0% 100% / 0.58);
+    font-size: 8px;
+    font-weight: 700;
   }
 
   .payment-method-showcase .payment-method-header {

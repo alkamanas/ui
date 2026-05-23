@@ -97,6 +97,7 @@ export type NavbarProps = {
   mobileFooterSlot?: React.ReactNode;
   className?: string;
   panelClassName?: string;
+  panelVisible?: boolean;
   linkComponent?: React.ComponentType<NavbarLinkRendererProps>;
   theme?: NavbarTheme | "auto";
   defaultTheme?: NavbarTheme;
@@ -431,6 +432,7 @@ export function Navbar({
   mobileFooterSlot,
   className,
   panelClassName,
+  panelVisible,
   linkComponent: LinkComponent = DefaultLink,
   theme = "auto",
   defaultTheme = "light",
@@ -462,7 +464,7 @@ export function Navbar({
 
   const resolvedTheme = theme === "auto" ? activeTheme : theme;
   const useDarkTheme = resolvedTheme === "dark";
-  const showPanel = mobileOpen || desktopMenuOpen || !isAtTop;
+  const showPanel = panelVisible ?? (mobileOpen || desktopMenuOpen || !isAtTop);
   const showPanelGlass = showPanel && !mobileOpen;
 
   const mobileOverlayVariants: Variants = {
@@ -707,7 +709,7 @@ export function Navbar({
             animate="open"
             exit="closed"
             variants={mobileOverlayVariants}
-            className={cn("fixed inset-0 z-10 overflow-y-auto px-8 pb-10 pt-28 md:hidden", mobileMenuTextClass)}
+            className={cn("alka-navbar-mobile-overlay fixed inset-0 z-10 overflow-y-auto px-8 pb-10 pt-28 md:hidden", mobileMenuTextClass)}
           >
             <motion.div
               aria-hidden="true"
@@ -716,14 +718,14 @@ export function Navbar({
               exit="closed"
               variants={mobileBackgroundVariants}
               style={{ willChange: "height" }}
-              className={cn("fixed left-0 right-0 top-0 overflow-hidden shadow-[0_18px_42px_rgba(0,0,0,0.18)]", mobileMenuBackgroundClass)}
+              className={cn("alka-navbar-mobile-background fixed left-0 right-0 top-0 overflow-hidden shadow-[0_18px_42px_rgba(0,0,0,0.18)]", mobileMenuBackgroundClass)}
             />
             <motion.div
               initial="closed"
               animate="open"
               exit="closed"
               variants={mobileListVariants}
-              className="relative mx-auto max-w-[520px]"
+              className="alka-navbar-mobile-list relative mx-auto max-w-[520px]"
             >
               {menu ? (
                 <motion.div variants={mobileItemVariants}>
