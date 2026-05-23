@@ -58,14 +58,29 @@ export function AlertDialogDemo() {
     </AlertDialog>
   );
 }`,
-  avatar: `import { Avatar, AvatarFallback, AvatarImage } from "@alkamanas/ui";
+  avatar: `import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@alkamanas/ui";
 
 export function AvatarDemo() {
   return (
-    <Avatar>
-      <AvatarImage src="/assets/sectors/automotive-light.webp" />
-      <AvatarFallback>VS</AvatarFallback>
-    </Avatar>
+    <div className="grid gap-4">
+      <Avatar>
+        <AvatarImage src="/assets/sectors/automotive-light.webp" />
+        <AvatarFallback>VS</AvatarFallback>
+      </Avatar>
+
+      <AvatarGroup>
+        <Avatar><AvatarFallback>CN</AvatarFallback></Avatar>
+        <Avatar><AvatarFallback>LR</AvatarFallback></Avatar>
+        <Avatar><AvatarFallback>ER</AvatarFallback></Avatar>
+        <AvatarGroupCount>+3</AvatarGroupCount>
+      </AvatarGroup>
+    </div>
   );
 }`,
   badge: `import { Badge } from "@alkamanas/ui";
@@ -102,7 +117,7 @@ export function BreadcrumbDemo() {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="#components">Components</BreadcrumbLink>
+          <BreadcrumbLink href="/components">Components</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
@@ -147,6 +162,31 @@ export function ButtonGroupDemo() {
         <ChevronRight />
       </Button>
     </ButtonGroup>
+  );
+}`,
+  calendar: `"use client";
+
+import * as React from "react";
+import { type DateRange } from "react-day-picker";
+import { Calendar } from "@alkamanas/ui";
+
+export function CalendarDemo() {
+  const [date, setDate] = React.useState<Date | undefined>(new Date(2026, 4, 20));
+  const [range, setRange] = React.useState<DateRange | undefined>({
+    from: new Date(2026, 4, 12),
+    to: new Date(2026, 4, 18),
+  });
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-2">
+      <Calendar mode="single" selected={date} onSelect={setDate} defaultMonth={date} />
+      <Calendar
+        mode="range"
+        selected={range}
+        onSelect={setRange}
+        defaultMonth={range?.from}
+      />
+    </div>
   );
 }`,
   card: `import {
@@ -241,19 +281,22 @@ const options = [
 
 export function ComboboxDemo() {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-3">
       <div className="grid gap-2">
-        <Badge variant="secondary">Flat / primary</Badge>
+        <Badge variant="secondary">Flat / default</Badge>
         <Combobox surface="flat" options={options} />
       </div>
       <div className="grid gap-2">
-        <Badge variant="secondary">Gradient / contrast</Badge>
+        <Badge variant="secondary">Gradient / utility</Badge>
         <Combobox
           surface="gradient"
-          surfaceGradientColor="contrast"
-          borderAnimationColor="contrast"
+          className="gradient-primary/50 border-animation-primary"
           options={options}
         />
+      </div>
+      <div className="grid gap-2">
+        <Badge variant="secondary">Glass / default</Badge>
+        <Combobox surface="glass" options={options} />
       </div>
     </div>
   );
@@ -283,22 +326,201 @@ export function CommandDemo() {
 }`,
   "context-menu": `import {
   ContextMenu,
+  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@alkamanas/ui";
 
 export function ContextMenuDemo() {
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="flex h-32 items-center justify-center rounded-2xl border border-dashed border-white/[0.14] text-sm text-muted-foreground">
-        Right click
+      <ContextMenuTrigger className="flex h-40 w-full max-w-md items-center justify-center rounded-2xl border border-dashed border-white/[0.14] text-sm text-muted-foreground">
+        Right click the workspace surface
       </ContextMenuTrigger>
-      <ContextMenuContent>
-        <ContextMenuItem>Open</ContextMenuItem>
-        <ContextMenuItem>Duplicate</ContextMenuItem>
+      <ContextMenuContent className="w-64">
+        <ContextMenuLabel>Navigation</ContextMenuLabel>
+        <ContextMenuItem>
+          Back
+          <ContextMenuShortcut>Alt Left</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem disabled>
+          Forward
+          <ContextMenuShortcut>Alt Right</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem>
+          Reload
+          <ContextMenuShortcut>Ctrl R</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>More Tools</ContextMenuSubTrigger>
+          <ContextMenuSubContent className="w-52">
+            <ContextMenuItem>Command palette</ContextMenuItem>
+            <ContextMenuItem>Developer tools</ContextMenuItem>
+            <ContextMenuItem>Export diagnostics</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        <ContextMenuSeparator />
+        <ContextMenuLabel>Visibility</ContextMenuLabel>
+        <ContextMenuCheckboxItem checked>Show Bookmarks</ContextMenuCheckboxItem>
+        <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <ContextMenuLabel>People</ContextMenuLabel>
+        <ContextMenuRadioGroup value="utku">
+          <ContextMenuRadioItem value="utku">Utku Gökcan</ContextMenuRadioItem>
+          <ContextMenuRadioItem value="berkay">Berkay İnci</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
       </ContextMenuContent>
     </ContextMenu>
+  );
+}`,
+  "data-table": `"use client";
+
+import { DataTable, type DataTableColumnDef } from "@alkamanas/ui/data-table";
+import "@alkamanas/ui/data-table.css";
+import {
+  Badge,
+  Button,
+  Checkbox,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@alkamanas/ui";
+
+type Payment = {
+  id: string;
+  amount: number;
+  status: "pending" | "processing" | "success" | "failed";
+  email: string;
+};
+
+const payments: Payment[] = [
+  { id: "728ed52f", amount: 316, status: "success", email: "utku@example.com" },
+  { id: "489e1d42", amount: 242, status: "processing", email: "berkay@example.com" },
+  { id: "95a8f4d1", amount: 837, status: "success", email: "studio@example.com" },
+  { id: "7f2d9a6c", amount: 874, status: "success", email: "product@example.com" },
+  { id: "20c7f3ba", amount: 721, status: "failed", email: "billing@example.com" },
+];
+
+const columns: DataTableColumnDef<Payment>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        aria-label="Select all rows"
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(Boolean(value))}
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        aria-label="Select row"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(Boolean(value))}
+      />
+    ),
+    enableHiding: false,
+    enableSorting: false,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => <Badge variant="secondary">{row.getValue("status")}</Badge>,
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <Button
+        size="sm"
+        type="button"
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Email
+        <span aria-hidden="true">{column.getIsSorted() === "asc" ? "Asc" : "Sort"}</span>
+      </Button>
+    ),
+  },
+  {
+    accessorKey: "amount",
+    header: () => <div className="text-right">Amount</div>,
+    cell: ({ row }) => {
+      const amount = Number(row.getValue("amount"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => (
+      <div className="flex justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button aria-label={\`Open actions for \${row.original.email}\`} size="sm" variant="ghost">
+              Actions
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>Copy payment ID</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    ),
+  },
+];
+
+export function DataTableDemo() {
+  return (
+    <DataTable
+      columns={columns}
+      data={payments}
+      filterColumn="email"
+      filterPlaceholder="Filter emails..."
+      pageSize={5}
+    />
+  );
+}`,
+  "date-picker": `"use client";
+
+import { DatePicker } from "@alkamanas/ui";
+
+export function DatePickerDemo() {
+  return (
+    <div className="grid gap-4">
+      <DatePicker defaultValue={new Date(2026, 4, 20)} />
+      <DatePicker surface="glass" placeholder="Glass date field" />
+      <DatePicker
+        size="sm"
+        placeholder="Select launch date"
+        calendarProps={{
+          disabled: { before: new Date(2026, 4, 1) },
+          defaultMonth: new Date(2026, 4, 1),
+        }}
+      />
+    </div>
   );
 }`,
   dialog: `import {
@@ -416,20 +638,23 @@ export function ImageCardDemo() {
 
 export function InputDemo() {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-3">
       <div className="grid gap-2">
-        <Badge variant="secondary">Underline / primary</Badge>
+        <Badge variant="secondary">Underline / default</Badge>
         <Input placeholder="workspace-name" />
       </div>
       <div className="grid gap-2">
-        <Badge variant="secondary">Pill gradient / contrast</Badge>
+        <Badge variant="secondary">Pill Gradient / utility</Badge>
         <Input
           variant="pill"
           surface="gradient"
-          surfaceGradientColor="contrast"
-          borderAnimationColor="contrast"
+          className="gradient-primary/50 border-animation-primary"
           placeholder="studio.visetra.app"
         />
+      </div>
+      <div className="grid gap-2">
+        <Badge variant="secondary">Pill glass / default</Badge>
+        <Input variant="pill" surface="glass" placeholder="studio.visetra.app" />
       </div>
     </div>
   );
@@ -443,9 +668,9 @@ export function InputDemo() {
 
 export function InputGroupDemo() {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-3">
       <div className="grid gap-2">
-        <Badge variant="secondary">Flat / primary</Badge>
+        <Badge variant="secondary">Flat / default</Badge>
         <InputGroup surface="flat">
           <InputGroupAddon>https://</InputGroupAddon>
           <InputGroupInput placeholder="studio.visetra.app" />
@@ -453,8 +678,16 @@ export function InputGroupDemo() {
         </InputGroup>
       </div>
       <div className="grid gap-2">
-        <Badge variant="secondary">Gradient / contrast</Badge>
-        <InputGroup surface="gradient" surfaceGradientColor="contrast">
+        <Badge variant="secondary">Gradient / utility</Badge>
+        <InputGroup surface="gradient" className="gradient-primary/50">
+          <InputGroupAddon>https://</InputGroupAddon>
+          <InputGroupInput placeholder="studio.visetra.app" />
+          <InputGroupAddon>.com</InputGroupAddon>
+        </InputGroup>
+      </div>
+      <div className="grid gap-2">
+        <Badge variant="secondary">Glass / default</Badge>
+        <InputGroup surface="glass">
           <InputGroupAddon>https://</InputGroupAddon>
           <InputGroupInput placeholder="studio.visetra.app" />
           <InputGroupAddon>.com</InputGroupAddon>
@@ -578,24 +811,51 @@ export function NavbarDemo() {
     <Navbar
       logo={{
         wide: {
-          dark: <span className="text-sm font-semibold text-white">Alkamanas UI</span>,
-          light: <span className="text-sm font-semibold text-black">Alkamanas UI</span>,
+          dark: (
+            <img
+              src="/assets/logo/wordmark-horizontal-for-dark.svg"
+              alt="Alkamanas UI"
+              className="h-7 w-full object-contain"
+            />
+          ),
+          light: (
+            <img
+              src="/assets/logo/wordmark-horizontal-for-light.svg"
+              alt="Alkamanas UI"
+              className="h-7 w-full object-contain"
+            />
+          ),
         },
         compact: {
-          dark: <span className="text-sm font-semibold text-white">A</span>,
-          light: <span className="text-sm font-semibold text-black">A</span>,
+          dark: (
+            <img
+              src="/assets/logo/brandmarksvg.svg"
+              alt="Alkamanas UI"
+              className="h-7 w-full object-contain"
+            />
+          ),
+          light: (
+            <img
+              src="/assets/logo/brandmarksvg.svg"
+              alt="Alkamanas UI"
+              className="h-7 w-full object-contain"
+            />
+          ),
+        },
+        widths: {
+          wide: "13.5rem",
+          compact: "2.35rem",
         },
       }}
-      logoWidths={{ wide: "9.5rem", compact: "2rem" }}
       theme="dark"
       syncThemeMeta={false}
       links={[
-        { href: "#button", label: "Components" },
-        { href: "#sidebar", label: "Shell" },
-        { href: "#theming", label: "Theme" },
+        { href: "/components/button", label: "Components" },
+        { href: "/components/sidebar", label: "Shell" },
+        { href: "/theming", label: "Theme" },
       ]}
-      rightSlot={<NavbarCTA href="#installation">Install</NavbarCTA>}
-      mobileFooterSlot={<NavbarCTA href="#installation">Install</NavbarCTA>}
+      rightSlot={<NavbarCTA href="/installation">Install</NavbarCTA>}
+      mobileFooterSlot={<NavbarCTA href="/installation">Install</NavbarCTA>}
     />
   );
 }`,
@@ -663,9 +923,9 @@ export function ScrollAreaDemo() {
 
 export function SelectDemo() {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-3">
       <div className="grid gap-2">
-        <Badge variant="secondary">Flat / primary</Badge>
+        <Badge variant="secondary">Flat / default</Badge>
         <Select>
           <SelectTrigger surface="flat">
             <SelectValue placeholder="Select product" />
@@ -677,9 +937,21 @@ export function SelectDemo() {
         </Select>
       </div>
       <div className="grid gap-2">
-        <Badge variant="secondary">Gradient / contrast</Badge>
+        <Badge variant="secondary">Gradient / utility</Badge>
         <Select>
-          <SelectTrigger surface="gradient" surfaceGradientColor="contrast">
+          <SelectTrigger surface="gradient" className="gradient-primary/50">
+            <SelectValue placeholder="Select product" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="studio">Visetra Studio</SelectItem>
+            <SelectItem value="web">Visetra Web</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="grid gap-2">
+        <Badge variant="secondary">Glass / default</Badge>
+        <Select>
+          <SelectTrigger surface="glass">
             <SelectValue placeholder="Select product" />
           </SelectTrigger>
           <SelectContent>
@@ -794,7 +1066,30 @@ export function SidebarDemo() {
   slider: `import { Slider } from "@alkamanas/ui";
 
 export function SliderDemo() {
-  return <Slider defaultValue={[42]} max={100} step={1} className="max-w-xl" />;
+  return (
+    <div className="grid gap-8">
+      <Slider defaultValue={[42]} max={100} step={1} className="max-w-xl" aria-label="Progress" />
+      <Slider
+        variant="range"
+        defaultValue={[24, 76]}
+        max={100}
+        step={1}
+        className="max-w-xl"
+        aria-label="Budget range"
+      />
+      <div className="flex h-72 items-center gap-8">
+        <Slider orientation="vertical" defaultValue={[62]} max={100} step={1} aria-label="Level" />
+        <Slider
+          orientation="vertical"
+          variant="range"
+          defaultValue={[18, 82]}
+          max={100}
+          step={1}
+          aria-label="Vertical range"
+        />
+      </div>
+    </div>
+  );
 }`,
   spinner: `import { Spinner } from "@alkamanas/ui";
 
@@ -836,15 +1131,14 @@ export function TextareaDemo() {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <div className="grid gap-2">
-        <Badge variant="secondary">Flat / primary</Badge>
+        <Badge variant="secondary">Flat / default</Badge>
         <Textarea surface="flat" placeholder="Write a note..." />
       </div>
       <div className="grid gap-2">
-        <Badge variant="secondary">Gradient / contrast</Badge>
+        <Badge variant="secondary">Gradient / utility</Badge>
         <Textarea
           surface="gradient"
-          surfaceGradientColor="contrast"
-          borderAnimationColor="contrast"
+          className="gradient-primary/50 border-animation-primary"
           placeholder="Write a note..."
         />
       </div>

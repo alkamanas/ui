@@ -35,6 +35,7 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonGroup,
+  Calendar,
   Card,
   CardContent,
   CardDescription,
@@ -62,6 +63,8 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
+  DataTable,
+  type DataTableColumnDef,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -69,6 +72,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DirectionProvider,
+  DatePicker,
   Drawer,
   DrawerContent,
   DrawerDescription,
@@ -156,6 +160,27 @@ const options = [
   { value: "web", label: "Visetra Web" },
 ];
 
+type DataTableSmokeRow = {
+  status: string;
+  task: string;
+};
+
+const dataTableColumns: DataTableColumnDef<DataTableSmokeRow>[] = [
+  {
+    accessorKey: "task",
+    header: "Task",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+];
+
+const dataTableRows: DataTableSmokeRow[] = [
+  { task: "Publish package", status: "Ready" },
+  { task: "Review docs", status: "In progress" },
+];
+
 function CommandPaletteTrigger() {
   const command = useCommandPalette();
   return <Button onClick={command.open}>Open command palette</Button>;
@@ -210,6 +235,7 @@ const cases: Array<[string, React.ReactElement]> = [
   ],
   ["button", <Button>Continue</Button>],
   ["button-group", <ButtonGroup><Button>Day</Button><Button variant="secondary">Week</Button></ButtonGroup>],
+  ["calendar", <Calendar mode="single" selected={new Date(2026, 4, 20)} defaultMonth={new Date(2026, 4, 20)} />],
   [
     "card",
     <Card>
@@ -259,6 +285,16 @@ const cases: Array<[string, React.ReactElement]> = [
     </ContextMenu>,
   ],
   [
+    "data-table",
+    <DataTable
+      columns={dataTableColumns}
+      data={dataTableRows}
+      enableColumnVisibility={false}
+      enablePagination={false}
+      enableRowSelection={false}
+    />,
+  ],
+  [
     "dialog",
     <Dialog>
       <DialogTrigger asChild><Button>Open dialog</Button></DialogTrigger>
@@ -270,6 +306,7 @@ const cases: Array<[string, React.ReactElement]> = [
       </DialogContent>
     </Dialog>,
   ],
+  ["date-picker", <DatePicker defaultValue={new Date(2026, 4, 20)} />],
   ["direction", <DirectionProvider dir="rtl"><div>RTL content</div></DirectionProvider>],
   [
     "drawer",

@@ -12,7 +12,7 @@ const details: ComponentPageDetails = {
       "preview": (
         <div className="grid w-full max-w-md gap-6">
           <Input placeholder="workspace-name" />
-          <Input borderAnimationColor="contrast" placeholder="contrast-border" />
+          <Input wrapperClassName="border-animation-primary" placeholder="custom-border" />
         </div>
       ),
       "code": `import { Input } from "@alkamanas/ui";
@@ -21,7 +21,7 @@ export function UnderlineInputExample() {
   return (
     <div className="grid gap-6">
       <Input placeholder="workspace-name" />
-      <Input borderAnimationColor="contrast" placeholder="contrast-border" />
+      <Input wrapperClassName="border-animation-primary" placeholder="custom-border" />
     </div>
   );
 }`
@@ -33,7 +33,7 @@ export function UnderlineInputExample() {
       "preview": (
         <div className="grid w-full max-w-md gap-4">
           <Input variant="pill" surface="flat" placeholder="studio.visetra.app" />
-          <Input borderAnimationColor="contrast" variant="pill" surface="flat" placeholder="contrast focus" />
+          <Input wrapperClassName="border-animation-primary" variant="pill" surface="flat" placeholder="custom focus" />
         </div>
       ),
       "code": `import { Input } from "@alkamanas/ui";
@@ -43,10 +43,10 @@ export function BorderedInputExample() {
     <div className="grid gap-4">
       <Input variant="pill" surface="flat" placeholder="studio.visetra.app" />
       <Input
-        borderAnimationColor="contrast"
+        wrapperClassName="border-animation-primary"
         variant="pill"
         surface="flat"
-        placeholder="contrast focus"
+        placeholder="custom focus"
       />
     </div>
   );
@@ -55,11 +55,11 @@ export function BorderedInputExample() {
     {
       "id": "input-pill-gradient",
       "title": "Subtle gradient surface",
-      "description": "Use the gradient surface when the field should carry a low-contrast spotlight. The gradient color can follow primary or contrast tokens per field.",
+      "description": "Use the gradient surface when the field should carry a low-contrast spotlight. Add a gradient utility class to assign a color per field or per parent scope.",
       "preview": (
         <div className="grid w-full max-w-md gap-4">
-          <Input variant="pill" surface="gradient" placeholder="primary spotlight" />
-          <Input surfaceGradientColor="contrast" variant="pill" surface="gradient" placeholder="contrast spotlight" />
+          <Input variant="pill" surface="gradient" placeholder="default spotlight" />
+          <Input wrapperClassName="gradient-primary/50" variant="pill" surface="gradient" placeholder="primary / 50 spotlight" />
         </div>
       ),
       "code": `import { Input } from "@alkamanas/ui";
@@ -67,12 +67,38 @@ export function BorderedInputExample() {
 export function GradientInputExample() {
   return (
     <div className="grid gap-4">
-      <Input variant="pill" surface="gradient" placeholder="primary spotlight" />
+      <Input variant="pill" surface="gradient" placeholder="default spotlight" />
       <Input
-        surfaceGradientColor="contrast"
+        wrapperClassName="gradient-primary/50"
         variant="pill"
         surface="gradient"
-        placeholder="contrast spotlight"
+        placeholder="primary / 50 spotlight"
+      />
+    </div>
+  );
+}`
+    },
+    {
+      "id": "input-pill-glass",
+      "title": "Glass pill input",
+      "description": "Glass is available for pill inputs. The field removes its own border, uses the shared liquid glass surface and animates the glass border on focus while tinting the glass gradient.",
+      "preview": (
+        <div className="grid w-full max-w-md gap-4">
+          <Input variant="pill" surface="glass" placeholder="glass default" />
+          <Input wrapperClassName="gradient-primary/50 border-animation-primary" variant="pill" surface="glass" placeholder="glass primary utility" />
+        </div>
+      ),
+      "code": `import { Input } from "@alkamanas/ui";
+
+export function GlassInputExample() {
+  return (
+    <div className="grid gap-4">
+      <Input variant="pill" surface="glass" placeholder="glass default" />
+      <Input
+        wrapperClassName="gradient-primary/50 border-animation-primary"
+        variant="pill"
+        surface="glass"
+        placeholder="glass primary utility"
       />
     </div>
   );
@@ -82,7 +108,7 @@ export function GradientInputExample() {
   "anatomy": [
     "Import Input from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, default border animation, default gradient and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -91,7 +117,7 @@ export function GradientInputExample() {
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to dark/light section and glass mode changes from the docs selector. Primary is opt-in through utility classes."
     }
   ],
   "sizes": [
@@ -112,19 +138,19 @@ export function GradientInputExample() {
     },
     {
       "name": "surface",
-      "type": "flat | gradient",
-      "description": "Controls whether the field uses the subtle spotlight surface."
+      "type": "flat | gradient | glass",
+      "description": "Controls the pill field surface. Glass is intentionally scoped to variant=\"pill\"; underline inputs keep the one-line treatment."
     },
     {
-      "name": "borderAnimationColor",
-      "type": "primary | contrast",
-      "description": "Selects the focus border highlight color per component."
+      "name": "wrapperClassName",
+      "type": "string",
+      "description": "Merged onto the visible field wrapper. Use utilities such as gradient-primary/50 and border-animation-primary to assign gradient and focus colors."
     },
     {
       "name": "className",
       "type": "string",
-      "description": "Merged onto the visible field wrapper."
-    }
+      "description": "Merged onto the native input control."
+    },
   ],
   "accessibility": [
     "Preserve the underlying Radix or native semantics when composing custom children.",
@@ -136,7 +162,10 @@ export function GradientInputExample() {
   ],
   "tokens": [
     "--alka-border-animation-color",
-    "--alka-surface-gradient-color",
+    "--alka-border-animation-opacity",
+    "--alka-gradient-color",
+    "--alka-gradient-opacity",
+    "--alka-liquid-glass-bg",
     "--alka-radius-pill"
   ]
 };

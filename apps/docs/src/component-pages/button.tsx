@@ -2,6 +2,7 @@ import { ArrowRight, Settings } from "lucide-react";
 import { Button } from "@alkamanas/ui";
 
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
+import { getDocHref } from "../docs-routes";
 
 const details: ComponentPageDetails = {
   "summary": "Button is the primary action primitive. It supports flat and glass treatments, preserves fixed control geometry, and keeps hover feedback subtle instead of lifting the control.",
@@ -102,7 +103,7 @@ export function ButtonSizeExample() {
       "preview": (
         <div className="flex w-full max-w-3xl items-center justify-center">
           <Button asChild>
-            <a href="#components">
+            <a href={getDocHref("components")}>
               Browse components
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -115,7 +116,7 @@ import { Button } from "@alkamanas/ui";
 export function ButtonAsChildExample() {
   return (
     <Button asChild>
-      <a href="#components">
+      <a href="/components">
         Browse components
         <ArrowRight className="h-4 w-4" />
       </a>
@@ -232,7 +233,7 @@ export function ButtonAsChildExample() {
     "--alka-radius-pill",
     "--alka-ease-smooth",
     "--alka-glass-element-bg",
-    "--alka-primary",
+    "--primary",
     "--destructive"
   ]
 };

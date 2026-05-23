@@ -106,6 +106,34 @@ import {
   TooltipTrigger,
 } from "@alkamanas/ui";
 
+import { PageScrollbar } from "./page-scrollbar";
+
+const brandmarkUrl = new URL("../../../public/assets/logo/brandmarksvg.svg", import.meta.url).href;
+const wordmarkForDarkUrl = new URL("../../../public/assets/logo/wordmark-horizontal-for-dark.svg", import.meta.url).href;
+
+function ExamplesWordmark({ className }: { className?: string }) {
+  return <img alt="Alkamanas Examples" className={className} decoding="async" loading="eager" src={wordmarkForDarkUrl} />;
+}
+
+function ExamplesBrandmark({ className }: { className?: string }) {
+  return <img alt="Alkamanas Examples" className={className} decoding="async" loading="eager" src={brandmarkUrl} />;
+}
+
+const examplesNavbarLogo = {
+  wide: {
+    dark: <ExamplesWordmark className="examples-navbar-wordmark" />,
+    light: <ExamplesWordmark className="examples-navbar-wordmark" />,
+  },
+  compact: {
+    dark: <ExamplesBrandmark className="examples-navbar-brandmark" />,
+    light: <ExamplesBrandmark className="examples-navbar-brandmark" />,
+  },
+  widths: {
+    wide: "13rem",
+    compact: "2.35rem",
+  },
+};
+
 type CategoryId = "marketing" | "dashboard" | "commerce" | "productivity" | "legal";
 type ExampleId =
   | "basic-landing"
@@ -502,6 +530,7 @@ export function ExamplesApp() {
     <GlassProvider effect="blurry" realisticStrategy="auto">
       <TooltipProvider>
         <div className="examples-app alka-theme-dark" data-theme="dark">
+          <PageScrollbar />
           {selectedExample ? (
             <ExampleDetail example={selectedExample} onBack={openHome} />
           ) : (
@@ -751,12 +780,6 @@ function ExamplesHome({
 function ExamplesNavbar({ onNavigateHome }: { onNavigateHome?: () => void }) {
   return (
     <Navbar
-      brand={
-        <span className="examples-brand">
-          <span className="examples-brand-mark" />
-          Alkamanas Examples
-        </span>
-      }
       defaultTheme="dark"
       links={[
         { href: "/#site-map", label: "Categories", onSelect: onNavigateHome },
@@ -764,6 +787,7 @@ function ExamplesNavbar({ onNavigateHome }: { onNavigateHome?: () => void }) {
         { href: "/#site-map", label: "Site map", onSelect: onNavigateHome },
         { href: "/#components", label: "Components", onSelect: onNavigateHome },
       ]}
+      logo={examplesNavbarLogo}
       mobileFooterSlot={<NavbarActions onNavigateHome={onNavigateHome} />}
       mobileMenuLabel="Open navigation"
       mobileMenuCloseLabel="Close navigation"
@@ -1607,7 +1631,7 @@ function AnalyticsDashboardExample({ example, onBack }: { example: Example; onBa
       <div className="dashboard-showcase-preview">
         <aside className="dashboard-showcase-sidebar">
           <span className="examples-brand">
-            <span className="examples-brand-mark" />
+            <ExamplesBrandmark className="examples-brand-mark" />
             Analytics
           </span>
           {["Overview", "Reports", "Traffic", "Settings"].map((item, index) => (
@@ -3349,10 +3373,7 @@ function ExamplesFooter() {
     <footer className="examples-footer">
       <div className="examples-shell footer-grid">
         <div>
-          <span className="examples-brand">
-            <span className="examples-brand-mark" />
-            Alkamanas Examples
-          </span>
+          <ExamplesWordmark className="examples-footer-wordmark" />
           <p>Page examples composed from the package component system.</p>
         </div>
         <div className="footer-links">

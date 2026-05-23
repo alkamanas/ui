@@ -1,6 +1,62 @@
-.alka-slider-track {
+.alka-progress {
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.06), transparent 54%),
+    hsl(var(--primary) / 0.14);
+  box-shadow:
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.08),
+    inset 0 0 0 1px hsl(var(--foreground) / 0.07);
+}
+
+.alka-progress-bar.alka-liquid-glass {
+  --alka-liquid-glass-bg: hsl(var(--primary) / 0.54);
+  --alka-liquid-glass-blur: 18px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-lens-opacity: 0.42;
+  --alka-liquid-glass-sheen-opacity: 0.5;
+  --alka-liquid-glass-border-color: var(--primary-foreground);
+  --alka-liquid-glass-border-baseline-color: var(--primary);
+  border-color: transparent;
+  background:
+    linear-gradient(180deg, hsl(var(--primary-foreground) / 0.26), hsl(var(--primary-foreground) / 0.04) 48%, transparent),
+    linear-gradient(90deg, hsl(var(--primary) / 0.88), hsl(var(--primary) / 0.58)),
+    var(--alka-liquid-glass-bg);
+  box-shadow:
+    0 0 18px hsl(var(--primary) / 0.22),
+    inset 0 1px 0 hsl(var(--primary-foreground) / 0.26),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.08);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.18);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.18);
+}
+
+.alka-progress-bar.alka-liquid-glass::before {
+  opacity: var(--alka-liquid-glass-lens-opacity);
+}
+
+.alka-progress-bar.alka-liquid-glass::after {
+  opacity: var(--alka-liquid-glass-sheen-opacity);
+}
+
+.alka-slider-root[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: center;
+}
+
+.alka-slider-track[data-orientation="horizontal"] {
   width: calc(100% - var(--alka-slider-thumb-width, 36px));
   margin-inline: calc(var(--alka-slider-thumb-width, 36px) / 2);
+}
+
+.alka-slider-track[data-orientation="vertical"] {
+  flex: 1 1 auto;
+  flex-grow: 1;
+  align-self: center;
+  width: var(--alka-slider-vertical-track-width, 0.625rem) !important;
+  max-width: var(--alka-slider-vertical-track-width, 0.625rem);
+  height: calc(100% - var(--alka-slider-thumb-height, 36px));
+  margin-block: calc(var(--alka-slider-thumb-height, 36px) / 2);
+}
+
+.alka-slider-track {
   background:
     linear-gradient(180deg, hsl(var(--foreground) / 0.1), hsl(var(--foreground) / 0.055)),
     hsl(var(--muted) / 0.72);
@@ -17,23 +73,42 @@
   box-shadow:
     0 0 22px hsl(var(--primary) / 0.18),
     inset 0 1px 0 hsl(var(--primary-foreground) / 0.16);
-  max-width: 100%;
+}
+
+.alka-slider-range[data-orientation="horizontal"] {
+  left: var(--alka-slider-range-start, 0%) !important;
   right: auto !important;
-  width: var(--alka-slider-fill-percent, 0%);
+  width: var(--alka-slider-range-size, 0%) !important;
+  max-width: 100%;
+}
+
+.alka-slider-range[data-orientation="vertical"] {
+  bottom: var(--alka-slider-range-start, 0%) !important;
+  top: auto !important;
+  width: 100%;
+  height: var(--alka-slider-range-size, 0%) !important;
+  max-height: 100%;
+  box-shadow:
+    0 0 14px hsl(var(--primary) / 0.14),
+    inset 0 1px 0 hsl(var(--primary-foreground) / 0.14);
 }
 
 .alka-slider-thumb.alka-liquid-glass {
-  --alka-liquid-glass-bg: hsl(var(--background) / 0.28);
-  --alka-liquid-glass-blur: 36px;
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.08);
+  --alka-liquid-glass-blur: 40px;
   --alka-liquid-glass-lens-blur: 18px;
-  --alka-liquid-glass-lens-opacity: 0.82;
-  --alka-liquid-glass-sheen-opacity: 0.62;
-  isolation: auto;
-  -webkit-backdrop-filter: blur(36px) saturate(1.28) !important;
-  backdrop-filter: blur(36px) saturate(1.28) !important;
+  --alka-liquid-glass-lens-opacity: 0.44;
+  --alka-liquid-glass-sheen-opacity: 0.58;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.08), transparent 52%),
+    var(--alka-liquid-glass-bg);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.45);
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.45);
   box-shadow:
     0 1px 8px hsl(var(--alka-shadow-color) / 0.18),
-    0 10px 26px hsl(var(--alka-shadow-color) / 0.24),
+    0 10px 24px hsl(var(--alka-shadow-color) / 0.2),
     inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.16);
 }
 
@@ -43,9 +118,42 @@
   z-index: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: hsl(var(--background) / 0.12);
-  -webkit-backdrop-filter: blur(42px) saturate(1.32);
-  backdrop-filter: blur(42px) saturate(1.32);
+  background: transparent;
+  -webkit-backdrop-filter: blur(48px) saturate(1.55);
+  backdrop-filter: blur(48px) saturate(1.55);
+}
+
+.alka-slider-thumb.alka-liquid-glass[data-orientation="horizontal"] > .alka-slider-thumb-backdrop {
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 0.625rem;
+  transform: translateY(-50%);
+}
+
+.alka-slider-thumb.alka-liquid-glass[data-orientation="vertical"] > .alka-slider-thumb-backdrop {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0.625rem;
+  transform: translateX(-50%);
+}
+
+.alka-slider-thumb.alka-liquid-glass > .alka-glass-element__backdrop {
+  background: hsl(var(--background) / 0.08);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.28) !important;
+  backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.28) !important;
+}
+
+.alka-slider-thumb.alka-liquid-glass::before {
+  z-index: 1;
+  opacity: var(--alka-liquid-glass-lens-opacity);
+  -webkit-backdrop-filter: blur(var(--alka-liquid-glass-lens-blur)) saturate(1.2);
+  backdrop-filter: blur(var(--alka-liquid-glass-lens-blur)) saturate(1.2);
+}
+
+.alka-slider-thumb.alka-liquid-glass::after {
+  z-index: 3;
 }
 
 [data-glass-effect="realistic"] .alka-slider-thumb.alka-liquid-glass:not([data-glass-effect="blurry"]) > .alka-slider-thumb-backdrop {
@@ -54,11 +162,11 @@
 }
 
 .alka-card-surface .alka-slider-thumb.alka-liquid-glass {
-  --alka-liquid-glass-bg: hsl(var(--background) / 0.18);
-  --alka-liquid-glass-blur: 42px;
+  --alka-liquid-glass-bg: hsl(var(--background) / 0.06);
+  --alka-liquid-glass-blur: 46px;
   --alka-liquid-glass-lens-blur: 20px;
-  --alka-liquid-glass-lens-opacity: 0.88;
-  --alka-liquid-glass-sheen-opacity: 0.74;
+  --alka-liquid-glass-lens-opacity: 0.48;
+  --alka-liquid-glass-sheen-opacity: 0.58;
 }
 
 .alka-slider-thumb.alka-liquid-glass::before,
@@ -76,11 +184,121 @@
 }
 
 .alka-slider-thumb.alka-liquid-glass[data-state="active"]::before {
-  opacity: 0.46;
+  opacity: 0.68;
 }
 
 .alka-slider-thumb.alka-liquid-glass[data-state="active"]::after {
-  opacity: 0.78;
+  opacity: 0.7;
+}
+
+.alka-calendar {
+  --alka-calendar-cell-size: 2.5rem;
+  color: hsl(var(--foreground));
+}
+
+.alka-calendar .alka-calendar-day-button:not(:disabled) {
+  cursor: pointer;
+}
+
+.alka-calendar .alka-calendar-day-button:hover {
+  background: hsl(var(--muted) / 0.76);
+}
+
+.alka-calendar .alka-calendar-day-today .alka-calendar-day-button {
+  box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.42);
+}
+
+.alka-calendar .alka-calendar-day-outside .alka-calendar-day-button {
+  color: hsl(var(--muted-foreground) / 0.48);
+}
+
+.alka-calendar .alka-calendar-day-disabled .alka-calendar-day-button {
+  color: hsl(var(--muted-foreground) / 0.36);
+  opacity: 0.55;
+}
+
+.alka-calendar .alka-calendar-day-selected .alka-calendar-day-button,
+.alka-calendar .alka-calendar-day-range-start .alka-calendar-day-button,
+.alka-calendar .alka-calendar-day-range-end .alka-calendar-day-button {
+  background:
+    linear-gradient(145deg, hsl(var(--primary) / 0.98), hsl(var(--primary) / 0.76)),
+    hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  box-shadow: inset 0 1px 0 hsl(var(--primary-foreground) / 0.18);
+}
+
+.alka-calendar .alka-calendar-day-range-middle {
+  border-radius: var(--alka-radius-pill);
+  background: hsl(var(--primary) / 0.32);
+  box-shadow: none;
+}
+
+.alka-calendar .alka-calendar-day-range-middle .alka-calendar-day-button {
+  border-radius: var(--alka-radius-pill);
+  background: transparent;
+  color: hsl(var(--foreground));
+}
+
+.alka-calendar .alka-calendar-day-range-start {
+  border-radius: var(--alka-radius-pill);
+  background: linear-gradient(90deg, transparent 0 50%, hsl(var(--primary) / 0.32) 50% 100%);
+}
+
+.alka-calendar .alka-calendar-day-range-end {
+  border-radius: var(--alka-radius-pill);
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.32) 0 50%, transparent 50% 100%);
+}
+
+.alka-calendar .alka-calendar-day-range-start.alka-calendar-day-range-end,
+.alka-calendar
+  .alka-calendar-day-selected:not(.alka-calendar-day-range-middle):not(.alka-calendar-day-range-start):not(
+    .alka-calendar-day-range-end
+  ) {
+  background: transparent;
+}
+
+.alka-spinner {
+  display: inline-block;
+  overflow: visible;
+  transform-origin: center;
+  will-change: transform;
+  animation: alka-spinner-rotate 2.35s linear infinite;
+}
+
+.alka-spinner-circle {
+  stroke: currentColor;
+  stroke-linecap: round;
+  animation: alka-spinner-dash 1.75s ease-in-out infinite;
+}
+
+@keyframes alka-spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes alka-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+
+  100% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: -125;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alka-spinner,
+  .alka-spinner-circle {
+    animation: none;
+  }
 }
 
 .alka-switch-track {
@@ -122,4 +340,146 @@
     0 1px 8px hsl(var(--alka-shadow-color) / 0.18),
     0 14px 34px hsl(var(--alka-shadow-color) / 0.28),
     inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.18);
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] {
+  scrollbar-width: none;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] [data-radix-scroll-area-viewport] {
+  scrollbar-width: none;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] [data-radix-scroll-area-viewport]::-webkit-scrollbar {
+  display: none;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] [data-radix-scroll-area-viewport]::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar {
+  --alka-scrollbar-offset: 0.375rem;
+  position: absolute;
+  z-index: 30;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transform: none;
+  will-change: opacity;
+  transition: opacity 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-state="hidden"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar][data-scrollbar-visible="true"] .alka-scroll-area-scrollbar,
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-state="visible"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-orientation="vertical"] {
+  right: 0;
+  transform: none;
+  transform-origin: center right;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar][data-scrollbar-visible="true"] .alka-scroll-area-scrollbar[data-orientation="vertical"],
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-orientation="vertical"][data-state="visible"] {
+  transform: none;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-orientation="horizontal"] {
+  bottom: 0;
+  transform: none;
+  transform-origin: bottom center;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar][data-scrollbar-visible="true"] .alka-scroll-area-scrollbar[data-orientation="horizontal"],
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-orientation="horizontal"][data-state="visible"] {
+  transform: none;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-thumb {
+  min-height: 2rem;
+  opacity: 0.88;
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.18), transparent),
+    hsl(var(--foreground) / 0.32);
+  transform: scaleX(0.72);
+  transform-origin: center right;
+  box-shadow:
+    0 6px 18px hsl(var(--alka-shadow-color) / 0.18),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.18);
+  transition:
+    background-color 240ms var(--alka-ease-smooth),
+    opacity 360ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 520ms var(--alka-ease-smooth);
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar][data-scrollbar-visible="true"] .alka-scroll-area-thumb,
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-state="visible"] .alka-scroll-area-thumb {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-orientation="horizontal"] .alka-scroll-area-thumb {
+  transform: scaleY(0.72);
+  transform-origin: bottom center;
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar][data-scrollbar-visible="true"] .alka-scroll-area-scrollbar[data-orientation="horizontal"] .alka-scroll-area-thumb,
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar[data-orientation="horizontal"][data-state="visible"] .alka-scroll-area-thumb {
+  transform: scaleY(1);
+}
+
+.alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-thumb:hover {
+  background:
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.22), transparent),
+    hsl(var(--foreground) / 0.44);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alka-scroll-area[data-desktop-overlay-scrollbar] .alka-scroll-area-scrollbar {
+    transition-duration: var(--alka-motion-instant);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*) {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*)::-webkit-scrollbar {
+    width: 0.625rem;
+    height: 0.625rem;
+    background: transparent;
+  }
+
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*)::-webkit-scrollbar-track,
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*)::-webkit-scrollbar-button,
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*)::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*)::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  :where(.alka-theme-light, .alka-theme-dark, .theme-light, .theme-dark, [data-theme], [data-section-theme]) :where(*)::-webkit-scrollbar-thumb {
+    border: 0.1875rem solid transparent;
+    border-radius: var(--alka-radius-pill);
+    background-color: transparent;
+    background-clip: padding-box;
+    transition: background-color 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
 }

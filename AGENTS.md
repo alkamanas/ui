@@ -35,15 +35,16 @@ Implementation rules:
 
 Current system conventions:
 
-- Primary color is token-driven. Keep `--alka-primary`, `--primary`, `--alka-primary-foreground` and `--primary-foreground` aligned; do not hard-code component highlight colors.
+- Primary color is token-driven through the shadcn-compatible `--primary` and `--primary-foreground` tokens; do not introduce parallel vendor-prefixed aliases or hard-code component highlight colors.
 - Package CSS output strips generic `.theme-light` and `.theme-dark` selectors. Keep compatibility inside docs/apps only when needed, not in published CSS.
 - `styles.css` is the full library stylesheet. Prefer component CSS subpaths such as `@alkamanas/ui/card.css` or `@alkamanas/ui/navbar.css` for consumer apps that already own Tailwind/theme globals.
 - `react-hook-form` is optional and must only be imported by `@alkamanas/ui/form`; root imports and unrelated component subpaths must not depend on it.
 - `lucide-react` is optional with a broad `>=0.469.0 <1.0.0` peer range. Icon-forward component subpaths may require it, but unrelated subpaths should not.
-- Border animation color is configurable at app level through `data-border-animation-color="primary|contrast"` and can be overridden per supported component with `borderAnimationColor`.
-- Spotlight/subtle surface gradients are configurable through `data-surface-gradient-color="primary|contrast"` and per-component `surfaceGradientColor`.
+- Border animation color is token-driven through `--alka-border-animation-color` and `--alka-border-animation-opacity`. Defaults are theme-aware: dark scopes use the foreground-like border token, light scopes use the dedicated white border token. Do not reintroduce `primary|contrast` data attributes or visual props.
+- Spotlight/subtle surface gradients are token-driven through `--alka-gradient-color` and `--alka-gradient-opacity`. Defaults are theme-aware: dark scopes use the foreground-like gradient token, light scopes use the dedicated white gradient token. Assign overrides with utility classes such as `gradient-primary`, `gradient-primary/50`, `border-animation-primary` or `border-animation-primary/50` on a component or parent scope.
 - Glass surfaces use one shared `alka-liquid-glass` system with `data-glass-effect="blurry|realistic"`. `blurry` is the default; `realistic` enables the chromatic SVG displacement glass.
 - Components with selectable surfaces should prefer `surface="flat" | "gradient"`; use `surface="bare"` only in composed glass panels where the parent panel supplies the background.
+- Do not nest glass surfaces inside glass panels. Items and similar child rows inside a glass `Card`, panel or navbar menu should use `surface="bare"` or a flat/non-glass treatment instead of `surface="glass"`.
 - `Button` defaults to the flat variant. `solid` remains a compatibility alias, while glass variants (`glassPrimary`, `glassDestructive`, `outline`) opt into the glass treatment. Glass buttons should keep the same padding as flat buttons and should not use the old conic hover border effect.
 - `Input`, `InputGroup`, `Textarea`, `SelectTrigger` and `Combobox` should keep matching pill/bordered focus behavior, close/open motion and optional gradient variants.
 - `CommandItem`, select options, combobox options and sidebar menu items share the command-like rounded item language with primary-aware hover/selected states.

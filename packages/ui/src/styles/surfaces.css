@@ -235,33 +235,33 @@
 :is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-liquid-glass {
   --alka-liquid-glass-blur: 26px;
   --alka-liquid-glass-lens-blur: 12px;
-  --alka-liquid-glass-base-lens-opacity: 0.58;
-  --alka-liquid-glass-base-sheen-opacity: 0.18;
+  --alka-liquid-glass-base-lens-opacity: 0.6;
+  --alka-liquid-glass-base-sheen-opacity: 0.22;
   --alka-liquid-glass-lens-opacity: var(--alka-liquid-glass-base-lens-opacity);
   --alka-liquid-glass-sheen-opacity: var(--alka-liquid-glass-base-sheen-opacity);
   --alka-liquid-glass-border-color: 0 0% 100%;
   --alka-liquid-glass-border-baseline-color: 0 0% 100%;
-  --alka-liquid-glass-border-opacity: 0.54;
-  --alka-liquid-glass-border-width: 1px;
-  --alka-glass-element-tint-opacity: 0.28;
-  --alka-glass-element-shine-opacity: 0.2;
+  --alka-liquid-glass-border-opacity: 0.72;
+  --alka-liquid-glass-border-width: 1.5px;
+  --alka-glass-element-tint-opacity: 0.3;
+  --alka-glass-element-shine-opacity: 0.22;
   --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
   border-color: transparent;
   background:
-    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
-    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.04), transparent 58%),
+    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.24), transparent 50%),
+    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.035), transparent 58%),
     linear-gradient(
       145deg,
-      hsl(0 0% 93% / 0.22),
+      hsl(0 0% 100% / 0.14),
       hsl(var(--alka-highlight-color) / 0.1) 48%,
-      hsl(0 0% 93% / 0.12)
+      hsl(0 0% 100% / 0.12)
     ),
-    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 48%),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.14), transparent 48%),
     var(--alka-liquid-glass-bg);
   box-shadow:
-    0 4px 12px hsl(var(--alka-shadow-color) / 0.022),
-    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.28),
-    inset 0 -1px 0 hsl(0 0% 0% / 0.028);
+    0 8px 22px hsl(var(--alka-shadow-color) / 0.045),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.36),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.034);
   -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
   backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
 }
@@ -287,29 +287,31 @@
 .alka-theme-light .alka-liquid-glass::after,
 .theme-light .alka-liquid-glass::after,
 :is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-liquid-glass::after {
+  z-index: 2;
   background:
-    radial-gradient(circle at 0 0, hsl(0 0% 100% / 0.72) 0 2px, hsl(0 0% 100% / 0.42) 8px, hsl(0 0% 100% / 0.16) 20px, transparent 34px),
-    radial-gradient(circle at 100% 100%, hsl(0 0% 100% / 0.74) 0 2px, hsl(0 0% 100% / 0.44) 8px, hsl(0 0% 100% / 0.18) 20px, transparent 34px),
+    radial-gradient(circle at 0 0, hsl(0 0% 100% / 0.86) 0 2px, hsl(0 0% 100% / 0.5) 8px, hsl(0 0% 100% / 0.2) 20px, transparent 34px),
+    radial-gradient(circle at 100% 100%, hsl(0 0% 100% / 0.88) 0 2px, hsl(0 0% 100% / 0.52) 8px, hsl(0 0% 100% / 0.22) 20px, transparent 34px),
     conic-gradient(
       from 45deg,
-      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.046) 0deg 20deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.074) 54deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.13) 90deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.084) 138deg,
-      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.052) 176deg 188deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.084) 224deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.14) 270deg,
-      hsl(var(--alka-liquid-glass-border-color) / 0.092) 318deg,
-      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.046) 350deg 360deg
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.064) 0deg 20deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.1) 54deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.18) 90deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.112) 138deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.072) 176deg 188deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.112) 224deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.19) 270deg,
+      hsl(var(--alka-liquid-glass-border-color) / 0.12) 318deg,
+      hsl(var(--alka-liquid-glass-border-baseline-color) / 0.064) 350deg 360deg
     );
   box-shadow: none;
+  filter: drop-shadow(0 0 1px hsl(0 0% 0% / 0.16));
 }
 
 :where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-glass-element__backdrop,
 .alka-theme-light .alka-glass-element__backdrop,
 .theme-light .alka-glass-element__backdrop,
 :is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-glass-element__backdrop {
-  background: hsl(var(--background) / 0.045);
+  background: hsl(0 0% 100% / 0.06);
 }
 
 :where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-glass-element__tint,
@@ -318,8 +320,8 @@
 :is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-glass-element__tint {
   background:
     radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.18), transparent 48%),
-    linear-gradient(145deg, hsl(0 0% 0% / 0.022), transparent 52%, hsl(var(--alka-highlight-color) / 0.08)),
-    hsl(0 0% 93% / 0.06);
+    linear-gradient(145deg, hsl(0 0% 100% / 0.08), transparent 52%, hsl(var(--alka-highlight-color) / 0.08)),
+    hsl(0 0% 100% / 0.055);
 }
 
 :where(:root:not(.theme-dark):not(.alka-theme-dark)) .alka-glass-element__shine,
@@ -327,11 +329,11 @@
 .theme-light .alka-glass-element__shine,
 :is([data-theme="light"], [data-section-theme="light"], [data-navbar-theme="light"]) .alka-glass-element__shine {
   background:
-    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.075), transparent 28%, transparent 72%, hsl(0 0% 0% / 0.018)),
-    linear-gradient(90deg, hsl(var(--alka-highlight-color) / 0.04), transparent 16%, transparent 84%, hsl(0 0% 0% / 0.018));
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 28%, transparent 72%, hsl(0 0% 0% / 0.018)),
+    linear-gradient(90deg, hsl(var(--alka-highlight-color) / 0.055), transparent 16%, transparent 84%, hsl(0 0% 0% / 0.018));
   box-shadow:
-    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.12),
-    inset 1px 0 0 hsl(var(--alka-highlight-color) / 0.035),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.22),
+    inset 1px 0 0 hsl(var(--alka-highlight-color) / 0.07),
     inset -1px 0 0 hsl(0 0% 0% / 0.025),
     inset 0 -1px 0 hsl(0 0% 0% / 0.035);
 }
@@ -505,6 +507,12 @@
   box-shadow:
     0 10px 28px hsl(var(--alka-shadow-color) / 0.12),
     inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.06);
+}
+
+.alka-item-surface[data-surface="bare"] {
+  background: transparent;
+  border-color: hsl(var(--foreground) / 0.08);
+  box-shadow: none;
 }
 
 .alka-item-surface[data-surface="glass"] {
@@ -791,15 +799,15 @@ body[data-alka-select-open="true"] {
   --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
   border-color: transparent !important;
   background:
-    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.16), transparent 50%),
-    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.04), transparent 58%),
-    linear-gradient(145deg, hsl(0 0% 0% / 0.032), hsl(0 0% 93% / 0.15) 48%, hsl(0 0% 0% / 0.026)),
-    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.1), transparent 48%),
+    radial-gradient(120% 120% at 12% -18%, hsl(var(--alka-highlight-color) / 0.24), transparent 50%),
+    radial-gradient(110% 120% at 104% 112%, hsl(0 0% 0% / 0.035), transparent 58%),
+    linear-gradient(145deg, hsl(0 0% 100% / 0.14), hsl(0 0% 100% / 0.1) 48%, hsl(0 0% 100% / 0.12)),
+    linear-gradient(180deg, hsl(var(--alka-highlight-color) / 0.14), transparent 48%),
     var(--alka-liquid-glass-bg) !important;
   box-shadow:
-    0 4px 12px hsl(var(--alka-shadow-color) / 0.022),
-    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.28),
-    inset 0 -1px 0 hsl(0 0% 0% / 0.028) !important;
+    0 8px 22px hsl(var(--alka-shadow-color) / 0.045),
+    inset 0 1px 0 hsl(var(--alka-highlight-color) / 0.36),
+    inset 0 -1px 0 hsl(0 0% 0% / 0.034) !important;
   -webkit-backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
   backdrop-filter: blur(var(--alka-liquid-glass-blur)) saturate(1.22) contrast(1.03);
 }
@@ -839,7 +847,6 @@ body[data-alka-select-open="true"] {
   border-color: transparent;
   background: transparent;
   box-shadow: none;
-  padding-inline: 0;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }

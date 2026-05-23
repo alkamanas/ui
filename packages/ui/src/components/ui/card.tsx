@@ -5,7 +5,7 @@ import { GlassElementLayers } from "@/components/surfaces/liquid-glass-filter"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
-  "relative overflow-hidden rounded-[var(--alka-radius-panel-lg)] border text-card-foreground transition-shadow duration-300 alka-glass-highlight",
+  "relative overflow-hidden rounded-[var(--alka-radius-card)] border text-card-foreground transition-shadow duration-300 alka-glass-highlight",
   {
     variants: {
       variant: {

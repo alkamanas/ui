@@ -1,8 +1,11 @@
 import * as React from "react";
 import { Bell, Boxes, Check, MoreHorizontal, PanelsTopLeft, Settings, Sparkles, Terminal } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardTitle, Carousel, CarouselContent, CarouselDots, CarouselItem, CarouselNext, CarouselPrevious, Checkbox, Combobox, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, FlipCard, GlassElementLayers, Input, InputGroup, InputGroupAddon, InputGroupInput, Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, Kbd, Label, LiquidGlassFilter, Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger, Popover, PopoverContent, PopoverTrigger, Progress, RadioGroup, RadioGroupItem, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Navbar, Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, Slider, Switch, Tabs, TabsContent, TabsList, TabsTrigger, Textarea, toast, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, useSidebar } from "@alkamanas/ui";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardTitle, Carousel, CarouselContent, CarouselDots, CarouselItem, CarouselNext, CarouselPrevious, Checkbox, Combobox, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, FlipCard, GlassElementLayers, Input, InputGroup, InputGroupAddon, InputGroupInput, Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, Kbd, Label, LiquidGlassFilter, Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger, Popover, PopoverContent, PopoverTrigger, Progress, RadioGroup, RadioGroupItem, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, Slider, Switch, Tabs, TabsContent, TabsList, TabsTrigger, Textarea, toast, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, useSidebar } from "@alkamanas/ui";
 
-import { getPrimaryThemeStyle, PrimaryColorSwitcher, type BorderAnimationColorId, type DocsThemeModeId, type GlassEffectId, type PrimaryThemeId, type SurfaceGradientColorId } from "./docs-theme";
+import { getDocHref } from "./docs-routes";
+import { DocsLogoMark, DocsThemeAwareWordmark } from "./brand-logo";
+import { getPrimaryThemeStyle, PrimaryColorSwitcher, type DocsThemeModeId, type GlassEffectId, type PrimaryThemeId } from "./docs-theme";
+import { DocsMarketingNavbar } from "./marketing-navbar";
 
 function BlockFrame({
   id,
@@ -72,15 +75,11 @@ function SidebarExternalTrigger({ className, inline = false }: { className?: str
   );
 }
 
-function SidebarBrandRow({ label }: { label: string }) {
+function SidebarBrandRow() {
   return (
     <div className="flex h-12 w-full min-w-0 items-center gap-2 overflow-hidden rounded-3xl px-2 text-sm font-semibold transition-[height,padding,gap,border-radius,justify-content] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:px-0">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-primary/10 transition-[width,height,border-radius] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:rounded-[24px]">
-        <span className="h-3 w-3 rounded-full bg-primary transition-[width,height] duration-[var(--alka-motion-smooth)] ease-[var(--alka-ease-smooth)] group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
-      </span>
-      <span className="alka-sidebar-brand-label min-w-0 truncate">
-        {label}
-      </span>
+      <DocsThemeAwareWordmark className="block h-7 w-44 shrink-0 group-data-[collapsible=icon]:hidden" />
+      <DocsLogoMark className="hidden h-9 w-12 shrink-0 object-contain group-data-[collapsible=icon]:block" />
     </div>
   );
 }
@@ -132,7 +131,7 @@ function WorkspaceShellBlock() {
           <div className="grid h-full w-full gap-4 lg:grid-cols-[auto_minmax(0,1fr)]">
             <Sidebar position="relative" collapsible="icon" variant="floating" className="hidden p-0 lg:flex">
               <SidebarHeader>
-                <SidebarBrandRow label="Studio" />
+                <SidebarBrandRow />
               </SidebarHeader>
               <SidebarContent>
                 <SidebarGroup>
@@ -161,7 +160,7 @@ function WorkspaceShellBlock() {
                   <SidebarExternalTrigger inline className="hidden lg:inline-flex" />
                   <Breadcrumb>
                     <BreadcrumbList>
-                      <BreadcrumbItem><BreadcrumbLink href="#blocks">Blocks</BreadcrumbLink></BreadcrumbItem>
+                      <BreadcrumbItem><BreadcrumbLink href={getDocHref("blocks")}>Blocks</BreadcrumbLink></BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem><BreadcrumbPage>Workspace overview</BreadcrumbPage></BreadcrumbItem>
                     </BreadcrumbList>
@@ -482,41 +481,11 @@ function CommandSurfaceBlock() {
   );
 }
 
-function BlocksTopNav({ glassEffect, themeMode }: { glassEffect: GlassEffectId; themeMode: DocsThemeModeId }) {
-  return (
-    <Navbar
-      brand={
-        <span className="flex items-center gap-3 text-sm font-semibold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary/10">
-            <span className="h-3 w-3 rounded-full bg-primary shadow-[0_0_24px_hsl(var(--primary)_/_0.55)]" />
-          </span>
-          <span className="leading-none">Alkamanas UI</span>
-        </span>
-      }
-      theme={themeMode}
-      syncThemeMeta={false}
-      glassEffect={glassEffect}
-      glassRealisticStrategy="premium"
-      links={[
-        { href: "#blocks", label: "Blocks" },
-        { href: "#components", label: "Components" },
-        { href: "#installation", label: "Docs" },
-        { href: "#registry", label: "Registry" },
-      ]}
-      cta={{ href: "#components", label: "View Components" }}
-    />
-  );
-}
-
 export function BlocksPage({
   primaryTheme,
   onPrimaryThemeChange,
   themeMode,
   onThemeModeChange,
-  borderAnimationColor,
-  onBorderAnimationColorChange,
-  surfaceGradientColor,
-  onSurfaceGradientColorChange,
   glassEffect,
   onGlassEffectChange,
   routeMotion,
@@ -526,28 +495,20 @@ export function BlocksPage({
   onPrimaryThemeChange: (value: PrimaryThemeId) => void;
   themeMode: DocsThemeModeId;
   onThemeModeChange: (value: DocsThemeModeId) => void;
-  borderAnimationColor: BorderAnimationColorId;
-  onBorderAnimationColorChange: (value: BorderAnimationColorId) => void;
-  surfaceGradientColor: SurfaceGradientColorId;
-  onSurfaceGradientColorChange: (value: SurfaceGradientColorId) => void;
   glassEffect: GlassEffectId;
   onGlassEffectChange: (value: GlassEffectId) => void;
   routeMotion: "enter" | "exit";
   routeKey: string;
 }) {
   return (
-    <div id="blocks" className={`theme-${themeMode} alka-theme-${themeMode} docs-shell min-h-dvh text-foreground`} data-border-animation-color={borderAnimationColor} data-glass-effect={glassEffect} data-surface-gradient-color={surfaceGradientColor} style={getPrimaryThemeStyle(primaryTheme, themeMode)}>
+    <div id="blocks" className={`theme-${themeMode} alka-theme-${themeMode} docs-shell min-h-dvh text-foreground`} data-glass-effect={glassEffect} style={getPrimaryThemeStyle(primaryTheme, themeMode)}>
       <LiquidGlassFilter />
-      <BlocksTopNav glassEffect={glassEffect} themeMode={themeMode} />
+      <DocsMarketingNavbar themeMode={themeMode} primaryTheme={primaryTheme} />
       <PrimaryColorSwitcher
         value={primaryTheme}
         onChange={onPrimaryThemeChange}
         themeMode={themeMode}
         onThemeModeChange={onThemeModeChange}
-        borderAnimationColor={borderAnimationColor}
-        onBorderAnimationColorChange={onBorderAnimationColorChange}
-        surfaceGradientColor={surfaceGradientColor}
-        onSurfaceGradientColorChange={onSurfaceGradientColorChange}
         glassEffect={glassEffect}
         onGlassEffectChange={onGlassEffectChange}
         className="fixed bottom-4 right-4 z-40 w-[min(92vw,20rem)] lg:bottom-auto lg:top-28"
@@ -566,18 +527,18 @@ export function BlocksPage({
             A block gallery separate from the component directory. Every example is composed from real `@alkamanas/ui` components so hover, focus, close motion, glass surfaces and responsive behavior can be tested together.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild><a href="#components">View Components</a></Button>
-            <Button variant="outline" asChild><a href="#blocks-dashboard">Browse Blocks</a></Button>
+            <Button asChild><a href={getDocHref("components")}>View Components</a></Button>
+            <Button variant="outline" asChild><a href={`${getDocHref("blocks")}#blocks-dashboard`}>Browse Blocks</a></Button>
           </div>
         </section>
 
         <section className="mt-10 flex flex-wrap gap-2">
           {[
-            ["Featured", "#blocks-dashboard"],
-            ["Dashboard", "#blocks-dashboard"],
-            ["Forms", "#blocks-forms"],
-            ["Marketing", "#blocks-marketing"],
-            ["Command", "#blocks-command"],
+            ["Featured", `${getDocHref("blocks")}#blocks-dashboard`],
+            ["Dashboard", `${getDocHref("blocks")}#blocks-dashboard`],
+            ["Forms", `${getDocHref("blocks")}#blocks-forms`],
+            ["Marketing", `${getDocHref("blocks")}#blocks-marketing`],
+            ["Command", `${getDocHref("blocks")}#blocks-command`],
           ].map(([label, href]) => (
             <Button key={label} variant="secondary" size="sm" asChild>
               <a href={href}>{label}</a>

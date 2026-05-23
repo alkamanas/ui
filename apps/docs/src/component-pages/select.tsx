@@ -9,25 +9,22 @@ import {
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 function ProductSelect({
-  borderAnimationColor,
+  className,
   size,
   surface = "flat",
-  surfaceGradientColor,
   placeholder = "Select product",
 }: {
-  borderAnimationColor?: "primary" | "contrast";
+  className?: string;
   size?: "default" | "sm" | "lg";
-  surface?: "flat" | "gradient";
-  surfaceGradientColor?: "primary" | "contrast";
+  surface?: "flat" | "gradient" | "glass";
   placeholder?: string;
 }) {
   return (
     <Select>
       <SelectTrigger
-        borderAnimationColor={borderAnimationColor}
+        className={className}
         size={size}
         surface={surface}
-        surfaceGradientColor={surfaceGradientColor}
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -50,7 +47,7 @@ const details: ComponentPageDetails = {
       "preview": (
         <div className="grid w-full max-w-md gap-4">
           <ProductSelect surface="flat" />
-          <ProductSelect borderAnimationColor="contrast" surface="flat" />
+          <ProductSelect className="border-animation-primary" surface="flat" />
         </div>
       ),
       "code": `import {
@@ -79,11 +76,11 @@ export function FlatSelectExample() {
     {
       "id": "select-gradient",
       "title": "Gradient select",
-      "description": "The gradient trigger uses the same subtle surface controls as Input and Combobox. Choose primary or contrast per component.",
+      "description": "The gradient trigger uses the same subtle surface controls as Input and Combobox. Assign custom color with gradient utility classes.",
       "preview": (
         <div className="grid w-full max-w-md gap-4">
           <ProductSelect surface="gradient" />
-          <ProductSelect surface="gradient" surfaceGradientColor="contrast" />
+          <ProductSelect className="gradient-primary/50" surface="gradient" />
         </div>
       ),
       "code": `import {
@@ -97,7 +94,43 @@ export function FlatSelectExample() {
 export function GradientSelectExample() {
   return (
     <Select>
-      <SelectTrigger surface="gradient" surfaceGradientColor="contrast">
+      <SelectTrigger className="gradient-primary/50" surface="gradient">
+        <SelectValue placeholder="Select product" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="studio">Visetra Studio</SelectItem>
+        <SelectItem value="web">Visetra Web</SelectItem>
+        <SelectItem value="ui">Alkamanas UI</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}`
+    },
+    {
+      "id": "select-glass",
+      "title": "Glass select",
+      "description": "Glass Select triggers use the same liquid glass treatment as glass Input and Combobox. Focus/open animates the glass border while utility classes can assign the tint.",
+      "preview": (
+        <div className="grid w-full max-w-md gap-4">
+          <ProductSelect surface="glass" />
+          <ProductSelect className="gradient-primary/50 border-animation-primary" surface="glass" />
+        </div>
+      ),
+      "code": `import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@alkamanas/ui";
+
+export function GlassSelectExample() {
+  return (
+    <Select>
+      <SelectTrigger
+        className="gradient-primary/50 border-animation-primary"
+        surface="glass"
+      >
         <SelectValue placeholder="Select product" />
       </SelectTrigger>
       <SelectContent>
@@ -168,7 +201,7 @@ export function SelectSizesExample() {
   "anatomy": [
     "Import Select from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, default border animation, default gradient and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -177,7 +210,7 @@ export function SelectSizesExample() {
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to dark/light section and glass mode changes from the docs selector. Primary is opt-in through utility classes."
     }
   ],
   "sizes": [
@@ -215,6 +248,11 @@ export function SelectSizesExample() {
       "name": "SelectTrigger size",
       "type": "default | sm | lg",
       "description": "Controls trigger height, padding and text scale using the same naming as Button."
+    },
+    {
+      "name": "SelectTrigger surface",
+      "type": "flat | gradient | glass | bare",
+      "description": "Controls trigger surface treatment. Glass removes the trigger border and animates the liquid glass border on focus/open."
     }
   ],
   "accessibility": [
@@ -228,6 +266,10 @@ export function SelectSizesExample() {
   ],
   "tokens": [
     "--alka-border-animation-color",
+    "--alka-border-animation-opacity",
+    "--alka-gradient-color",
+    "--alka-gradient-opacity",
+    "--alka-liquid-glass-bg",
     "--alka-panel-bg",
     "--alka-ease-smooth"
   ]

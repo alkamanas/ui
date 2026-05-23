@@ -15,6 +15,7 @@ export const componentNames = [
   ["breadcrumb", "Breadcrumb", "Hierarchical navigation trail."],
   ["button", "Button", "Action primitive with soft color transitions and no hover lift."],
   ["button-group", "Button Group", "Grouped actions with a shared pill surface."],
+  ["calendar", "Calendar", "Date and range selection calendar built on React DayPicker."],
   ["card", "Card", "Glass-first content surface with solid and outline variants."],
   ["carousel", "Carousel", "Highlight rail inspired by Apple product story carousels."],
   ["checkbox", "Checkbox", "Binary selection control."],
@@ -22,6 +23,8 @@ export const componentNames = [
   ["combobox", "Combobox", "Searchable select built from Popover and Command."],
   ["command", "Command", "Composable command menu primitives."],
   ["context-menu", "Context Menu", "Right-click menu primitive."],
+  ["data-table", "Data Table", "TanStack-powered table with filtering, selection and pagination."],
+  ["date-picker", "Date Picker", "Popover calendar trigger for selecting a single date."],
   ["dialog", "Dialog", "Modal surface for focused tasks."],
   ["direction", "Direction", "LTR/RTL scope provider."],
   ["drawer", "Drawer", "Bottom sheet style dialog surface."],
@@ -99,6 +102,8 @@ export const docs: DocItem[] = [
     importCode:
       id === "navbar"
         ? 'import { Navbar } from "@alkamanas/ui/navbar";\nimport "@alkamanas/ui/navbar.css";'
+        : id === "data-table"
+          ? 'import { DataTable } from "@alkamanas/ui/data-table";\nimport "@alkamanas/ui/data-table.css";'
         : `import { ${title.replace(/\s+/g, "")} } from "@alkamanas/ui";`,
   })),
   {

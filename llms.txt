@@ -39,6 +39,7 @@ Current design/API notes for agents:
 - `react-hook-form` is optional and isolated to `@alkamanas/ui/form`.
 - `lucide-react` is optional and accepts `>=0.469.0 <1.0.0`.
 - Glass surfaces come from `alka-liquid-glass` and support `data-glass-effect="blurry|realistic"`.
+- Do not nest glass surfaces inside glass panels. Child rows such as `Item` inside a glass `Card`, panel or navbar menu should use `surface="bare"` or another non-glass treatment.
 - Primary color, border animation color and subtle gradient color are token/config driven. Use `borderAnimationColor` and `surfaceGradientColor` props where available.
 - Inputs, input groups, textareas, selects and comboboxes share the bordered pill animation style and flat/gradient surface options.
 - Select, combobox, command and sidebar menu option states should use primary-aware medium hover/selected backgrounds.

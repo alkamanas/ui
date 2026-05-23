@@ -191,6 +191,154 @@
   color: rgb(255 255 255 / 0.76);
 }
 
+.alka-data-table {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 1rem;
+}
+
+.alka-data-table-toolbar,
+.alka-data-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.alka-data-table-toolbar {
+  flex-wrap: wrap;
+}
+
+.alka-data-table-filter {
+  width: min(100%, 20rem);
+  min-height: 2.75rem;
+}
+
+.alka-data-table-filter .alka-input-control {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+}
+
+.alka-data-table-toolbar-slot {
+  min-width: 0;
+}
+
+.alka-data-table-columns-trigger {
+  margin-inline-start: auto;
+}
+
+.alka-data-table-shell {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border) / 0.7);
+  border-radius: var(--alka-radius-card);
+  background: hsl(var(--background) / 0.36);
+}
+
+.alka-data-table-shell[data-surface="bare"] {
+  border-color: hsl(var(--border) / 0.52);
+  background: transparent;
+}
+
+.alka-data-table-shell[data-surface="glass"] {
+  --alka-liquid-glass-blur: 22px;
+  --alka-liquid-glass-lens-blur: 8px;
+  --alka-liquid-glass-bg: hsl(var(--alka-panel-bg));
+  background: var(--alka-liquid-glass-bg);
+}
+
+.alka-data-table-shell > .relative {
+  position: relative;
+  z-index: 2;
+}
+
+.alka-data-table-table {
+  min-width: 44rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.alka-data-table-table thead {
+  background: hsl(var(--foreground) / 0.035);
+}
+
+.alka-data-table-table thead tr,
+.alka-data-table-table tbody tr {
+  border-color: hsl(var(--border) / 0.62);
+}
+
+.alka-data-table-table th {
+  height: 3rem;
+  padding-inline: 1rem;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.alka-data-table-table td {
+  height: 3.625rem;
+  padding: 0.75rem 1rem;
+  color: hsl(var(--foreground));
+  vertical-align: middle;
+}
+
+.alka-data-table-table tbody tr {
+  transition:
+    background-color 220ms var(--alka-ease-smooth),
+    color 220ms var(--alka-ease-smooth);
+}
+
+.alka-data-table-table tbody tr:hover {
+  background: hsl(var(--primary) / 0.055);
+}
+
+.alka-data-table-table tbody tr[data-state="selected"] {
+  background: hsl(var(--primary) / 0.1);
+}
+
+.alka-data-table-empty {
+  height: 8rem;
+  color: hsl(var(--muted-foreground));
+  text-align: center;
+}
+
+.alka-data-table-selection {
+  min-width: 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+}
+
+.alka-data-table-pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+@media (max-width: 640px) {
+  .alka-data-table-toolbar,
+  .alka-data-table-footer {
+    align-items: stretch;
+  }
+
+  .alka-data-table-footer {
+    flex-direction: column;
+  }
+
+  .alka-data-table-filter,
+  .alka-data-table-columns-trigger,
+  .alka-data-table-pagination,
+  .alka-data-table-pagination > .alka-button-control {
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .alka-image-tile-image {
     transition-duration: 0.01ms;

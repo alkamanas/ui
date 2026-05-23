@@ -8,16 +8,13 @@ import {
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 function OtpDemo({
-  borderAnimationColor,
-  surfaceGradientColor,
+  className,
 }: {
-  borderAnimationColor?: "primary" | "contrast";
-  surfaceGradientColor?: "primary" | "contrast";
+  className?: string;
 }) {
   return (
     <InputOTP
-      borderAnimationColor={borderAnimationColor}
-      surfaceGradientColor={surfaceGradientColor}
+      className={className}
       maxLength={6}
     >
       <InputOTPGroup>
@@ -37,8 +34,8 @@ const details: ComponentPageDetails = {
   "summary": "Input OTP is a form control in the Alkamanas system. This page documents composition, public props, expected motion and the tokens that keep it consistent across dark and light scopes.",
   "examples": [
     {
-      "id": "input-otp-primary",
-      "title": "Primary OTP slots",
+      "id": "input-otp-default",
+      "title": "Default OTP slots",
       "description": "Each slot follows the bordered input style independently so focus and fill states stay visible per digit.",
       "preview": (
         <div className="w-full overflow-x-auto pb-2">
@@ -69,22 +66,21 @@ export function InputOTPExample() {
 }`
     },
     {
-      "id": "input-otp-contrast",
-      "title": "Contrast border and gradient",
-      "description": "OTP supports the same per-component border and spotlight color controls used by bordered fields.",
+      "id": "input-otp-utilities",
+      "title": "Utility assigned border and gradient",
+      "description": "OTP supports the same class-driven border and spotlight color controls used by bordered fields.",
       "preview": (
         <div className="grid w-full gap-5 overflow-x-auto pb-2">
-          <OtpDemo borderAnimationColor="contrast" />
-          <OtpDemo surfaceGradientColor="contrast" />
+          <OtpDemo className="border-animation-primary" />
+          <OtpDemo className="gradient-primary/50" />
         </div>
       ),
       "code": `import { InputOTP } from "@alkamanas/ui";
 
-export function ContrastInputOTPExample() {
+export function UtilityInputOTPExample() {
   return (
     <InputOTP
-      borderAnimationColor="contrast"
-      surfaceGradientColor="contrast"
+      className="gradient-primary/50 border-animation-primary"
       maxLength={6}
     >
       {/* Compose InputOTPGroup, InputOTPSlot and InputOTPSeparator here. */}
@@ -96,7 +92,7 @@ export function ContrastInputOTPExample() {
   "anatomy": [
     "Import InputOTP from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, default border animation, default gradient and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -105,7 +101,7 @@ export function ContrastInputOTPExample() {
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to dark/light section and glass mode changes from the docs selector. Primary is opt-in through utility classes."
     }
   ],
   "sizes": [
@@ -122,7 +118,7 @@ export function ContrastInputOTPExample() {
     {
       "name": "className",
       "type": "string",
-      "description": "Merged onto the visible root when the primitive renders one."
+      "description": "Merged onto the visible root. Use utilities such as gradient-primary/50 and border-animation-primary to assign gradient and focus colors."
     },
     {
       "name": "children",
@@ -142,6 +138,10 @@ export function ContrastInputOTPExample() {
   "tokens": [
     "--alka-ease-smooth",
     "--alka-radius-control",
+    "--alka-gradient-color",
+    "--alka-gradient-opacity",
+    "--alka-border-animation-color",
+    "--alka-border-animation-opacity",
     "--alka-panel-bg"
   ]
 };

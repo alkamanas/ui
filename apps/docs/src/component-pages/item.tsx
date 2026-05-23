@@ -1,6 +1,8 @@
 import { Sparkles, User } from "lucide-react";
 import {
   Badge,
+  Card,
+  CardContent,
   Item,
   ItemActions,
   ItemContent,
@@ -50,6 +52,45 @@ export function FlatItemExample() {
         <Badge variant="secondary">Active</Badge>
       </ItemActions>
     </Item>
+  );
+}`
+    },
+    {
+      "id": "item-bare",
+      "title": "Bare item in glass panels",
+      "description": "Use the bare surface for item rows inside glass panels so the parent panel supplies the glass treatment.",
+      "preview": (
+        <Card className="w-full max-w-xl">
+          <CardContent className="grid gap-3 p-5">
+            <Item surface="bare">
+              <ItemMedia><Sparkles className="h-4 w-4" /></ItemMedia>
+              <ItemContent>
+                <ItemTitle>Panel child row</ItemTitle>
+                <ItemDescription>Item stays transparent while the card carries the glass.</ItemDescription>
+              </ItemContent>
+              <ItemActions><Badge variant="secondary">Bare</Badge></ItemActions>
+            </Item>
+          </CardContent>
+        </Card>
+      ),
+      "code": `import { Badge, Card, CardContent, Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@alkamanas/ui";
+
+export function BareItemInGlassPanelExample() {
+  return (
+    <Card>
+      <CardContent className="grid gap-3 p-5">
+        <Item surface="bare">
+          <ItemMedia />
+          <ItemContent>
+            <ItemTitle>Panel child row</ItemTitle>
+            <ItemDescription>Item stays transparent while the card carries the glass.</ItemDescription>
+          </ItemContent>
+          <ItemActions>
+            <Badge variant="secondary">Bare</Badge>
+          </ItemActions>
+        </Item>
+      </CardContent>
+    </Card>
   );
 }`
     },
@@ -120,8 +161,8 @@ export function GlassItemExample() {
   "props": [
     {
       "name": "surface",
-      "type": "flat | glass",
-      "description": "Controls the root surface. Defaults to flat; solid is kept as a compatibility alias for flat."
+      "type": "flat | glass | bare",
+      "description": "Controls the root surface. Defaults to flat; use bare for child rows inside glass panels. Solid is kept as a compatibility alias for flat."
     },
     {
       "name": "className",

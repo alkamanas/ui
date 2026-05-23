@@ -3,19 +3,16 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@alkamanas/ui";
 import { ComponentPageTemplate, type ComponentPageDetails, type ComponentPageProps } from "./shared";
 
 function DomainInputGroup({
-  borderAnimationColor,
+  className,
   surface = "flat",
-  surfaceGradientColor,
 }: {
-  borderAnimationColor?: "primary" | "contrast";
-  surface?: "flat" | "gradient";
-  surfaceGradientColor?: "primary" | "contrast";
+  className?: string;
+  surface?: "flat" | "gradient" | "glass";
 }) {
   return (
     <InputGroup
-      borderAnimationColor={borderAnimationColor}
+      className={className}
       surface={surface}
-      surfaceGradientColor={surfaceGradientColor}
     >
       <InputGroupAddon>https://</InputGroupAddon>
       <InputGroupInput placeholder="studio.visetra.app" />
@@ -34,7 +31,7 @@ const details: ComponentPageDetails = {
       "preview": (
         <div className="grid w-full max-w-xl gap-4">
           <DomainInputGroup surface="flat" />
-          <DomainInputGroup borderAnimationColor="contrast" surface="flat" />
+          <DomainInputGroup className="border-animation-primary" surface="flat" />
         </div>
       ),
       "code": `import { InputGroup, InputGroupAddon, InputGroupInput } from "@alkamanas/ui";
@@ -56,14 +53,36 @@ export function FlatInputGroupExample() {
       "preview": (
         <div className="grid w-full max-w-xl gap-4">
           <DomainInputGroup surface="gradient" />
-          <DomainInputGroup surfaceGradientColor="contrast" surface="gradient" />
+          <DomainInputGroup className="gradient-primary/50" surface="gradient" />
         </div>
       ),
       "code": `import { InputGroup, InputGroupAddon, InputGroupInput } from "@alkamanas/ui";
 
 export function GradientInputGroupExample() {
   return (
-    <InputGroup surface="gradient" surfaceGradientColor="contrast">
+    <InputGroup className="gradient-primary/50" surface="gradient">
+      <InputGroupAddon>https://</InputGroupAddon>
+      <InputGroupInput placeholder="studio.visetra.app" />
+      <InputGroupAddon>.com</InputGroupAddon>
+    </InputGroup>
+  );
+}`
+    },
+    {
+      "id": "input-group-glass",
+      "title": "Glass grouped field",
+      "description": "Glass grouped fields remove the group's own border. Focus animates the glass border and changes the liquid glass gradient color instead of drawing a separate layer behind the input.",
+      "preview": (
+        <div className="grid w-full max-w-xl gap-4">
+          <DomainInputGroup surface="glass" />
+          <DomainInputGroup className="gradient-primary/50 border-animation-primary" surface="glass" />
+        </div>
+      ),
+      "code": `import { InputGroup, InputGroupAddon, InputGroupInput } from "@alkamanas/ui";
+
+export function GlassInputGroupExample() {
+  return (
+    <InputGroup className="gradient-primary/50 border-animation-primary" surface="glass">
       <InputGroupAddon>https://</InputGroupAddon>
       <InputGroupInput placeholder="studio.visetra.app" />
       <InputGroupAddon>.com</InputGroupAddon>
@@ -75,7 +94,7 @@ export function GradientInputGroupExample() {
   "anatomy": [
     "Import InputGroup from @alkamanas/ui and compose it with the documented subcomponents when the primitive is compound.",
     "The visible root accepts className so product teams can place it without forking the primitive.",
-    "The component inherits theme, primary, border animation and glass-mode tokens from the nearest Alkamanas scope."
+    "The component inherits theme, default border animation, default gradient and glass-mode tokens from the nearest Alkamanas scope."
   ],
   "variants": [
     {
@@ -84,7 +103,7 @@ export function GradientInputGroupExample() {
     },
     {
       "name": "themed",
-      "description": "Responds to primary color, dark/light section and glass mode changes from the docs selector."
+      "description": "Responds to dark/light section and glass mode changes from the docs selector. Primary is opt-in through utility classes."
     }
   ],
   "sizes": [
@@ -101,12 +120,17 @@ export function GradientInputGroupExample() {
     {
       "name": "className",
       "type": "string",
-      "description": "Merged onto the visible root when the primitive renders one."
+      "description": "Merged onto the visible root. Use utilities such as gradient-primary/50 and border-animation-primary to assign gradient and focus colors."
     },
     {
       "name": "children",
       "type": "ReactNode",
       "description": "Used for composition in compound primitives."
+    },
+    {
+      "name": "surface",
+      "type": "flat | gradient | glass",
+      "description": "Controls the grouped field surface. Glass removes the component border and routes focus color into the liquid glass surface."
     }
   ],
   "accessibility": [
@@ -121,6 +145,11 @@ export function GradientInputGroupExample() {
   "tokens": [
     "--alka-ease-smooth",
     "--alka-radius-control",
+    "--alka-gradient-color",
+    "--alka-gradient-opacity",
+    "--alka-border-animation-color",
+    "--alka-border-animation-opacity",
+    "--alka-liquid-glass-bg",
     "--alka-panel-bg"
   ]
 };
