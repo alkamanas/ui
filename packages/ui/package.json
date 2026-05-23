@@ -1,6 +1,6 @@
 {
   "name": "@alkamanas/ui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Premium React UI primitives and patterns for Alkamanas.",
   "license": "MIT",
   "type": "module",

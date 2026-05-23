@@ -134,8 +134,8 @@ importers:
   apps/npm-test:
     dependencies:
       '@alkamanas/ui':
-        specifier: 0.1.7
-        version: 0.1.7(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)
+        specifier: 0.1.8
+        version: 0.1.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)
       lucide-react:
         specifier: ^0.561.0
         version: 0.561.0(react@19.2.4)
@@ -309,10 +309,10 @@ importers:
 
 packages:
 
-  '@alkamanas/ui@0.1.7':
-    resolution: {integrity: sha512-I9V8wB/k8r7RyUSpS9aAl4R48acUzlaZFGSowN+CFnN94YlFgaOrYqemJa7bG7o2us5yR7RViUDQF8cmb0Zx7g==}
+  '@alkamanas/ui@0.1.8':
+    resolution: {integrity: sha512-NNM7lJQuB63Sr/DH2qQQgJwEIv556Faf4Maj3AHJvTF64T80TRdtu5Ib8uojK85dmUP3W+E2V/SfDMKRFCmm+w==}
     peerDependencies:
-      lucide-react: ^0.561.0
+      lucide-react: '>=0.469.0 <1.0.0'
       react: '>=18.3.0 || >=19.0.0'
       react-dom: '>=18.3.0 || >=19.0.0'
       react-hook-form: ^7.73.1
@@ -3265,7 +3265,7 @@ packages:
 
 snapshots:
 
-  '@alkamanas/ui@0.1.7(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)':
+  '@alkamanas/ui@0.1.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lucide-react@0.561.0(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.76.0(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@radix-ui/react-alert-dialog': 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@radix-ui/react-avatar': 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -3291,11 +3291,13 @@ snapshots:
       '@radix-ui/react-tabs': 1.1.13(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@radix-ui/react-toggle': 1.1.10(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@radix-ui/react-tooltip': 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-table': 8.21.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       cmdk: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       framer-motion: 12.38.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
+      react-day-picker: 10.0.1(@types/react@19.2.14)(react@19.2.4)
       react-dom: 19.2.4(react@19.2.4)
       sonner: 2.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       tailwind-merge: 3.6.0
