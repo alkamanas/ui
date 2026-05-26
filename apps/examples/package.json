@@ -7,6 +7,7 @@
     "dev": "vite --host 0.0.0.0 --port 4328",
     "build": "tsc -p tsconfig.json --noEmit && vite build",
     "start": "vite --host 0.0.0.0 --port 4328",
+    "thumbnails:showcase": "node scripts/capture-showcase-thumbnails.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

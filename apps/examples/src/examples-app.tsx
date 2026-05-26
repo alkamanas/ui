@@ -1,4 +1,13 @@
-import { useEffect, useMemo, useRef, useState, type ClipboardEvent, type ComponentType, type FormEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ClipboardEvent,
+  type ComponentType,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import { createPortal } from "react-dom";
 import {
   ArrowLeft,
@@ -17,11 +26,12 @@ import {
   Command,
   Copy,
   CreditCard,
+  Database,
   Factory,
   FileText,
   Gauge,
   Globe2,
-  Grid3X3,
+  Info,
   LayoutDashboard,
   LockKeyhole,
   Mail,
@@ -44,6 +54,7 @@ import {
   UsersRound,
   WalletCards,
   Zap,
+  X,
 } from "lucide-react";
 import {
   Avatar,
@@ -100,6 +111,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
+  Textarea,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -450,6 +462,7 @@ function getExampleIdFromPath(): ExampleId | null {
 export function ExamplesApp() {
   const [activeCategory, setActiveCategory] = useState<CategoryId | "all">("all");
   const [activeExample, setActiveExample] = useState<ExampleId | null>(() => getExampleIdFromPath());
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const selectedExample = useMemo(
     () => examples.find((example) => example.id === activeExample),
     [activeExample],
@@ -484,7 +497,19 @@ export function ExamplesApp() {
   }, []);
 
   useEffect(() => {
-    const focusSearch = (event: KeyboardEvent) => {
+    const openSearch = () => {
+      setIsSearchOpen(true);
+      window.requestAnimationFrame(() => {
+        document.querySelector<HTMLInputElement>(".examples-search-input-shell input")?.focus();
+      });
+    };
+
+    window.addEventListener("examples:open-search", openSearch);
+    return () => window.removeEventListener("examples:open-search", openSearch);
+  }, []);
+
+  useEffect(() => {
+    const openSearchShortcut = (event: KeyboardEvent) => {
       if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k") return;
 
       const target = event.target;
@@ -497,19 +522,12 @@ export function ExamplesApp() {
         return;
       }
 
-      const visibleSearchInput = Array.from(
-        document.querySelectorAll<HTMLInputElement>("[data-examples-search]"),
-      ).find((input) => input.getClientRects().length > 0);
-
-      if (!visibleSearchInput) return;
-
       event.preventDefault();
-      visibleSearchInput.focus();
-      visibleSearchInput.select();
+      setIsSearchOpen(true);
     };
 
-    window.addEventListener("keydown", focusSearch);
-    return () => window.removeEventListener("keydown", focusSearch);
+    window.addEventListener("keydown", openSearchShortcut);
+    return () => window.removeEventListener("keydown", openSearchShortcut);
   }, []);
 
   useEffect(() => {
@@ -517,6 +535,7 @@ export function ExamplesApp() {
   }, [activeExample]);
 
   const openExample = (id: ExampleId) => {
+    setIsSearchOpen(false);
     setActiveExample(id);
     window.history.pushState(null, "", `/examples/${id}`);
   };
@@ -524,6 +543,16 @@ export function ExamplesApp() {
   const openHome = () => {
     setActiveExample(null);
     window.history.pushState(null, "", "/");
+  };
+
+  const openHomeSection = (sectionId: string, categoryId?: CategoryId | "all") => {
+    setIsSearchOpen(false);
+    if (categoryId) setActiveCategory(categoryId);
+    setActiveExample(null);
+    window.history.pushState(null, "", `/#${sectionId}`);
+    window.setTimeout(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   };
 
   return (
@@ -541,6 +570,12 @@ export function ExamplesApp() {
               onOpenExample={openExample}
             />
           )}
+          <ExamplesSearchDialog
+            open={isSearchOpen}
+            onOpenChange={setIsSearchOpen}
+            onOpenExample={openExample}
+            onOpenSection={openHomeSection}
+          />
         </div>
       </TooltipProvider>
     </GlassProvider>
@@ -558,75 +593,28 @@ function ExamplesHome({
   onCategoryChange: (id: CategoryId | "all") => void;
   onOpenExample: (id: ExampleId) => void;
 }) {
-  const featuredExamples = examples.filter((example) => example.featured);
-  const recentExamples = examples.filter((example) => example.recent);
+  const heroExamples = examples.filter((example) =>
+    ["glass-command-center", "checkout-flow", "payment-method", "bento-grid"].includes(example.id),
+  );
 
   return (
     <>
       <ExamplesNavbar />
       <main className="examples-home" data-navbar-theme="dark" data-theme-color="#050505">
         <section className="examples-hero">
-          <div className="examples-shell hero-grid">
+          <div className="examples-shell">
             <div className="hero-copy">
-              <Badge size="md" variant="outline">
-                Alkamanas examples
+              <Badge className="hero-eyebrow" size="md" variant="outline">
+                <Blocks />
+                UI templates
               </Badge>
-              <h1>Page examples for Alkamanas UI.</h1>
+              <h1>Premium UI Examples</h1>
               <p>
-                Browse complete app surfaces composed from <span>@alkamanas/ui</span> primitives.
-                Each example has a preview, CLI command and source structure.
+                Beautiful, production-ready templates and components to ship exceptional digital products.
               </p>
-              <div className="hero-actions">
-                <Button asChild>
-                  <a href="#examples">
-                    Browse examples
-                    <ArrowRight />
-                  </a>
-                </Button>
-                <Button asChild className="hero-outline-button" variant="secondary">
-                  <a href="#site-map">
-                    View site map
-                    <Grid3X3 />
-                  </a>
-                </Button>
-              </div>
-              <div className="hero-category-strip" aria-label="Example category summary">
-                {categories.map((category) => (
-                  <a href="#site-map" key={category.id}>
-                    <category.icon />
-                    <span>{category.title}</span>
-                    <Badge variant="outline">
-                      {examples.filter((example) => example.category === category.id).length}
-                    </Badge>
-                  </a>
-                ))}
-              </div>
             </div>
-          </div>
-        </section>
-
-        <section className="examples-section" aria-label="Recently added">
-          <div className="examples-shell">
-            <SectionHeading
-              eyebrow="Recently added"
-              title="Fresh page patterns for the examples app."
-            />
-            <div className="example-card-grid compact">
-              {recentExamples.map((example) => (
-                <ExampleCard key={example.id} example={example} onOpen={onOpenExample} compact />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="examples-section" aria-label="Featured examples">
-          <div className="examples-shell">
-            <SectionHeading
-              eyebrow="Featured"
-              title="High-signal starting points."
-            />
-            <div className="example-card-grid featured">
-              {featuredExamples.map((example) => (
+            <div className="hero-example-grid" aria-label="Featured UI examples">
+              {heroExamples.map((example) => (
                 <ExampleCard key={example.id} example={example} onOpen={onOpenExample} />
               ))}
             </div>
@@ -807,13 +795,21 @@ function NavbarActions({ onNavigateHome }: { onNavigateHome?: () => void }) {
 }
 
 function NavbarSearch() {
+  const openSearch = () => window.dispatchEvent(new Event("examples:open-search"));
+
   return (
     <div className="navbar-search">
-      <InputGroup className="navbar-search-control">
+      <InputGroup className="navbar-search-control" onClick={openSearch}>
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
-        <InputGroupInput data-examples-search floatingLabel={false} placeholder="Search" />
+        <InputGroupInput
+          data-examples-search
+          floatingLabel={false}
+          placeholder="Search"
+          readOnly
+          onFocus={openSearch}
+        />
         <InputGroupAddon className="navbar-search-shortcut">
           <Kbd className="navbar-search-kbd">
             <Command aria-hidden="true" className="navbar-command-icon" />
@@ -822,6 +818,457 @@ function NavbarSearch() {
         </InputGroupAddon>
       </InputGroup>
     </div>
+  );
+}
+
+const searchSuggestionItems = [
+  { label: "Settings", icon: Settings, exampleId: "settings-page" as ExampleId },
+  { label: "Dashboard", icon: LayoutDashboard, exampleId: "saas-dashboard" as ExampleId },
+  { label: "Pricing", icon: CreditCard, exampleId: "pricing-page" as ExampleId },
+  { label: "Data table", icon: Database, sectionId: "components" },
+  { label: "Landing page", icon: Globe2, exampleId: "basic-landing" as ExampleId },
+  { label: "Auth", icon: LockKeyhole, sectionId: "request" },
+  { label: "AI Chat", icon: Bell, exampleId: "glass-command-center" as ExampleId },
+];
+
+const searchPageIds: ExampleId[] = [
+  "glass-command-center",
+  "bento-grid",
+  "checkout-flow",
+  "payment-method",
+];
+
+const searchComponents = [
+  { title: "Tabs", description: "Navigation", icon: Copy },
+  { title: "Select", description: "Input", icon: ChevronDown },
+  { title: "Slider", description: "Input", icon: Gauge },
+  { title: "Data table", description: "Display", icon: Database },
+];
+
+function ExamplesSearchDialog({
+  onOpenChange,
+  onOpenExample,
+  onOpenSection,
+  open,
+}: {
+  onOpenChange: (open: boolean) => void;
+  onOpenExample: (id: ExampleId) => void;
+  onOpenSection: (sectionId: string, categoryId?: CategoryId | "all") => void;
+  open: boolean;
+}) {
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [isSearchClosing, setIsSearchClosing] = useState(false);
+  const closeAnimationFrameRef = useRef<number | undefined>(undefined);
+  const closeAnimationTimerRef = useRef<number | undefined>(undefined);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const inputFrameRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const overlayRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const normalizedQuery = debouncedQuery.trim().toLowerCase();
+  const pageResults = useMemo(() => {
+    const pageItems = searchPageIds
+      .map((id) => examples.find((example) => example.id === id))
+      .filter((example): example is Example => Boolean(example));
+
+    if (!normalizedQuery) return pageItems;
+
+    return pageItems.filter((example) =>
+      [example.title, example.eyebrow, example.description, ...example.tags]
+        .join(" ")
+        .toLowerCase()
+        .includes(normalizedQuery),
+    );
+  }, [normalizedQuery]);
+  const componentResults = useMemo(() => {
+    if (!normalizedQuery) return searchComponents;
+
+    return searchComponents.filter((component) =>
+      `${component.title} ${component.description}`.toLowerCase().includes(normalizedQuery),
+    );
+  }, [normalizedQuery]);
+
+  useEffect(() => {
+    if (open) {
+      if (closeAnimationTimerRef.current) {
+        window.clearTimeout(closeAnimationTimerRef.current);
+        closeAnimationTimerRef.current = undefined;
+      }
+      setIsSearchClosing(false);
+      closeAnimationFrameRef.current = window.requestAnimationFrame(() => inputRef.current?.focus());
+      return () => {
+        if (closeAnimationFrameRef.current) {
+          window.cancelAnimationFrame(closeAnimationFrameRef.current);
+          closeAnimationFrameRef.current = undefined;
+        }
+      };
+    }
+
+    setIsSearchClosing(false);
+    setQuery("");
+    setDebouncedQuery("");
+  }, [open]);
+
+  useEffect(() => {
+    return () => {
+    if (closeAnimationFrameRef.current) {
+      window.cancelAnimationFrame(closeAnimationFrameRef.current);
+    }
+      if (closeAnimationTimerRef.current) {
+      window.clearTimeout(closeAnimationTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousBodyPaddingRight = document.body.style.paddingRight;
+    const previousHtmlOverscrollBehavior = document.documentElement.style.overscrollBehavior;
+
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    document.documentElement.style.overscrollBehavior = "none";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.body.style.paddingRight = previousBodyPaddingRight;
+      document.documentElement.style.overscrollBehavior = previousHtmlOverscrollBehavior;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const timeout = window.setTimeout(() => setDebouncedQuery(query), 180);
+    return () => window.clearTimeout(timeout);
+  }, [open, query]);
+
+  useEffect(() => {
+    if (!open) return;
+    panelRef.current?.scrollTo({ top: 0, left: 0 });
+  }, [open, normalizedQuery]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeSearch();
+      }
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
+  function closeSearch() {
+    if (isSearchClosing) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      setIsSearchClosing(false);
+      setQuery("");
+      setDebouncedQuery("");
+      onOpenChange(false);
+      return;
+    }
+
+    setIsSearchClosing(true);
+    if (closeAnimationTimerRef.current) {
+      window.clearTimeout(closeAnimationTimerRef.current);
+    }
+
+    const animations = [
+      overlayRef.current?.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 300,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "forwards",
+      }),
+      contentRef.current?.animate(
+        [
+          { opacity: 1, transform: "translate3d(-50%, 0, 0) scale(1)" },
+          { opacity: 0, transform: "translate3d(-50%, 22px, 0) scale(0.97)" },
+        ],
+        {
+          duration: 520,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "forwards",
+        },
+      ),
+      inputFrameRef.current?.animate(
+        [
+          { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" },
+          { opacity: 0, transform: "translate3d(0, -10px, 0) scale(0.975)" },
+        ],
+        {
+          duration: 360,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "forwards",
+        },
+      ),
+    ].filter((animation): animation is Animation => Boolean(animation));
+
+    closeAnimationTimerRef.current = window.setTimeout(() => {
+      animations.forEach((animation) => animation.cancel());
+      setIsSearchClosing(false);
+      setQuery("");
+      setDebouncedQuery("");
+      onOpenChange(false);
+      closeAnimationTimerRef.current = undefined;
+    }, 560);
+  }
+
+  const searchInput = (
+    <InputGroup className="examples-search-input-shell" surface="glass">
+      <InputGroupAddon>
+        <Search />
+      </InputGroupAddon>
+      <InputGroupInput
+        ref={inputRef}
+        value={query}
+        aria-label="Search examples, components and patterns"
+        floatingLabel={false}
+        placeholder="Search examples, components & patterns..."
+        onChange={(event) => setQuery(event.target.value)}
+      />
+      <InputGroupAddon className="examples-search-shortcut">
+        <Kbd className="examples-search-kbd">
+          <Command aria-hidden="true" />
+          <span>K</span>
+        </Kbd>
+      </InputGroupAddon>
+    </InputGroup>
+  );
+
+  if (!open || typeof document === "undefined") return null;
+
+  const searchState = isSearchClosing ? "closed" : "open";
+  const searchMode = normalizedQuery.length > 0 ? "search" : "browse";
+
+  return createPortal(
+    <div
+      className="examples-search-layer"
+      data-state={searchState}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="examples-search-title"
+    >
+      <button
+        ref={overlayRef}
+        className="examples-search-overlay"
+        data-state={searchState}
+        type="button"
+        aria-label="Close search"
+        onClick={closeSearch}
+      />
+      <Card
+        ref={contentRef}
+        className="examples-search-content"
+        data-mode={searchMode}
+        data-state={searchState}
+        variant="solid"
+      >
+        <h2 id="examples-search-title" className="sr-only">
+          Search examples, components and patterns
+        </h2>
+        <button className="examples-search-close" type="button" aria-label="Close search" onClick={closeSearch}>
+          <X />
+        </button>
+        <div key={searchMode} ref={panelRef} className="examples-search-panel" data-mode={searchMode}>
+          <SearchDialogContent
+            componentResults={componentResults}
+            hasQuery={normalizedQuery.length > 0}
+            onOpenExample={onOpenExample}
+            onOpenSection={onOpenSection}
+            pageResults={pageResults}
+          />
+        </div>
+      </Card>
+      <div ref={inputFrameRef} className="examples-search-input-frame" data-state={searchState}>
+        {searchInput}
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
+function SearchDialogContent({
+  componentResults,
+  hasQuery,
+  onOpenExample,
+  onOpenSection,
+  pageResults,
+}: {
+  componentResults: typeof searchComponents;
+  hasQuery: boolean;
+  onOpenExample: (id: ExampleId) => void;
+  onOpenSection: (sectionId: string, categoryId?: CategoryId | "all") => void;
+  pageResults: Example[];
+}) {
+  const hasPageResults = pageResults.length > 0;
+  const hasComponentResults = componentResults.length > 0;
+  const hasAnyResults = hasPageResults || hasComponentResults;
+
+  if (hasQuery && !hasAnyResults) {
+    return (
+      <div className="examples-search-empty">
+        <Search />
+        <strong>No results found</strong>
+        <span>Try settings, pricing, dashboard, data table or kanban.</span>
+      </div>
+    );
+  }
+
+  return (
+    <>
+          {!hasQuery ? (
+          <div className="examples-search-suggestions">
+            <span>Suggestions</span>
+            <div>
+              {searchSuggestionItems.map((item) => (
+                <Item
+                  key={item.label}
+                  asChild
+                  className="examples-search-suggestion-item"
+                  surface="bare"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (item.exampleId) onOpenExample(item.exampleId);
+                      else if (item.sectionId) onOpenSection(item.sectionId);
+                    }}
+                  >
+                    <item.icon />
+                    {item.label}
+                  </button>
+                </Item>
+              ))}
+            </div>
+          </div>
+          ) : null}
+
+          <div className="examples-search-columns">
+            {hasPageResults ? (
+            <SearchSection
+              title="Pages"
+              moreLabel="More"
+              onMore={() => onOpenSection("examples")}
+            >
+              {pageResults.map((example) => (
+                <Item
+                  className="examples-search-page"
+                  key={example.id}
+                  asChild
+                  surface="bare"
+                >
+                  <button
+                    type="button"
+                    onClick={() => onOpenExample(example.id)}
+                  >
+                    <span className="examples-search-page-thumb">
+                      <ExampleCardVisualContent example={example} />
+                    </span>
+                    <span>
+                      <strong>{example.title}</strong>
+                      <em data-category={example.category}>{example.eyebrow}</em>
+                    </span>
+                  </button>
+                </Item>
+              ))}
+            </SearchSection>
+            ) : null}
+
+            {hasComponentResults ? (
+            <SearchSection
+              title="Components"
+              moreLabel="More"
+              onMore={() => onOpenSection("components")}
+            >
+              {componentResults.map((component) => (
+                <Item
+                  className="examples-search-component"
+                  key={component.title}
+                  asChild
+                  surface="bare"
+                >
+                  <button
+                    type="button"
+                    onClick={() => onOpenSection("components")}
+                  >
+                    <span className="examples-search-component-icon">
+                      <component.icon />
+                    </span>
+                    <span>
+                      <strong>{component.title}</strong>
+                      <small>{component.description}</small>
+                    </span>
+                  </button>
+                </Item>
+              ))}
+            </SearchSection>
+            ) : null}
+          </div>
+
+          {!hasQuery ? (
+          <SearchSection
+            className="examples-search-categories"
+            title="Categories"
+            moreLabel="More"
+            onMore={() => onOpenSection("examples")}
+          >
+            {categories.map((category) => (
+              <Item
+                key={category.id}
+                asChild
+                className="examples-search-category-item"
+                surface="bare"
+              >
+                <button
+                  type="button"
+                  onClick={() => onOpenSection("examples", category.id)}
+                >
+                  <category.icon />
+                  {category.title}
+                </button>
+              </Item>
+            ))}
+          </SearchSection>
+          ) : null}
+    </>
+  );
+}
+
+function SearchSection({
+  children,
+  className,
+  moreLabel,
+  onMore,
+  title,
+}: {
+  children: ReactNode;
+  className?: string;
+  moreLabel?: string;
+  onMore?: () => void;
+  title: string;
+}) {
+  return (
+    <section className={className}>
+      <div className="examples-search-section-header">
+        <h3>{title}</h3>
+        {moreLabel && onMore ? (
+          <button type="button" onClick={onMore}>
+            {moreLabel} <ChevronRight />
+          </button>
+        ) : null}
+      </div>
+      <div className="examples-search-section-body">{children}</div>
+    </section>
   );
 }
 
@@ -853,6 +1300,8 @@ function ExampleCard({
   onOpen: (id: ExampleId) => void;
 }) {
   const openCard = () => onOpen(example.id);
+  const category = categories.find((item) => item.id === example.category);
+  const CategoryIcon = category?.icon ?? example.icon;
 
   return (
     <Card
@@ -872,11 +1321,18 @@ function ExampleCard({
       <CardContent className="example-card-content">
         <ExampleCardVisual example={example} />
         <div className="example-card-body">
-          <div className="example-card-title-row">
-            <CardTitle>{example.title}</CardTitle>
+          <div className="example-card-topline">
+            <span className="example-card-icon">
+              <CategoryIcon />
+            </span>
+            <span>{example.eyebrow}</span>
+          </div>
+          <CardTitle>{example.title}</CardTitle>
+          <CardDescription>{example.description}</CardDescription>
+          <div className="example-card-footer">
+            <Badge variant="outline">{example.tags[0]}</Badge>
             <Badge variant="outline">{example.complexity}</Badge>
           </div>
-          <CardDescription>{example.description}</CardDescription>
         </div>
       </CardContent>
     </Card>
@@ -892,145 +1348,32 @@ function ExampleCardVisual({ example }: { example: Example }) {
 }
 
 function ExampleCardVisualContent({ example }: { example: Example }) {
-  switch (example.preview) {
-    case "dashboard":
-      return (
-        <div className="visual-dashboard">
-          <div className="visual-stat-row">
-            <Card variant="outline">
-              <CardHeader>
-                <CardDescription>MRR</CardDescription>
-                <CardTitle>$42k</CardTitle>
-              </CardHeader>
-            </Card>
-            <Card variant="outline">
-              <CardHeader>
-                <CardDescription>Users</CardDescription>
-                <CardTitle>1.8k</CardTitle>
-              </CardHeader>
-            </Card>
-          </div>
-          <Progress value={68} />
-        </div>
-      );
-    case "pricing":
-      return (
-        <div className="visual-pricing">
-          {["Free", "Pro", "Scale"].map((plan, index) => (
-            <Card key={plan} variant={index === 1 ? "solid" : "outline"}>
-              <CardHeader>
-                <Badge variant={index === 1 ? "default" : "outline"}>{plan}</Badge>
-                <CardTitle>{index === 0 ? "$0" : index === 1 ? "$29" : "Custom"}</CardTitle>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      );
-    case "settings":
-      return (
-        <div className="visual-settings">
-          <Item surface="flat">
-            <ItemMedia>
-              <Bell />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>Email alerts</ItemTitle>
-            </ItemContent>
-            <ItemActions>
-              <Switch defaultChecked />
-            </ItemActions>
-          </Item>
-          <Slider defaultValue={[54]} aria-label="Card density preview" />
-        </div>
-      );
+  const thumbnail = getExampleThumbnail(example.id);
+  if (!thumbnail) return null;
+
+  return <img alt="" className="example-card-visual-image" draggable={false} src={thumbnail} />;
+}
+
+function getExampleThumbnail(exampleId: ExampleId) {
+  switch (exampleId) {
+    case "admin-console":
+    case "analytics-overview":
+    case "bento-grid":
+    case "calendar-app":
+    case "checkout-flow":
+    case "glass-command-center":
+    case "invoice-page":
+    case "kanban-board":
+    case "payment-method":
     case "portfolio":
+    case "pricing-page":
+    case "saas-dashboard":
+    case "settings-page":
     case "storefront":
-      return (
-        <div className="visual-media">
-          <Card variant="outline">
-            <CardHeader>
-              <Badge variant="outline">{example.eyebrow}</Badge>
-              <CardTitle>{example.preview === "storefront" ? "Product grid" : "Project cover"}</CardTitle>
-            </CardHeader>
-          </Card>
-          <div className="visual-media-list">
-            <Badge variant="outline">{example.tags[0]}</Badge>
-            <Badge variant="outline">{example.tags[1]}</Badge>
-          </div>
-        </div>
-      );
-    case "kanban":
-      return (
-        <div className="visual-kanban">
-          {["Todo", "Doing", "Done"].map((column, index) => (
-            <Card key={column} variant="outline">
-              <CardHeader>
-                <Badge variant={index === 1 ? "info" : "outline"}>{column}</Badge>
-              </CardHeader>
-              <CardContent>
-                <Item surface="flat">
-                  <ItemContent>
-                    <ItemTitle>{index === 1 ? "Preview cards" : "Task"}</ItemTitle>
-                  </ItemContent>
-                </Item>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      );
-    case "bento":
-      return (
-        <div className="visual-bento">
-          <div className="visual-bento-hero">
-            <Badge variant="outline">
-              <Sparkles />
-              Alkamanas
-            </Badge>
-            <strong>Build with Alkamanas UI</strong>
-          </div>
-          <div className="visual-bento-grid">
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-      );
-    case "command":
-      return (
-        <div className="visual-command">
-          <div className="visual-command-hero">
-            <Badge variant="outline">
-              <WalletCards />
-              Fintech landing
-            </Badge>
-            <strong>Finance Hero</strong>
-          </div>
-          <div className="visual-command-panel">
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-      );
+    case "terms-page":
+      return `/assets/example-thumbnails/${exampleId}.png`;
     default:
-      return (
-        <div className="visual-default">
-          <Item surface="flat">
-            <ItemMedia>
-              <example.icon />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>{example.eyebrow}</ItemTitle>
-              <ItemDescription>{example.tags.slice(0, 2).join(" + ")}</ItemDescription>
-            </ItemContent>
-          </Item>
-          <div className="visual-pill-row">
-            <Button size="sm">Action</Button>
-            <Badge variant="outline">{example.tags[0]}</Badge>
-          </div>
-        </div>
-      );
+      return undefined;
   }
 }
 
@@ -1401,6 +1744,10 @@ function ExampleDetail({ example, onBack }: { example: Example; onBack: () => vo
 
   if (example.id === "payment-method") {
     return <PaymentMethodExample example={example} onBack={onBack} />;
+  }
+
+  if (example.id === "basic-landing") {
+    return <BasicLandingExample example={example} onBack={onBack} />;
   }
 
   if (example.id === "settings-page") {
@@ -1858,6 +2205,207 @@ function BentoGridExample({ example, onBack }: { example: Example; onBack: () =>
   );
 }
 
+function GlassCommandCenterPreview() {
+  return (
+    <section className="command-showcase-preview" aria-label="Fintech glass landing preview">
+      <div className="command-navbar-frame">
+        <Navbar
+          brand={
+            <span className="command-brand">
+              <span className="command-brand-mark">
+                <WalletCards />
+              </span>
+              FlowPay
+            </span>
+          }
+          className="command-navbar"
+          actions={
+            <>
+              <NavbarCTA className="command-navbar-login" href="#command-login" label="Login" />
+              <NavbarCTA className="command-navbar-signup" href="#command-signup" label="Sign up" />
+            </>
+          }
+          defaultTheme="dark"
+          links={[
+            { href: "#command-product", label: "Home" },
+            { href: "#command-glass", label: "Features" },
+            { href: "#command-demo", label: "How it works" },
+            { href: "#command-pricing", label: "Pricing" },
+          ]}
+          mobileMenuLabel="Open navigation"
+          mobileMenuCloseLabel="Close navigation"
+          panelClassName="command-navbar-panel"
+          panelVisible={false}
+          syncThemeMeta={false}
+          theme="dark"
+        />
+      </div>
+
+      <div className="command-hero">
+        <div className="command-copy">
+          <h2>Streamline Your <span>Finance</span></h2>
+          <p>Automate payments, spending and growth from one secure finance hub.</p>
+        </div>
+
+        <div className="command-proof">
+          <div className="command-proof-copy">
+            <div className="command-proof-actions" aria-label="Finance platform actions">
+              <Button className="command-proof-glass-button" size="sm" variant="glassPrimary">
+                <WalletCards />
+                Start managing
+              </Button>
+              <Button className="command-proof-outline-button" size="sm" variant="ghost">
+                Learn more
+                <ArrowRight />
+              </Button>
+            </div>
+          </div>
+        </div>
+        <span className="fintech-floating-dot fintech-floating-dot-mastercard" aria-hidden="true">
+          <PaymentBrandLogo brand="mastercard" size="preview" />
+        </span>
+        <span className="fintech-floating-dot fintech-floating-dot-user" aria-hidden="true">
+          <ShieldCheck />
+        </span>
+        <span className="fintech-floating-dot fintech-floating-dot-check" aria-hidden="true">
+          <TrendingUp />
+        </span>
+        <span className="fintech-floating-dot fintech-floating-dot-small" aria-hidden="true">
+          <WalletCards />
+        </span>
+        <span className="fintech-floating-dot fintech-floating-dot-arrow" aria-hidden="true">
+          <CreditCard />
+        </span>
+
+        <div className="command-visual-stage">
+          <div className="fintech-orb" aria-hidden="true" />
+          <div className="fintech-orbit-line" aria-hidden="true" />
+          <div className="fintech-mobile-balance-card" aria-hidden="true">
+            <div className="fintech-mobile-balance-card-topline">
+              <div className="fintech-mobile-balance-card-meta">
+                <span>Total Balance</span>
+                <strong>$24,890</strong>
+              </div>
+              <span className="fintech-mobile-balance-card-wallet">
+                <WalletCards />
+              </span>
+            </div>
+            <div className="fintech-mobile-balance-card-trend-row">
+              <div className="fintech-mobile-balance-card-trend">
+                <TrendingUp />
+                <span>+12.4%</span>
+              </div>
+              <span>vs last 30 days</span>
+            </div>
+            <div className="fintech-mobile-balance-card-chart">
+              <svg viewBox="0 0 190 64" role="presentation" focusable="false">
+                <path d="M6 48 C18 34 26 40 38 30 S62 42 76 30 S102 32 114 22 S136 24 148 16 S172 18 184 6" />
+              </svg>
+              <span />
+            </div>
+          </div>
+          <div className="fintech-mobile-feature-row" aria-hidden="true">
+            <div className="fintech-mobile-feature-item">
+              <span><CreditCard /></span>
+              <strong>Payments</strong>
+              <small>Automated</small>
+            </div>
+            <div className="fintech-mobile-feature-item">
+              <span><BarChart3 /></span>
+              <strong>Spending</strong>
+              <small>Tracked</small>
+            </div>
+            <div className="fintech-mobile-feature-item">
+              <span><TrendingUp /></span>
+              <strong>Growth</strong>
+              <small>Accelerated</small>
+            </div>
+          </div>
+          <div className="fintech-card-layout">
+            <div className="fintech-left-stack">
+              <Card className="fintech-card-preview">
+                <CardHeader>
+                  <div className="fintech-card-preview-meta">
+                    <CardDescription>June 2026</CardDescription>
+                    <Badge variant="outline">Live</Badge>
+                  </div>
+                  <CardTitle>78.39k</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="fintech-card-preview-users">
+                    {[
+                      ["28.45k", "Active buyers"],
+                      ["19.32k", "Repeat orders"],
+                    ].map(([value, label], index) => (
+                      <div className="fintech-card-preview-user" key={label}>
+                        <span data-tone={index === 0 ? "purple" : "blue"} />
+                        <div>
+                          <strong>{value}</strong>
+                          <small>{label}</small>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="fintech-chart-lines" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="fintech-center-stack">
+              <Card className="command-console-card fintech-wallet-panel">
+                <CardHeader>
+                  <div className="fintech-console-topline">
+                    <Badge variant="outline">May</Badge>
+                    <Badge variant="outline">Last 28 days</Badge>
+                  </div>
+                  <div className="fintech-console-heading">
+                    <CardDescription>Marketing campaign</CardDescription>
+                    <CardTitle>7.95k</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <Progress value={74} />
+                  <div className="fintech-mini-bars" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="fintech-right-stack">
+              <Card className="fintech-expense-back-card fintech-expense-back-card-far" aria-hidden="true" />
+              <Card className="fintech-expense-back-card fintech-expense-back-card-near" aria-hidden="true" />
+              <Card className="command-floating-card command-floating-card-top">
+                <CardHeader>
+                  <CardDescription>Total expenses</CardDescription>
+                  <CardTitle>$6,240</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="fintech-expense-line" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function GlassCommandCenterExample({ example, onBack }: { example: Example; onBack: () => void }) {
   return (
     <ExampleShowcasePage
@@ -1873,202 +2421,7 @@ function GlassCommandCenterExample({ example, onBack }: { example: Example; onBa
       onBack={onBack}
       title="Fintech Glass Landing"
     >
-      <section className="command-showcase-preview" aria-label="Fintech glass landing preview">
-        <div className="command-navbar-frame">
-          <Navbar
-            brand={
-              <span className="command-brand">
-                <span className="command-brand-mark">
-                  <WalletCards />
-                </span>
-                FlowPay
-              </span>
-            }
-            className="command-navbar"
-            actions={
-              <>
-                <NavbarCTA className="command-navbar-login" href="#command-login" label="Login" />
-                <NavbarCTA className="command-navbar-signup" href="#command-signup" label="Sign up" />
-              </>
-            }
-            defaultTheme="dark"
-            links={[
-              { href: "#command-product", label: "Home" },
-              { href: "#command-glass", label: "Features" },
-              { href: "#command-demo", label: "How it works" },
-              { href: "#command-pricing", label: "Pricing" },
-            ]}
-            mobileMenuLabel="Open navigation"
-            mobileMenuCloseLabel="Close navigation"
-            panelClassName="command-navbar-panel"
-            panelVisible={false}
-            syncThemeMeta={false}
-            theme="dark"
-          />
-        </div>
-
-        <div className="command-hero">
-          <div className="command-copy">
-            <h2>Streamline Your <span>Finance</span></h2>
-            <p>Automate payments, spending and growth from one secure finance hub.</p>
-          </div>
-
-          <div className="command-proof">
-            <div className="command-proof-copy">
-              <div className="command-proof-actions" aria-label="Finance platform actions">
-                <Button className="command-proof-glass-button" size="sm" variant="glassPrimary">
-                  <WalletCards />
-                  Start managing
-                </Button>
-                <Button className="command-proof-outline-button" size="sm" variant="ghost">
-                  Learn more
-                  <ArrowRight />
-                </Button>
-              </div>
-            </div>
-          </div>
-          <span className="fintech-floating-dot fintech-floating-dot-mastercard" aria-hidden="true">
-            <PaymentBrandLogo brand="mastercard" size="preview" />
-          </span>
-          <span className="fintech-floating-dot fintech-floating-dot-user" aria-hidden="true">
-            <ShieldCheck />
-          </span>
-          <span className="fintech-floating-dot fintech-floating-dot-check" aria-hidden="true">
-            <TrendingUp />
-          </span>
-          <span className="fintech-floating-dot fintech-floating-dot-small" aria-hidden="true">
-            <WalletCards />
-          </span>
-          <span className="fintech-floating-dot fintech-floating-dot-arrow" aria-hidden="true">
-            <CreditCard />
-          </span>
-
-          <div className="command-visual-stage">
-            <div className="fintech-orb" aria-hidden="true" />
-            <div className="fintech-orbit-line" aria-hidden="true" />
-            <div className="fintech-mobile-balance-card" aria-hidden="true">
-              <div className="fintech-mobile-balance-card-topline">
-                <div className="fintech-mobile-balance-card-meta">
-                  <span>Total Balance</span>
-                  <strong>$24,890</strong>
-                </div>
-                <span className="fintech-mobile-balance-card-wallet">
-                  <WalletCards />
-                </span>
-              </div>
-              <div className="fintech-mobile-balance-card-trend-row">
-                <div className="fintech-mobile-balance-card-trend">
-                  <TrendingUp />
-                  <span>+12.4%</span>
-                </div>
-                <span>vs last 30 days</span>
-              </div>
-              <div className="fintech-mobile-balance-card-chart">
-                <svg viewBox="0 0 190 64" role="presentation" focusable="false">
-                  <path d="M6 48 C18 34 26 40 38 30 S62 42 76 30 S102 32 114 22 S136 24 148 16 S172 18 184 6" />
-                </svg>
-                <span />
-              </div>
-            </div>
-            <div className="fintech-mobile-feature-row" aria-hidden="true">
-              <div className="fintech-mobile-feature-item">
-                <span><CreditCard /></span>
-                <strong>Payments</strong>
-                <small>Automated</small>
-              </div>
-              <div className="fintech-mobile-feature-item">
-                <span><BarChart3 /></span>
-                <strong>Spending</strong>
-                <small>Tracked</small>
-              </div>
-              <div className="fintech-mobile-feature-item">
-                <span><TrendingUp /></span>
-                <strong>Growth</strong>
-                <small>Accelerated</small>
-              </div>
-            </div>
-            <div className="fintech-card-layout">
-              <div className="fintech-left-stack">
-                <Card className="fintech-card-preview">
-                  <CardHeader>
-                    <div className="fintech-card-preview-meta">
-                      <CardDescription>June 2026</CardDescription>
-                      <Badge variant="outline">Live</Badge>
-                    </div>
-                    <CardTitle>78.39k</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="fintech-card-preview-users">
-                      {[
-                        ["28.45k", "Active buyers"],
-                        ["19.32k", "Repeat orders"],
-                      ].map(([value, label], index) => (
-                        <div className="fintech-card-preview-user" key={label}>
-                          <span data-tone={index === 0 ? "purple" : "blue"} />
-                          <div>
-                            <strong>{value}</strong>
-                            <small>{label}</small>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="fintech-chart-lines" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="fintech-center-stack">
-                <Card className="command-console-card fintech-wallet-panel">
-                  <CardHeader>
-                    <div className="fintech-console-topline">
-                      <Badge variant="outline">May</Badge>
-                      <Badge variant="outline">Last 28 days</Badge>
-                    </div>
-                    <div className="fintech-console-heading">
-                      <CardDescription>Marketing campaign</CardDescription>
-                      <CardTitle>7.95k</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <Progress value={74} />
-                    <div className="fintech-mini-bars" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="fintech-right-stack">
-                <Card className="fintech-expense-back-card fintech-expense-back-card-far" aria-hidden="true" />
-                <Card className="fintech-expense-back-card fintech-expense-back-card-near" aria-hidden="true" />
-                <Card className="command-floating-card command-floating-card-top">
-                  <CardHeader>
-                    <CardDescription>Total expenses</CardDescription>
-                    <CardTitle>$6,240</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="fintech-expense-line" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <GlassCommandCenterPreview />
     </ExampleShowcasePage>
   );
 }
@@ -2163,7 +2516,86 @@ function MobilePreviewFrame({ children }: { children: ReactNode }) {
   );
 }
 
-function CheckoutFlowExample({ example, onBack }: { example: Example; onBack: () => void }) {
+function BasicLandingPreview({ example }: { example: Example }) {
+  return (
+    <main className="landing-page">
+      <section className="landing-hero" data-navbar-theme="dark" data-theme-color="#050505">
+        <div className="landing-shell">
+          <div className="landing-hero-grid">
+            <div className="landing-copy">
+              <Badge>{example.title}</Badge>
+              <h1>Launch operations without losing the signal.</h1>
+              <p>
+                SignalForge turns fragmented team activity into a focused operating layer for
+                launches, billing, account health and customer-facing workflows.
+              </p>
+              <div className="landing-actions">
+                <Button>
+                  Start free
+                  <ArrowRight />
+                </Button>
+                <Button variant="glass">
+                  <Play />
+                  Watch overview
+                </Button>
+              </div>
+              <div className="landing-proof">
+                <Avatar>
+                  <AvatarFallback>AK</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                  <AvatarFallback>ST</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                  <AvatarFallback>VF</AvatarFallback>
+                </Avatar>
+                <span>Used by product, ops and revenue teams shipping weekly.</span>
+              </div>
+            </div>
+
+            <Card className="landing-dashboard-card">
+              <CardHeader>
+                <div className="dashboard-card-header">
+                  <div>
+                    <CardDescription>Live workspace</CardDescription>
+                    <CardTitle>Launch control</CardTitle>
+                  </div>
+                  <Badge>
+                    <BadgeCheck />
+                    Healthy
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="pipeline">
+                  <TabsList>
+                    <TabsTrigger value="pipeline">Pipeline</TabsTrigger>
+                    <TabsTrigger value="accounts">Accounts</TabsTrigger>
+                    <TabsTrigger value="risk">Risk</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="pipeline">
+                    <div className="dashboard-preview-grid">
+                      {platformStats.map((stat) => (
+                        <div className="dashboard-stat" key={stat.label}>
+                          <stat.icon />
+                          <span>{stat.label}</span>
+                          <strong>{stat.value}</strong>
+                        </div>
+                      ))}
+                    </div>
+                    <Progress value={76} />
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function CheckoutShowcasePreview() {
   const orderItems = [
     {
       name: "UI Kit license",
@@ -2206,6 +2638,160 @@ function CheckoutFlowExample({ example, onBack }: { example: Example; onBack: ()
   ];
 
   return (
+    <div className="checkout-showcase-preview">
+      <div className="checkout-flow-main">
+        <div className="showcase-panel-header">
+          <div>
+            <Badge variant="outline">
+              <LockKeyhole />
+              Secure checkout
+            </Badge>
+            <h2>Complete your order</h2>
+            <p className="checkout-header-copy">Review your details and complete your secure purchase.</p>
+          </div>
+          <Badge variant="success">
+            <LockKeyhole />
+            SSL ready
+          </Badge>
+        </div>
+
+        <div className="checkout-step-row" aria-label="Checkout progress">
+          {[
+            ["1", "Address", "Complete", "complete"],
+            ["2", "Payment", "Complete", "complete"],
+            ["3", "Review", "Current step", "active"],
+          ].map(([number, step, status, state]) => (
+            <div className="checkout-step-item" data-state={state as string} key={step as string}>
+              <span className="checkout-step-number">{state === "complete" ? <Check /> : (number as string)}</span>
+              <div>
+                <CardTitle>{step as string}</CardTitle>
+                <CardDescription>{status as string}</CardDescription>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Card className="checkout-review-card">
+          <CardHeader>
+            <CardTitle>Review details</CardTitle>
+          </CardHeader>
+          <CardContent className="checkout-review-list">
+            <section className="checkout-review-section" aria-label="Shipping address">
+              <div className="checkout-review-section-header">
+                <div>
+                  <h3>Shipping address</h3>
+                </div>
+              </div>
+              <Item surface="flat" className="checkout-review-item">
+                <ItemMedia>
+                  <Building2 />
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle>Berkay Labs</ItemTitle>
+                  <ItemDescription>Market Street 24, Floor 8, San Francisco, CA 94103</ItemDescription>
+                </ItemContent>
+                <ItemActions>
+                  <Button size="sm" variant="secondary">
+                    Edit
+                  </Button>
+                </ItemActions>
+              </Item>
+            </section>
+
+            <section className="checkout-review-section" aria-label="Payment method">
+              <div className="checkout-review-section-header">
+                <div>
+                  <h3>Payment method</h3>
+                </div>
+              </div>
+              <Item surface="flat" className="checkout-review-item">
+                <ItemMedia className="checkout-card-brand" aria-label="Visa">
+                  <PaymentBrandLogo brand="visa" size="wallet" />
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle>Visa ending in 4242</ItemTitle>
+                  <ItemDescription>Billed to Alkamanas Labs</ItemDescription>
+                </ItemContent>
+                <ItemActions>
+                  <Button size="sm" variant="secondary">
+                    Change
+                  </Button>
+                </ItemActions>
+              </Item>
+            </section>
+          </CardContent>
+        </Card>
+      </div>
+
+      <aside className="checkout-summary">
+        <Card className="checkout-summary-card">
+          <CardHeader>
+            <CardTitle>Order summary</CardTitle>
+            <CardDescription>3 items</CardDescription>
+          </CardHeader>
+          <CardContent className="checkout-summary-stack">
+            <div className="checkout-cart-list">
+              {orderItems.map(({ icon: Icon, meta, name, price, quantity }) => (
+                <Item key={name} surface="flat" className="checkout-cart-item">
+                  <ItemMedia>
+                    <Icon />
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>{name}</ItemTitle>
+                    <ItemDescription>{meta}</ItemDescription>
+                  </ItemContent>
+                  <ItemActions>
+                    <Badge variant="outline">x{quantity}</Badge>
+                    <strong>{price}</strong>
+                  </ItemActions>
+                </Item>
+              ))}
+            </div>
+            <Separator />
+            <div className="checkout-total-list">
+              {[
+                ["Subtotal", "$240"],
+                ["Shipping", "Free"],
+                ["Tax", "$0"],
+              ].map(([label, value]) => (
+                <div className="checkout-summary-row" key={label}>
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+              <Separator />
+              <div className="checkout-summary-row total">
+                <span>Total</span>
+                <strong>$240</strong>
+              </div>
+            </div>
+            <Button>
+              Complete checkout
+              <ArrowRight />
+            </Button>
+          </CardContent>
+        </Card>
+
+        <div className="checkout-trust-list">
+          {trustItems.map(({ icon: Icon, title, description }) => (
+            <Item key={title} surface="flat" className="checkout-trust-item">
+              <ItemMedia className="settings-nav-icon">
+                <Icon />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>{title}</ItemTitle>
+                <ItemDescription>{description}</ItemDescription>
+              </ItemContent>
+            </Item>
+          ))}
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+function CheckoutFlowExample({ example, onBack }: { example: Example; onBack: () => void }) {
+  return (
     <ExampleShowcasePage
       access="Free"
       description="A focused checkout flow with contact fields, shipping method, payment controls, order summary and trust signals."
@@ -2220,157 +2806,12 @@ function CheckoutFlowExample({ example, onBack }: { example: Example; onBack: ()
       onBack={onBack}
       title="Checkout Flow"
     >
-      <div className="checkout-showcase-preview">
-        <div className="checkout-flow-main">
-          <div className="showcase-panel-header">
-            <div>
-              <Badge variant="outline">Secure checkout</Badge>
-              <h2>Complete your order</h2>
-            </div>
-            <Badge variant="success">SSL ready</Badge>
-          </div>
-
-          <div className="checkout-step-row" aria-label="Checkout progress">
-            {[
-              ["1", "Address", "Complete", "complete"],
-              ["2", "Payment Method", "Selected", "complete"],
-              ["3", "Review", "Current step", "active"],
-            ].map(([number, step, status, state]) => (
-              <Card data-state={state as string} key={step as string} variant="outline">
-                <CardContent className="checkout-step-card">
-                  <span className="checkout-step-number">{number as string}</span>
-                  <div>
-                    <CardTitle>{step as string}</CardTitle>
-                    <CardDescription>{status as string}</CardDescription>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <Card className="checkout-review-card">
-            <CardHeader>
-              <CardTitle>Review</CardTitle>
-            </CardHeader>
-            <CardContent className="checkout-review-list">
-              <section className="checkout-review-section" aria-label="Shipping address">
-                <div className="checkout-review-section-header">
-                  <div>
-                    <h3>Shipping address</h3>
-                  </div>
-                </div>
-                <Item surface="flat" className="checkout-review-item">
-                  <ItemMedia>
-                    <Building2 />
-                  </ItemMedia>
-                  <ItemContent>
-                    <ItemTitle>Berkay Labs</ItemTitle>
-                    <ItemDescription>
-                      Market Street 24, Floor 8, San Francisco, CA 94103
-                    </ItemDescription>
-                  </ItemContent>
-                  <ItemActions>
-                    <Button size="sm" variant="secondary">
-                      Edit
-                    </Button>
-                  </ItemActions>
-                </Item>
-              </section>
-
-              <section className="checkout-review-section" aria-label="Payment method">
-                <div className="checkout-review-section-header">
-                  <div>
-                    <h3>Payment method</h3>
-                  </div>
-                </div>
-                <Item surface="flat" className="checkout-review-item">
-                  <ItemMedia className="checkout-card-brand" aria-label="Visa">
-                    Visa
-                  </ItemMedia>
-                  <ItemContent>
-                    <ItemTitle>Visa ending in 4242</ItemTitle>
-                    <ItemDescription>Billed to Alkamanas Labs</ItemDescription>
-                  </ItemContent>
-                  <ItemActions>
-                    <Button size="sm" variant="secondary">
-                      Change
-                    </Button>
-                  </ItemActions>
-                </Item>
-              </section>
-            </CardContent>
-          </Card>
-        </div>
-
-        <aside className="checkout-summary">
-          <Card>
-            <CardHeader>
-              <CardDescription>Cart</CardDescription>
-              <CardTitle>3 items</CardTitle>
-            </CardHeader>
-            <CardContent className="checkout-summary-stack">
-              <div className="checkout-cart-list">
-                {orderItems.map(({ icon: Icon, meta, name, price, quantity }) => (
-                  <Item key={name} surface="flat" className="checkout-cart-item">
-                    <ItemMedia>
-                      <Icon />
-                    </ItemMedia>
-                    <ItemContent>
-                      <ItemTitle>{name}</ItemTitle>
-                      <ItemDescription>{meta}</ItemDescription>
-                    </ItemContent>
-                    <ItemActions>
-                      <Badge variant="outline">x{quantity}</Badge>
-                      <strong>{price}</strong>
-                    </ItemActions>
-                  </Item>
-                ))}
-              </div>
-              <Separator />
-              <div className="checkout-total-list">
-                {[
-                  ["Subtotal", "$240"],
-                  ["Shipping", "Free"],
-                  ["Tax", "$0"],
-                ].map(([label, value]) => (
-                  <div className="checkout-summary-row" key={label}>
-                    <span>{label}</span>
-                    <strong>{value}</strong>
-                  </div>
-                ))}
-                <Separator />
-                <div className="checkout-summary-row total">
-                  <span>Total</span>
-                  <strong>$240</strong>
-                </div>
-              </div>
-              <Button>
-                Checkout
-                <ArrowRight />
-              </Button>
-            </CardContent>
-          </Card>
-
-          <div className="checkout-trust-list">
-            {trustItems.map(({ icon: Icon, title, description }) => (
-              <Item key={title} surface="flat" className="checkout-trust-item">
-                <ItemMedia>
-                  <Icon />
-                </ItemMedia>
-                <ItemContent>
-                  <ItemTitle>{title}</ItemTitle>
-                  <ItemDescription>{description}</ItemDescription>
-                </ItemContent>
-              </Item>
-            ))}
-          </div>
-        </aside>
-      </div>
+      <CheckoutShowcasePreview />
     </ExampleShowcasePage>
   );
 }
 
-function PaymentMethodExample({ example, onBack }: { example: Example; onBack: () => void }) {
+function PaymentMethodShowcasePreview() {
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
@@ -2422,6 +2863,192 @@ function PaymentMethodExample({ example, onBack }: { example: Example; onBack: (
   ];
 
   return (
+    <div className="checkout-showcase-preview payment-method-showcase">
+      <div className="checkout-flow-main">
+        <div className="showcase-panel-header payment-method-header">
+          <div>
+            <Badge variant="outline">Team billing</Badge>
+            <h2>Add Payment Method</h2>
+          </div>
+          <Badge variant="success">PCI scoped</Badge>
+        </div>
+
+        <Card className="checkout-review-card payment-method-card">
+          <CardHeader>
+            <CardTitle>Card Details</CardTitle>
+          </CardHeader>
+          <CardContent className="checkout-review-list">
+            <PaymentCardPreview
+              cardHolder={cardHolder}
+              cardNumber={cardNumber}
+              cvc={cvc}
+              expiry={expiry}
+              flipped={isCvcFocused}
+            />
+
+            <section className="checkout-review-section payment-card-fields" aria-label="Card details">
+              <div className="payment-form-grid">
+                <InputGroup className="payment-form-field payment-form-field-wide">
+                  <InputGroupAddon>
+                    <UsersRound />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    maxLength={48}
+                    placeholder="Name on card"
+                    value={cardHolder}
+                    onBeforeInput={handleCardHolderBeforeInput}
+                    onChange={(event) => setCardHolder(formatCardHolderInput(event.target.value))}
+                    onPaste={(event) => handleCardHolderPaste(event, setCardHolder)}
+                  />
+                </InputGroup>
+                <InputGroup className="payment-form-field payment-form-field-wide">
+                  <InputGroupAddon>
+                    <CreditCard />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    inputMode="numeric"
+                    maxLength={16}
+                    pattern="[0-9]*"
+                    placeholder="Card number"
+                    type="text"
+                    value={cardNumber}
+                    onBeforeInput={handleCardNumberBeforeInput}
+                    onChange={(event) => setCardNumber(formatCardNumberInput(event.target.value))}
+                    onPaste={(event) => handleCardNumberPaste(event, setCardNumber)}
+                  />
+                </InputGroup>
+                <Input
+                  inputMode="numeric"
+                  maxLength={7}
+                  placeholder="Expiration"
+                  value={expiry}
+                  variant="pill"
+                  onChange={(event) => setExpiry(formatExpiryInput(event.target.value))}
+                />
+                <Input
+                  inputMode="numeric"
+                  maxLength={cvcMaxLength}
+                  placeholder="CVC"
+                  value={cvc}
+                  variant="pill"
+                  onBlur={() => setIsCvcFocused(false)}
+                  onChange={(event) => setCvc(formatCvcInput(event.target.value, cvcMaxLength))}
+                  onFocus={() => setIsCvcFocused(true)}
+                />
+              </div>
+            </section>
+
+            <section className="checkout-review-section payment-billing-section" aria-label="Billing address">
+              <div className="checkout-review-section-header">
+                <div>
+                  <h3>Billing Address</h3>
+                </div>
+              </div>
+              <div className="payment-form-grid">
+                <Select>
+                  <SelectTrigger aria-label="Country">
+                    <SelectValue placeholder="Country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="us">United States</SelectItem>
+                    <SelectItem value="tr">Turkey</SelectItem>
+                    <SelectItem value="gb">United Kingdom</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Input placeholder="City" variant="pill" />
+                <Input
+                  inputMode="numeric"
+                  maxLength={10}
+                  pattern="[0-9]*"
+                  placeholder="ZIP code"
+                  variant="pill"
+                  onBeforeInput={handleZipCodeBeforeInput}
+                  onChange={(event) => {
+                    event.currentTarget.value = formatZipCodeInput(event.currentTarget.value);
+                  }}
+                  onPaste={handleZipCodePaste}
+                />
+                <Input placeholder="Billing address" variant="pill" wrapperClassName="payment-form-field-wide" />
+              </div>
+              <div className="payment-billing-actions">
+                <label className="payment-default-row" htmlFor="payment-default-method">
+                  <Checkbox id="payment-default-method" defaultChecked />
+                  <span>
+                    <strong>Set as default payment method</strong>
+                    <span>Use this card for future workspace invoices.</span>
+                  </span>
+                </label>
+                <Button className="payment-save-button">
+                  Save Card
+                  <ArrowRight />
+                </Button>
+              </div>
+            </section>
+          </CardContent>
+        </Card>
+      </div>
+
+      <aside className="checkout-summary">
+        <Card>
+          <CardHeader>
+            <CardDescription>Wallet</CardDescription>
+            <CardTitle>Saved Methods</CardTitle>
+          </CardHeader>
+          <CardContent className="checkout-summary-stack">
+            <div className="checkout-cart-list">
+              {savedMethods.map(({ brand, meta, name, state }) => (
+                <Item key={name} surface="flat" className="checkout-cart-item" data-default={state === "Default" ? "true" : undefined}>
+                  <ItemMedia className="payment-wallet-logo-media">
+                    <PaymentBrandLogo brand={brand} size="wallet" />
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>{name}</ItemTitle>
+                    <ItemDescription>{meta}</ItemDescription>
+                  </ItemContent>
+                  {state === "Default" ? (
+                    <ItemActions className="payment-wallet-default-action">
+                      <Badge className="payment-wallet-default-badge" variant="outline">
+                        {state}
+                      </Badge>
+                    </ItemActions>
+                  ) : null}
+                </Item>
+              ))}
+            </div>
+            <Separator />
+            <Item asChild surface="glass" className="payment-method-option">
+              <button type="button" aria-label="Add new payment method">
+                <ItemContent>
+                  <ItemTitle>New Payment Method</ItemTitle>
+                </ItemContent>
+                <ItemActions className="payment-add-card-action">
+                  <Plus />
+                </ItemActions>
+              </button>
+            </Item>
+          </CardContent>
+        </Card>
+
+        <div className="checkout-trust-list">
+          {trustItems.map(({ icon: Icon, title, description }) => (
+            <Item key={title} surface="flat" className="checkout-trust-item">
+              <ItemMedia>
+                <Icon />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>{title}</ItemTitle>
+                <ItemDescription>{description}</ItemDescription>
+              </ItemContent>
+            </Item>
+          ))}
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+function PaymentMethodExample({ example, onBack }: { example: Example; onBack: () => void }) {
+  return (
     <ExampleShowcasePage
       access="Free"
       description="A focused payment method flow with animated card previews, card entry fields, billing controls, saved methods and trust signals."
@@ -2436,187 +3063,7 @@ function PaymentMethodExample({ example, onBack }: { example: Example; onBack: (
       onBack={onBack}
       title="Add Payment Method"
     >
-      <div className="checkout-showcase-preview payment-method-showcase">
-        <div className="checkout-flow-main">
-          <div className="showcase-panel-header payment-method-header">
-            <div>
-              <Badge variant="outline">Team billing</Badge>
-              <h2>Add Payment Method</h2>
-            </div>
-            <Badge variant="success">PCI scoped</Badge>
-          </div>
-
-          <Card className="checkout-review-card payment-method-card">
-            <CardHeader>
-              <CardTitle>Card Details</CardTitle>
-            </CardHeader>
-            <CardContent className="checkout-review-list">
-              <PaymentCardPreview
-                cardHolder={cardHolder}
-                cardNumber={cardNumber}
-                cvc={cvc}
-                expiry={expiry}
-                flipped={isCvcFocused}
-              />
-
-              <section className="checkout-review-section payment-card-fields" aria-label="Card details">
-                <div className="payment-form-grid">
-                  <InputGroup className="payment-form-field payment-form-field-wide">
-                    <InputGroupAddon>
-                      <UsersRound />
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      maxLength={48}
-                      placeholder="Name on card"
-                      value={cardHolder}
-                      onBeforeInput={handleCardHolderBeforeInput}
-                      onChange={(event) => setCardHolder(formatCardHolderInput(event.target.value))}
-                      onPaste={(event) => handleCardHolderPaste(event, setCardHolder)}
-                    />
-                  </InputGroup>
-                  <InputGroup className="payment-form-field payment-form-field-wide">
-                    <InputGroupAddon>
-                      <CreditCard />
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      inputMode="numeric"
-                      maxLength={16}
-                      pattern="[0-9]*"
-                      placeholder="Card number"
-                      type="text"
-                      value={cardNumber}
-                      onBeforeInput={handleCardNumberBeforeInput}
-                      onChange={(event) => setCardNumber(formatCardNumberInput(event.target.value))}
-                      onPaste={(event) => handleCardNumberPaste(event, setCardNumber)}
-                    />
-                  </InputGroup>
-                  <Input
-                    inputMode="numeric"
-                    maxLength={7}
-                    placeholder="Expiration"
-                    value={expiry}
-                    variant="pill"
-                    onChange={(event) => setExpiry(formatExpiryInput(event.target.value))}
-                  />
-                  <Input
-                    inputMode="numeric"
-                    maxLength={cvcMaxLength}
-                    placeholder="CVC"
-                    value={cvc}
-                    variant="pill"
-                    onBlur={() => setIsCvcFocused(false)}
-                    onChange={(event) => setCvc(formatCvcInput(event.target.value, cvcMaxLength))}
-                    onFocus={() => setIsCvcFocused(true)}
-                  />
-                </div>
-              </section>
-
-              <section className="checkout-review-section payment-billing-section" aria-label="Billing address">
-                <div className="checkout-review-section-header">
-                  <div>
-                    <h3>Billing Address</h3>
-                  </div>
-                </div>
-                <div className="payment-form-grid">
-                  <Select>
-                    <SelectTrigger aria-label="Country">
-                      <SelectValue placeholder="Country" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="us">United States</SelectItem>
-                      <SelectItem value="tr">Turkey</SelectItem>
-                      <SelectItem value="gb">United Kingdom</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Input placeholder="City" variant="pill" />
-                  <Input
-                    inputMode="numeric"
-                    maxLength={10}
-                    pattern="[0-9]*"
-                    placeholder="ZIP code"
-                    variant="pill"
-                    onBeforeInput={handleZipCodeBeforeInput}
-                    onChange={(event) => {
-                      event.currentTarget.value = formatZipCodeInput(event.currentTarget.value);
-                    }}
-                    onPaste={handleZipCodePaste}
-                  />
-                  <Input placeholder="Billing address" variant="pill" wrapperClassName="payment-form-field-wide" />
-                </div>
-                <div className="payment-billing-actions">
-                  <label className="payment-default-row" htmlFor="payment-default-method">
-                    <Checkbox id="payment-default-method" defaultChecked />
-                    <span>
-                      <strong>Set as default payment method</strong>
-                      <span>Use this card for future workspace invoices.</span>
-                    </span>
-                  </label>
-                  <Button className="payment-save-button">
-                    Save Card
-                    <ArrowRight />
-                  </Button>
-                </div>
-              </section>
-            </CardContent>
-          </Card>
-        </div>
-
-        <aside className="checkout-summary">
-          <Card>
-            <CardHeader>
-              <CardDescription>Wallet</CardDescription>
-              <CardTitle>Saved Methods</CardTitle>
-            </CardHeader>
-            <CardContent className="checkout-summary-stack">
-              <div className="checkout-cart-list">
-                {savedMethods.map(({ brand, meta, name, state }) => (
-                  <Item key={name} surface="flat" className="checkout-cart-item" data-default={state === "Default" ? "true" : undefined}>
-                    <ItemMedia className="payment-wallet-logo-media">
-                      <PaymentBrandLogo brand={brand} size="wallet" />
-                    </ItemMedia>
-                    <ItemContent>
-                      <ItemTitle>{name}</ItemTitle>
-                      <ItemDescription>{meta}</ItemDescription>
-                    </ItemContent>
-                    {state === "Default" ? (
-                      <ItemActions className="payment-wallet-default-action">
-                        <Badge className="payment-wallet-default-badge" variant="outline">
-                          {state}
-                        </Badge>
-                      </ItemActions>
-                    ) : null}
-                  </Item>
-                ))}
-              </div>
-              <Separator />
-              <Item asChild surface="glass" className="payment-method-option">
-                <button type="button" aria-label="Add new payment method">
-                  <ItemContent>
-                    <ItemTitle>New Payment Method</ItemTitle>
-                  </ItemContent>
-                  <ItemActions className="payment-add-card-action">
-                    <Plus />
-                  </ItemActions>
-                </button>
-              </Item>
-            </CardContent>
-          </Card>
-
-          <div className="checkout-trust-list">
-            {trustItems.map(({ icon: Icon, title, description }) => (
-              <Item key={title} surface="flat" className="checkout-trust-item">
-                <ItemMedia>
-                  <Icon />
-                </ItemMedia>
-                <ItemContent>
-                  <ItemTitle>{title}</ItemTitle>
-                  <ItemDescription>{description}</ItemDescription>
-                </ItemContent>
-              </Item>
-            ))}
-          </div>
-        </aside>
-      </div>
+      <PaymentMethodShowcasePreview />
     </ExampleShowcasePage>
   );
 }
@@ -2976,11 +3423,57 @@ function _PricingExample({ example, onBack }: { example: Example; onBack: () => 
 
 function SettingsExample({ example, onBack }: { example: Example; onBack: () => void }) {
   const [settingsTab, setSettingsTab] = useState("profile");
+  const [appearanceTheme, setAppearanceTheme] = useState("dark");
+  const [appearanceAccent, setAppearanceAccent] = useState("gold");
+  const [appearanceDensity, setAppearanceDensity] = useState("comfortable");
   const settingsItems = [
-    { icon: Settings, label: "Profile", value: "profile" },
+    { icon: UsersRound, label: "Profile", value: "profile" },
+    { icon: Settings, label: "Account", value: "account" },
     { icon: Bell, label: "Notifications", value: "notifications" },
+    { icon: ShieldCheck, label: "Security", value: "security" },
+    { icon: CreditCard, label: "Billing", value: "billing" },
     { icon: Palette, label: "Appearance", value: "appearance" },
+    { icon: Blocks, label: "Integrations", value: "integrations" },
+    { icon: UsersRound, label: "Team", value: "team" },
   ];
+  const notifications = [
+    ["Email notifications", "Receive updates via email", true],
+    ["Push notifications", "Receive push notifications", true],
+    ["Weekly summary", "Weekly digest of your activity", false],
+    ["Product updates", "News and announcements", true],
+  ] as const;
+  const integrations = [
+    ["Slack", "Connected to #flowsuite", "Connected"],
+    ["Google Drive", "Connected as alex.kim@flowsuite.com", "Connected"],
+    ["GitHub", "Connected as @alexkim", "Connected"],
+    ["Stripe", "Connected for billing", "Connected"],
+  ] as const;
+  const sessions = [
+    ["macOS - Chrome", "San Francisco, CA - US", "Current session"],
+    ["iOS - Mobile App", "San Francisco, CA - US", "2h ago"],
+    ["Windows - Edge", "New York, NY - US", "1d ago"],
+  ] as const;
+  const appearanceThemes = [
+    { icon: Monitor, label: "Dark", value: "dark" },
+    { icon: Monitor, label: "System", value: "system" },
+    { icon: Sparkles, label: "Light", value: "light" },
+  ] as const;
+  const appearanceAccents = ["gold", "violet", "blue", "cyan", "green", "pink", "coral"] as const;
+  const appearanceDensities = [
+    {
+      description: "More padding and room to breathe.",
+      icon: BadgeCheck,
+      label: "Comfortable",
+      value: "comfortable",
+    },
+    {
+      description: "More content in less space.",
+      icon: LayoutDashboard,
+      label: "Compact",
+      value: "compact",
+    },
+  ] as const;
+  const activeSettingsItem = settingsItems.find((item) => item.value === settingsTab) ?? settingsItems[0];
 
   return (
     <ExampleShowcasePage
@@ -2999,6 +3492,7 @@ function SettingsExample({ example, onBack }: { example: Example; onBack: () => 
     >
       <div className="settings-showcase-preview">
         <aside className="settings-nav">
+          <span className="settings-nav-label">Settings</span>
           {settingsItems.map(({ icon: Icon, label, value }) => (
             <button
               className="settings-nav-button"
@@ -3012,107 +3506,470 @@ function SettingsExample({ example, onBack }: { example: Example; onBack: () => 
               </ItemMedia>
               <ItemContent>
                 <ItemTitle>{label}</ItemTitle>
-                <ItemDescription>
-                  {value === "profile"
-                    ? "Workspace and plan"
-                    : value === "notifications"
-                      ? "Delivery rules"
-                      : "Interface preferences"}
-                </ItemDescription>
               </ItemContent>
             </button>
           ))}
+          <span className="settings-nav-spacer" aria-hidden="true" />
         </aside>
 
         <div className="settings-panels">
-          <Tabs value={settingsTab} onValueChange={setSettingsTab}>
-            <TabsList>
-              <TabsTrigger value="profile">Profile</TabsTrigger>
-              <TabsTrigger value="notifications">Notifications</TabsTrigger>
-              <TabsTrigger value="appearance">Appearance</TabsTrigger>
-            </TabsList>
-            <TabsContent value="profile">
-              <Card>
+          <header className="settings-showcase-header">
+            <div>
+              <h2>{activeSettingsItem.label}</h2>
+              <p>
+                {settingsTab === "appearance"
+                  ? "Customize how FlowSuite looks and feels for you."
+                  : "Manage your account, preferences and workspace."}
+              </p>
+            </div>
+            <div className="settings-showcase-actions">
+              <Button size="sm" variant="secondary">Reset</Button>
+              <Button size="sm">
+                Save changes
+                <Sparkles />
+              </Button>
+            </div>
+          </header>
+
+          <div className="settings-section-grid">
+            {settingsTab === "profile" ? (
+              <Card className="settings-section-card settings-profile-card">
                 <CardHeader>
-                  <CardDescription>Account</CardDescription>
-                  <CardTitle>Workspace profile</CardTitle>
+                  <div>
+                    <CardTitle>Profile information</CardTitle>
+                    <CardDescription>Update your personal details and how others see you.</CardDescription>
+                  </div>
+                  <div className="settings-profile-progress">
+                    <strong>82% complete</strong>
+                    <Progress value={82} />
+                    <span>Nice! You're almost there.</span>
+                  </div>
                 </CardHeader>
-                <CardContent className="settings-form-grid">
-                  <InputGroup>
-                    <InputGroupAddon>
+                <CardContent>
+                  <div className="settings-profile-media">
+                    <Avatar className="settings-profile-avatar">
+                      <AvatarFallback>AK</AvatarFallback>
+                    </Avatar>
+                    <Button size="sm" variant="secondary">
                       <UsersRound />
-                    </InputGroupAddon>
-                    <InputGroupInput placeholder="Workspace name" defaultValue="Alkamanas Labs" />
-                  </InputGroup>
-                  <Select defaultValue="pro">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Plan" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="starter">Starter</SelectItem>
-                      <SelectItem value="pro">Pro</SelectItem>
-                      <SelectItem value="scale">Scale</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button>
-                    Save changes
-                    <Check />
-                  </Button>
+                      Change avatar
+                    </Button>
+                    <span className="settings-upload-note">JPG, PNG or GIF. Max 2MB.</span>
+                  </div>
+                  <div className="settings-field-list">
+                    <label>
+                      <span>Full name</span>
+                      <Input className="settings-profile-input" defaultValue="Alex Kim" />
+                    </label>
+                    <label>
+                      <span>Email address</span>
+                      <Input className="settings-profile-input" defaultValue="alex.kim@flowsuite.com" />
+                    </label>
+                    <label className="settings-select-field">
+                      <span>Role</span>
+                      <span className="settings-select-wrap">
+                        <Select defaultValue="admin">
+                          <SelectTrigger className="settings-profile-select">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="admin">Administrator</SelectItem>
+                            <SelectItem value="member">Member</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </span>
+                    </label>
+                    <label>
+                      <span>Phone number</span>
+                      <Input className="settings-profile-input" defaultValue="+1 (415) 555-0199" />
+                    </label>
+                    <label>
+                      <span>Company</span>
+                      <Input className="settings-profile-input" defaultValue="FlowSuite Inc." />
+                    </label>
+                    <label className="settings-select-field">
+                      <span>Time zone</span>
+                      <span className="settings-select-wrap">
+                        <Select defaultValue="pacific">
+                          <SelectTrigger className="settings-profile-select">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pacific">(GMT-7) Pacific Time (US & Canada)</SelectItem>
+                            <SelectItem value="eastern">(GMT-4) Eastern Time (US & Canada)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </span>
+                    </label>
+                    <label className="settings-bio-field">
+                      <span>Bio</span>
+                      <Textarea
+                        className="settings-profile-textarea"
+                        defaultValue="Building secure, reliable and delightful experiences for modern teams."
+                      />
+                    </label>
+                  </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-            <TabsContent value="notifications">
-              <Card>
+            ) : null}
+
+            {settingsTab === "notifications" ? (
+            <Card className="settings-section-card">
+              <CardHeader>
+                <span className="settings-section-icon">
+                  <Bell />
+                </span>
+                <CardTitle>Notifications</CardTitle>
+              </CardHeader>
+              <CardContent className="settings-list">
+                {notifications.map(([title, description, checked]) => (
+                  <Item key={title} surface="flat">
+                    <ItemMedia>
+                      <Mail />
+                    </ItemMedia>
+                    <ItemContent>
+                      <ItemTitle>{title}</ItemTitle>
+                      <ItemDescription>{description}</ItemDescription>
+                    </ItemContent>
+                    <ItemActions>
+                      <Switch defaultChecked={checked} />
+                    </ItemActions>
+                  </Item>
+                ))}
+                <button className="settings-card-link" type="button">
+                  Manage notification preferences
+                  <ChevronRight />
+                </button>
+              </CardContent>
+            </Card>
+            ) : null}
+
+            {settingsTab === "appearance" ? (
+            <Card
+              className="settings-section-card settings-appearance-card"
+              data-accent={appearanceAccent}
+              data-density={appearanceDensity}
+              data-theme-setting={appearanceTheme}
+            >
+              <CardContent className="settings-appearance-panel">
+                <div className="settings-preference-row">
+                  <div className="settings-preference-copy">
+                    <strong>Theme</strong>
+                    <span>Choose how the application looks.</span>
+                  </div>
+                  <Tabs
+                    className="settings-theme-tabs"
+                    onValueChange={setAppearanceTheme}
+                    value={appearanceTheme}
+                  >
+                    <TabsList surface="flat">
+                    {appearanceThemes.map(({ icon: Icon, label, value }) => (
+                      <TabsTrigger
+                        key={value}
+                        value={value}
+                      >
+                        <Icon />
+                        {label}
+                      </TabsTrigger>
+                    ))}
+                    </TabsList>
+                  </Tabs>
+                </div>
+
+                <div className="settings-preference-row">
+                  <div className="settings-preference-copy">
+                    <strong>Accent color</strong>
+                    <span>Pick an accent color to highlight key elements.</span>
+                  </div>
+                  <div className="settings-swatch-row">
+                    {appearanceAccents.map((tone) => (
+                      <button
+                        aria-label={`Use ${tone} accent`}
+                        className="settings-swatch"
+                        data-active={appearanceAccent === tone ? "true" : undefined}
+                        data-tone={tone}
+                        key={tone}
+                        onClick={() => setAppearanceAccent(tone)}
+                        type="button"
+                      >
+                        {appearanceAccent === tone ? <Check /> : null}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="settings-preference-row">
+                  <div className="settings-preference-copy">
+                    <strong>Density</strong>
+                    <span>Adjust the spacing and information density.</span>
+                  </div>
+                  <div className="settings-density-row">
+                    {appearanceDensities.map(({ description, icon: Icon, label, value }) => (
+                      <Item
+                        asChild
+                        data-active={appearanceDensity === value ? "true" : undefined}
+                        key={value}
+                        surface="flat"
+                      >
+                        <button onClick={() => setAppearanceDensity(value)} type="button">
+                          <ItemMedia>
+                            <Icon />
+                          </ItemMedia>
+                          <ItemContent>
+                            <ItemTitle>{label}</ItemTitle>
+                            <ItemDescription>{description}</ItemDescription>
+                          </ItemContent>
+                        </button>
+                      </Item>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="settings-preference-row settings-preview-row">
+                  <div className="settings-preference-copy">
+                    <strong>Preview</strong>
+                    <span>See how your preferences look in action.</span>
+                  </div>
+                  <div className="settings-preview-chart" aria-hidden="true">
+                    <div className="settings-preview-sidebar">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <div className="settings-preview-main">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <div className="settings-preview-panel">
+                      <span />
+                      <span />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            ) : null}
+
+            {settingsTab === "security" ? (
+            <Card className="settings-section-card">
+              <CardHeader>
+                <span className="settings-section-icon">
+                  <ShieldCheck />
+                </span>
+                <CardTitle>Security</CardTitle>
+              </CardHeader>
+              <CardContent className="settings-list security">
+                <Item surface="flat">
+                  <ItemMedia>
+                    <LockKeyhole />
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>Password</ItemTitle>
+                    <ItemDescription>Last changed 45 days ago</ItemDescription>
+                  </ItemContent>
+                  <ItemActions>
+                    <Button size="sm" variant="secondary">Change</Button>
+                  </ItemActions>
+                </Item>
+                <Item surface="flat">
+                  <ItemMedia>
+                    <ShieldCheck />
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>Two-factor authentication</ItemTitle>
+                    <ItemDescription>Enabled</ItemDescription>
+                  </ItemContent>
+                  <ItemActions>
+                    <Button size="sm" variant="secondary">Manage</Button>
+                  </ItemActions>
+                </Item>
+                {sessions.map(([title, description, status]) => (
+                  <Item key={title} surface="flat">
+                    <ItemMedia>
+                      <Monitor />
+                    </ItemMedia>
+                    <ItemContent>
+                      <ItemTitle>{title}</ItemTitle>
+                      <ItemDescription>{description}</ItemDescription>
+                    </ItemContent>
+                    <ItemActions>
+                      <Badge variant="outline">{status}</Badge>
+                    </ItemActions>
+                  </Item>
+                ))}
+                <button className="settings-card-link" type="button">
+                  Manage security settings
+                  <ChevronRight />
+                </button>
+              </CardContent>
+            </Card>
+            ) : null}
+
+            {settingsTab === "billing" ? (
+            <Card className="settings-section-card settings-billing-card">
+              <CardHeader>
+                <span className="settings-section-icon">
+                  <CreditCard />
+                </span>
+                <CardTitle>Billing</CardTitle>
+              </CardHeader>
+              <CardContent className="settings-billing-panel">
+                <div className="settings-plan-row">
+                  <div>
+                    <span>Current plan</span>
+                    <strong>Pro Plan</strong>
+                    <Badge variant="outline">Most popular</Badge>
+                  </div>
+                  <div>
+                    <span>Next renewal</span>
+                    <strong>Jun 12, 2025</strong>
+                    <small>in 24 days</small>
+                  </div>
+                </div>
+                <div className="settings-usage-row">
+                  <span>Usage this month</span>
+                  <strong>78% of 100GB</strong>
+                  <Progress value={78} />
+                </div>
+                <div className="settings-payment-section">
+                  <span>Payment method</span>
+                  <Item surface="flat">
+                    <ItemMedia className="settings-payment-logo">
+                      <PaymentBrandLogo brand="visa" size="wallet" />
+                    </ItemMedia>
+                    <ItemContent>
+                      <ItemTitle>Visa ending in 4242</ItemTitle>
+                      <ItemDescription>Expires 04/28</ItemDescription>
+                    </ItemContent>
+                    <ItemActions>
+                      <Button size="sm" variant="secondary">Change</Button>
+                    </ItemActions>
+                  </Item>
+                </div>
+                <div className="settings-billing-history-section">
+                  <span>Billing history</span>
+                <button className="settings-card-link" type="button">
+                  View billing history
+                  <ChevronRight />
+                </button>
+                </div>
+                <div className="settings-billing-note">
+                  <Info />
+                  <span>Invoices are generated automatically and sent to your billing email.</span>
+                </div>
+              </CardContent>
+            </Card>
+            ) : null}
+
+            {settingsTab === "integrations" ? (
+            <Card className="settings-section-card">
+              <CardHeader>
+                <span className="settings-section-icon">
+                  <Blocks />
+                </span>
+                <CardTitle>Integrations</CardTitle>
+              </CardHeader>
+              <CardContent className="settings-list">
+                {integrations.map(([title, description, status]) => (
+                  <Item key={title} surface="flat">
+                    <ItemMedia>
+                      <Globe2 />
+                    </ItemMedia>
+                    <ItemContent>
+                      <ItemTitle>{title}</ItemTitle>
+                      <ItemDescription>{description}</ItemDescription>
+                    </ItemContent>
+                    <ItemActions>
+                      <Badge variant="outline">{status}</Badge>
+                      <Button size="sm" variant="secondary">Manage</Button>
+                    </ItemActions>
+                  </Item>
+                ))}
+                <button className="settings-card-link" type="button">
+                  Browse all integrations
+                  <ChevronRight />
+                </button>
+              </CardContent>
+            </Card>
+            ) : null}
+
+            {settingsTab === "account" ? (
+              <Card className="settings-section-card">
                 <CardHeader>
-                  <CardDescription>Notifications</CardDescription>
-                  <CardTitle>Delivery rules</CardTitle>
+                  <span className="settings-section-icon">
+                    <Settings />
+                  </span>
+                  <CardTitle>Account</CardTitle>
                 </CardHeader>
-                <CardContent className="mini-list">
-                  {["Product updates", "Security alerts", "Weekly summary"].map((item, index) => (
-                    <Item key={item} surface="glass">
+                <CardContent className="settings-field-list">
+                  <label>
+                    <span>Workspace</span>
+                    <Input defaultValue="FlowSuite" />
+                  </label>
+                  <label>
+                    <span>Region</span>
+                    <Select defaultValue="us">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="us">United States</SelectItem>
+                        <SelectItem value="eu">Europe</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </label>
+                  <label>
+                    <span>Language</span>
+                    <Select defaultValue="en">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="tr">Turkish</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </label>
+                </CardContent>
+              </Card>
+            ) : null}
+
+            {settingsTab === "team" ? (
+              <Card className="settings-section-card">
+                <CardHeader>
+                  <span className="settings-section-icon">
+                    <UsersRound />
+                  </span>
+                  <CardTitle>Team</CardTitle>
+                </CardHeader>
+                <CardContent className="settings-list">
+                  {["Maya Chen", "Nora Ellis", "Sam Rivera", "Theo Martin"].map((member, index) => (
+                    <Item key={member} surface="flat">
                       <ItemMedia>
-                        <Bell />
+                        <UsersRound />
                       </ItemMedia>
                       <ItemContent>
-                        <ItemTitle>{item}</ItemTitle>
-                        <ItemDescription>{index === 1 ? "Always on" : "Configurable"}</ItemDescription>
+                        <ItemTitle>{member}</ItemTitle>
+                        <ItemDescription>{index === 0 ? "Owner" : "Product team"}</ItemDescription>
                       </ItemContent>
                       <ItemActions>
-                        <Switch defaultChecked={index !== 2} />
+                        <Badge variant="outline">{index === 0 ? "Owner" : "Member"}</Badge>
                       </ItemActions>
                     </Item>
                   ))}
                 </CardContent>
               </Card>
-            </TabsContent>
-            <TabsContent value="appearance">
-              <Card>
-                <CardHeader>
-                  <CardDescription>Appearance</CardDescription>
-                  <CardTitle>Interface preferences</CardTitle>
-                </CardHeader>
-                <CardContent className="settings-appearance">
-                  <Item surface="glass">
-                    <ItemMedia>
-                      <Palette />
-                    </ItemMedia>
-                    <ItemContent>
-                      <ItemTitle>Density</ItemTitle>
-                      <ItemDescription>Control how compact repeated surfaces feel.</ItemDescription>
-                    </ItemContent>
-                  </Item>
-                  <Slider defaultValue={[62]} aria-label="Interface density" />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+            ) : null}
+          </div>
         </div>
       </div>
     </ExampleShowcasePage>
   );
 }
 
-function _BasicLandingExample({ example, onBack }: { example: Example; onBack: () => void }) {
+function BasicLandingExample({ example, onBack }: { example: Example; onBack: () => void }) {
   return (
     <>
       <Navbar
